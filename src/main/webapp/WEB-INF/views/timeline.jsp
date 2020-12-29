@@ -176,7 +176,7 @@
 					float: left;
 					margin-left: 5px;
 					font-size: 12px;
-										margin-right: 11px;
+					margin-right: 11px;
 					color: #8E8E8E;
 					line-height: 18px;
 					cursor: pointer;
@@ -339,10 +339,7 @@
 				$(".hidden_commentchk").trigger('click');
 				$(".hidden_likechk").trigger('click');
 
-				//댓글 overflow 더보기 (css 오류있어서 보류)
-				/* document.querySelector('.commentViewAll').addEventListener('click', function (e) {
-					e.target.previousElementSibling.classList.toggle('overflow');
-				}); */
+
 				//회원 추천 팔로우
 				$(".followBtn").on('click', function () {
 					var memId = $(".m_id").val();
@@ -357,7 +354,6 @@
 							m_id: memId,
 							r_mid: r_mid
 						},
-						async : false,
 						success: function (data) {
 							console.log("memId : "
 								+ memId
@@ -404,7 +400,6 @@
 									t_comment: comment,
 									t_id: postid
 								},
-								async : false,
 								success: function (data) {
 									console.log("memId : "
 										+ memId
@@ -413,70 +408,6 @@
 										+ " postid : "
 										+ postid);
 									$(".write_space").val('');
-									/* $(".comment_lcon").on('click', function () {
-										var memId = $(".m_id").val();
-										var b_id = $(this).next().next().val();
-										console.log(memId);
-										console.log(b_id);
-										$.ajax({
-											url: "${pageContext.request.contextPath}/pressLike.do",
-											method: "POST",
-											async: false,
-											data: {
-												m_id: memId,
-												t_id: b_id
-											},
-											success: function (data) {
-												console.log("memId : "
-													+ memId
-													+ " b_id : "
-													+ b_id);
-												$(this).css("display", "none");
-												$(this).next().css("display", "block");
-											},
-											error: function (request, status, error) {
-												alert("code:"
-													+ request.status
-													+ "\n"
-													+ "message:"
-													+ request.responseText
-													+ "\n" + "error:"
-													+ error);
-											}
-										});
-									});
-									$(".comment_unlcon").on('click', function () {
-										var memId = $(".m_id").val();
-										var b_id = $(this).next().val();
-										console.log(memId);
-										console.log(b_id);
-										$.ajax({
-											url: "${pageContext.request.contextPath}/pressUnLike.do",
-											method: "POST",
-											async: false,
-											data: {
-												m_id: memId,
-												t_id: b_id
-											},
-											success: function (data) {
-												console.log("memId : "
-													+ memId
-													+ " b_id : "
-													+ b_id);
-												$(this).css("display", "none");
-												$(this).prev().css("display", "block");
-											},
-											error: function (request, status, error) {
-												alert("code:"
-													+ request.status
-													+ "\n"
-													+ "message:"
-													+ request.responseText
-													+ "\n" + "error:"
-													+ error);
-											}
-										});
-									}); */
 								},
 								error: function (request, status, error) {
 									alert("code:"
@@ -498,7 +429,6 @@
 									t_comment: comment,
 									t_id: postid
 								},
-								async : false,
 								success: function (data) {
 									console.log("memId : "
 										+ memId
@@ -507,70 +437,6 @@
 										+ " postid : "
 										+ postid);
 									$(".write_space").val('');
-									/* $(".comment_lcon").on('click', function () {
-										var memId = $(".m_id").val();
-										var b_id = $(this).next().next().val();
-										console.log(memId);
-										console.log(b_id);
-										$.ajax({
-											url: "${pageContext.request.contextPath}/pressLikeB.do",
-											method: "POST",
-											async: false,
-											data: {
-												m_id: memId,
-												t_id: b_id
-											},
-											success: function (data) {
-												console.log("memId : "
-													+ memId
-													+ " t_id : "
-													+ t_id);
-												$(this).css("display", "none");
-												$(this).next().css("display", "block");
-											},
-											error: function (request, status, error) {
-												alert("code:"
-													+ request.status
-													+ "\n"
-													+ "message:"
-													+ request.responseText
-													+ "\n" + "error:"
-													+ error);
-											}
-										});
-									});
-									$(".comment_unlcon").on('click', function () {
-										var memId = $(".m_id").val();
-										var b_id = $(this).next().val();
-										console.log(memId);
-										console.log(b_id);
-										$.ajax({
-											url: "${pageContext.request.contextPath}/pressUnLikeB.do",
-											method: "POST",
-											async: false,
-											data: {
-												m_id: memId,
-												t_id: b_id
-											},
-											success: function (data) {
-												console.log("memId : "
-													+ memId
-													+ " b_id : "
-													+ b_id);
-												$(this).css("display", "none");
-												$(this).prev().css("display", "block");
-											},
-											error: function (request, status, error) {
-												alert("code:"
-													+ request.status
-													+ "\n"
-													+ "message:"
-													+ request.responseText
-													+ "\n" + "error:"
-													+ error);
-											}
-										});
-									}); */
 								},
 								error: function (request, status, error) {
 									alert("code:"
@@ -597,7 +463,6 @@
 					$.ajax({
 						url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
 						method: "POST",
-						   async : false,
 						data: {
 							t_id: t_id
 						},
@@ -622,48 +487,51 @@
 								$(".cm3" + t_id).append("<input type='hidden' class='" + b_id + "lBtn rlikechkBtn' onclick='rlikechk(\"" + b_id + "\");' value='" + b_id + "'>"
 									+ "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>");
 								if (countr != 0) {
-									if(id==mem_id){
-									$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
-										+ id + '</div>'
-										+ '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
-										+ '<div class="moreCo' + b_id + ' moreCo">답글 보기(' + countr + ')개</div>'
-										+ '<div class="moreCoMo' + b_id + ' moreCo moreCoMo">댓글 수정</div>'
-										+ '<div class="moreCoDe' + b_id + ' moreCo moreCoDe">댓글 삭제</div>'
-										+ '<input type="hidden" value="' + b_id + '">'
-										+ '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
-									} else{
-									$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
-										+ id + '</div>'
-										+ '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
-										+ '<div class="moreCo' + b_id + ' moreCo">답글 보기(' + countr + ')개</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
-										
+									if (id == mem_id) {
+										$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
+											+ id + '</div>'
+											+ '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
+											+ '<div class="moreCo' + b_id + ' moreCo">답글 보기(' + countr + ')개</div>'
+											+ '<div class="moreCoMo' + b_id + ' moreCo moreCoMo">댓글 수정</div>'
+											+ '<div class="moreCoDe' + b_id + ' moreCo moreCoDe">댓글 삭제</div>'
+											+ '<input type="hidden" value="' + b_id + '">'
+											+ '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
+									} else {
+										$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
+											+ id + '</div>'
+											+ '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
+											+ '<div class="moreCo' + b_id + ' moreCo">답글 보기(' + countr + ')개</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
+
 									}
 								} else {
-									if(id==mem_id){
+									if (id == mem_id) {
 										$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
-												+ id + '</div><div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
-												+ '<div class="moreCoMo' + b_id + ' moreCo moreCoMo">댓글 수정</div>'
-												+ '<div class="moreCoDe' + b_id + ' moreCo moreCoDe">댓글 삭제</div>'
-												+ '<input type="hidden" value="' + b_id + '">'
-												+'<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
-									} else{
-									
-									$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
-										+ id + '</div><div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
+											+ id + '</div><div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
+											+ '<div class="moreCoMo' + b_id + ' moreCo moreCoMo">댓글 수정</div>'
+											+ '<div class="moreCoDe' + b_id + ' moreCo moreCoDe">댓글 삭제</div>'
+											+ '<input type="hidden" value="' + b_id + '">'
+											+ '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>'
+											+ '<div class="com_detail replyCo" style="display:none;"></div>');
+									} else {
+
+										$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
+											+ id + '</div><div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
 									}
 
 								}
 							}
-							
+
 							$(".rlikechkBtn").trigger('click');
-							
-							/* //댓글 삭제
+
+							//댓글 삭제
 							$(".moreCoDe").on('click', function(){
 								var memId = $(".m_id").val();
 								var b_id = $(this).next().val();
 								console.log(memId);
 								console.log(b_id);
-								$(this).parent().prevAll().remove();
+								$(this).parent().prev().remove();
+								$(this).parent().prev().remove();
+								$(this).parent().prev().remove();
 								$(this).parent().remove();
 								$.ajax({
 									url: "${pageContext.request.contextPath}/deleteComment.do",
@@ -688,7 +556,9 @@
 											+ error);
 									}
 								});
-							}); */
+							});
+							
+							// 답글 달기
 							
 							// 댓글 좋아요
 							$(".comment_lcon").on('click', function () {
@@ -703,12 +573,12 @@
 										m_id: memId,
 										t_id: b_id
 									},
-									async : false,
+									async:false,
 									success: function (data) {
 										console.log("memId : "
 											+ memId
-											+ " t_id : "
-											+ t_id);
+											+ " b_id : "
+											+ b_id);
 										$(".clcon" + b_id).css("display", "none");
 										$(".cunlcon" + b_id).css("display", "block");
 									},
@@ -723,8 +593,8 @@
 									}
 								});
 							});
-							
-							// 댓글 싫어요
+
+							// 댓글 좋아요 취소
 							$(".comment_unlcon").on('click', function () {
 								var memId = $(".m_id").val();
 								var b_id = $(this).next().val();
@@ -737,7 +607,6 @@
 										m_id: memId,
 										t_id: b_id
 									},
-									async : false,
 									success: function (data) {
 										console.log("memId : "
 											+ memId
@@ -768,7 +637,6 @@
 							t_id: t_id
 						},
 						dataType: "json",
-						async : false,
 						success: function (hComment) {
 							var count = hComment;
 							for (var i = 0; i < count.hComment.length; i++) {
@@ -789,32 +657,32 @@
 								$(".cm3" + t_id).append("<input type='hidden' class='" + b_id + "lBtn rlikechkBtn' onclick='rlikechk(\"" + b_id + "\");' value='" + b_id + "'>"
 									+ "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>");
 								if (countr != 0) {
-									if(id==mem_id){
-									$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
-										+ id + '</div>'
-										+ '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
-										+ '<div class="moreCo' + b_id + ' moreCo">답글 보기(' + countr + ')개</div>'
-										+ '<div class="moreCoMo' + b_id + ' moreCo">댓글 수정</div>'
-										+ '<div class="moreCoDe' + b_id + ' moreCo">댓글 삭제</div>'
-										+ '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
-									} else{
-									$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
-										+ id + '</div>'
-										+ '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
-										+ '<div class="moreCo' + b_id + ' moreCo">답글 보기(' + countr + ')개</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
-										
+									if (id == mem_id) {
+										$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
+											+ id + '</div>'
+											+ '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
+											+ '<div class="moreCo' + b_id + ' moreCo">답글 보기(' + countr + ')개</div>'
+											+ '<div class="moreCoMo' + b_id + ' moreCo">댓글 수정</div>'
+											+ '<div class="moreCoDe' + b_id + ' moreCo">댓글 삭제</div>'
+											+ '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
+									} else {
+										$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
+											+ id + '</div>'
+											+ '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
+											+ '<div class="moreCo' + b_id + ' moreCo">답글 보기(' + countr + ')개</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
+
 									}
 								} else {
-									if(id==mem_id){
+									if (id == mem_id) {
 										$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
-												+ id + '</div><div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
-												+ '<div class="moreCoMo' + b_id + ' moreCo">댓글 수정</div>'
-												+ '<div class="moreCoDe' + b_id + ' moreCo">댓글 삭제</div>'
-												+'<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
-									} else{
-									
-									$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
-										+ id + '</div><div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
+											+ id + '</div><div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>'
+											+ '<div class="moreCoMo' + b_id + ' moreCo">댓글 수정</div>'
+											+ '<div class="moreCoDe' + b_id + ' moreCo">댓글 삭제</div>'
+											+ '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
+									} else {
+
+										$(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">'
+											+ id + '</div><div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>');
 									}
 
 								}
@@ -832,7 +700,6 @@
 										m_id: memId,
 										t_id: b_id
 									},
-									async : false,
 									success: function (data) {
 										console.log("memId : "
 											+ memId
@@ -864,7 +731,6 @@
 										m_id: memId,
 										t_id: b_id
 									},
-									async : false,
 									success: function (data) {
 										console.log("memId : "
 											+ memId
@@ -895,6 +761,7 @@
 			// 페이지 로딩 시 처음 두개 댓글 나타내기
 			function showAllCoHidden(t_id) {
 				var type = $(".t_type" + t_id).val();
+				console.log(type);
 				if (type == "G") {
 					$.ajax({
 						url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
@@ -903,7 +770,6 @@
 							t_id: t_id
 						},
 						dataType: "json",
-						async : false,
 						success: function (hComment) {
 							var count = hComment;
 							for (var i = 0; i < 2; i++) {
@@ -935,7 +801,6 @@
 										m_id: memId,
 										t_id: b_id
 									},
-									async : false,
 									success: function (data) {
 										console.log("memId : "
 											+ memId
@@ -967,7 +832,6 @@
 										m_id: memId,
 										t_id: b_id
 									},
-									async : false,
 									success: function (data) {
 										console.log("memId : "
 											+ memId
@@ -999,7 +863,6 @@
 							t_id: t_id
 						},
 						dataType: "json",
-						async : false,
 						success: function (hComment) {
 							var count = hComment;
 
@@ -1042,7 +905,6 @@
 										m_id: memId,
 										t_id: b_id
 									},
-									async : false,
 									success: function (data) {
 										console.log("memId : "
 											+ memId
@@ -1074,7 +936,6 @@
 										m_id: memId,
 										t_id: b_id
 									},
-									async : false,
 									success: function (data) {
 										console.log("memId : "
 											+ memId
@@ -1113,7 +974,6 @@
 							m_id: memId
 						},
 						dataType: "json",
-						async : false,
 						success: function (hLike) {
 							if (hLike >= 1) {
 								$(".likechk" + t_id).css("display", "none");
@@ -1140,7 +1000,6 @@
 							m_id: memId
 						},
 						dataType: "json",
-						async : false,
 						success: function (hLike) {
 							if (hLike >= 1) {
 								$(".likechk" + t_id).css("display", "none");
@@ -1176,7 +1035,6 @@
 							m_id: memId,
 							t_id: t_id
 						},
-						async : false,
 						success: function (data) {
 							console.log("memId : "
 								+ memId
@@ -1204,7 +1062,6 @@
 							m_id: memId,
 							t_id: t_id
 						},
-						async : false,
 						success: function (data) {
 							console.log("memId : "
 								+ memId
@@ -1241,7 +1098,6 @@
 							m_id: memId,
 							t_id: t_id
 						},
-						async : false,
 						success: function (data) {
 							console.log("memId : "
 								+ memId
@@ -1269,7 +1125,6 @@
 							m_id: memId,
 							t_id: t_id
 						},
-						async : false,
 						success: function (data) {
 							console.log("memId : "
 								+ memId
@@ -1305,7 +1160,6 @@
 							m_id: memId
 						},
 						dataType: "json",
-						async : false,
 						success: function (hLike) {
 							if (hLike >= 1) {
 								$(".clcon" + b_id).css("display", "none");
@@ -1332,7 +1186,6 @@
 							m_id: memId
 						},
 						dataType: "json",
-						async : false,
 						success: function (hLike) {
 							if (hLike >= 1) {
 								$(".clcon" + b_id).css("display", "none");
