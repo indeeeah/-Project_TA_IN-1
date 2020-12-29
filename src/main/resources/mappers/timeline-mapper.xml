@@ -224,6 +224,28 @@
 		delete from (select board.*, timeline.* from board left outer join timeline
 		on board.t_num = timeline.t_num where board.b_id= #{b_id})
 	</delete>
+	
+	<!-- 답글 작성 -->
+	<insert id="insertReplyComment" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into board
+		(b_id, m_id, b_content, b_type, b_topid) values
+		('RR'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BOARD_COMMENT_SEQ.NEXTVAL,3,'0'),
+		#{m_id}, #{t_comment},'R', #{t_id})
+	</insert>
+	<insert id="insertReplyCommentB" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into businessboard
+		(bb_id, m_id, bb_info, bb_type, bb_topid) values
+		('RR'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BOARD_COMMENT_SEQ.NEXTVAL,3,'0'),
+		#{m_id}, #{t_comment},'R', #{t_id})
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id = "updateComment" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		update board set b_content = #{t_comment} where b_id = #{t_id}
+		</update>
 </mapper>
 
 

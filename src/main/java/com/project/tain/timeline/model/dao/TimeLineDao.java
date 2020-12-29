@@ -93,4 +93,20 @@ public class TimeLineDao {
 	public int deleteCommentt(String b_id) {
 		return sqlSession.delete("TimeLine.deleteCommentt", b_id);
 	}
+	
+	public int insertReplyComment(TimeLine tl) {
+		System.out.println(tl);
+		return sqlSession.insert("TimeLine.insertReplyComment", tl);
+	}
+	public int insertReplyCommentB(TimeLine tl) {
+		System.out.println(tl);
+		return sqlSession.insert("TimeLine.insertReplyCommentB", tl);
+	}
+	
+	public int updateComment(TimeLine tl) {
+		System.out.println(tl);
+		return sqlSession.insert("TimeLine.updateComment", tl);
+	}
+	
+	
 }

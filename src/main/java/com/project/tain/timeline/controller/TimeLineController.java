@@ -199,7 +199,7 @@ public class TimeLineController {
 			return job.toJSONString();
 		}
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "hiddenCShowLike.do", method = RequestMethod.POST)
 	public int hiddenCShowLike(TimeLine tl) {
@@ -225,7 +225,7 @@ public class TimeLineController {
 		}
 		return result;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "insertFollow.do", method = RequestMethod.POST)
 	public String insertFollow(TimeLine tl) {
@@ -239,7 +239,7 @@ public class TimeLineController {
 			return job.toJSONString();
 		}
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "deleteComment.do", method = RequestMethod.POST)
 	public String deleteComment(String b_id) {
@@ -249,6 +249,47 @@ public class TimeLineController {
 			job.put("ack2", tService.deleteCommentt(b_id));
 			job.put("ack3", tService.deleteComment(b_id));
 			System.out.println("delete comment success");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "insertReplyComment.do", method = RequestMethod.POST)
+	public String insertReplyComment(TimeLine tl) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", tService.insertReplyComment(tl));
+			System.out.println("insert comment success");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "insertReplyCommentB.do", method = RequestMethod.POST)
+	public String insertReplyCommentB(TimeLine tl) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", tService.insertReplyCommentB(tl));
+			System.out.println("insert comment success");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+	@ResponseBody
+	@RequestMapping(value = "updateComment.do", method = RequestMethod.POST)
+	public String updateComment(TimeLine tl) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", tService.updateComment(tl));
+			System.out.println("insert comment success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

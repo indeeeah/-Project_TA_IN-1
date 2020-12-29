@@ -111,4 +111,17 @@ public class TimeLineServiceImpl implements TimeLineService {
 		return tDao.deleteCommentt(b_id);
 	}
 	
+	@Override
+	public int insertReplyComment(TimeLine tl) {
+		return tDao.insertReplyComment(tl);
+	}
+	@Override
+	public int insertReplyCommentB(TimeLine tl) {
+		return tDao.insertReplyCommentB(tl);
+	}
+	@Override
+	public int updateComment(TimeLine tl) {
+		return tDao.updateComment(tl);
+	}
+	
 }
