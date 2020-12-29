@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="TimeLine">
+	<resultMap type="TimeLine" id="resultTimeLine">
+		<id property="m_id" column="m_id" />
+		<result property="m_img" column="m_img" />
+	</resultMap>
+
+	<!-- 타임라인 내 프로필 출력 -->
+	<select id="showMyProf" parameterType="string"
+		resultType="TimeLine">
+		select m_id, m_img from Member where m_id = #{m_id}
+	</select>
+
+	<!-- 스토리 업데이트 리스트 -->
+	<select id="showStoryList" parameterType="string"
+		resultType="arrayList" resultMap="resultTimeLine">
+		select * from (select story.m_id,
+		m_img, m_id1, max(s_date) as s_date from
+		story join member on
+		story.m_id=member.m_id
+		inner join follow on story.m_id = m_id2
+		where
+		m_id1 = #{m_id}
+		and s_date > SYSDATE - 1
+		group by m_id1, m_img,
+		story.m_id) order by s_date DESC
+	</select>
+
+	<!-- 타임라인 순서 리스트 -->
+	<select id="showTimeLineList" parameterType="string"
+		resultType="arrayList" resultMap="resultTimeLine">
+		select timeline.*, m_img, board.b_id
+		|| businessboard.bb_id t_id, b_content||bb_info t_content
+		, b_img1
+		||'|'|| b_img2 ||'|'||b_img3 ||'|'||b_img4 ||'|'||b_img5
+		||'|'||b_img6
+		||'|'||b_img7 ||'|'||b_img8 ||'|'||b_img9 ||'|'||b_img10
+		||'|'||
+		bb_img1 ||'|'||bb_img2 ||'|'||bb_img3 ||'|'||bb_img4
+		||'|'||bb_img5
+		||'|'||bb_img6 ||'|'||bb_img7 ||'|'||bb_img8
+		||'|'||bb_img9
+		||'|'||bb_img10 t_img
+		, b_type || bb_type t_type,
+		to_char(board.b_date,'YYYY-MM-DD HH24:Mi:SS') ||
+		to_char(businessboard.bb_date,'YYYY-MM-DD HH24:Mi:SS') t_time,
+		count(blike.b_id)+count(bblike.bb_id) t_likes
+		from timeline join
+		member
+		on timeline.m_id=member.m_id
+		inner join follow on m_id2 =
+		timeline.m_id
+		left outer join board on timeline.t_num = board.t_num
+		left outer join
+		businessboard on timeline.t_num = businessboard.t_num
+		left outer join
+		boardadd on board.b_id = boardadd.b_id
+		left outer join
+		businessboardadd
+		on businessboard.bb_id =
+		businessboardadd.bb_id
+		left outer join blike on
+		blike.b_id = board.b_id
+		left outer join bblike on bblike.bb_id =
+		businessboard.bb_id
+		where
+		m_id1=#{m_id}
+		or m_id2= #{m_id}
+		group by
+		blike.b_id, bblike.bb_id, timeline.t_num, timeline.m_id, m_img,
+		board.b_id || businessboard.bb_id,
+		businessboard.bb_id,
+		b_content||bb_info, bb_info, b_img1 ||'|'|| b_img2 ||'|'||b_img3
+		||'|'||b_img4 ||'|'||b_img5 ||'|'||b_img6 ||'|'||b_img7 ||'|'||b_img8
+		||'|'||b_img9 ||'|'||b_img10 ||'|'|| bb_img1 ||'|'||bb_img2
+		||'|'||bb_img3 ||'|'||bb_img4 ||'|'||bb_img5 ||'|'||bb_img6
+		||'|'||bb_img7 ||'|'||bb_img8 ||'|'||bb_img9 ||'|'||bb_img10,
+		b_type ||
+		bb_type, to_char(board.b_date,'YYYY-MM-DD HH24:Mi:SS') ||
+		to_char(businessboard.bb_date,'YYYY-MM-DD HH24:Mi:SS')
+		order by
+		timeline.t_num desc
+	</select>
+
+	<!-- 댓글 ajax 이용 업로드 -->
+	<insert id="insertTimeLineComment" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into board
+		(b_id, m_id, b_content, b_type, b_topid) values
+		('BR'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BOARD_COMMENT_SEQ.NEXTVAL,3,'0'),
+		#{m_id}, #{t_comment},'C', #{t_id})
+	</insert>
+	<insert id="insertTimeLineCommentB" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into
+		businessboard
+		(bb_id, m_id, bb_type, bb_topid, bb_price, bb_name,
+		bb_info) values
+		('BR'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BOARD_COMMENT_SEQ.NEXTVAL,3,'0'),
+		#{m_id}, 'C', #{t_id}, '1', 'n', #{t_comment})
+	</insert>
+
+	<!-- 댓글 보여주기 -->
+	<select id="hiddenShowAllCo" parameterType="string"
+		resultType="arrayList" resultMap="resultTimeLine">
+		select b.b_id b_id, b.m_id,
+		b.b_content, to_char(b.b_date,'YYYY-MM-DD HH24:Mi') b_date, b.b_topid
+		b_topid, a.b_type b_type,
+		count(r.b_topid) count
+		from board b
+		left outer
+		join board a on b.b_topid
+		= a.b_id
+		left outer join board r on b.b_id =
+		r.b_topid
+		where
+		b.b_topid=#{t_id} group
+		by b.b_id, b.m_id, b.b_content,
+		b.b_date,
+		b.b_topid, a.b_type
+		order by
+		b.b_date
+		desc
+	</select>
+	<select id="hiddenShowAllCoB" parameterType="string"
+		resultType="arrayList" resultMap="resultTimeLine">
+		select b.bb_id b_id, b.m_id m_id,
+		b.bb_info b_content, to_char(b.bb_date,'YYYY-MM-DD HH24:Mi') b_date,
+		a.bb_type b_type, b.bb_topid
+		b_topid, count(r.bb_topid) count
+		from
+		businessboard b
+		left outer join
+		businessboard a on
+		b.bb_topid = a.bb_id
+		left outer join businessboard r
+		on b.bb_id = r.bb_topid
+		where
+		b.bb_topid=#{t_id} group by b.bb_id,
+		b.m_id, b.bb_info, b.bb_date,
+		a.bb_type,
+		b.bb_topid order by b.bb_date desc
+	</select>
+	<!-- Like check -->
+	<select id="hiddenShowLike" resultType="int">
+		select count(*)
+		from blike
+		where b_id=#{t_id} and m_id=#{m_id}
+	</select>
+	<select id="hiddenShowLikeB" resultType="int">
+		select count(*) from
+		bblike where bb_id=#{t_id} and m_id=#{m_id}
+	</select>
+
+	<!-- press Heart -->
+	<insert id="pressLike" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into blike
+		(b_id, m_id) values (#{t_id}, #{m_id})
+	</insert>
+	<insert id="pressLikeB" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into bblike
+		(bb_id, m_id) values (#{t_id}, #{m_id})
+	</insert>
+	<delete id="pressUnLike" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		delete from blike
+		where b_id=#{t_id} and m_id=#{m_id}
+	</delete>
+	<delete id="pressUnLikeB" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		delete from bblike
+		where bb_id=#{t_id} and m_id=#{m_id}
+	</delete>
+
+	<!-- Comment Like check -->
+	<select id="hiddenCShowLike" resultType="int">
+		select count(*) from
+		blike
+		where b_id=#{b_id} and m_id=#{m_id}
+	</select>
+	<select id="hiddenCShowLikeB" resultType="int">
+		select count(*) from
+		bblike
+		where bb_id=#{b_id} and m_id=#{m_id}
+	</select>
+
+	<!-- 계정 추천 -->
+	<select id="recomFollow" parameterType="string"
+		resultType="arrayList" resultMap="resultTimeLine">
+		select count(b.m_id2) count, b.m_id2
+		r_mid, m_img from follow a
+		join follow b on a.m_id2 = b.m_id1
+		join
+		member on b.m_id2 = m_id
+		where a.m_id1 = #{m_id}
+		and b.m_id2 not in
+		(select m_id2 from follow where m_id1=#{m_id})
+		and b.m_id2!=#{m_id}
+		group by b.m_id2, m_img
+		order by dbms_random.value
+	</select>
+
+	<!-- 계정 팔로우 -->
+	<insert id="insertFollow" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into follow
+		(m_id1, m_id2) values (#{m_id}, #{r_mid})
+	</insert>
+
+	<!-- 댓글 삭제 -->
+	<delete id="deleteCommentl" parameterType="string"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		delete from blike where b_id= #{b_id}
+	</delete>
+	<delete id="deleteCommentt" parameterType="string"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		delete from board where b_topid = #{b_id}
+	</delete>
+	<delete id="deleteComment" parameterType="string"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		delete from (select board.*, timeline.* from board left outer join timeline
+		on board.t_num = timeline.t_num where board.b_id= #{b_id})
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
