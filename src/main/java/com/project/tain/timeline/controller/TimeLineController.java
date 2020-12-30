@@ -33,6 +33,15 @@ public class TimeLineController {
 	public String testForm(ModelAndView mv) {
 		return "test";
 	}
+	
+	@RequestMapping(value="/writeStory.do", method = RequestMethod.GET)
+	public String writeStory(ModelAndView mv) {
+		return "writeStory";
+	}
+	@RequestMapping(value="/stories.do", method = RequestMethod.GET)
+	public String stories(ModelAndView mv) {
+		return "stories";
+	}
 
 	// TimeLine Page
 	@RequestMapping(value = "/timeLineList.do", method = RequestMethod.GET)
@@ -257,6 +266,22 @@ public class TimeLineController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "deleteCommentB.do", method = RequestMethod.POST)
+	public String deleteCommentB(String b_id) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", tService.deleteCommentlB(b_id));
+			job.put("ack2", tService.deleteCommenttB(b_id));
+			job.put("ack3", tService.deleteCommentB(b_id));
+			System.out.println("delete comment success");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "insertReplyComment.do", method = RequestMethod.POST)
 	public String insertReplyComment(TimeLine tl) {
 		JSONObject job = new JSONObject();
@@ -283,6 +308,7 @@ public class TimeLineController {
 			return job.toJSONString();
 		}
 	}
+
 	@ResponseBody
 	@RequestMapping(value = "updateComment.do", method = RequestMethod.POST)
 	public String updateComment(TimeLine tl) {
@@ -295,5 +321,44 @@ public class TimeLineController {
 		} finally {
 			return job.toJSONString();
 		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "updateCommentB.do", method = RequestMethod.POST)
+	public String updateCommentB(TimeLine tl) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", tService.updateCommentB(tl));
+			System.out.println("insert comment success");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "countLike.do", method = RequestMethod.POST)
+	public int countLike(TimeLine tl) {
+		int result = tService.countLike(tl);
+		try {
+			System.out.println(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+		return result;
+	}
+	@ResponseBody
+	@RequestMapping(value = "countLikeB.do", method = RequestMethod.POST)
+	public int countLikeB(TimeLine tl) {
+		int result = tService.countLikeB(tl);
+		try {
+			System.out.println(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+		return result;
 	}
 }

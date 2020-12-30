@@ -75,38 +75,64 @@ public class TimeLineDao {
 	public int hiddenCShowLikeB(TimeLine tl) {
 		return sqlSession.selectOne("TimeLine.hiddenCShowLikeB", tl);
 	}
-	
-	public List<TimeLine> recomFollow(String m_id){
+
+	public List<TimeLine> recomFollow(String m_id) {
 		return sqlSession.selectList("TimeLine.recomFollow", m_id);
 	}
-	
+
 	public int insertFollow(TimeLine tl) {
 		return sqlSession.insert("TimeLine.insertFollow", tl);
 	}
-	
+
 	public int deleteComment(String b_id) {
 		return sqlSession.delete("TimeLine.deleteComment", b_id);
 	}
+
 	public int deleteCommentl(String b_id) {
 		return sqlSession.delete("TimeLine.deleteCommentl", b_id);
 	}
+
 	public int deleteCommentt(String b_id) {
 		return sqlSession.delete("TimeLine.deleteCommentt", b_id);
 	}
-	
+
+	public int deleteCommentB(String b_id) {
+		return sqlSession.delete("TimeLine.deleteCommentB", b_id);
+	}
+
+	public int deleteCommentlB(String b_id) {
+		return sqlSession.delete("TimeLine.deleteCommentlB", b_id);
+	}
+
+	public int deleteCommenttB(String b_id) {
+		return sqlSession.delete("TimeLine.deleteCommenttB", b_id);
+	}
+
 	public int insertReplyComment(TimeLine tl) {
 		System.out.println(tl);
 		return sqlSession.insert("TimeLine.insertReplyComment", tl);
 	}
+
 	public int insertReplyCommentB(TimeLine tl) {
 		System.out.println(tl);
 		return sqlSession.insert("TimeLine.insertReplyCommentB", tl);
 	}
-	
+
 	public int updateComment(TimeLine tl) {
 		System.out.println(tl);
 		return sqlSession.insert("TimeLine.updateComment", tl);
 	}
+
+	public int updateCommentB(TimeLine tl) {
+		System.out.println(tl);
+		return sqlSession.insert("TimeLine.updateCommentB", tl);
+	}
 	
-	
+	public int countLike(TimeLine tl) {
+		return sqlSession.selectOne("TimeLine.countLike", tl);
+	}
+	public int countLikeB(TimeLine tl) {
+		return sqlSession.selectOne("TimeLine.countLikeB", tl);
+	}
+
 }

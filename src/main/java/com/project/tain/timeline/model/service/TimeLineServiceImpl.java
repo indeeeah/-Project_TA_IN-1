@@ -63,6 +63,7 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int pressLike(TimeLine tl) {
 		return tDao.pressLike(tl);
 	}
+
 	@Override
 	public int pressLikeB(TimeLine tl) {
 		return tDao.pressLikeB(tl);
@@ -102,26 +103,59 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int deleteComment(String b_id) {
 		return tDao.deleteComment(b_id);
 	}
+
 	@Override
 	public int deleteCommentl(String b_id) {
 		return tDao.deleteCommentl(b_id);
 	}
+
 	@Override
 	public int deleteCommentt(String b_id) {
 		return tDao.deleteCommentt(b_id);
 	}
-	
+
+	@Override
+	public int deleteCommentB(String b_id) {
+		return tDao.deleteCommentB(b_id);
+	}
+
+	@Override
+	public int deleteCommentlB(String b_id) {
+		return tDao.deleteCommentlB(b_id);
+	}
+
+	@Override
+	public int deleteCommenttB(String b_id) {
+		return tDao.deleteCommenttB(b_id);
+	}
+
 	@Override
 	public int insertReplyComment(TimeLine tl) {
 		return tDao.insertReplyComment(tl);
 	}
+
 	@Override
 	public int insertReplyCommentB(TimeLine tl) {
 		return tDao.insertReplyCommentB(tl);
 	}
+
 	@Override
 	public int updateComment(TimeLine tl) {
 		return tDao.updateComment(tl);
 	}
-	
+
+	@Override
+	public int updateCommentB(TimeLine tl) {
+		return tDao.updateCommentB(tl);
+	}
+
+	@Override
+	public int countLike(TimeLine tl) {
+		return tDao.countLike(tl);
+	}
+	@Override
+	public int countLikeB(TimeLine tl) {
+		return tDao.countLikeB(tl);
+	}
+
 }
