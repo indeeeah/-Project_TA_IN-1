@@ -6,10 +6,18 @@
 	</settings>
 
 	<typeAliases>
+<<<<<<< HEAD
 
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mapper/mManage-mapper.xml" />
+=======
+		<typeAlias type="com.project.tain.timeline.model.domain.TimeLine" alias="TimeLine"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="mappers/timeline-mapper.xml"/>
+>>>>>>> ksm
 	</mappers>
 </configuration>
