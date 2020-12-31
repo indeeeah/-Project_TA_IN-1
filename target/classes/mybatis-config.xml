@@ -2,6 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	<settings>
+<<<<<<< HEAD
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
@@ -11,5 +12,18 @@
 
 	<mappers>
 		<mapper resource="mapper/mManage-mapper.xml" />
+=======
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.kh.crimc.board.model.domain.Board" alias="Board"/>
+		<typeAlias type="com.kh.crimc.board.model.domain.BoardReply" alias="BoardReply"/>
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="mapper/board-mapper.xml"/>
+		<mapper resource="mapper/boardReply-mapper.xml"/>
+>>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 	</mappers>
 </configuration>
