@@ -3,6 +3,7 @@
 <configuration>
 	<settings>
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
@@ -15,10 +16,15 @@
 		<mapper resource="mapper/mManage-mapper.xml" />
 =======
 =======
+=======
+>>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 
 	<typeAliases>
+<<<<<<< HEAD
+>>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
+=======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 		<typeAlias type="com.project.tain.timeline.model.domain.TimeLine" alias="TimeLine"/>
 	</typeAliases>
@@ -26,7 +32,10 @@
 	<mappers>
 		<mapper resource="mappers/timeline-mapper.xml"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ksm
+=======
+>>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 =======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 	</mappers>

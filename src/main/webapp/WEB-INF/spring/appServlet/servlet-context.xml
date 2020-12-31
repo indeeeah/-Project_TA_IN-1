@@ -26,11 +26,14 @@
 	</beans:bean>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"/>
 		<!-- <beans:property name="configLocation" value="classpath:mybatis-config.xml"/> -->
 =======
+=======
+>>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 =======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 
@@ -40,7 +43,10 @@
 		<beans:property name="configLocation"
 			value="classpath:mybatis-config.xml" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ksm
+=======
+>>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 =======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 	</beans:bean>

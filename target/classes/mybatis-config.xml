@@ -3,6 +3,7 @@
 <configuration>
 	<settings>
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
@@ -13,6 +14,8 @@
 	<mappers>
 		<mapper resource="mapper/mManage-mapper.xml" />
 =======
+=======
+>>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 
@@ -24,6 +27,9 @@
 	<mappers>
 		<mapper resource="mapper/board-mapper.xml"/>
 		<mapper resource="mapper/boardReply-mapper.xml"/>
+<<<<<<< HEAD
+>>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
+=======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 	</mappers>
 </configuration>
