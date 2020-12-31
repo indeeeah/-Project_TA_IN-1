@@ -267,7 +267,7 @@
 
 				}
 
-				.countLike_trigger{
+				.countLike_trigger {
 					display: none;
 				}
 			</style>
@@ -425,7 +425,7 @@
 				//회원 추천 팔로우
 				$(".followBtn").on('click', function () {
 					var memId = $(".m_id").val();
-					var r_mid = $(this).next().val();
+					var r_mid = $(this).next().val(); ㄴ
 					console.log(memId);
 					console.log(r_mid);
 					$(this).next().parent().remove();
@@ -804,7 +804,7 @@
 			}
 
 			// 댓글 신고
-			function report(b_id){
+			function report(b_id) {
 				console.log(b_id);
 			}
 
@@ -1903,216 +1903,187 @@
 
 			}
 
-			// 페이지 로딩 시 처음 두개 댓글 나타내기 (일반 & 비즈니스 게시판 분리) trigger - .hidden_commentchk
+			// 페이지 로딩 시 처음 두개 댓글 나타내기 trigger - .hidden_commentchk
 			// 댓글 좋아요 표시 외 수정 불가
 			function showAllCoHidden(t_id) {
 				var type = $(".t_type" + t_id).val();
 				console.log(type);
 
-				// 두개 댓글 나타내기 - 일반 게시판
-				if (type == "G") {
-					$.ajax({
-						url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
-						method: "POST",
-						data: {
-							t_id: t_id
-						},
-						dataType: "json",
-						success: function (hComment) {
-							var count = hComment;
-							for (var i = 0; i < 2; i++) {
-								var id = count.hComment[i].m_id;
-								var b_content = count.hComment[i].b_content;
-								var b_id = count.hComment[i].b_id;
-								var b_type = count.hComment[i].b_type;
-								var countr = count.hComment[i].count;
-								var b_date = count.hComment[i].b_date;
+				// 두개 댓글 나타내기
+				$.ajax({
+					url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
+					method: "POST",
+					data: {
+						t_id: t_id
+					},
+					dataType: "json",
+					success: function (hComment) {
+						var count = hComment;
+						for (var i = 0; i < 2; i++) {
+							var id = count.hComment[i].m_id;
+							var b_content = count.hComment[i].b_content;
+							var b_id = count.hComment[i].b_id;
+							var b_type = count.hComment[i].b_type;
+							var countr = count.hComment[i].count;
+							var b_date = count.hComment[i].b_date;
 
-								// 댓글 append - cm2 // 댓글 좋아요 체크 trigger 사용
-								$(".cm2" + t_id).append('<div class="com_detail"><div class="commentRId post_id">'
-									+ id + '</div><div class="commentResult post_content">'
-									+ b_content + '</div><a class="commentViewAll"></a><div class="comment_lcon clcon clcon' + b_id + '"></div>'
-									+ '<div class="comment_unlcon clcon cunlcon' + b_id + '"></div>'
-									+ '<input type="hidden" value="' + b_id + '"></div></div>');
-								$(".cm2" + t_id).append("<input type='hidden' class='" + b_id + "lBtn rlikechkBtn' onclick='rlikechk(\"" + b_id + "\");' value='" + b_id + "'>"
-									+ "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>");
-							}
-
-							// 댓글 좋아요 체크 trigger 호출
-							$(".rlikechkBtn").trigger('click');
-
-							// 댓글 좋아요 - 일반 게시판
-							$(".comment_lcon").on('click', function () {
-								var memId = $(".m_id").val();
-								var b_id = $(this).next().next().val();
-								console.log(memId);
-								console.log(b_id);
-								$.ajax({
-									url: "${pageContext.request.contextPath}/pressLike.do",
-									method: "POST",
-									data: {
-										m_id: memId,
-										t_id: b_id
-									},
-									success: function (data) {
-										console.log("memId : "
-											+ memId
-											+ " b_id : "
-											+ b_id);
-										$(".clcon" + b_id).css("display", "none");
-										$(".cunlcon" + b_id).css("display", "block");
-									},
-									error: function (request, status, error) {
-										alert("code:"
-											+ request.status
-											+ "\n"
-											+ "message:"
-											+ request.responseText
-											+ "\n" + "error:"
-											+ error);
-									}
-								});
-							});
-
-							// 댓글 좋아요 취소 - 일반 게시판
-							$(".comment_unlcon").on('click', function () {
-								var memId = $(".m_id").val();
-								var b_id = $(this).next().val();
-								console.log(memId);
-								console.log(b_id);
-								$.ajax({
-									url: "${pageContext.request.contextPath}/pressUnLike.do",
-									method: "POST",
-									data: {
-										m_id: memId,
-										t_id: b_id
-									},
-									success: function (data) {
-										console.log("memId : "
-											+ memId
-											+ " b_id : "
-											+ b_id);
-										$(".clcon" + b_id).css("display", "block");
-										$(".cunlcon" + b_id).css("display", "none");
-									},
-									error: function (request, status, error) {
-										alert("code:"
-											+ request.status
-											+ "\n"
-											+ "message:"
-											+ request.responseText
-											+ "\n" + "error:"
-											+ error);
-									}
-								});
-
-							});
+							// 댓글 append - cm2 // 댓글 좋아요 체크 trigger 사용
+							$(".cm2" + t_id).append('<div class="com_detail"><div class="commentRId post_id">'
+								+ id + '</div><div class="commentResult post_content">'
+								+ b_content + '</div><a class="commentViewAll"></a><div class="comment_lcon clcon clcon' + b_id + '"></div>'
+								+ '<div class="comment_unlcon clcon cunlcon' + b_id + '"></div>'
+								+ '<input type="hidden" value="' + b_id + '"></div></div>');
+							$(".cm2" + t_id).append("<input type='button' class='" + b_id + "lBtn rlikechkBtn' onclick='rlikechk(\"" + b_id + "\");' value='" + b_id + "'>"
+								+ "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>");
 						}
+
+						// 댓글 좋아요 체크 trigger 호출
+						$(".rlikechkBtn").trigger('click');
+					}
+				});
+
+				// (일반 & 비즈니스 게시판 분리)
+				if (type == "G") {
+					// 댓글 좋아요 - 일반 게시판
+					$(".comment_lcon").on('click', function () {
+						var memId = $(".m_id").val();
+						var b_id = $(this).next().next().val();
+						console.log(memId);
+						console.log(b_id);
+						$.ajax({
+							url: "${pageContext.request.contextPath}/pressLike.do",
+							method: "POST",
+							data: {
+								m_id: memId,
+								t_id: b_id
+							},
+							success: function (data) {
+								console.log("memId : "
+									+ memId
+									+ " b_id : "
+									+ b_id);
+								$(".clcon" + b_id).css("display", "none");
+								$(".cunlcon" + b_id).css("display", "block");
+							},
+							error: function (request, status, error) {
+								alert("code:"
+									+ request.status
+									+ "\n"
+									+ "message:"
+									+ request.responseText
+									+ "\n" + "error:"
+									+ error);
+							}
+						});
+					});
+
+					// 댓글 좋아요 취소 - 일반 게시판
+					$(".comment_unlcon").on('click', function () {
+						var memId = $(".m_id").val();
+						var b_id = $(this).next().val();
+						console.log(memId);
+						console.log(b_id);
+						$.ajax({
+							url: "${pageContext.request.contextPath}/pressUnLike.do",
+							method: "POST",
+							data: {
+								m_id: memId,
+								t_id: b_id
+							},
+							success: function (data) {
+								console.log("memId : "
+									+ memId
+									+ " b_id : "
+									+ b_id);
+								$(".clcon" + b_id).css("display", "block");
+								$(".cunlcon" + b_id).css("display", "none");
+							},
+							error: function (request, status, error) {
+								alert("code:"
+									+ request.status
+									+ "\n"
+									+ "message:"
+									+ request.responseText
+									+ "\n" + "error:"
+									+ error);
+							}
+						});
+
 					});
 
 					// 두개 댓글 나타내기 - 비즈니스 게시판
 				} else if (type = "B") {
-					$.ajax({
-						url: "${pageContext.request.contextPath}/hiddenShowAllCoB.do",
-						method: "POST",
-						data: {
-							t_id: t_id
-						},
-						dataType: "json",
-						success: function (hComment) {
-							var count = hComment;
 
-							for (var i = 0; i < 2; i++) {
-								var id = count.hComment[i].m_id;
-								var b_content = count.hComment[i].b_content;
-								var b_id = count.hComment[i].b_id;
-								var b_type = count.hComment[i].b_type;
-								var countr = count.hComment[i].count;
-								var b_date = count.hComment[i].b_date;
-
-								// 댓글 append - cm2 // 댓글 좋아요 체크 trigger 사용
-								$(".cm2" + t_id).append('<div class="com_detail"><div class="commentRId post_id">'
-									+ id + '</div><div class="commentResult post_content">'
-									+ b_content + '</div><a class="commentViewAll"></a><div class="comment_lcon clcon clcon' + b_id + '"></div>'
-									+ '<div class="comment_unlcon clcon cunlcon' + b_id + '"></div>'
-									+ '<input type="hidden" value="' + b_id + '"></div></div>');
-								$(".cm2" + t_id).append("<input type='hidden' class='" + b_id + "lBtn rlikechkBtn' onclick='rlikechk(\"" + b_id + "\");' value='" + b_id + "'>"
-									+ "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>");
+					// 댓글 좋아요 - 비즈니스 게시판
+					$(".comment_lcon").on('click', function () {
+						var memId = $(".m_id").val();
+						var b_id = $(this).next().next().val();
+						console.log(memId);
+						console.log(b_id);
+						$.ajax({
+							url: "${pageContext.request.contextPath}/pressLikeB.do",
+							method: "POST",
+							data: {
+								m_id: memId,
+								t_id: b_id
+							},
+							success: function (data) {
+								console.log("memId : "
+									+ memId
+									+ " b_id : "
+									+ b_id);
+								$(".clcon" + b_id).css("display", "none");
+								$(".cunlcon" + b_id).css("display", "block");
+							},
+							error: function (request, status, error) {
+								alert("code:"
+									+ request.status
+									+ "\n"
+									+ "message:"
+									+ request.responseText
+									+ "\n" + "error:"
+									+ error);
 							}
+						});
+					});
 
-							// 댓글 좋아요 체크 trigger 호출
-							$(".rlikechkBtn").trigger('click');
-
-							// 댓글 좋아요 - 비즈니스 게시판
-							$(".comment_lcon").on('click', function () {
-								var memId = $(".m_id").val();
-								var b_id = $(this).next().next().val();
-								console.log(memId);
-								console.log(b_id);
-								$.ajax({
-									url: "${pageContext.request.contextPath}/pressLikeB.do",
-									method: "POST",
-									data: {
-										m_id: memId,
-										t_id: b_id
-									},
-									success: function (data) {
-										console.log("memId : "
-											+ memId
-											+ " b_id : "
-											+ b_id);
-										$(".clcon" + b_id).css("display", "none");
-										$(".cunlcon" + b_id).css("display", "block");
-									},
-									error: function (request, status, error) {
-										alert("code:"
-											+ request.status
-											+ "\n"
-											+ "message:"
-											+ request.responseText
-											+ "\n" + "error:"
-											+ error);
-									}
-								});
-							});
-
-							// 댓글 좋아요 취소 - 비즈니스 게시판
-							$(".comment_unlcon").on('click', function () {
-								var memId = $(".m_id").val();
-								var b_id = $(this).next().val();
-								console.log(memId);
-								console.log(b_id);
-								$.ajax({
-									url: "${pageContext.request.contextPath}/pressUnLikeB.do",
-									method: "POST",
-									data: {
-										m_id: memId,
-										t_id: b_id
-									},
-									success: function (data) {
-										console.log("memId : "
-											+ memId
-											+ " b_id : "
-											+ b_id);
-										$(".clcon" + b_id).css("display", "block");
-										$(".cunlcon" + b_id).css("display", "none");
-									},
-									error: function (request, status, error) {
-										alert("code:"
-											+ request.status
-											+ "\n"
-											+ "message:"
-											+ request.responseText
-											+ "\n" + "error:"
-											+ error);
-									}
-								});
-							});
-						}
+					// 댓글 좋아요 취소 - 비즈니스 게시판
+					$(".comment_unlcon").on('click', function () {
+						var memId = $(".m_id").val();
+						var b_id = $(this).next().val();
+						console.log(memId);
+						console.log(b_id);
+						$.ajax({
+							url: "${pageContext.request.contextPath}/pressUnLikeB.do",
+							method: "POST",
+							data: {
+								m_id: memId,
+								t_id: b_id
+							},
+							success: function (data) {
+								console.log("memId : "
+									+ memId
+									+ " b_id : "
+									+ b_id);
+								$(".clcon" + b_id).css("display", "block");
+								$(".cunlcon" + b_id).css("display", "none");
+							},
+							error: function (request, status, error) {
+								alert("code:"
+									+ request.status
+									+ "\n"
+									+ "message:"
+									+ request.responseText
+									+ "\n" + "error:"
+									+ error);
+							}
+						});
 					});
 				}
-
 			}
+				
+
+			
 
 			// 댓글 좋아요 체크 (일반 & 비즈니스 게시판 분리) trigger - .rlikechkBtn
 			function rlikechk(b_id) {

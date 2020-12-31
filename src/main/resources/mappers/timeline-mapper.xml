@@ -30,38 +30,31 @@
 	<!-- 타임라인 순서 리스트 -->
 	<select id="showTimeLineList" parameterType="string"
 		resultType="arrayList" resultMap="resultTimeLine">
-		select * from (select board.b_id as
-		t_id, board.m_id as m_id, m_img as m_img, b_content as t_content,
-		b_type as t_type, b_topid as topid, to_char(b_date,'YYYY-MM-DD
-		HH24:Mi:SS') as t_time,
-		b_img1
+		select * from (select board.b_id as t_id, board.m_id as m_id, m_img as m_img, b_content as t_content, b_type as t_type, b_topid as topid, to_char(b_date,'YYYY-MM-DD HH24:Mi:SS') as t_time,
+b_img1
 		||'|'|| b_img2 ||'|'||b_img3 ||'|'||b_img4 ||'|'||b_img5
 		||'|'||b_img6
 		||'|'||b_img7 ||'|'||b_img8 ||'|'||b_img9 ||'|'||b_img10 as t_img
-		from board
-		join boardadd on board.b_id = boardadd.b_id
-		join follow on m_id2 = board.m_id
-		join member on board.m_id = member.m_id
-		where b_type='G'
-		and m_id1 = #{m_id}
-		or board.m_id = #{m_id}
-		union
-		select businessboard.bb_id as t_id, businessboard.m_id as m_id, m_img as
-		m_img, bb_info as t_content, bb_type as t_type, bb_topid as topid,
-		to_char(bb_date,'YYYY-MM-DD HH24:Mi:SS') as t_time,
-		bb_img1 ||'|'||bb_img2
-		||'|'||bb_img3 ||'|'||bb_img4 ||'|'||bb_img5
-		||'|'||bb_img6
-		||'|'||bb_img7 ||'|'||bb_img8 ||'|'||bb_img9
-		||'|'||bb_img10 as t_img
-		from businessboard
-		join businessboardadd on businessboard.bb_id = businessboardadd.bb_id
-		join follow on m_id2 = businessboard.m_id
-		join member on businessboard.m_id = member.m_id
-		where bb_type='B'
-		and m_id1 = #{m_id}
-		or businessboard.m_id = #{m_id})
-		order by t_time desc
+from board 
+join boardadd on board.b_id = boardadd.b_id
+join follow on m_id2 = board.m_id
+join member on board.m_id = member.m_id
+where b_type='G'
+and m_id1 = #{m_id}
+or board.m_id = #{m_id}
+union
+select businessboard.bb_id as t_id, businessboard.m_id as m_id, m_img as m_img, bb_info as t_content, bb_type as t_type, bb_topid as topid, to_char(bb_date,'YYYY-MM-DD HH24:Mi:SS') as t_time,
+bb_img1 ||'|'||bb_img2
+		||'|'||bb_img3 ||'|'||bb_img4 ||'|'||bb_img5 ||'|'||bb_img6
+		||'|'||bb_img7 ||'|'||bb_img8 ||'|'||bb_img9 ||'|'||bb_img10 as t_img
+from businessboard
+join businessboardadd on businessboard.bb_id = businessboardadd.bb_id
+join follow on m_id2 = businessboard.m_id
+join member on businessboard.m_id = member.m_id
+where bb_type='B'
+and m_id1 = #{m_id}
+or businessboard.m_id = #{m_id})
+order by t_time desc
 	</select>
 
 	<!-- 댓글 ajax 이용 업로드 -->
@@ -85,10 +78,9 @@
 	<!-- 댓글 보여주기 -->
 	<select id="hiddenShowAllCo" parameterType="string"
 		resultType="arrayList" resultMap="resultTimeLine">
-		select b.b_id b_id, b.m_id,
-		b.b_content, to_char(b.b_date,'YYYY-MM-DD HH24:Mi') b_date, b.b_topid
-		b_topid, a.b_type b_type,
-		count(r.b_topid) count
+		select * from (select b.b_id as b_id, b.m_id as m_id,
+		b.b_content as b_content, to_char(b.b_date,'YYYY-MM-DD HH24:Mi') as b_date, b.b_topid as b_topid, a.b_type as b_type,
+		count(r.b_topid) as count
 		from board b
 		left outer
 		join board a on b.b_topid
@@ -100,9 +92,23 @@
 		by b.b_id, b.m_id, b.b_content,
 		b.b_date,
 		b.b_topid, a.b_type
-		order by
-		b.b_date
-		desc
+union
+select b.bb_id as b_id, b.m_id as m_id,
+		b.bb_info as b_content, to_char(b.bb_date,'YYYY-MM-DD HH24:Mi') as b_date,
+		a.bb_type as b_type, b.bb_topid as b_topid, count(r.bb_topid) as count
+		from
+		businessboard b
+		left outer join
+		businessboard a on
+		b.bb_topid = a.bb_id
+		left outer join businessboard r
+		on b.bb_id = r.bb_topid
+		where
+		b.bb_topid=#{t_id} group by b.bb_id,
+		b.m_id, b.bb_info, b.bb_date,
+		a.bb_type,
+		b.bb_topid
+        ) order by b_date desc
 	</select>
 	<select id="hiddenShowAllCoB" parameterType="string"
 		resultType="arrayList" resultMap="resultTimeLine">
