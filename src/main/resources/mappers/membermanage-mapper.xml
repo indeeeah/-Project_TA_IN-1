@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MemberManage">
+	<resultMap type="MemberManage" id="resultMmanage">
+		<!-- property에는 vo의 필드명, column에는 db table의 컬럼명 -->
+		<id property="m_id" column="m_id" />
+		<result property="m_pw" column="m_pw" />
+		<result property="m_name" column="m_name" />
+		<result property="m_intro" column="m_intro" />
+		<result property="m_email" column="m_email" />
+		<result property="m_addr1" column="m_addr1" />
+		<result property="m_addr2" column="m_addr2" />
+		<result property="m_addr3" column="m_addr3" />
+		<result property="m_phone" column="m_phone" />
+		<result property="m_birth" column="m_birth" />
+		<result property="m_img" column="m_img" />
+		<result property="m_usage" column="m_usage" />
+		<result property="m_status" column="m_status" />
+		<result property="m_activity" column="m_activity" />
+		<result property="m_lastact" column="m_lastact" />
+		<result property="m_language" column="m_language" />
+		<result property="m_joindate" column="m_joindate" />
+	</resultMap>
+	
+	<!-- 전체 회원 수 조회 -->
+	<select id="listCount" resultType="int">
+		select count(*) from Member
+	</select>
+	
+	<!-- 전체 회원 조회 -->
+	<select id="selectList" resultType="arraylist"
+		resultMap="resultMmanage">
+		select * from Member
+	</select>
+	
+	<!-- 회원 단일 조회 -->
+	<select id="selectOne" parameterType="string" resultType="MemberManage">
+		select * from Member
+		where m_id = #{m_id}
+	</select>
+	
+	<!-- 검색한 회원 조회 -->
+	<select id="searchList" parameterType="string"
+		resultType="arraylist" resultMap="resultMmanage">
+		SELECT * FROM Member
+		WHERE m_id LIKE '%'|| #{keyword} ||'%'
+		OR m_name LIKE '%'|| #{keyword} ||'%'
+		ORDER BY m_id DESC
+	</select>
+	
+	<!-- 회원 수정 -->
+	<update id="updateMmanage" parameterType="MemberManage" flushCache="true"
+		statementType="PREPARED">
+		UPDATE Member SET m_usage = #{m_usage},
+		m_status = #{m_status}
+		WHERE m_id = #{m_id}
+	</update>
+	
+	<!-- 회원 삭제 -->
+	<delete id="deleteMmanage" parameterType="string"
+		flushCache="true" statementType="PREPARED">
+		DELETE FROM Member WHERE m_id = #{m_id}
+	</delete>
+</mapper>
