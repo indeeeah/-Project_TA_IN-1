@@ -125,6 +125,9 @@ public class TimeLineDao {
 	public int reportchk(TimeLine tl) {
 		return sqlSession.selectOne("TimeLine.reportchk", tl);
 	}
+	public int unfollow(TimeLine tl) {
+		return sqlSession.delete("TimeLine.unfollow", tl);
+	}
 	
 
 }

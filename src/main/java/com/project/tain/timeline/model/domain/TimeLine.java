@@ -32,6 +32,7 @@ public class TimeLine implements java.io.Serializable{
 	private String r_bid;
 	private int count;
 	private String r_reason;
+	private String id;
 	
 	public TimeLine() {
 		
@@ -277,6 +278,14 @@ public class TimeLine implements java.io.Serializable{
 
 	public void setR_reason(String r_reason) {
 		this.r_reason = r_reason;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

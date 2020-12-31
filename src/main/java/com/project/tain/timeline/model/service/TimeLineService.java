@@ -57,6 +57,7 @@ public interface TimeLineService {
 	int insertReport(TimeLine tl);
 	int insertReportB(TimeLine tl);
 	int reportchk(TimeLine tl);
+	int unfollow(TimeLine tl);
 
 
 }

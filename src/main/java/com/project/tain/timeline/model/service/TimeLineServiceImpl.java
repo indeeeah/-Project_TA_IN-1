@@ -145,4 +145,8 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int countLike(TimeLine tl) {
 		return tDao.countLike(tl);
 	}
+	@Override
+	public int unfollow(TimeLine tl) {
+		return tDao.unfollow(tl);
+	}
 }

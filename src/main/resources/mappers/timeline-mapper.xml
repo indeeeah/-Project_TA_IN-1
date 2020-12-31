@@ -256,6 +256,12 @@ select count(*) as from
 		flushCache="true" statementType="PREPARED" timeout="20">
 		insert into reportbusinessboard (bb_id, m_id, rbb_reason) values (#{b_id}, #{m_id}, #{r_reason})
 		</insert>
+		
+		<!-- 계정 언팔로 -->
+		<delete id="unfollow" parameterType="string"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		delete from follow where m_id1=#{m_id} and m_id2=#{id}
+		</delete>
 </mapper>
 
 

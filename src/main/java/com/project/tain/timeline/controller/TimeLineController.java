@@ -331,4 +331,18 @@ public class TimeLineController {
 		}
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "unfollow.do", method = RequestMethod.POST)
+	public String unfollow(TimeLine tl) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", tService.unfollow(tl));
+			System.out.println("insert report success");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
 }

@@ -294,7 +294,11 @@
 				#report_choose,
 				#report_write,
 				#report_result,
-				#report_already {
+				#report_already,
+				#pre_report_choose,
+				#unfollowchk,
+				#askunfollow,
+				#cantunfollow {
 					position: absolute;
 					top: 50%;
 					left: 50%;
@@ -350,6 +354,13 @@
 				.modal_result {
 					height: 96px;
 				}
+
+				.fa-bars_title {
+					display: block;
+					margin-right: 16px;
+					float: right;
+					line-height: 60px;
+				}
 			</style>
 		</head>
 
@@ -385,11 +396,33 @@
 						빠른 시일 내 검토 후 조치하겠습니다.</div>
 					<div id="cancel_4" class="modal_in cancel">화면으로 돌아가기</div>
 				</div>
+				<div id="askunfollow" style="display: none;">
+					<div class="modal_in modal_nocursor">팔로우를 취소하시겠습니까?</div>
+					<div id="yes_unfollow" class="modal_in">팔로우 취소하기</div>
+					<div id="cancel_7" class="modal_in cancel">화면으로 돌아가기</div>
+				</div>
+				<div id="unfollowchk" style="display: none;">
+					<div class="modal_in modal_nocursor">팔로우가 취소되었습니다.</div>
+					<div id="cancel_6" class="modal_in cancel"
+						onclick="location.href='timeLineList.do?m_id=${myProfile.m_id }'">화면으로 돌아가기</div>
+				</div>
+				<div id="cantunfollow" style="display: none;">
+					<div class="modal_in modal_nocursor">나 자신은 팔로우 취소할 수 없어요!</div>
+					<div id="cancel_7" class="modal_in cancel"
+						onclick="location.href='timeLineList.do?m_id=${myProfile.m_id }'">화면으로 돌아가기</div>
+				</div>
+				<div id="pre_report_choose" style="display: none;">
+					<div id="pre_report_re" class="modal_in toreport" onclick="report('b_id', 'id', 'type');">게시물 신고하기
+					</div>
+					<div id="pre_unfollow" class="modal_in">팔로우 취소</div>
+					<div id="pre_go" class="modal_in">게시물로 이동하기</div>
+					<div id="cancel_5" class="modal_in cancel">취소</div>
+				</div>
 			</div>
 			<header id="header">
 				<div id="header_con">
 					<div id="header_left">
-						<div id="fix_logo" onclick="location.href='timeLineList.do?m_id=aaab'"></div>
+						<div id="fix_logo" onclick="location.href='timeLineList.do?m_id=${myProfile.m_id }'"></div>
 					</div>
 					<input type="text" id="search" placeholder="검색" style="text-align:center;">
 					<div id="header_right">
@@ -431,6 +464,8 @@
 									<div class="timeline_profile">
 										<div class="t_prof_photo">${vo.m_img }</div>
 										<div class="t_prof_id">${vo.m_id }</div>
+										<i class="fas fa-bars fa-bars_title"
+											onclick="pre_report('${vo.t_id}','${vo.m_id }','${vo.t_type}');"></i>
 									</div>
 									<div class="timeline_photo"></div>
 									<div class="timeline_comment_con">
@@ -540,7 +575,7 @@
 				//회원 추천 팔로우
 				$(".followBtn").on('click', function () {
 					var memId = $(".m_id").val();
-					var r_mid = $(this).next().val(); ㄴ
+					var r_mid = $(this).next().val();
 					console.log(memId);
 					console.log(r_mid);
 					$(this).next().parent().remove();
@@ -856,10 +891,57 @@
 				}
 			}
 
+			function pre_report(b_id, id, type) {
+				var memId = $(".m_id").val();
+				$("#report_modal").css("display", "block");
+				$("#report_back").css("display", "block");
+				$("#pre_report_choose").css("display", "block");
+				$(".toreport").on('click', function () {
+					$("#pre_report_choose").css("display", "none");
+					report(b_id, id, type);
+				});
+				$("#pre_unfollow").on('click', function () {
+					$("#pre_report_choose").css("display", "none");
+					if (memId == id) {
+						$("#cantunfollow").css("display", "block");
+						$("#askunfollow").css("display", "none");
+					} else {
+						$("#askunfollow").css("display", "block");
+						$("#yes_unfollow").on('click', function () {
+							$.ajax({
+								url: "${pageContext.request.contextPath}/unfollow.do",
+								method: "POST",
+								data: {
+									m_id: memId,
+									id: id
+								},
+								success: function (data) {
+									console.log("언팔 완료");
+									$("#askunfollow").css("display", "none");
+									$("#unfollowchk").css("display", "block");
+								},
+								error: function (request, status, error) {
+									alert("code:"
+										+ request.status
+										+ "\n"
+										+ "message:"
+										+ request.responseText
+										+ "\n" + "error:"
+										+ error);
+								}
+							});
+						});
+					}
+				});
+			}
+
 			// 댓글 신고 (일반 & 비즈니스 게시판 분리)
 			function report(b_id, id, type) {
 				var memId = $(".m_id").val();
-
+				console.log(b_id);
+				console.log(id);
+				console.log(memId);
+				console.log(type);
 				$.ajax({
 					url: "${pageContext.request.contextPath}/reportchk.do",
 					method: "POST",
@@ -869,10 +951,13 @@
 					},
 					dataType: "json",
 					success: function (hLike) {
-						if (hLike ==0) {
+						if (hLike == 0) {
 							$("#report_modal").css("display", "block");
 							$("#report_back").css("display", "block");
 							$("#report_choose").css("display", "block");
+							$("#report_result").css("display", "none");
+							$("#report_already").css("display", "none");
+
 							if (type == "G") {
 								$(".send_report").on('click', function () {
 									var report_reason = $(this).next().val();
@@ -893,8 +978,11 @@
 											console.log("신고 완료");
 											$("#report_choose").css("display", "none");
 											$("#report_write").css("display", "none");
+											$("#pre_report_choose").css("display", "none");
 											$("#report_result").css("display", "block");
 											$(".send_report").off('click');
+											$(".toreport").off('click');
+
 										},
 										error: function (request, status, error) {
 											alert("code:"
@@ -927,8 +1015,10 @@
 											$("#report_choose").css("display", "none");
 											$("#report_write").css("display", "none");
 											$("#report_result").css("display", "block");
+											$("#pre_report_choose").css("display", "none");
 											$("#etx_write_space").val('');
 											$(".send_report_text").off('click');
+											$(".toreport").off('click');
 										},
 										error: function (request, status, error) {
 											alert("code:"
@@ -961,8 +1051,10 @@
 											console.log("신고 완료");
 											$("#report_choose").css("display", "none");
 											$("#report_write").css("display", "none");
+											$("#pre_report_choose").css("display", "none");
 											$("#report_result").css("display", "block");
 											$(".send_report").off('click');
+											$(".toreport").off('click');
 										},
 										error: function (request, status, error) {
 											alert("code:"
@@ -994,9 +1086,11 @@
 											console.log("신고 완료");
 											$("#report_choose").css("display", "none");
 											$("#report_write").css("display", "none");
+											$("#pre_report_choose").css("display", "none");
 											$("#report_result").css("display", "block");
 											$("#etx_write_space").val('');
 											$(".send_report_text").off('click');
+											$(".toreport").off('click');
 										},
 										error: function (request, status, error) {
 											alert("code:"
@@ -1010,11 +1104,13 @@
 									});
 								});
 							}
-						} else if(hLike >= 1){
+						} else if (hLike >= 1) {
 							$("#report_modal").css("display", "block");
 							$("#report_back").css("display", "block");
 							$("#report_already").css("display", "block");
 							$("#report_choose").css("display", "none");
+							$("#pre_report_choose").css("display", "none");
+
 
 						}
 					},
@@ -1037,8 +1133,12 @@
 				$("#report_back").css("display", "none");
 				$("#report_write").css("display", "none");
 				$("#report_result").css("display", "none");
-				$("#report_choose").css("display", "block");
+				$("#report_choose").css("display", "none");
 				$("#report_already").css("display", "none");
+				$("#pre_report_choose").css("display", "none");
+				$("#unfollowchk").css("display", "none");
+				$("#askunfollow").css("display", "none");
+				$("#cantunfollow").css("display", "none");
 			});
 
 			$("#etc").on('click', function () {
