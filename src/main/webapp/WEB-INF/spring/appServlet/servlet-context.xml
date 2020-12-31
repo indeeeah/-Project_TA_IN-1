@@ -27,15 +27,21 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 2a62efc (revert시도)
 	
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"/>
 		<!-- <beans:property name="configLocation" value="classpath:mybatis-config.xml"/> -->
 =======
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 =======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
+=======
+>>>>>>> parent of 2a62efc (revert시도)
 
 	<beans:bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -44,11 +50,15 @@
 			value="classpath:mybatis-config.xml" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ksm
 =======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 =======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
+=======
+>>>>>>> ksm
+>>>>>>> parent of 2a62efc (revert시도)
 	</beans:bean>
 
 	<beans:bean id="sqlSession"

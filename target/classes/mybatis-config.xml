@@ -4,6 +4,9 @@
 	<settings>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 2a62efc (revert시도)
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
@@ -13,6 +16,7 @@
 
 	<mappers>
 		<mapper resource="mapper/mManage-mapper.xml" />
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
@@ -31,5 +35,7 @@
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
 =======
 >>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
+=======
+>>>>>>> parent of 2a62efc (revert시도)
 	</mappers>
 </configuration>
