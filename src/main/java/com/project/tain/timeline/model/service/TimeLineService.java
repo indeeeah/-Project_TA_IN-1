@@ -18,11 +18,7 @@ public interface TimeLineService {
 
 	List<TimeLine> hiddenShowAllCo(String t_id);
 
-	List<TimeLine> hiddenShowAllCoB(String t_id);
-
 	int hiddenShowLike(TimeLine tl);
-
-	int hiddenShowLikeB(TimeLine tl);
 
 	int pressLike(TimeLine tl);
 
@@ -31,10 +27,6 @@ public interface TimeLineService {
 	int pressUnLike(TimeLine tl);
 
 	int pressUnLikeB(TimeLine tl);
-
-	int hiddenCShowLike(TimeLine tl);
-
-	int hiddenCShowLikeB(TimeLine tl);
 
 	List<TimeLine> recomFollow(String m_id);
 
@@ -61,7 +53,10 @@ public interface TimeLineService {
 	int updateCommentB(TimeLine tl);
 	
 	int countLike(TimeLine tl);
-	int countLikeB(TimeLine tl);
+	
+	int insertReport(TimeLine tl);
+	int insertReportB(TimeLine tl);
+	int reportchk(TimeLine tl);
 
 
 }

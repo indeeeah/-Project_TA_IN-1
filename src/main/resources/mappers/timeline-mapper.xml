@@ -110,34 +110,16 @@ select b.bb_id as b_id, b.m_id as m_id,
 		b.bb_topid
         ) order by b_date desc
 	</select>
-	<select id="hiddenShowAllCoB" parameterType="string"
-		resultType="arrayList" resultMap="resultTimeLine">
-		select b.bb_id b_id, b.m_id m_id,
-		b.bb_info b_content, to_char(b.bb_date,'YYYY-MM-DD HH24:Mi') b_date,
-		a.bb_type b_type, b.bb_topid
-		b_topid, count(r.bb_topid) count
-		from
-		businessboard b
-		left outer join
-		businessboard a on
-		b.bb_topid = a.bb_id
-		left outer join businessboard r
-		on b.bb_id = r.bb_topid
-		where
-		b.bb_topid=#{t_id} group by b.bb_id,
-		b.m_id, b.bb_info, b.bb_date,
-		a.bb_type,
-		b.bb_topid order by b.bb_date desc
-	</select>
+	
 	<!-- Like check -->
 	<select id="hiddenShowLike" resultType="int">
-		select count(*)
+		select sum(count) count from (       
+select count(*) as count
 		from blike
-		where b_id=#{t_id} and m_id=#{m_id}
-	</select>
-	<select id="hiddenShowLikeB" resultType="int">
-		select count(*) from
-		bblike where bb_id=#{t_id} and m_id=#{m_id}
+		where b_id=#{b_id} and m_id=#{m_id}
+union
+select count(*) as from
+		bblike where bb_id=#{b_id} and m_id=#{m_id})
 	</select>
 
 	<!-- press Heart -->
@@ -161,18 +143,6 @@ select b.bb_id as b_id, b.m_id as m_id,
 		delete from bblike
 		where bb_id=#{t_id} and m_id=#{m_id}
 	</delete>
-
-	<!-- Comment Like check -->
-	<select id="hiddenCShowLike" resultType="int">
-		select count(*) from
-		blike
-		where b_id=#{b_id} and m_id=#{m_id}
-	</select>
-	<select id="hiddenCShowLikeB" resultType="int">
-		select count(*) from
-		bblike
-		where bb_id=#{b_id} and m_id=#{m_id}
-	</select>
 
 	<!-- 계정 추천 -->
 	<select id="recomFollow" parameterType="string"
@@ -259,13 +229,33 @@ select b.bb_id as b_id, b.m_id as m_id,
 
 	<!-- 게시글 좋아요 카운트 -->
 	<select id="countLike" resultType="int">
-		select count(b_id) from blike
-		where b_id = #{t_id}
+		select sum(count) count from (       
+select count(*) as count
+		from blike
+		where b_id=#{t_id}
+union
+select count(*) as from
+		bblike where bb_id=#{t_id})
 	</select>
-	<select id="countLikeB" resultType="int">
-		select count(bb_id) from
-		bblike where bb_id = #{t_id}
+	
+	<!-- 신고 -->
+	<select id="reportchk" resultType="int">
+		select sum(count) count from (       
+select count(*) as count
+		from ReportBoard
+		where b_id=#{b_id} and m_id= #{m_id}
+union
+select count(*) as from
+		reportbusinessboard where bb_id=#{b_id} and m_id= #{m_id})
 	</select>
+	<insert id="insertReport" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into reportboard (b_id, m_id, rb_reason) values (#{b_id}, #{m_id}, #{r_reason})
+		</insert>
+		<insert id="insertReportB" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into reportbusinessboard (bb_id, m_id, rbb_reason) values (#{b_id}, #{m_id}, #{r_reason})
+		</insert>
 </mapper>
 
 

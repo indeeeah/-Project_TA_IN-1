@@ -40,16 +40,8 @@ public class TimeLineDao {
 		return sqlSession.selectList("TimeLine.hiddenShowAllCo", t_id);
 	}
 
-	public List<TimeLine> hiddenShowAllCoB(String t_id) {
-		return sqlSession.selectList("TimeLine.hiddenShowAllCoB", t_id);
-	}
-
 	public int hiddenShowLike(TimeLine tl) {
 		return sqlSession.selectOne("TimeLine.hiddenShowLike", tl);
-	}
-
-	public int hiddenShowLikeB(TimeLine tl) {
-		return sqlSession.selectOne("TimeLine.hiddenShowLikeB", tl);
 	}
 
 	public int pressLike(TimeLine tl) {
@@ -66,14 +58,6 @@ public class TimeLineDao {
 
 	public int pressUnLikeB(TimeLine tl) {
 		return sqlSession.delete("TimeLine.pressUnLikeB", tl);
-	}
-
-	public int hiddenCShowLike(TimeLine tl) {
-		return sqlSession.selectOne("TimeLine.hiddenCShowLike", tl);
-	}
-
-	public int hiddenCShowLikeB(TimeLine tl) {
-		return sqlSession.selectOne("TimeLine.hiddenCShowLikeB", tl);
 	}
 
 	public List<TimeLine> recomFollow(String m_id) {
@@ -131,8 +115,16 @@ public class TimeLineDao {
 	public int countLike(TimeLine tl) {
 		return sqlSession.selectOne("TimeLine.countLike", tl);
 	}
-	public int countLikeB(TimeLine tl) {
-		return sqlSession.selectOne("TimeLine.countLikeB", tl);
+	
+	public int insertReport(TimeLine tl) {
+		return sqlSession.insert("TimeLine.insertReport", tl);
 	}
+	public int insertReportB(TimeLine tl) {
+		return sqlSession.insert("TimeLine.insertReportB", tl);
+	}
+	public int reportchk(TimeLine tl) {
+		return sqlSession.selectOne("TimeLine.reportchk", tl);
+	}
+	
 
 }

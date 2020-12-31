@@ -45,18 +45,8 @@ public class TimeLineServiceImpl implements TimeLineService {
 	}
 
 	@Override
-	public List<TimeLine> hiddenShowAllCoB(String t_id) {
-		return tDao.hiddenShowAllCoB(t_id);
-	}
-
-	@Override
 	public int hiddenShowLike(TimeLine tl) {
 		return tDao.hiddenShowLike(tl);
-	}
-
-	@Override
-	public int hiddenShowLikeB(TimeLine tl) {
-		return tDao.hiddenShowLikeB(tl);
 	}
 
 	@Override
@@ -77,16 +67,6 @@ public class TimeLineServiceImpl implements TimeLineService {
 	@Override
 	public int pressUnLikeB(TimeLine tl) {
 		return tDao.pressUnLikeB(tl);
-	}
-
-	@Override
-	public int hiddenCShowLike(TimeLine tl) {
-		return tDao.hiddenCShowLike(tl);
-	}
-
-	@Override
-	public int hiddenCShowLikeB(TimeLine tl) {
-		return tDao.hiddenCShowLikeB(tl);
 	}
 
 	@Override
@@ -138,6 +118,18 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int insertReplyCommentB(TimeLine tl) {
 		return tDao.insertReplyCommentB(tl);
 	}
+	@Override
+	public int insertReport(TimeLine tl) {
+		return tDao.insertReport(tl);
+	}
+	@Override
+	public int insertReportB(TimeLine tl) {
+		return tDao.insertReportB(tl);
+	}
+	@Override
+	public int reportchk(TimeLine tl) {
+		return tDao.reportchk(tl);
+	}
 
 	@Override
 	public int updateComment(TimeLine tl) {
@@ -153,9 +145,4 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int countLike(TimeLine tl) {
 		return tDao.countLike(tl);
 	}
-	@Override
-	public int countLikeB(TimeLine tl) {
-		return tDao.countLikeB(tl);
-	}
-
 }

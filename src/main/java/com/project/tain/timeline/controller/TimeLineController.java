@@ -109,41 +109,9 @@ public class TimeLineController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "hiddenShowAllCoB.do", method = RequestMethod.POST)
-	public String hiddenShowAllCoB(@RequestParam(name = "t_id") String t_id, ModelAndView mv) {
-		JsonObject job = new JsonObject();
-		try {
-			List<TimeLine> hComment = tService.hiddenShowAllCoB(t_id);
-			if (CollectionUtils.isEmpty(hComment) == false) {
-				JsonArray jsonArr = new Gson().toJsonTree(hComment).getAsJsonArray();
-				job.add("hComment", jsonArr);
-			} else {
-				System.out.println("emptyB");
-			}
-			System.out.println("hiddenShowAllCoB success");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return job.toString();
-	}
-
-	@ResponseBody
 	@RequestMapping(value = "hiddenShowLike.do", method = RequestMethod.POST)
 	public int hiddenShowLike(TimeLine tl) {
 		int result = tService.hiddenShowLike(tl);
-		try {
-			System.out.println(result);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
-		return result;
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "hiddenShowLikeB.do", method = RequestMethod.POST)
-	public int hiddenShowLikeB(TimeLine tl) {
-		int result = tService.hiddenShowLikeB(tl);
 		try {
 			System.out.println(result);
 		} catch (Exception e) {
@@ -207,32 +175,6 @@ public class TimeLineController {
 		} finally {
 			return job.toJSONString();
 		}
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "hiddenCShowLike.do", method = RequestMethod.POST)
-	public int hiddenCShowLike(TimeLine tl) {
-		int result = tService.hiddenCShowLike(tl);
-		try {
-			System.out.println(result);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
-		return result;
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "hiddenCShowLikeB.do", method = RequestMethod.POST)
-	public int hiddenCShowLikeB(TimeLine tl) {
-		int result = tService.hiddenCShowLikeB(tl);
-		try {
-			System.out.println(result);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
-		return result;
 	}
 
 	@ResponseBody
@@ -349,10 +291,38 @@ public class TimeLineController {
 		}
 		return result;
 	}
+	
 	@ResponseBody
-	@RequestMapping(value = "countLikeB.do", method = RequestMethod.POST)
-	public int countLikeB(TimeLine tl) {
-		int result = tService.countLikeB(tl);
+	@RequestMapping(value = "insertReport.do", method = RequestMethod.POST)
+	public String insertReport(TimeLine tl) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", tService.insertReport(tl));
+			System.out.println("insert report success");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+	@ResponseBody
+	@RequestMapping(value = "insertReportB.do", method = RequestMethod.POST)
+	public String insertReportB(TimeLine tl) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", tService.insertReportB(tl));
+			System.out.println("insert report success");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "reportchk.do", method = RequestMethod.POST)
+	public int reportchk(TimeLine tl) {
+		int result = tService.reportchk(tl);
 		try {
 			System.out.println(result);
 		} catch (Exception e) {
