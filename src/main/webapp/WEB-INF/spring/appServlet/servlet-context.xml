@@ -22,50 +22,20 @@
 		<beans:property name="url"
 			value="jdbc:oracle:thin:@localhost:1521:xe" />
 		<beans:property name="username" value="TA_IN" />
-		<beans:property name="password" value="1234"/>
+		<beans:property name="password" value="1234" />
 	</beans:bean>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 2a62efc (revert시도)
-	
-	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSource"/>
-		<!-- <beans:property name="configLocation" value="classpath:mybatis-config.xml"/> -->
-=======
-<<<<<<< HEAD
-=======
->>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
-=======
->>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
-=======
->>>>>>> parent of 2a62efc (revert시도)
 
 	<beans:bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource" />
 		<beans:property name="configLocation"
 			value="classpath:mybatis-config.xml" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> ksm
-=======
->>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
-=======
->>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
-=======
->>>>>>> ksm
->>>>>>> parent of 2a62efc (revert시도)
 	</beans:bean>
 
 	<beans:bean id="sqlSession"
 		class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg ref="sqlSessionFactory" />
 	</beans:bean>
-
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
@@ -87,7 +57,5 @@
 
 	<context:component-scan
 		base-package="com.project.tain" />
-
-
 
 </beans:beans>

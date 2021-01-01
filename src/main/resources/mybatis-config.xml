@@ -2,55 +2,16 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	<settings>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 2a62efc (revert시도)
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
 	<typeAliases>
-<<<<<<< HEAD
-
-	</typeAliases>
-
-	<mappers>
-		<mapper resource="mapper/mManage-mapper.xml" />
-=======
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
-		<setting name="jdbcTypeForNull" value="NULL"/>
-	</settings>
-
-	<typeAliases>
-<<<<<<< HEAD
->>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
-=======
->>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
-=======
->>>>>>> parent of 2a62efc (revert시도)
 		<typeAlias type="com.project.tain.timeline.model.domain.TimeLine" alias="TimeLine"/>
-		
 		<typeAlias type="com.project.tain.management.model.domain.MemberManage" alias="MemberManage"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/timeline-mapper.xml"/>
-		
 		<mapper resource="mappers/membermanage-mapper.xml"/>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> ksm
-=======
->>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
-=======
->>>>>>> parent of 306335b (깃 충돌로 파일 다시 업로드)
-=======
->>>>>>> ksm
->>>>>>> parent of 2a62efc (revert시도)
 	</mappers>
 </configuration>
