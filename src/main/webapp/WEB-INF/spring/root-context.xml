@@ -11,8 +11,8 @@
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
 		<property name="defaultEncoding" value="utf-8" />
-		<property name="username" value="rhkrdmswl97@gmail.com" />
-		<property name="password" value="dmswl6160" />
+		<property name="username" value="보내는 email" />
+		<property name="password" value="비밀번호" />
 
 
 		<!-- email 요청시는 SMTP -->
