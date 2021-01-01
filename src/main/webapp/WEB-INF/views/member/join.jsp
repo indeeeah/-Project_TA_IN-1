@@ -11,7 +11,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- 부트스트랩 -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- daum 도로명주소 찾기 api -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <style type="text/css">
@@ -188,52 +188,52 @@ $(document).ready(function() {
 			</div>
 		</div>
 		<div class="col_sm col_md_3">
-			<form action="/member/join.do" method="post" rale="from" id="usercheck"
+			<form action="${pageContext.request.contextPath}/member/join.do" method="post" rale="from" id="usercheck"
 				name="member">
 				<div class="form_group">
 					<label for="id">아이디</label> <input type="text" class="form_control"
-						id="mem_id" placeholder="ID">
+						id="mem_id" name="m_id" placeholder="ID">
 					<div class="check_font" id="id_check"></div>
 				</div>
 				<div class="form_group">
 					<label for="pw">비밀번호</label> <input type="password"
-						class="form_control" id="mem_pw" name="mem_pw"
+						class="form_control" id="mem_pw" name="m_pw"
 						placeholder="PASSWARD">
 					<div class="check_font" id="pw_check"></div>
 				</div>
 				<div class="form_group">
 					<label for="pw2">비밀번호 확인</label> <input type="password"
-						class="form_control" id="mem_pw2" name="mem_pw2"
+						class="form_control" id="mem_pw2" name="m_pw"
 						placeholder="Confirm Password">
 					<div class="check_font" id="pw2_check"></div>
 				</div>
 				<div class="form_group">
 					<label for="mem_name">이름</label> <input type="text"
-						class="form_control" id="mem_name" name="mem_name"
+						class="form_control" id="mem_name" name="m_name"
 						placeholder="Name">
 					<div class="check_font" id="name_check"></div>
 				</div>
 				<div class="form-group">
 					<label for="mem_birth">생년월일</label> <input type="tel"
-						class="form_control" id="mem_birth" name="mem_birth"
+						class="form_control" id="mem_birth" name="m_birth"
 						placeholder="ex) 19990101">
 					<div class="check_font" id="birth_check"></div>
 				</div>
 				<div class="form_group">
 					<label for="mem_email">이메일 주소</label> <input type="email"
-						class="form_control" id="mem_email" name="mem_email"
+						class="form_control" id="mem_email" name="m_email"
 						placeholder="E-mail">
 					<div class="check_font" id="email_check"></div>
 				</div>
 				<div class="form_group">
 					<label for="mem_phone">휴대폰 번호('-'없이 번호만 입력해주세요)</label> <input
-						type="tel" class="form_control" id="mem_phone" name="mem_phone"
+						type="tel" class="form_control" id="mem_phone" name="m_phone"
 						placeholder="Phone Number">
 					<div class="check_font" id="phone_check"></div>
 				</div>
 				<div class="form_group">
 					<input class="form_control" style="width: 40%; display: inline;"
-						placeholder="우편번호" name="mem_oaddress" id="mem_oaddress"
+						placeholder="우편번호" name="m_addr1" id="mem_oaddress"
 						type="text" readonly="readonly">
 					<button type="button" class="btn btn-default"
 						onclick="execPostCode();">
@@ -242,12 +242,12 @@ $(document).ready(function() {
 				</div>
 				<div class="form_group">
 					<input class="form_control" style="top: 5px;" placeholder="도로명 주소"
-						name="mem_address" id="mem_address" type="text"
+						name="m_addr2" id="mem_address" type="text"
 						readonly="readonly" />
 				</div>
 				<div class="form_group">
 					<input class="form_control" placeholder="상세주소"
-						name="mem_detailaddress" id="mem_detailaddress" type="text" />
+						name="m_addr3" id="mem_detailaddress" type="text" />
 				</div>
 				<div class="form_group text_center">
 					<button type="submit" class="btn btn-primary">회원가입</button>

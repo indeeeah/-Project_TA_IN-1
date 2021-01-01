@@ -8,7 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-<script src="resources/jQuery/jquery-3.4.1.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 	<div style="float: none; margin: 0 auto;">

@@ -9,7 +9,7 @@ import com.project.tain.member.model.vo.MemberRegVO;
 public interface MemberRegService {
 	public boolean login(MemberRegVO vo, HttpSession session) throws Exception;
 
-	public void join(MemberRegVO vo) throws Exception;
+	public int join(MemberRegVO vo) throws Exception;
 
 	public List<MemberRegVO> memberFindId(MemberRegVO vo) throws Exception;
 

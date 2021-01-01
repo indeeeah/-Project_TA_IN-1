@@ -52,19 +52,8 @@ public class MemberRegServicelmpl implements MemberRegService{
 	}
 
 	@Override
-	public void join(MemberRegVO vo) throws Exception {
-		vo.setM_id(vo.getM_id());
-		vo.setM_pw(vo.getM_pw());
-		vo.setM_name(vo.getM_name());
-		vo.setM_birth(vo.getM_birth());
-		vo.setM_phone(vo.getM_phone());
-		vo.setM_email(vo.getM_email());
-		vo.setM_language(vo.getM_language());
-		vo.setM_usage(vo.getM_usage());
-		vo.setM_addr1(vo.getM_addr1());
-		vo.setM_addr2(vo.getM_addr2());
-		vo.setM_addr3(vo.getM_addr3());
-	
+	public int join(MemberRegVO vo) throws Exception {
+		return dao.join(vo);
 	}
 
 	@Override

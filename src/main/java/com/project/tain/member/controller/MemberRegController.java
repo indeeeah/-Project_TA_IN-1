@@ -2,6 +2,7 @@ package com.project.tain.member.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -48,8 +49,14 @@ public class MemberRegController {
 
 	// 회원가입 
 	@RequestMapping("/join.do")
-	public String join(@ModelAttribute MemberRegVO vo) throws Exception {
-		service.join(vo);  // db갔다옴
+	public String join(MemberRegVO vo
+			//HttpServletRequest req
+			) throws Exception {
+//		System.out.println(req.getParameter("m_addr1") + ", getM_addr1");
+//		System.out.println(req.getParameter("m_birth") + ", getM_birth");
+		System.out.println(vo.getM_addr1() + ", getM_addr1");
+		System.out.println(vo.getM_birth() + ", getM_birth");
+		//service.join(vo);  // db갔다옴
 		return "redirect:/member/loginPage";
 	}
 	// 아이디 중복 검사
@@ -75,7 +82,8 @@ public class MemberRegController {
 	// 비밀번호 찾기 페이지
 	@RequestMapping("/findPwPage")
 	public String memberFindPwPage() { 
-		return "/member/memberFindPw"; } 
+		return "/member/memberFindPw"; 
+	} 
 	// 아이디 찾기 
 	@RequestMapping("/findId") 
 	public ModelAndView userFindId(@ModelAttribute MemberRegVO vo) throws Exception { 

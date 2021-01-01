@@ -8,10 +8,14 @@
 	<typeAliases>
 		<typeAlias type="com.project.tain.timeline.model.domain.TimeLine" alias="TimeLine"/>
 		<typeAlias type="com.project.tain.management.model.domain.MemberManage" alias="MemberManage"/>
+		<typeAlias
+			type="com.project.tain.member.model.vo.MemberRegVO"
+			alias="MemberRegVO" />
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/timeline-mapper.xml"/>
 		<mapper resource="mappers/membermanage-mapper.xml"/>
+		<mapper resource="mappers/memberReg-mapper.xml" />
 	</mappers>
 </configuration>
