@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.tain.business.board.model.dao.MediaUtils;
-import com.project.tain.business.board.model.dao.UploadFileUtils;
+//import com.project.tain.business.board.model.dao.MediaUtils;
+//import com.project.tain.business.board.model.dao.UploadFileUtils;
 import com.project.tain.business.board.model.domain.BsnBoard;
 import com.project.tain.business.board.model.domain.BsnBoardAdd;
 import com.project.tain.business.board.model.service.BsnBoardService;

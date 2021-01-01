@@ -1,0 +1,97 @@
+package com.project.tain.member.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.project.tain.member.model.service.MemberRegService;
+import com.project.tain.member.model.vo.MemberRegVO;
+
+@Controller
+@RequestMapping("/member")
+public class MemberRegController {
+	@Autowired
+	private MemberRegService service;
+
+	// 로그인 페이지
+	@RequestMapping("/loginPage")
+	public String loginPage() {
+		return "/member/login";
+	}
+
+	// 로그인
+	@RequestMapping("/login")
+	public ModelAndView login(@ModelAttribute MemberRegVO vo, HttpSession session) throws Exception {
+		boolean result = service.login(vo, session);  // 로그인 db 확인
+		ModelAndView mav = new ModelAndView();
+		if (result == true) {
+			mav.setViewName("redirect:/board/list"); // 로그인후 메인페이지 경로 
+		} else {
+			mav.setViewName("/member/login");
+		}
+		return mav;
+	}
+
+	// 회원가입 페이지
+	@RequestMapping("/joinPage")
+	public String JoinPage() {
+		return "/member/join";   // jsp
+	}
+
+	// 회원가입 
+	@RequestMapping("/join.do")
+	public String join(@ModelAttribute MemberRegVO vo) throws Exception {
+		service.join(vo);  // db갔다옴
+		return "redirect:/member/loginPage";
+	}
+	// 아이디 중복 검사
+	@RequestMapping("/idCheck") 
+	public void idCheck(@RequestParam String id, HttpServletResponse res) throws Exception { 
+		int result = 0; 
+		if (service.idcheck(id) != 0) { 
+			result = 1; 
+			} 
+		res.getWriter().print(result); 
+		}
+	// 로그아웃 
+	@RequestMapping("/logout") 
+	public String userLogout(HttpSession session) throws Exception { 
+		service.memberLogout(session); 
+		return "redirect:/member/loginPage"; 
+		}
+	// 아이디 찾기 페이지
+	@RequestMapping("/findIdPage") 
+	public String memberFindIdPage() { 
+		return "/member/memberFindId"; 
+		} 
+	// 비밀번호 찾기 페이지
+	@RequestMapping("/findPwPage")
+	public String memberFindPwPage() { 
+		return "/member/memberFindPw"; } 
+	// 아이디 찾기 
+	@RequestMapping("/findId") 
+	public ModelAndView userFindId(@ModelAttribute MemberRegVO vo) throws Exception { 
+		ModelAndView mav = new ModelAndView(); 
+		List<MemberRegVO> memberList = service.memberFindId(vo); 
+		System.out.println(memberList); 
+		mav.setViewName("/member/memberId"); 
+		mav.addObject("memberFindId", memberList); 
+		return mav; } 
+	// 비밀번호 찾기
+	@RequestMapping("/findPw") 
+	public ModelAndView userFindPw(@ModelAttribute MemberRegVO vo) throws Exception { 
+		ModelAndView mav = new ModelAndView(); 
+		String pw = service.memberFindPw(vo); 
+		mav.setViewName("/member/memberPw"); 
+		mav.addObject("memberFindPw", pw); 
+		return mav; 
+		}
+}
