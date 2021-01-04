@@ -1,4 +1,4 @@
-package com.project.tain.timeline.model.dao;
+package com.project.tain.post.model.dao;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.project.tain.timeline.model.domain.TimeLine;
+import com.project.tain.post.model.domain.TimeLine;
 
 @Repository("tDao")
 public class TimeLineDao {
@@ -128,6 +128,11 @@ public class TimeLineDao {
 	public int unfollow(TimeLine tl) {
 		return sqlSession.delete("TimeLine.unfollow", tl);
 	}
+	
+	public List<TimeLine> autocomplete(String word){
+		return sqlSession.selectList("TimeLine.autocomplete", word);
+	}
+	
 	
 
 }
