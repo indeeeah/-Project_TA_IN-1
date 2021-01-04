@@ -22,17 +22,18 @@ public class BsnBoard implements java.io.Serializable{
 	private String bb_type;
 	private String bb_topid;
 	private Date bb_date;
+	
 //	비즈니스 첨부파일
-//	private String bb_img1;
-//	private String bb_img2;
-//	private String bb_img3;
-//	private String bb_img4;
-//	private String bb_img5;
-//	private String bb_img6;
-//	private String bb_img7;
-//	private String bb_img8;
-//	private String bb_img9;
-//	private String bb_img10;
+	private String bb_img1;
+	private String bb_img2;
+	private String bb_img3;
+	private String bb_img4;
+	private String bb_img5;
+	private String bb_img6;
+	private String bb_img7;
+	private String bb_img8;
+	private String bb_img9;
+	private String bb_img10;
 ////	비즈니스정보
 //	private String b_cate;
 //	private String bm_name;
@@ -106,66 +107,140 @@ public class BsnBoard implements java.io.Serializable{
 		this.bb_date = bb_date;
 	}
 
-	
-//	public BsnBoard(String bb_name, String bb_info, int bb_price, String bb_option1,
-//			String bb_option2, String bb_option3, String bb_option4,
-//			String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5, String bb_img6,
-//			String bb_img7, String bb_img8, String bb_img9, String bb_img10) {
-//		super();
-//		this.bb_name = bb_name;
-//		this.bb_info = bb_info;
-//		this.bb_price = bb_price;
-//		this.bb_option1 = bb_option1;
-//		this.bb_option2 = bb_option2;
-//		this.bb_option3 = bb_option3;
-//		this.bb_option4 = bb_option4;
-//		this.bb_img1 = bb_img1;
-//		this.bb_img2 = bb_img2;
-//		this.bb_img3 = bb_img3;
-//		this.bb_img4 = bb_img4;
-//		this.bb_img5 = bb_img5;
-//		this.bb_img6 = bb_img6;
-//		this.bb_img7 = bb_img7;
-//		this.bb_img8 = bb_img8;
-//		this.bb_img9 = bb_img9;
-//		this.bb_img10 = bb_img10;
-//	}
-//	
-//	public BsnBoard(String bb_id, String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
-//			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date,
-//			String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5, String bb_img6,
-//			String bb_img7, String bb_img8, String bb_img9, String bb_img10) {
-//		super();
-//		this.bb_id = bb_id;
-//		this.m_id = m_id;
-//		this.bb_name = bb_name;
-//		this.bb_info = bb_info;
-//		this.bb_price = bb_price;
-//		this.bb_option1 = bb_option1;
-//		this.bb_option2 = bb_option2;
-//		this.bb_option3 = bb_option3;
-//		this.bb_option4 = bb_option4;
-//		this.bb_type = bb_type;
-//		this.bb_topid = bb_topid;
-//		this.bb_date = bb_date;
-//		this.bb_img1 = bb_img1;
-//		this.bb_img2 = bb_img2;
-//		this.bb_img3 = bb_img3;
-//		this.bb_img4 = bb_img4;
-//		this.bb_img5 = bb_img5;
-//		this.bb_img6 = bb_img6;
-//		this.bb_img7 = bb_img7;
-//		this.bb_img8 = bb_img8;
-//		this.bb_img9 = bb_img9;
-//		this.bb_img10 = bb_img10;
-//	}
+	public BsnBoard(String bb_img1) {
+		super();
+		this.bb_img1 = bb_img1;
+	}
+	public BsnBoard(String bb_img1, String bb_img2) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+	}
+	public BsnBoard(String bb_img1, String bb_img2, String bb_img3) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+	}
+	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+	}
+	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+	}
+	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+	}
+	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6, String bb_img7) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+		this.bb_img7 = bb_img7;
+	}
+	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6, String bb_img7, String bb_img8) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+		this.bb_img7 = bb_img7;
+		this.bb_img8 = bb_img8;
+	}
+	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6, String bb_img7, String bb_img8, String bb_img9) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+		this.bb_img7 = bb_img7;
+		this.bb_img8 = bb_img8;
+		this.bb_img9 = bb_img9;
+	}
+	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6, String bb_img7, String bb_img8, String bb_img9, String bb_img10) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+		this.bb_img7 = bb_img7;
+		this.bb_img8 = bb_img8;
+		this.bb_img9 = bb_img9;
+		this.bb_img10 = bb_img10;
+	}
+	public BsnBoard(String bb_id, String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6, String bb_img7, String bb_img8, String bb_img9, String bb_img10) {
+		super();
+		this.bb_id = bb_id;
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+		this.bb_img7 = bb_img7;
+		this.bb_img8 = bb_img8;
+		this.bb_img9 = bb_img9;
+		this.bb_img10 = bb_img10;
+	}
 
-	@Override
-	public String toString() {
-		return "BsnBoard [bb_id=" + bb_id + ", m_id=" + m_id + ", bb_name=" + bb_name + ", bb_info=" + bb_info
-				+ ", bb_price=" + bb_price + ", bb_option1=" + bb_option1 + ", bb_option2=" + bb_option2
-				+ ", bb_option3=" + bb_option3 + ", bb_option4=" + bb_option4 + ", bb_type=" + bb_type + ", bb_topid="
-				+ bb_topid + ", bb_date=" + bb_date + "]";
+
+	public BsnBoard(String bb_id, String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
+			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date,
+			String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5, String bb_img6,
+			String bb_img7, String bb_img8, String bb_img9, String bb_img10) {
+		super();
+		this.bb_id = bb_id;
+		this.m_id = m_id;
+		this.bb_name = bb_name;
+		this.bb_info = bb_info;
+		this.bb_price = bb_price;
+		this.bb_option1 = bb_option1;
+		this.bb_option2 = bb_option2;
+		this.bb_option3 = bb_option3;
+		this.bb_option4 = bb_option4;
+		this.bb_type = bb_type;
+		this.bb_topid = bb_topid;
+		this.bb_date = bb_date;
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+		this.bb_img7 = bb_img7;
+		this.bb_img8 = bb_img8;
+		this.bb_img9 = bb_img9;
+		this.bb_img10 = bb_img10;
 	}
 
 //	@Override
@@ -173,11 +248,19 @@ public class BsnBoard implements java.io.Serializable{
 //		return "BsnBoard [bb_id=" + bb_id + ", m_id=" + m_id + ", bb_name=" + bb_name + ", bb_info=" + bb_info
 //				+ ", bb_price=" + bb_price + ", bb_option1=" + bb_option1 + ", bb_option2=" + bb_option2
 //				+ ", bb_option3=" + bb_option3 + ", bb_option4=" + bb_option4 + ", bb_type=" + bb_type + ", bb_topid="
-//				+ bb_topid + ", bb_date=" + bb_date + ", bb_img1=" + bb_img1 + ", bb_img2=" + bb_img2 + ", bb_img3="
-//				+ bb_img3 + ", bb_img4=" + bb_img4 + ", bb_img5=" + bb_img5 + ", bb_img6=" + bb_img6 + ", bb_img7="
-//				+ bb_img7 + ", bb_img8=" + bb_img8 + ", bb_img9=" + bb_img9 + ", bb_img10=" + bb_img10 + ", getClass()="
-//				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+//				+ bb_topid + ", bb_date=" + bb_date + "]";
 //	}
+
+	@Override
+	public String toString() {
+		return "BsnBoard [bb_id=" + bb_id + ", m_id=" + m_id + ", bb_name=" + bb_name + ", bb_info=" + bb_info
+				+ ", bb_price=" + bb_price + ", bb_option1=" + bb_option1 + ", bb_option2=" + bb_option2
+				+ ", bb_option3=" + bb_option3 + ", bb_option4=" + bb_option4 + ", bb_type=" + bb_type + ", bb_topid="
+				+ bb_topid + ", bb_date=" + bb_date + ", bb_img1=" + bb_img1 + ", bb_img2=" + bb_img2 + ", bb_img3="
+				+ bb_img3 + ", bb_img4=" + bb_img4 + ", bb_img5=" + bb_img5 + ", bb_img6=" + bb_img6 + ", bb_img7="
+				+ bb_img7 + ", bb_img8=" + bb_img8 + ", bb_img9=" + bb_img9 + ", bb_img10=" + bb_img10 + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
 
 
 	public String getBb_id() {
@@ -300,104 +383,104 @@ public class BsnBoard implements java.io.Serializable{
 	}
 
 
-//	public String getBb_img1() {
-//		return bb_img1;
-//	}
-//
-//
-//	public void setBb_img1(String bb_img1) {
-//		this.bb_img1 = bb_img1;
-//	}
-//
-//
-//	public String getBb_img2() {
-//		return bb_img2;
-//	}
-//
-//
-//	public void setBb_img2(String bb_img2) {
-//		this.bb_img2 = bb_img2;
-//	}
-//
-//
-//	public String getBb_img3() {
-//		return bb_img3;
-//	}
-//
-//
-//	public void setBb_img3(String bb_img3) {
-//		this.bb_img3 = bb_img3;
-//	}
-//
-//
-//	public String getBb_img4() {
-//		return bb_img4;
-//	}
-//
-//
-//	public void setBb_img4(String bb_img4) {
-//		this.bb_img4 = bb_img4;
-//	}
-//
-//
-//	public String getBb_img5() {
-//		return bb_img5;
-//	}
-//
-//
-//	public void setBb_img5(String bb_img5) {
-//		this.bb_img5 = bb_img5;
-//	}
-//
-//
-//	public String getBb_img6() {
-//		return bb_img6;
-//	}
-//
-//
-//	public void setBb_img6(String bb_img6) {
-//		this.bb_img6 = bb_img6;
-//	}
-//
-//
-//	public String getBb_img7() {
-//		return bb_img7;
-//	}
-//
-//
-//	public void setBb_img7(String bb_img7) {
-//		this.bb_img7 = bb_img7;
-//	}
-//
-//
-//	public String getBb_img8() {
-//		return bb_img8;
-//	}
-//
-//
-//	public void setBb_img8(String bb_img8) {
-//		this.bb_img8 = bb_img8;
-//	}
-//
-//
-//	public String getBb_img9() {
-//		return bb_img9;
-//	}
-//
-//
-//	public void setBb_img9(String bb_img9) {
-//		this.bb_img9 = bb_img9;
-//	}
-//
-//
-//	public String getBb_img10() {
-//		return bb_img10;
-//	}
-//
-//
-//	public void setBb_img10(String bb_img10) {
-//		this.bb_img10 = bb_img10;
-//	}
+	public String getBb_img1() {
+		return bb_img1;
+	}
+
+
+	public void setBb_img1(String bb_img1) {
+		this.bb_img1 = bb_img1;
+	}
+
+
+	public String getBb_img2() {
+		return bb_img2;
+	}
+
+
+	public void setBb_img2(String bb_img2) {
+		this.bb_img2 = bb_img2;
+	}
+
+
+	public String getBb_img3() {
+		return bb_img3;
+	}
+
+
+	public void setBb_img3(String bb_img3) {
+		this.bb_img3 = bb_img3;
+	}
+
+
+	public String getBb_img4() {
+		return bb_img4;
+	}
+
+
+	public void setBb_img4(String bb_img4) {
+		this.bb_img4 = bb_img4;
+	}
+
+
+	public String getBb_img5() {
+		return bb_img5;
+	}
+
+
+	public void setBb_img5(String bb_img5) {
+		this.bb_img5 = bb_img5;
+	}
+
+
+	public String getBb_img6() {
+		return bb_img6;
+	}
+
+
+	public void setBb_img6(String bb_img6) {
+		this.bb_img6 = bb_img6;
+	}
+
+
+	public String getBb_img7() {
+		return bb_img7;
+	}
+
+
+	public void setBb_img7(String bb_img7) {
+		this.bb_img7 = bb_img7;
+	}
+
+
+	public String getBb_img8() {
+		return bb_img8;
+	}
+
+
+	public void setBb_img8(String bb_img8) {
+		this.bb_img8 = bb_img8;
+	}
+
+
+	public String getBb_img9() {
+		return bb_img9;
+	}
+
+
+	public void setBb_img9(String bb_img9) {
+		this.bb_img9 = bb_img9;
+	}
+
+
+	public String getBb_img10() {
+		return bb_img10;
+	}
+
+
+	public void setBb_img10(String bb_img10) {
+		this.bb_img10 = bb_img10;
+	}
 
 
 	public static long getSerialversionuid() {

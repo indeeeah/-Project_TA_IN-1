@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +46,14 @@ public class BsnBoardController {
 	
 	@RequestMapping(value="/bbList.do", method = RequestMethod.GET)
 	public ModelAndView bbListService(ModelAndView mv) {
+		// 로그인 대체
+		String m_id= "aaaa";
 		try {
 			mv.addObject("listCount", bbService.listCount());
-			mv.addObject("list", bbService.selectList());
+			// 게시물 텍스트정보
+			mv.addObject("list", bbService.selectListAll());
+			mv.addObject("bbDetail", bbService.selectOne(m_id));
+			mv.addObject("listImg", bbService.selectOneImg(m_id));
 			mv.setViewName("business/bsnMain");
 		} catch(Exception e) {
 			mv.addObject("errorMsg", e.getMessage());
@@ -74,14 +80,18 @@ public class BsnBoardController {
 	}
 	
 	@RequestMapping(value="/bbInsert.do", method = RequestMethod.POST)
-	public ModelAndView bsnBoardInsert(BsnBoard bb,
+	public ModelAndView bsnBoardInsert(BsnBoard bb, BsnBoardAdd bba,
+			@RequestParam(name="imgfile", required=false) MultipartFile report,
 			HttpServletRequest request, ModelAndView mv) {
 		try {
+			if(report!=null && !report.equals("")) {
+				saveFile(report, request);
+			}
+			bba.setBb_img1(report.getOriginalFilename());
 			System.out.println("aaa1");
-			bbService.insertBsnBoard(bb);
-			System.out.println("aaa2");
+			bbService.insertBsnBoard(bb, bba);
+			System.out.println("인서트완료");
 			mv.setViewName("redirect:bbList.do");
-			System.out.println("aaa5");
 		} catch(Exception e) {
 			mv.addObject("errorMsg", e.getMessage());
 			mv.setViewName("errorPage");
@@ -108,6 +118,73 @@ public class BsnBoardController {
 //		}
 //		return mv;
 //	}
+	
+	@RequestMapping(value="/bbRenew.do", method = RequestMethod.GET)
+	public ModelAndView boardDetail(@RequestParam(name="bb_id") String bb_id, ModelAndView mv) {
+		try {
+			mv.addObject("bbRenew", bbService.selectOne(bb_id));
+			mv.setViewName("business/bbRenew");
+		} catch(Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}	
+		return mv;
+	}
+	
+	@RequestMapping(value="/bbUpdate.do", method = RequestMethod.POST)
+	public ModelAndView boardUpdate(BsnBoard bb, BsnBoardAdd bba, 
+			@RequestParam(name="upfile") MultipartFile report, HttpServletRequest request, ModelAndView mv) {
+		try {
+			if(report!=null && !report.getOriginalFilename().equals("")) {
+				removeFile(bba.getBb_img1(), request);
+				saveFile(report, request);
+				bba.setBb_img1(report.getOriginalFilename());
+			}
+			bbService.updateBsnBoard(bb, bba);
+			if(bbService.updateBsnBoard(bb, bba)!=0) {
+				mv.addObject("board_num", bbService.updateBsnBoard(bb, bba));
+//				mv.addObject("board_num", b.getBoard_num());	// 선생님 추천 코드
+				mv.setViewName("redirect:bbList.do");
+			}
+		} catch(Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+		return mv;
+	}
+	
+	// 게시물 삭제
+	@RequestMapping(value="/bbDelete.do")
+	public ModelAndView boardDelete(@RequestParam(name="bb_id") String bb_id, 
+			HttpServletRequest request, ModelAndView mv) {
+		try {
+			BsnBoardAdd bba = bbService.selectOneImg(bb_id);
+			removeFile(bba.getBb_img1(), request);
+			
+			bbService.deleteBsnBoard(bb_id);
+			
+			mv.setViewName("redirect:bbList.do");
+		} catch(Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/bbImg.do", method = RequestMethod.POST)
+	public String bsnBoardImg(BsnBoardAdd bba,
+			@RequestParam(name="bb_id", required=false) String bb_id,
+			HttpServletRequest request, ModelAndView mv) {
+		JSONObject job = new JSONObject();
+		try {
+			
+		} catch(Exception e) {
+			mv.addObject("errorMsg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+		return job.toJSONString();
+	}
 	
 	private void saveFile(MultipartFile report, HttpServletRequest request) {
 
