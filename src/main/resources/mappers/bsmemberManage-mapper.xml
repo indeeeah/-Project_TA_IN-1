@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="BsMemberManage">
+	<resultMap type="BsMemberManage" id="resultBsMmanage">
+		<!-- property에는 vo의 필드명, column에는 db table의 컬럼명 -->
+		<id property="m_id" column="m_id" />
+		<result property="bm_cate" column="bm_cate" />
+		<result property="bm_name" column="bm_name" />
+		<result property="bm_addr" column="bm_addr" />
+		<result property="bm_url" column="bm_url" />
+		<result property="bm_account" column="bm_account" />
+		<result property="bm_qr" column="bm_qr" />
+		<result property="bm_intro" column="bm_intro" />
+		<result property="bm_phone" column="bm_phone" />
+		<result property="bm_approval" column="bm_approval" />
+	</resultMap>
+
+	<!-- 전체 회원 수 조회 -->
+	<select id="listCount" resultType="int">
+		select count(*) from BusinessMember
+	</select>
+	
+	<!-- 전체 회원 조회 -->
+	<select id="selectList" resultType="arraylist"
+		resultMap="resultBsMmanage">
+		select * from BusinessMember
+	</select>
+	
+	<!-- 회원 단일 조회 -->
+	<select id="selectOne" parameterType="string" resultType="BsMemberManage">
+		select * from BusinessMember
+		where m_id = #{m_id}
+	</select>
+	
+	<!-- 검색한 회원 조회 -->
+	<select id="searchList" parameterType="string"
+		resultType="arraylist" resultMap="resultBsMmanage">
+		SELECT * FROM BusinessMember
+		WHERE m_id LIKE '%'|| #{keyword} ||'%'
+		OR bm_name LIKE '%'|| #{keyword} ||'%'
+		ORDER BY m_id DESC
+	</select>
+	
+	<!-- 회원 수정 -->
+	<update id="updateBsMmanage" parameterType="BsMemberManage" flushCache="true"
+		statementType="PREPARED">
+		UPDATE BusinessMember SET bm_approval = #{bm_approval}
+		WHERE m_id = #{m_id}
+	</update>
+	
+	<!-- 회원 삭제 -->
+	<delete id="deleteBsMmanage" parameterType="string"
+		flushCache="true" statementType="PREPARED">
+		DELETE FROM BusinessMember WHERE m_id = #{m_id}
+	</delete>
+</mapper>
+
+

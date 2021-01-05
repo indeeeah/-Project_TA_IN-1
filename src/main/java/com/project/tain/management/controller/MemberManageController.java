@@ -32,7 +32,7 @@ public class MemberManageController {
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
 				mv.addObject("listCount", listCount);
-				mv.setViewName("management/membermanage/membermanagelist");
+				mv.setViewName("management/membermanagelist");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
@@ -48,7 +48,7 @@ public class MemberManageController {
 			// 한 페이지당 출력할 목록 갯수
 			mv.addObject("MemberManage", mmService.selectOne(m_id));
 			mv.addObject("currentPage", currentPage);
-			mv.setViewName("management/membermanage/memberDetail");
+			mv.setViewName("management/memberDetail");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
@@ -60,7 +60,7 @@ public class MemberManageController {
 	public ModelAndView memberDetail(@RequestParam(name = "m_id") String m_id, ModelAndView mv) {
 		try {
 			mv.addObject("MemberManage", mmService.selectOne(m_id));
-			mv.setViewName("management/membermanage/memberRenew");
+			mv.setViewName("management/memberRenew");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
