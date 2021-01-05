@@ -37,76 +37,8 @@
         </body>
         <script type="text/javascript">
             $(function() {
-
-                // 자동 검색어 완성
-                // var availableTags = [
-                // 	"#ActionScript",
-                // 	"#AppleScript",
-                // 	"#Asp",
-                // 	"#BASIC",
-                // 	"#C",
-                // 	"#C++",
-                // 	"#Clojure",
-                // 	"#COBOL",
-                // 	"#ColdFusion",
-                // 	"#Erlang",
-                // 	"#Fortran",
-                // 	"#Groovy",
-                // 	"#Haskell",
-                // 	"#Java",
-                // 	"JavaScript",
-                // 	"#Lisp",
-                // 	"#Perl",
-                // 	"#PHP",
-                // 	"#Python",
-                // 	"#Ruby",
-                // 	"#Scala",
-                // 	"Scheme"
-                // ];
-
-                // $("#search").autocomplete({
-                // 	source:availableTags
-                // });
-                /* $("#search").autocomplete({
-                    source: function (request, response) {
-                        $.ajax({
-                            url: "${pageContext.request.contextPath}/autocomplete.do",
-                            type: "post",
-                            dataType: "json",
-                            data: request,
-                            success: function (data) {
-                                var result = data;
-                                response(result);
-                            },
-                            error: function (request, status, error) {
-                                alert("code:"
-                                    + request.status
-                                    + "\n"
-                                    + "message:"
-                                    + request.responseText
-                                    + "\n" + "error:"
-                                    + error);
-                            }
-                        });
-                    } */
-
-                /* $("#search").autocomplete({
-                    serviceUrl:"${pageContext.request.contextPath}/autocomplete.do",
-                    paramName : "word",
-                    delimiter:",",
-                    transformResult:function(response){
-                        return{
-                            suggestions: $.map($.parseJSON(response), function(item) {
-    
-                                  return { value: item.word, data: item.categoryId };
-                               })
-                        };
-                    }
-                }); */
-
-
                 $("#search").autocomplete({
-                    source: function(request, response) { // 자동완성대
+                    source: function(request, response) { 
                         var request = $("#search").val();
                         console.log(request);
                         $.ajax({
@@ -123,50 +55,17 @@
                                 console.log(value);
                                 var value = new Array();
                                 for (var i = 0; i < data.length; i++) {
-                                	value.push(data[i].word)
+                                    value.push(data[i].word)
                                 }
                                 response(
-                                        $.map(value, function(item) {    //json[i] 번째 에 있는게 item 임.
-                                            return {
-                                                //label: item+"label",    //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
-                                                value: item,    //그냥 사용자 설정값?
-                                                test : item+"test"
-                                /* response(
-                                    data = $.map(data, function(value, key) { //json[i] 번째 에 있는게 item 임.
-                                        /* return value;
-                                        console.log('key' + key[3]);
-                                        console.log('value' + value);
-                                        var word = data.word;
-                                        console.log('word' + word); */
-                                //   return {
-                                //     //label: value + "label", //UI 에서 보여지는 글자, 실제 검색어랑 비교 대상
-                                //     value: value, //그냥 사용자 설정값?
-                                //     test: value + "test"
-
-                                 }  
-
-                                 })
-
-
-
-                                /* var result = autoword;
-                                console.log(result);
-                                console.log(response);
-                                // for (var i = 0; i < result.autoword.length; i++) {
-                                // 	var resultword = result.autoword[i].word;
-                                // 	console.log(resultword);
-                                // }
-                                // console.log(autoword);
-                                $.each(result, function(key, value) {
-                                    console.log('key:'+ key[2]);
-                                    console.log('value:'+ value[3]);
-                                    console.log('word:'+ value.word); */
-
-
-                                /* }); */
-
-
-                                  ) 
+                                    $.map(value, function(item) { 
+                                        return {
+                                            //label: item+"label",    
+                                            value: item,
+                                            test: item + "test"
+                                        }
+                                    })
+                                )
                             },
                             error: function(request, status, error) {
                                 alert("code:" +
@@ -179,36 +78,8 @@
                             }
                         });
                     }
-
-
                 });
-
-
             });
-
-            // function forautocomp() {
-            // 		$.ajax({
-            // 			url: "${pageContext.request.contextPath}/autocomplete.do",
-            // 			type: "post",
-            // 			dataType: "json",
-            // 			success: function (autoword) {
-            // 				var result = autoword;
-            // 				console.log(result);
-            // 				var resultword = result.autoword.word;
-            // 				console.log(resultword);
-            // 			},
-            // 			error: function (request, status, error) {
-            // 				alert("code:"
-            // 					+ request.status
-            // 					+ "\n"
-            // 					+ "message:"
-            // 					+ request.responseText
-            // 					+ "\n" + "error:"
-            // 					+ error);
-            // 			}
-            // 		});
-            // 	}
-
             $("#fix_logo").on('click', function() {
                 var memId = $(".m_id").val();
                 var url = "${pageContext.request.contextPath}/timeLine?m_id=" + memId;
@@ -217,11 +88,17 @@
 
             $("#search").on("keypress", function(event) {
                 if (window.event.keyCode == 13) {
-
+                    var at = "@";
                     var memId = $(".m_id").val();
                     var hashtag = $("#search").val();
-                    var url = "${pageContext.request.contextPath}/explore?hashtag=" + hashtag + "&&m_id=" + memId;
-                    $(location).attr('href', url);
+                    if (hashtag.startsWith(at)) {
+
+                    } else {
+                        hashtag = hashtag.replace(/[#]/g, '')
+                        var url = "${pageContext.request.contextPath}/explore?hashtag=" + hashtag + "&&m_id=" + memId;
+                        $(location).attr('href', url);
+
+                    }
                 }
             });
         </script>

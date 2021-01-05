@@ -319,46 +319,6 @@ public class TimeLineController {
 		}
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(value = "autocomplete.do", method = RequestMethod.POST)
-//	public String autocomplete(@RequestParam(name = "word") String word, ModelAndView mv) {
-//		JsonObject job = new JsonObject();
-//		try {
-//			List<TimeLine> autoComplete = tService.autocomplete(word);
-//			if (CollectionUtils.isEmpty(autoComplete) == false) {
-//				JsonArray jsonArr = new Gson().toJsonTree(autoComplete).getAsJsonArray();
-//				job.add("autoComplete", jsonArr);
-//			} else {
-//				System.out.println("empty");
-//			}
-//			System.out.println("autoComplete success");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return job.toString();
-//	}
-	
-//	@ResponseBody
-//	@RequestMapping(value = "autocomplete.do", method = RequestMethod.GET)
-//	public String getTags(@RequestParam String word) {
-//		return autoSearch(word);
-//	}
-//	
-//	private String autoSearch(String word) {
-//		List<TimeLine> result = new ArrayList<TimeLine>();
-//		List<TimeLine> data = tService.autocomplete(word);
-//		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-//		String j = null;
-//		
-//		for(TimeLine tag : data) {
-//			if(tag.getWord().contains(word)) {
-//				result.add(tag);
-//				j=gson.toJson(result);
-//			}
-//		}
-//		return j;
-//	}
-	
 	@ResponseBody
 	@RequestMapping(value = "autocomplete.do", method = RequestMethod.POST)
 	public Object autocomplete(@RequestParam(name = "word") String word, ModelAndView mv) {
@@ -367,24 +327,4 @@ public class TimeLineController {
 			
 		return autoword;
 	}
-//	@ResponseBody
-//	@RequestMapping(value = "autocomplete.do", method = RequestMethod.POST)
-//	public String autocomplete(@RequestParam(name = "word") String word, ModelAndView mv) {
-//		JsonObject job = new JsonObject();
-//		try {
-//			List<TimeLine> autoword = tService.autocomplete(word);
-//			
-//			if (CollectionUtils.isEmpty(autoword) == false) {
-//				JsonArray jsonArr = new Gson().toJsonTree(autoword).getAsJsonArray();
-//				job.add("autoword", jsonArr);
-//				System.out.println(job);
-//			} else {
-//				System.out.println("empty");
-//			}
-//			System.out.println("autocomplete success");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return job.toString();
-//	}
 }

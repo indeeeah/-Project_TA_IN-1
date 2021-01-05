@@ -5,4 +5,26 @@
 		<id property="m_id" column="m_id" />
 		<result property="m_img" column="m_img" />
 	</resultMap>
+	
+	<!-- 스토리 인서트 -->
+	<insert id="storyInsert" flushCache="true" statementType="PREPARED">
+	insert into story (m_id, s_img, s_type) values(#{m_id}, #{s_img}, 'G')
+	</insert>
+	
+	<!-- 계정 종류 확인 -->
+	<select id="chkmember" parameterType="string" resultType="Story">
+	select m_usage from member where m_id=#{m_id}
+	</select>
+	
+	<!-- 내 스토리 보기 -->
+	<select id="showMyStory" parameterType="string" resultType="Story">
+	select m_id , s_img from story where m_id=#{m_id}
+	</select>
+	
+	<!-- 스토리 삭제 -->
+	<delete id="deleteStory" parameterType="Story"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		delete from story
+		where m_id= #{m_id} and s_img = #{s_img}
+	</delete>
 </mapper>
