@@ -112,12 +112,12 @@ ${listCount }
 					</c:url>
 					<a href="${bbdel }">[글 삭제]</a>
 					<a href="${bbupview }">[수정 페이지로 이동]</a>
-					
 			  		</div>
 			  		<div id="mdBoard">
 			  			<div id="mdContent">
 			  			${v.bb_name} <br>
-			  			${v.bb_info} <br>
+			  			<span name="info" class="${v.bb_id}">${v.bb_info}</span> <br>
+			  			<button class="translate" value="${v.bb_id }">번역하기</button>
 			  			</div>
 			  			<div id="mdReply">
 			  			</div>
@@ -149,7 +149,7 @@ ${listCount }
 			</div>
 			</c:forEach>
 		</c:if>
-	</div>
+		</div>
 	<input type="button"  value="글쓰기" onclick="window.location='bbWriteForm.do'">
 	</div>
 <%-- <c:forEach items="${listImg }" var="v">
@@ -166,31 +166,6 @@ ${v.bb_option3}
 ${v.bb_option4}
 </c:forEach> --%>
 <script>
-// Get the modal
-var modal = document.getElementsByClassName("modal");
-
-/* // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-} */
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
 
 $('.myBtn').on('click', function() {
 	var a = $(this).val();
@@ -207,6 +182,59 @@ $('.close').on('click', function() {
 	var x = document.getElementById(a);
 	console.log(x);
     x.style.display="none";
+});
+
+// When the user clicks anywhere outside of the modal, close it
+/* $(window).on('click', function() {
+	var modal1 = document.getElementsByClassName('modal');
+	console.log(modal1);
+	var modal2 = document.getElementById('modal1');
+	console.log(modal2);
+  if (event.target == modal1) {
+    modal1.style.display = "none";
+  }
+}); */
+
+$(".translate").on("click", function(){
+	var a = $(this).val();
+	console.log(a);
+	var b = document.getElementsByClassName(a);
+	console.log(b);
+	var  source = $(b).html();
+	console.log(source);
+	$.ajax({
+		url : "translate",
+		type : "post",
+		dataType : "json",
+		data : { source : source },
+		success:function(resp){
+			if(resp.result=="ko"){
+				$.ajax({
+					url : "TranslateProcKo",
+					type : "post",
+					dataType : "json",
+					data : { source : source },
+					success:function(resp){
+						$(b).html(resp.result);
+					}
+				});
+			} else if(resp.result=="en"){
+				$.ajax({
+					url : "TranslateProcEn",
+					type : "post",
+					dataType : "json",
+					data : { source : source },
+					success:function(resp){
+						$(b).html(resp.result);
+					}
+				});
+			} else {
+				$(b).html("오류");
+			}
+		}, error : function(err1){
+			$(b).html("오류가 발생하였습니다.");
+		}
+	});
 });
 </script>
 </body>

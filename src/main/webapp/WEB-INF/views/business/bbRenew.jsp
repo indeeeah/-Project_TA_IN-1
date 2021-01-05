@@ -101,7 +101,7 @@
 				(임시)아이디:<input type="text" name="m_id" value="${bbRenew.m_id}">
 			</div>
 		</div>
-		<input type="submit" value="등록하기">&nbsp;&nbsp;
+		<input type="submit" value="수정하기">&nbsp;&nbsp;
 		<c:url var="bbList" value="bbList.do">
 			<c:param name="page" value="1"/>
 		</c:url>
