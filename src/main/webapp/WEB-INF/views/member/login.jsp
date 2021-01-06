@@ -21,10 +21,10 @@
 			<form action="${pageContext.request.contextPath}/member/login"
 				name="LoginForm" method="post">
 				<div class="form_group">
-				<input type ="text" name="m_id" class="form_control" placeholder="���̵�">
+				<input type ="text" name="m_id" class="form_control" placeholder="아이디">
 				</div>
 				<div class="form_group">
-				<input type="password" name="m_pw" class="form_control" placeholder="��й�ȣ">
+				<input type="password" name="m_pw" class="form_control" placeholder="비밀번호">
 				</div>
 				<div class="row">
 				<div class="login">
@@ -38,7 +38,7 @@
 				</div>
 			</form>
 			<div class="find_link">
-			<a href="#">��й�ȣ ã��</a> <a href="#">���̵� ã��</a>
+			<a href="#">비밀번호 찾기</a> <a href="#">아이디 찾기</a>
 			</div>
 		</div>
 	</div>

@@ -50,7 +50,7 @@ public class MemberRegController {
 
 	// 회원가입 
 	@RequestMapping(value="/join.do", method = RequestMethod.POST)
-	public String join(MemberRegVO vo,   // 실지 못함.
+	public String join(MemberRegVO vo,   // 실지 못함
 			HttpServletRequest req,
 			ModelAndView mv) {
 		System.out.println(req.getParameter("m_addr1") + ", getM_addr1");

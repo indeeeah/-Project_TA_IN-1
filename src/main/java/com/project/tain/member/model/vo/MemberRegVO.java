@@ -18,7 +18,7 @@ public class MemberRegVO {
 	private String m_addr2;
 	private String m_addr3;
 	private String m_phone;
-	@DateTimeFormat(pattern = "YYYYMMDD")
+	@DateTimeFormat(pattern = "YYYYMMDD") 
 	private Date m_birth;
 	private String m_img;
 	private char m_usage;
