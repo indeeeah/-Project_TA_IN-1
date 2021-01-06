@@ -31,8 +31,8 @@ public class MemberRegDao{
 		return sqlSession.selectOne(NameSpace + ".memberFindPw", vo); 
 	}
 
-	public int idcheck(String id) throws Exception {
-		return sqlSession.selectOne(NameSpace + ".idcheck", id);
+	public int idcheck(String m_id) throws Exception {
+		return sqlSession.selectOne(NameSpace + ".idcheck", m_id);
 	}
 
 

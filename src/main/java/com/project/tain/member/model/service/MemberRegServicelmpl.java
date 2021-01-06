@@ -67,8 +67,8 @@ public class MemberRegServicelmpl implements MemberRegService{
 	}
 
 	@Override
-	public int idcheck(String id) throws Exception {
-		return dao.idcheck(id);
+	public int idcheck(String m_id) throws Exception {
+		return dao.idcheck(m_id);
 	}
 	@Override 
 	public void memberLogout(HttpSession session) throws Exception { 

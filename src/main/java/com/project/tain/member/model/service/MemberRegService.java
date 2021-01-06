@@ -15,7 +15,7 @@ public interface MemberRegService {
 
 	public String memberFindPw(MemberRegVO vo) throws Exception;
 
-	public int idcheck(String id) throws Exception;
+	public int idcheck(String m_id) throws Exception;
 
 	void memberLogout(HttpSession session) throws Exception;
 }

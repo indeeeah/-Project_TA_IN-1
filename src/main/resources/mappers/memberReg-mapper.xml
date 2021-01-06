@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MemberRegMapper">
-	
-	<insert id="join" parameterType="MemberRegVO">
+	<resultMap type="MemberRegVO" id="resultMemberReg">
+		<id property="m_id" column="m_id"></id>
+	</resultMap>
+
+	<insert id="join" parameterType="MemberRegVO" flushCache="true"
+		statementType="PREPARED" timeout="20">
 		insert into member (m_id, m_pw,
-		m_name, m_birth, m_email, m_phone, m_usage, m_status, m_activity, m_lastact,  m_language, m_addr1,
-		m_addr2, m_addr3)
+		m_name, m_birth, m_email, m_phone, m_usage, m_status, m_activity,
+		m_language, m_addr1, m_addr2, m_addr3)
 		values(
 		#{m_id},
 		#{m_pw},
@@ -16,7 +20,6 @@
 		#{m_usage},
 		#{m_status},
 		#{m_activity},
-		sysdate,
 		#{m_language},
 		#{m_addr1},
 		#{m_addr2},
@@ -37,8 +40,9 @@
 		where
 		m_id=#{id} and m_email=#{m_email}
 	</select>
-	<select id="idcheck" resultType="_int">
-		select count(*) from member where
+	<select id="idcheck" resultType="int">
+		select count(*) from member
+		where
 		m_id=#{m_id}
 	</select>
 </mapper>
