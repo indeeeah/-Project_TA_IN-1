@@ -1,12 +1,9 @@
-package com.project.tain.timeline.controller;
+package com.project.tain.post.controller;
 
-import java.io.PrintWriter;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.project.tain.timeline.model.domain.TimeLine;
-import com.project.tain.timeline.model.service.TimeLineService;
+import com.project.tain.post.model.domain.TimeLine;
+import com.project.tain.post.model.service.TimeLineService;
 
 @Controller
 public class TimeLineController {
@@ -34,24 +31,17 @@ public class TimeLineController {
 		return "test";
 	}
 	
-	@RequestMapping(value="/writeStory.do", method = RequestMethod.GET)
-	public String writeStory(ModelAndView mv) {
-		return "writeStory";
-	}
-	@RequestMapping(value="/stories.do", method = RequestMethod.GET)
-	public String stories(ModelAndView mv) {
-		return "stories";
-	}
+	
 
 	// TimeLine Page
-	@RequestMapping(value = "/timeLineList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/timeLine", method = RequestMethod.GET)
 	public ModelAndView TimeLineList(@RequestParam(name = "m_id", required = false) String m_id, ModelAndView mv) {
 		try {
 			mv.addObject("myProfile", tService.showMyProf(m_id));
 			mv.addObject("storyList", tService.showStoryList(m_id));
 			mv.addObject("timeLineList", tService.showTimeLineList(m_id));
 			mv.addObject("recomFollow", tService.recomFollow(m_id));
-			mv.setViewName("timeline");
+			mv.setViewName("post/timeline");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
@@ -67,7 +57,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertTimeLineComment(tl));
-			System.out.println("insert comment success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -81,7 +70,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertTimeLineCommentB(tl));
-			System.out.println("insert B comment success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -101,7 +89,6 @@ public class TimeLineController {
 			} else {
 				System.out.println("empty");
 			}
-			System.out.println("hiddenShowAllCo success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -127,7 +114,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.pressLike(tl));
-			System.out.println("press like success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -141,7 +127,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.pressLikeB(tl));
-			System.out.println("press like success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -155,7 +140,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.pressUnLike(tl));
-			System.out.println("press unlike success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -169,7 +153,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.pressUnLikeB(tl));
-			System.out.println("press unlike success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -183,7 +166,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertFollow(tl));
-			System.out.println("insert follow success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -199,7 +181,6 @@ public class TimeLineController {
 			job.put("ack", tService.deleteCommentl(b_id));
 			job.put("ack2", tService.deleteCommentt(b_id));
 			job.put("ack3", tService.deleteComment(b_id));
-			System.out.println("delete comment success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -215,7 +196,6 @@ public class TimeLineController {
 			job.put("ack", tService.deleteCommentlB(b_id));
 			job.put("ack2", tService.deleteCommenttB(b_id));
 			job.put("ack3", tService.deleteCommentB(b_id));
-			System.out.println("delete comment success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -229,7 +209,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertReplyComment(tl));
-			System.out.println("insert comment success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -243,7 +222,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertReplyCommentB(tl));
-			System.out.println("insert comment success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -257,7 +235,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.updateComment(tl));
-			System.out.println("insert comment success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -271,7 +248,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.updateCommentB(tl));
-			System.out.println("insert comment success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -298,7 +274,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertReport(tl));
-			System.out.println("insert report success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -311,7 +286,6 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertReportB(tl));
-			System.out.println("insert report success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -338,11 +312,19 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.unfollow(tl));
-			System.out.println("insert report success");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			return job.toJSONString();
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "autocomplete.do", method = RequestMethod.POST)
+	public Object autocomplete(@RequestParam(name = "word") String word, ModelAndView mv) {
+			List<TimeLine> autoword = new ArrayList<TimeLine>();
+			autoword = tService.autocomplete(word);
+			
+		return autoword;
 	}
 }

@@ -1,12 +1,12 @@
-package com.project.tain.timeline.model.service;
+package com.project.tain.post.model.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.tain.timeline.model.dao.TimeLineDao;
-import com.project.tain.timeline.model.domain.TimeLine;
+import com.project.tain.post.model.dao.TimeLineDao;
+import com.project.tain.post.model.domain.TimeLine;
 
 @Service("tService")
 public class TimeLineServiceImpl implements TimeLineService {
@@ -118,14 +118,17 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int insertReplyCommentB(TimeLine tl) {
 		return tDao.insertReplyCommentB(tl);
 	}
+
 	@Override
 	public int insertReport(TimeLine tl) {
 		return tDao.insertReport(tl);
 	}
+
 	@Override
 	public int insertReportB(TimeLine tl) {
 		return tDao.insertReportB(tl);
 	}
+
 	@Override
 	public int reportchk(TimeLine tl) {
 		return tDao.reportchk(tl);
@@ -145,8 +148,14 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int countLike(TimeLine tl) {
 		return tDao.countLike(tl);
 	}
+
 	@Override
 	public int unfollow(TimeLine tl) {
 		return tDao.unfollow(tl);
+	}
+
+	@Override
+	public List<TimeLine> autocomplete(String word) {
+		return tDao.autocomplete(word);
 	}
 }

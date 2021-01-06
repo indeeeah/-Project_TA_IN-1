@@ -10,12 +10,32 @@
 <script src="http://code.jquery.com/jquery-3.4.0.js"></script> 
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
-
+.content{
+	width:1000px;
+	margin:0 auto;
+}
+.bbList{
+	display:flex;
+	flex-wrap:wrap;
+	
+}
+.selectBb{
+	margin-bottom:20px;
+	margin-right:20px;
+}
+.listImg{
+	width:300px;
+	height:300px;
+}
+#mdImg img{
+	max-width:500px;
+	max-height:500px;
+}
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 10; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
@@ -33,6 +53,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  overflow: scroll;
 }
 
 /* The Close Button */
@@ -53,58 +74,98 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </head>
 <body>
 ${listCount }
-	<div>
+	<div id="content" class="content">
 		<c:if test="${empty list }">
 			게시물이 없습니다.
 		</c:if>
+		<div id="bbList" class="bbList">
 		<c:if test="${not empty list }">
 			<c:forEach items="${list }" var="v">
-			<div>
-				<div>${v.bb_id }${v.m_id }</div>
+				<div id="selectBb" class="selectBb">
+					<button type="button" id="bb" class="myBtn" value="${v.bb_id }" style="border:none; cursor:pointer">
+						<img class="listImg" src="${pageContext.request.contextPath}/resources/uploadFiles/${v.bb_img1 }">
+					</button>
+					<!-- <label for="bb" style="cursor:pointer"> -->
+						
+					</label>
+				</div>
+
+			
+			<!-- The Modal -->
+			<div id="${v.bb_id }" class="modal">
+			    <button type="button" class="close" value="${v.bb_id }">&times;</button>
+			
+			  <!-- Modal content -->
+			  <div id="modalContent" class="modal-content">
+			  	<div id="mdImg">
+					<img src="${pageContext.request.contextPath}/resources/uploadFiles/${v.bb_img1 }"/>
+			  	</div>
+			  	<div id="mdText">
+			  		<div id="mdInfo">
+			  		${v.bb_id}
+			  		${v.m_id}
+			  		<c:url var="bbupview" value="bbRenew.do">
+						<c:param name="bb_id" value="${v.bb_id }"/>
+					</c:url>
+			  		<c:url var="bbdel" value="bbDelete.do">
+						<c:param name="bb_id" value="${v.bb_id }"/>
+					</c:url>
+					<a href="${bbdel }">[글 삭제]</a>
+					<a href="${bbupview }">[수정 페이지로 이동]</a>
+			  		</div>
+			  		<div id="mdBoard">
+			  			<div id="mdContent">
+			  			${v.bb_name} <br>
+			  			<span name="info" class="${v.bb_id}">${v.bb_info}</span> <br>
+			  			<button class="translate" value="${v.bb_id }">번역하기</button>
+			  			</div>
+			  			<div id="mdReply">
+			  			</div>
+			  		</div>
+			  		<div id="mdMore">
+			  		</div>
+			  		<div id="mdWrite">
+			  		</div>
+			  		
+			  	</div>
+			  	<div id="mdFooter">
+			  		<div id="mdPrice">
+			  		가격 : ${v.bb_price}
+			  		</div>
+			  		<div id="mdOption">
+						<select name="option" id="option">
+						  <option value="${v.bb_option1}">${v.bb_option1}</option>
+						  <option value="${v.bb_option2}">${v.bb_option2}</option>
+						  <option value="${v.bb_option3}">${v.bb_option3}</option>
+						  <option value="${v.bb_option4}">${v.bb_option4}</option>
+						</select>
+			  		</div>
+			  		<div id="mdCart">
+			  			<button type="button" class="cart" onclick="location.href='#';">장바구니</button>
+			  		</div>
+			  	</div>
+			  </div>
+			
 			</div>
 			</c:forEach>
 		</c:if>
-	</div>
+		</div>
 	<input type="button"  value="글쓰기" onclick="window.location='bbWriteForm.do'">
-<!-- Trigger/Open The Modal -->
-<button id="myBtn">Open Modal</button>
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
-  </div>
-
-</div>
+	</div>
+<%-- <c:forEach items="${listImg }" var="v">
+${v.bb_img1 }
+</c:forEach>
+<c:forEach items="${bbDetail }" var="v">
+${v.m_id }
+${v.bb_name}
+${v.bb_info}
+${v.bb_price}
+${v.bb_option1}
+${v.bb_option2}
+${v.bb_option3}
+${v.bb_option4}
+</c:forEach> --%>
 <script>
-// Get the modal
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
 
 $('.myBtn').on('click', function() {
 	var a = $(this).val();
@@ -112,8 +173,8 @@ $('.myBtn').on('click', function() {
 	var x = document.getElementById(a);
 	console.log(x);
     x.style.display="block";
-    
 });
+
 $('.close').on('click', function() {
 	/* $('#modal').hide(); */
 	var a = $(this).val();
@@ -121,6 +182,59 @@ $('.close').on('click', function() {
 	var x = document.getElementById(a);
 	console.log(x);
     x.style.display="none";
+});
+
+// When the user clicks anywhere outside of the modal, close it
+/* $(window).on('click', function() {
+	var modal1 = document.getElementsByClassName('modal');
+	console.log(modal1);
+	var modal2 = document.getElementById('modal1');
+	console.log(modal2);
+  if (event.target == modal1) {
+    modal1.style.display = "none";
+  }
+}); */
+
+$(".translate").on("click", function(){
+	var a = $(this).val();
+	console.log(a);
+	var b = document.getElementsByClassName(a);
+	console.log(b);
+	var  source = $(b).html();
+	console.log(source);
+	$.ajax({
+		url : "translate",
+		type : "post",
+		dataType : "json",
+		data : { source : source },
+		success:function(resp){
+			if(resp.result=="ko"){
+				$.ajax({
+					url : "TranslateProcKo",
+					type : "post",
+					dataType : "json",
+					data : { source : source },
+					success:function(resp){
+						$(b).html(resp.result);
+					}
+				});
+			} else if(resp.result=="en"){
+				$.ajax({
+					url : "TranslateProcEn",
+					type : "post",
+					dataType : "json",
+					data : { source : source },
+					success:function(resp){
+						$(b).html(resp.result);
+					}
+				});
+			} else {
+				$(b).html("오류");
+			}
+		}, error : function(err1){
+			$(b).html("오류가 발생하였습니다.");
+		}
+	});
 });
 </script>
 </body>

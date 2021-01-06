@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="timeLineList.do?m_id=aaab">이동!</a>
+	<a href="timeLine?m_id=aaab">이동!</a>
 </body>
 </html>

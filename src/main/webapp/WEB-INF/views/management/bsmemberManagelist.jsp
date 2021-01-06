@@ -25,31 +25,30 @@
 </script>
 </head>
 <body>
-<form method="post" name="listForm" action="membermanagelist.do">
+<form method="get" name="listForm" action="bsmemberManagelist.do">
 		<input type="hidden" name="page" value="${currentPage}"> 
 		<input type="text" name="keyword"> <input type="submit" value="검색">
 </form><br>
 
 <table border="1">
 	<tr>
-		<td align="right" colspan="8" style="border: none;"><input type="button" value="전체목록"
-				onclick="window.location='membermanagelist.do'"> </td>
+		<td align="right" colspan="7" style="border: none;"><input type="button" value="전체목록"
+				onclick="window.location='bsmemberManagelist.do'"> </td>
 	</tr>
 	
 	<tr>
 		<td align="center" width="60">번호</td>
 		<td align="center" width="100">아이디</td>
-		<td align="center" width="100">이름</td>
-		<td align="center" width="100">이메일</td>
-		<td align="center" width="100">전화번호</td>
-		<td align="center" width="100">가입일자</td>
-		<td align="center" width="100">계정용도</td>
-		<td align="center" width="100">계정상태</td>
+		<td align="center" width="200">회사이름</td>
+		<td align="center" width="300">회사주소</td>
+		<td align="center" width="100">회사전화</td>
+		<td align="center" width="200">계좌번호</td>
+		<td align="center" width="100">승인여부</td>
 	</tr>
 	<!-- 글이 없을 경우 -->
 		<c:if test="${listCount eq 0}">
 			<tr>
-				<td colspan="8" align="center"><br> <br> 가입된 회원이 
+				<td colspan="7" align="center"><br> <br> 가입된 회원이 
 					없습니다.<br> <br></td>
 			</tr>
 		</c:if>	
@@ -58,23 +57,22 @@
 				<tr>
 					<td align="center">${status.count}</td>
 					<td align="left"><a
-						href="memberDetail.do?m_id=${vo.m_id}&page=${currentPage}">
+						href="bsmemberDetail.do?m_id=${vo.m_id}&page=${currentPage}">
 							&nbsp;${vo.m_id} </a></td>
-					<td align="center">${vo.m_name}</td>
-					<td align="center">${vo.m_email}</td>
-					<td align="center">${vo.m_phone}</td>
-					<td align="center">${vo.m_joindate}</td>
-					<td align="center">${vo.m_usage}</td>
-					<td align="center">${vo.m_status}</td>
+					<td align="center">${vo.bm_name}</td>
+					<td align="center">${vo.bm_addr}</td>
+					<td align="center">${vo.bm_phone}</td>
+					<td align="center">${vo.bm_account}</td>
+					<td align="center">${vo.bm_approval}</td>
 				</tr>
 			</c:forEach>
 		</c:if>	
 		<!-- 앞 페이지 번호 처리 -->
 		<tr align="center" height="20">
-			<td colspan="8"><c:if test="${currentPage <= 1}">
+			<td colspan="7"><c:if test="${currentPage <= 1}">
 				 [이전]&nbsp;
 				 </c:if> <c:if test="${currentPage > 1}">
-					<c:url var="blistST" value="membermanagelist.do">
+					<c:url var="blistST" value="bsmemberManagelist.do">
 						<c:param name="page" value="${currentPage-1}" />
 					</c:url>
 					<a href="${blistST}">[이전]</a>
@@ -84,7 +82,7 @@
 						<font color="black" size="4"><b>[${p}]</b></font>
 					</c:if>
 					<c:if test="${p ne currentPage}">
-						<c:url var="blistchk" value="membermanagelist.do">
+						<c:url var="blistchk" value="bsmemberManagelist.do">
 							<c:param name="page" value="${p}" />
 						</c:url>
 						<a href="${blistchk}">${p}</a>
@@ -92,7 +90,7 @@
 				</c:forEach> <c:if test="${currentPage >= maxPage}">
 					 [다음]
 					 </c:if> <c:if test="${currentPage < maxPage}">
-					<c:url var="blistEND" value="membermanagelist.do">
+					<c:url var="blistEND" value="bsmemberManagelist.do">
 						<c:param name="page" value="${currentPage+1}" />
 					</c:url>
 					<a href="${blistEND}">[다음]</a>

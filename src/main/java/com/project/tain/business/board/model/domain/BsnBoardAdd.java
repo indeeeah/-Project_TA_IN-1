@@ -19,6 +19,96 @@ public class BsnBoardAdd {
 	
 	public BsnBoardAdd() {}
 
+	public BsnBoardAdd(String bb_img1) {
+		super();
+		this.bb_img1 = bb_img1;
+	}
+	public BsnBoardAdd(String bb_img1, String bb_img2) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+	}
+	public BsnBoardAdd(String bb_img1, String bb_img2, String bb_img3) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+	}
+	public BsnBoardAdd(String bb_img1, String bb_img2, String bb_img3, String bb_img4) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+	}
+	public BsnBoardAdd(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+	}
+	public BsnBoardAdd(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+	}
+	public BsnBoardAdd(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6, String bb_img7) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+		this.bb_img7 = bb_img7;
+	}
+	public BsnBoardAdd(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6, String bb_img7, String bb_img8) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+		this.bb_img7 = bb_img7;
+		this.bb_img8 = bb_img8;
+	}
+	public BsnBoardAdd(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6, String bb_img7, String bb_img8, String bb_img9) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+		this.bb_img7 = bb_img7;
+		this.bb_img8 = bb_img8;
+		this.bb_img9 = bb_img9;
+	}
+	public BsnBoardAdd(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
+			String bb_img6, String bb_img7, String bb_img8, String bb_img9, String bb_img10) {
+		super();
+		this.bb_img1 = bb_img1;
+		this.bb_img2 = bb_img2;
+		this.bb_img3 = bb_img3;
+		this.bb_img4 = bb_img4;
+		this.bb_img5 = bb_img5;
+		this.bb_img6 = bb_img6;
+		this.bb_img7 = bb_img7;
+		this.bb_img8 = bb_img8;
+		this.bb_img9 = bb_img9;
+		this.bb_img10 = bb_img10;
+	}
 	public BsnBoardAdd(String bb_id, String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
 			String bb_img6, String bb_img7, String bb_img8, String bb_img9, String bb_img10) {
 		super();

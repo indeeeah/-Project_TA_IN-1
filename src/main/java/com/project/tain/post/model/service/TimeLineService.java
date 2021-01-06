@@ -1,8 +1,8 @@
-package com.project.tain.timeline.model.service;
+package com.project.tain.post.model.service;
 
 import java.util.List;
 
-import com.project.tain.timeline.model.domain.TimeLine;
+import com.project.tain.post.model.domain.TimeLine;
 
 public interface TimeLineService {
 
@@ -51,13 +51,17 @@ public interface TimeLineService {
 	int updateComment(TimeLine tl);
 
 	int updateCommentB(TimeLine tl);
-	
+
 	int countLike(TimeLine tl);
-	
+
 	int insertReport(TimeLine tl);
+
 	int insertReportB(TimeLine tl);
+
 	int reportchk(TimeLine tl);
+
 	int unfollow(TimeLine tl);
 
+	List<TimeLine> autocomplete(String word);
 
 }

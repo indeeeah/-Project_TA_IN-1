@@ -1,6 +1,4 @@
-package com.project.tain.timeline.model.domain;
-
-import java.sql.Date;
+package com.project.tain.post.model.domain;
 
 import org.springframework.stereotype.Component;
 
@@ -33,6 +31,7 @@ public class TimeLine implements java.io.Serializable{
 	private int count;
 	private String r_reason;
 	private String id;
+	private String word;
 	
 	public TimeLine() {
 		
@@ -286,6 +285,14 @@ public class TimeLine implements java.io.Serializable{
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getWord() {
+		return word;
+	}
+
+	public void setWord(String word) {
+		this.word = word;
 	}
 	
 	
