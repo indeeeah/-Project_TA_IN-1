@@ -22,6 +22,7 @@ public class SearchListController {
 			@RequestParam(name = "hashtag") String hashtag, ModelAndView mv) {
 		try {
 			mv.addObject("myProfile", tService.showMyProf(m_id));
+			mv.addObject("chkfollow", tService.chkfollow(m_id));
 			mv.addObject("searchResult", sService.showHashTag(hashtag));
 			mv.setViewName("post/searchList");
 		} catch (Exception e) {

@@ -38,6 +38,7 @@ public class TimeLineController {
 	public ModelAndView TimeLineList(@RequestParam(name = "m_id", required = false) String m_id, ModelAndView mv) {
 		try {
 			mv.addObject("myProfile", tService.showMyProf(m_id));
+			mv.addObject("chkfollow", tService.chkfollow(m_id));
 			mv.addObject("storyList", tService.showStoryList(m_id));
 			mv.addObject("timeLineList", tService.showTimeLineList(m_id));
 			mv.addObject("recomFollow", tService.recomFollow(m_id));

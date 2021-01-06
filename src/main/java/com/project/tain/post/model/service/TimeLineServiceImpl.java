@@ -163,4 +163,9 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public List<TimeLine> showHashTag(String t_id) {
 		return tDao.showHashTag(t_id);
 	}
+
+	@Override
+	public List<TimeLine> chkfollow(String m_id) {
+		return tDao.chkfollow(m_id);
+	}
 }

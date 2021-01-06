@@ -30,6 +30,7 @@ public class StoryController {
 	public ModelAndView writeStory(@RequestParam(name = "m_id", required = false) String m_id, ModelAndView mv) {
 		try {
 			mv.addObject("myProfile", tService.showMyProf(m_id));
+			mv.addObject("chkfollow", tService.chkfollow(m_id));
 			mv.addObject("myStory", sService.showMyStory(m_id));
 			mv.setViewName("post/writeStory");
 		} catch (Exception e) {

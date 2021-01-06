@@ -18,8 +18,8 @@
                     display: flex;
                     justify-content: center;
                     position: fixed;
+                    z-index: 5;
                     border-bottom: 0.5px solid black;
-                    background-color: white;
                 }
                 
                 #big_con {
@@ -28,19 +28,41 @@
                 
                 #header_con {
                     height: 54px;
+                    background-color: white;
                 }
                 
                 #alert_con {
-                    width: 500px;
+                    width: 100%;
+                    justify-content: center;
+                    position: fixed;
                     top: 54px;
-                    float: right;
                     z-index: 5;
+                    display: none;
+                }
+                
+                #alert_con>div {
+                    width: 1000px;
                 }
                 
                 #chk_my_follower {
-                    width: 100%;
+                    float: right;
+                    width: 500px;
                     height: 65px;
                     background-color: crimson;
+                    overflow:auto;
+                }
+                
+                .fo_con {
+                    float: left;
+                    margin-left:16px;
+                    margin-top: 11px;
+                }
+                
+                .fo_photo {
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 50%;
+                    background-color: black;
                 }
             </style>
         </head>
@@ -58,17 +80,32 @@
                             <div id="header_icon_con">
                                 <div id="fix_home" class="fix_icon"><i class="fas fa-home"></i></div>
                                 <div id="fix_message" class="fix_icon"><i class="fas fa-comment-dots"></i></div>
-                                <div id="fix_alert" class="fix_icon"><i class="fas fa-bell"></i></div>
+                                <div id="fix_alert" class="fix_icon"><label for="alert" style="cursor:pointer;"><i
+                                            class="fas fa-bell"></i></label></div>
+                                <input type="checkbox" id="alert" style="display:none;">
                                 <div id="fix_bag" class="fix_icon"><i class="fas fa-shopping-bag"></i></div>
                                 <div id="fix_profile" class="fix_icon"><i class="fas fa-user-circle"></i></div>
                             </div>
                         </div>
                     </div>
-                    <div id="alert_con">
-                        <div id="chk_my_follower"></div>
-                    </div>
                 </div>
             </header>
+            <div id="alert_con">
+                <div>
+                    <div id="chk_my_follower">
+                        <c:if test="${not empty chkfollow }">
+                            <c:forEach var="vo" items="${chkfollow }" varStatus="s">
+                                <div class="fo_con">
+                                    <div class="fo_photo fo_photo${vo.id }">${vo.m_img }</div>
+                                    <%-- <div class="fo_id">${vo.id }</div> --%>
+                                    <input type="hidden" class="fo_act fo_act${vo.id }" onclick="showfollowchk('${vo.id }', '${vo.m_activity }');" value="${vo.m_activity }">
+                                </div>
+                            </c:forEach>
+                        </c:if>
+                    </div>
+                    <!-- 아래에 실시간 알림 -->
+                </div>
+            </div>
             <div id="forheader"></div>
         </body>
         <script type="text/javascript">
@@ -115,6 +152,17 @@
                         });
                     }
                 });
+
+                $("#alert").change(function() {
+                    if ($("#alert").is(":checked")) {
+                        $("#alert_con").css("display", "flex");
+                    } else {
+                        $("#alert_con").css("display", "none");
+                    }
+                });
+                
+                $(".fo_act").trigger('click');
+                
             });
             $("#fix_logo").on('click', function() {
                 var memId = $(".m_id").val();
@@ -142,6 +190,12 @@
                     }
                 }
             });
+            
+            function showfollowchk(id, m_activity){
+            	if(m_activity==1){
+            		$(".fo_photo" + id).css("background-color", "blue");
+            	}
+            }
         </script>
 
         </html>

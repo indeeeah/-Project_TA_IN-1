@@ -136,5 +136,8 @@ public class TimeLineDao {
 	public List<TimeLine> showHashTag(String t_id) {
 		return sqlSession.selectList("TimeLine.showHashTag", t_id);
 	}
+	public List<TimeLine> chkfollow(String m_id) {
+		return sqlSession.selectList("TimeLine.chkfollow", m_id);
+	}
 
 }
