@@ -109,13 +109,6 @@ body {
     float: right;
 }
 
-#right_small_con {
-    width: 320px;
-    background-color: darkorange;
-    float: right;
-    margin-left: 20px;
-    position: fixed;
-}
 
 .timeline_photo {
     width: 100%;
@@ -422,20 +415,6 @@ body {
     cursor: pointer;
 }
 
-.comment_lcon {
-    background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
-    background-size: 12px;
-}
-
-.comment_lcon:hover {
-    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
-}
-
-.comment_unlcon {
-    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
-    background-size: 12px;
-    display: none;
-}
 
 #follow_recom_con {
     height: 200px;

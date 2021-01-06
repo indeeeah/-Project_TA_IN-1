@@ -12,24 +12,60 @@
             <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
             <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
             <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
+            <style>
+                #header {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    position: fixed;
+                    border-bottom: 0.5px solid black;
+                    background-color: white;
+                }
+                
+                #big_con {
+                    width: 1000px;
+                }
+                
+                #header_con {
+                    height: 54px;
+                }
+                
+                #alert_con {
+                    width: 500px;
+                    top: 54px;
+                    float: right;
+                    z-index: 5;
+                }
+                
+                #chk_my_follower {
+                    width: 100%;
+                    height: 65px;
+                    background-color: crimson;
+                }
+            </style>
         </head>
 
         <body>
             <header id="header">
-                <div id="header_con">
-                    <div id="header_left">
-                        <div id="fix_logo"></div>
-                        <input type="hidden" name="m_id" class="m_id" value="${myProfile.m_id }">
-                    </div>
-                    <input type="text" id="search" placeholder="검색" style="text-align: center;">
-                    <div id="header_right">
-                        <div id="header_icon_con">
-                            <div id="fix_home" class="fix_icon"></div>
-                            <div id="fix_message" class="fix_icon"></div>
-                            <div id="fix_alert" class="fix_icon"></div>
-                            <div id="fix_bag" class="fix_icon"></div>
-                            <div id="fix_profile" class="fix_icon"></div>
+                <div id="big_con">
+                    <div id="header_con">
+                        <div id="header_left">
+                            <div id="fix_logo"></div>
+                            <input type="hidden" name="m_id" class="m_id" value="${myProfile.m_id }">
                         </div>
+                        <input type="text" id="search" placeholder="검색" style="text-align: center;">
+                        <div id="header_right">
+                            <div id="header_icon_con">
+                                <div id="fix_home" class="fix_icon"><i class="fas fa-home"></i></div>
+                                <div id="fix_message" class="fix_icon"><i class="fas fa-comment-dots"></i></div>
+                                <div id="fix_alert" class="fix_icon"><i class="fas fa-bell"></i></div>
+                                <div id="fix_bag" class="fix_icon"><i class="fas fa-shopping-bag"></i></div>
+                                <div id="fix_profile" class="fix_icon"><i class="fas fa-user-circle"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="alert_con">
+                        <div id="chk_my_follower"></div>
                     </div>
                 </div>
             </header>
@@ -38,7 +74,7 @@
         <script type="text/javascript">
             $(function() {
                 $("#search").autocomplete({
-                    source: function(request, response) { 
+                    source: function(request, response) {
                         var request = $("#search").val();
                         console.log(request);
                         $.ajax({
@@ -58,7 +94,7 @@
                                     value.push(data[i].word)
                                 }
                                 response(
-                                    $.map(value, function(item) { 
+                                    $.map(value, function(item) {
                                         return {
                                             //label: item+"label",    
                                             value: item,
@@ -81,6 +117,11 @@
                 });
             });
             $("#fix_logo").on('click', function() {
+                var memId = $(".m_id").val();
+                var url = "${pageContext.request.contextPath}/timeLine?m_id=" + memId;
+                $(location).attr('href', url);
+            });
+            $("#fix_home").on('click', function() {
                 var memId = $(".m_id").val();
                 var url = "${pageContext.request.contextPath}/timeLine?m_id=" + memId;
                 $(location).attr('href', url);

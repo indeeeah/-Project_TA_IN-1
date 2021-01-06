@@ -327,4 +327,22 @@ public class TimeLineController {
 			
 		return autoword;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "showHashTag.do", method = RequestMethod.POST)
+	public String showHashTag(@RequestParam(name = "t_id") String t_id, ModelAndView mv) {
+		JsonObject job = new JsonObject();
+		try {
+			List<TimeLine> hashtag = tService.showHashTag(t_id);
+			if (CollectionUtils.isEmpty(hashtag) == false) {
+				JsonArray jsonArr = new Gson().toJsonTree(hashtag).getAsJsonArray();
+				job.add("hashtag", jsonArr);
+			} else {
+				System.out.println("empty");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return job.toString();
+	}
 }

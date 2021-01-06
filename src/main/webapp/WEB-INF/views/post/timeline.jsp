@@ -27,6 +27,50 @@
                     background-size: 24px;
                     display: none;
                 }
+                
+                .comment_lcon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
+                    background-size: 12px;
+                }
+                
+                .comment_lcon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
+                }
+                
+                .comment_unlcon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
+                    background-size: 12px;
+                    display: none;
+                }
+                
+                .timeline_photo {
+                    width: 660px;
+                    height: 660px;
+                    position: relative;
+                    overflow: hidden;
+                    z-index: -1;
+                }
+                
+                .timephoto {
+                    display: flex;
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                }
+                
+                .show_t_img {
+                    width: 660px;
+                    height: 660px;
+                }
+                
+                #right_small_con {
+                    width: 320px;
+                    background-color: darkorange;
+                    float: right;
+                    margin-left: 20px;
+                    position: fixed;
+                    z_index: -1;
+                }
             </style>
         </head>
 
@@ -107,10 +151,17 @@
                                 <div class="timeline_contents">
                                     <div class="timeline_profile">
                                         <div class="t_prof_photo">${vo.m_img }</div>
-                                        <div class="t_prof_id">${vo.m_id }</div>
+                                        <div class="t_prof_id">${vo.m_id }
+                                        </div>
                                         <i class="fas fa-bars fa-bars_title" onclick="pre_report('${vo.t_id}','${vo.m_id }','${vo.t_type}');"></i>
                                     </div>
-                                    <div class="timeline_photo"></div>
+                                    <div class="timeline_photo timeline_photo${vo.t_id }">
+                                        <ul class="photo${vo.t_id } timephoto">
+                                        </ul>
+                                        <input type="hidden" class="hidden_showphoto" onclick="showphoto('${vo.t_id }','${vo.t_img }');">
+                                    </div>
+                                    <button type="button" class="slide_btn_prev slide_btn_prev${vo.t_id }">Prev</button>
+                                    <button type="button" class="slide_btn_next slide_btn_next${vo.t_id }">Next</button>
                                     <div class="timeline_comment_con">
                                         <div class="inner_comment_con">
                                             <div class="timeline_icon_con">
@@ -126,6 +177,9 @@
                                                     <div class="post_id">${vo.m_id }</div>
                                                     <div class="post_content">${vo.t_content }</div>
                                                 </div>
+                                                <ul class="hashtag${vo.t_id }">
+                                                </ul>
+                                                <input type="hidden" class="hidden_showhashtag" onclick="showhashtag('${vo.t_id }');">
                                                 <div class="com_detail comment_more" onclick="showAllCo('${vo.t_id }');">댓글 전체 보기</div>
                                                 <div class="com_detail cm1 cm1${vo.t_id }">
                                                     <div class="commentRId post_id commentRIdf"></div>
@@ -204,7 +258,11 @@
                 // 게시물 좋아요 수 카운트 trigger 호출
                 $(".countLike_trigger").trigger('click');
 
+                // 게시물 이미지 보기 trigger 호출
+                $(".hidden_showphoto").trigger('click');
 
+                // 해쉬태그 보기 trigger 호출
+                $(".hidden_showhashtag").trigger('click');
                 //회원 추천 팔로우
                 $(".followBtn").on('click', function() {
                     var memId = $(".m_id").val();
@@ -238,13 +296,89 @@
                 });
 
             });
-            
-            $(".my_story_add").on('click', function(){
+
+            // 스토리 업로드 페이지로 이동
+            $(".my_story_add").on('click', function() {
                 var memId = $(".m_id").val();
-                var url = "${pageContext.request.contextPath}/writeStory?m_id=" + memId;   
+                var url = "${pageContext.request.contextPath}/writeStory?m_id=" + memId;
                 $(location).attr('href', url);
-            	});
-            
+            });
+
+            // 게시물 이미지 보기 trigger
+            function showphoto(t_id, t_img) {
+                t_img = t_img.split("|");
+                for (i = 0; i < t_img.length; i++) {
+                    $(".photo" + t_id).append('<li class="show_t_img show_t_img' + t_id + '" >' + t_img[i] + '</li>');
+                }
+
+                // 게시물 슬라이드
+                var slideWrapper = document.querySelector('.timeline_photo' + t_id);
+                var slides = document.querySelectorAll('.show_t_img' + t_id);
+                var totalSlides = slides.length;
+                var sliderWidth = slideWrapper.clientWidth;
+                var slideIndex = 0;
+                var slider = document.querySelector('.photo' + t_id);
+                slider.style.width = sliderWidth * totalSlides + 'px';
+
+                function showSlides(n) {
+                    slideIndex = n;
+                    if (slideIndex == -1) {
+                        slideIndex = totalSlides - 1;
+                    } else if (slideIndex === totalSlides) {
+                        slideIndex = 0;
+                    }
+                    slider.style.left = -(sliderWidth * slideIndex) + 'px';
+                }
+
+                function plusSlides(n) {
+                    showSlides(slideIndex += n);
+                }
+
+                function currentSlide(n) {
+                    showSlides(slideIndex = n);
+                }
+                var nextBtn = document.querySelector('.slide_btn_next' + t_id);
+                var prevBtn = document.querySelector('.slide_btn_prev' + t_id);
+                nextBtn.addEventListener('click', function() {
+                    plusSlides(1);
+                });
+                prevBtn.addEventListener('click', function() {
+                    plusSlides(-1);
+                });
+            }
+
+            // 해쉬태그 보기 trigger
+            function showhashtag(t_id) {
+                var memId = $(".m_id").val();
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/showHashTag.do",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        t_id: t_id
+                    },
+                    success: function(hashtag) {
+                        var count = hashtag;
+                        if (count.hashtag == undefined) {} else {
+                            for (var i = 0; i < count.hashtag.length; i++) {
+                                var hashtag1 = count.hashtag[i].h_tag;
+
+                                // 해쉬태그 append - hashtag
+                                $(".hashtag" + t_id).append('<a href="${pageContext.request.contextPath}/explore?hashtag=' + hashtag1 + '&&m_id=' + memId + '">#' + hashtag1 + '</a>');
+                            }
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
 
             // 댓글 등록 (일반 & 비즈니스 게시판 분리)
             // 처음 등록된 댓글에는 좋아요 & 변환 불가
@@ -1664,8 +1798,8 @@
                                                         memId +
                                                         " b_id : " +
                                                         b_id);
-                                                    $(".clcon" + b_id).css("display", "none");
-                                                    $(".cunlcon" + b_id).css("display", "block");
+                                                    $(".likechk" + b_id).css("display", "none");
+                                                    $(".unlikechk" + b_id).css("display", "block");
 
                                                     // 게시물 좋아요 수 카운트 trigger 호출
                                                     $(".countLike_trigger").trigger('click');
@@ -1700,8 +1834,8 @@
                                                         memId +
                                                         " b_id : " +
                                                         b_id);
-                                                    $(".clcon" + b_id).css("display", "block");
-                                                    $(".cunlcon" + b_id).css("display", "none");
+                                                    $(".likechk" + b_id).css("display", "block");
+                                                    $(".unlikechk" + b_id).css("display", "none");
 
                                                     // 게시물 좋아요 수 카운트 trigger 호출
                                                     $(".countLike_trigger").trigger('click');

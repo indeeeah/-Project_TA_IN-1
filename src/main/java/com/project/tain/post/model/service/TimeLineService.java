@@ -64,4 +64,6 @@ public interface TimeLineService {
 
 	List<TimeLine> autocomplete(String word);
 
+	List<TimeLine> showHashTag(String t_id);
+
 }

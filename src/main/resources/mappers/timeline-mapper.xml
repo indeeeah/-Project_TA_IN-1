@@ -3,6 +3,7 @@
 <mapper namespace="TimeLine">
 	<resultMap type="TimeLine" id="resultTimeLine">
 		<id property="m_id" column="m_id" />
+		<id property="t_id" column="t_id" />
 		<result property="m_img" column="m_img" />
 	</resultMap>
 
@@ -35,31 +36,45 @@
 		b_type as t_type, b_topid as topid, to_char(b_date,'YYYY-MM-DD
 		HH24:Mi:SS') as t_time,
 		b_img1
-		||'|'|| b_img2 ||'|'||b_img3 ||'|'||b_img4 ||'|'||b_img5
+		||'|'|| b_img2 ||'|'||b_img3
+		||'|'||b_img4 ||'|'||b_img5
 		||'|'||b_img6
-		||'|'||b_img7 ||'|'||b_img8 ||'|'||b_img9 ||'|'||b_img10 as t_img
+		||'|'||b_img7 ||'|'||b_img8
+		||'|'||b_img9 ||'|'||b_img10 as t_img
 		from board
-		join boardadd on board.b_id = boardadd.b_id
+		join boardadd on
+		board.b_id = boardadd.b_id
 		join follow on m_id2 = board.m_id
-		join member on board.m_id = member.m_id
+		join member
+		on board.m_id = member.m_id
 		where b_type='G'
 		and m_id1 = #{m_id}
-		or board.m_id = #{m_id}
+		or
+		board.m_id = #{m_id}
 		union
-		select businessboard.bb_id as t_id, businessboard.m_id as m_id, m_img as
-		m_img, bb_info as t_content, bb_type as t_type, bb_topid as topid,
-		to_char(bb_date,'YYYY-MM-DD HH24:Mi:SS') as t_time,
+		select businessboard.bb_id as t_id,
+		businessboard.m_id as m_id, m_img as
+		m_img, bb_info as t_content,
+		bb_type as t_type, bb_topid as topid,
+		to_char(bb_date,'YYYY-MM-DD
+		HH24:Mi:SS') as t_time,
 		bb_img1 ||'|'||bb_img2
-		||'|'||bb_img3 ||'|'||bb_img4 ||'|'||bb_img5
+		||'|'||bb_img3
+		||'|'||bb_img4 ||'|'||bb_img5
 		||'|'||bb_img6
-		||'|'||bb_img7 ||'|'||bb_img8 ||'|'||bb_img9
+		||'|'||bb_img7
+		||'|'||bb_img8 ||'|'||bb_img9
 		||'|'||bb_img10 as t_img
-		from businessboard
-		join businessboardadd on businessboard.bb_id = businessboardadd.bb_id
+		from
+		businessboard
+		join businessboardadd on businessboard.bb_id =
+		businessboardadd.bb_id
 		join follow on m_id2 = businessboard.m_id
-		join member on businessboard.m_id = member.m_id
+		join
+		member on businessboard.m_id = member.m_id
 		where bb_type='B'
-		and m_id1 = #{m_id}
+		and m_id1 =
+		#{m_id}
 		or businessboard.m_id = #{m_id})
 		order by t_time desc
 	</select>
@@ -105,14 +120,17 @@
 		union
 		select b.bb_id as b_id, b.m_id as m_id,
 		b.bb_info as b_content,
-		to_char(b.bb_date,'YYYY-MM-DD HH24:Mi') as b_date,
+		to_char(b.bb_date,'YYYY-MM-DD HH24:Mi') as
+		b_date,
 		a.bb_type as b_type,
-		b.bb_topid as b_topid, count(r.bb_topid) as count
+		b.bb_topid as b_topid, count(r.bb_topid) as
+		count
 		from
 		businessboard b
 		left outer join
 		businessboard a on
-		b.bb_topid = a.bb_id
+		b.bb_topid =
+		a.bb_id
 		left outer join
 		businessboard r
 		on b.bb_id = r.bb_topid
@@ -131,10 +149,12 @@
 		from (
 		select count(*) as count
 		from blike
-		where b_id=#{b_id} and m_id=#{m_id}
+		where b_id=#{b_id} and
+		m_id=#{m_id}
 		union
 		select count(*) as from
-		bblike where bb_id=#{b_id} and m_id=#{m_id})
+		bblike where bb_id=#{b_id} and
+		m_id=#{m_id})
 	</select>
 
 	<!-- press Heart -->
@@ -251,7 +271,8 @@
 		from blike
 		where b_id=#{t_id}
 		union
-		select count(*) as from
+		select
+		count(*) as from
 		bblike where bb_id=#{t_id})
 	</select>
 
@@ -264,7 +285,8 @@
 		#{m_id}
 		union
 		select count(*) as from
-		reportbusinessboard where bb_id=#{b_id} and m_id=
+		reportbusinessboard where
+		bb_id=#{b_id} and m_id=
 		#{m_id})
 	</select>
 	<insert id="insertReport" parameterType="TimeLine"
@@ -288,15 +310,26 @@
 	</delete>
 
 	<!-- 자동검색 완성 -->
-	<select id="autocomplete" parameterType="string" resultType="arrayList" resultMap="resultTimeLine">
+	<select id="autocomplete" parameterType="string"
+		resultType="arrayList" resultMap="resultTimeLine">
 		select '#'||h_tag word from hashtag
 		where h_tag like concat('%',concat(UPPER(#{word}),'%')) or
-		h_tag like concat('%',concat(LOWER(#{word}),'%'))
+		h_tag like
+		concat('%',concat(LOWER(#{word}),'%'))
 		union
-		select '@'||m_id word from member where m_id like
+		select '@'||m_id word from
+		member where m_id like
 		concat('%',concat(UPPER(#{word}),'%')) or
-		m_id like concat('%',concat(LOWER(#{word}),'%'))
+		m_id
+		like concat('%',concat(LOWER(#{word}),'%'))
 	</select>
+
+	<!-- 해쉬태그 표시 -->
+	<select id="showHashTag" parameterType="string"
+		resultType="arrayList" resultMap="resultTimeLine">
+		select h_tag from hashtag where b_id= #{t_id}
+	</select>
+
 </mapper>
 
 

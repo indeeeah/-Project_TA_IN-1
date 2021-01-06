@@ -158,4 +158,9 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public List<TimeLine> autocomplete(String word) {
 		return tDao.autocomplete(word);
 	}
+
+	@Override
+	public List<TimeLine> showHashTag(String t_id) {
+		return tDao.showHashTag(t_id);
+	}
 }

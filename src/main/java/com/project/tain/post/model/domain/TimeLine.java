@@ -32,6 +32,8 @@ public class TimeLine implements java.io.Serializable{
 	private String r_reason;
 	private String id;
 	private String word;
+	private String t_img;
+	private String h_tag;
 	
 	public TimeLine() {
 		
@@ -293,6 +295,22 @@ public class TimeLine implements java.io.Serializable{
 
 	public void setWord(String word) {
 		this.word = word;
+	}
+
+	public String getT_img() {
+		return t_img;
+	}
+
+	public void setT_img(String t_img) {
+		this.t_img = t_img;
+	}
+
+	public String getH_tag() {
+		return h_tag;
+	}
+
+	public void setH_tag(String h_tag) {
+		this.h_tag = h_tag;
 	}
 	
 	

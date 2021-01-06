@@ -133,6 +133,8 @@ public class TimeLineDao {
 		return sqlSession.selectList("TimeLine.autocomplete", word);
 	}
 	
-	
+	public List<TimeLine> showHashTag(String t_id) {
+		return sqlSession.selectList("TimeLine.showHashTag", t_id);
+	}
 
 }
