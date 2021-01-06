@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.project.tain.business.board.model.dao.BsnBoardDao;
 import com.project.tain.business.board.model.domain.BsnBoard;
-import com.project.tain.business.board.model.domain.BsnBoardAdd;
 
 @Service("bbService")
 public class BsnBoardServiceImpl implements BsnBoardService{
@@ -16,30 +15,25 @@ public class BsnBoardServiceImpl implements BsnBoardService{
 	private BsnBoardDao bbDao;
 	
 	@Override
-	public int listCount() {
-		// TODO Auto-generated method stub
-		return bbDao.listCount();
+	public int listCount(String m_id) {
+		return bbDao.listCount(m_id);
 	}
 
 	@Override
-	public List<BsnBoard> selectListAll() {
-		// TODO Auto-generated method stub
-		return bbDao.selectListAll();
+	public List<BsnBoard> selectListAll(String m_id) {
+		return bbDao.selectListAll(m_id);
 	}
 	@Override
 	public List<BsnBoard> selectList() {
-		// TODO Auto-generated method stub
 		return bbDao.selectList();
 	}
 	@Override
-	public List<BsnBoardAdd> selectListImg() {
-		// TODO Auto-generated method stub
+	public List<BsnBoard> selectListImg() {
 		return bbDao.selectListImg();
 	}
 	
 	@Override
 	public BsnBoard selectOne(String bb_id) {
-		// TODO Auto-generated method stub
 		return bbDao.selectOne(bb_id);
 	}
 	@Override
@@ -48,27 +42,27 @@ public class BsnBoardServiceImpl implements BsnBoardService{
 		return bbDao.selectOneText(bb_id);
 	}
 	@Override
-	public BsnBoardAdd selectOneImg(String bb_id) {
-		// TODO Auto-generated method stub
+	public BsnBoard selectOneImg(String bb_id) {
 		return bbDao.selectOneImg(bb_id);
 	}
 
 	@Override
-	public int insertBsnBoard(BsnBoard bb, BsnBoardAdd bba) {
+	public int insertBsnBoard(BsnBoard bb) {
 		System.out.println("aaa2");
 		bbDao.insertBsnBoard(bb);
-		return bbDao.insertBsnBoardAdd(bba);
+		return bbDao.insertBsnBoardAdd(bb);
 	}
-//	@Override
-//	public int insertBsnBoard(BsnBoard bb, BsnBoardAdd bba) {
-//		bbDao.insertBsnBoardAdd(bba);
-//		return bbDao.insertBsnBoard(bb);
-//	}
 
 	@Override
-	public int updateBsnBoard(BsnBoard bb, BsnBoardAdd bba) {
-		bbDao.updateBsnBoardAdd(bba);
-		return bbDao.updateBsnBoard(bb);
+	public BsnBoard updateBsnBoard(BsnBoard bb) {
+		int result = bbDao.updateBsnBoard(bb);
+		if(result>0) {
+			bb=bbDao.selectOne(bb.getBb_id());
+			bbDao.updateBsnBoardAdd(bb);
+		} else {
+			bb=null;
+		}
+		return bb;
 	}
 
 	@Override

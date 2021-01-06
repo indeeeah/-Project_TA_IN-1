@@ -14,6 +14,7 @@
 		<result property="bb_type" column="bb_type"/>
 		<result property="bb_topid" column="bb_topid"/>
 		<result property="bb_date" column="bb_date"/>
+		<result property="t_num" column="t_num"/>
 		<result property="bb_img1" column="bb_img1"/>
 		<result property="bb_img2" column="bb_img2"/>
 		<result property="bb_img3" column="bb_img3"/>
@@ -25,7 +26,7 @@
 		<result property="bb_img9" column="bb_img9"/>
 		<result property="bb_img10" column="bb_img10"/>
 	</resultMap>
- 	<resultMap type="BsnBoardAdd" id="resultBsnBoardAdd">
+<!--  	<resultMap type="BsnBoardAdd" id="resultBsnBoardAdd">
 		<id property="bb_id" column="bb_id"/>
 		<result property="bb_img1" column="bb_img1"/>
 		<result property="bb_img2" column="bb_img2"/>
@@ -37,23 +38,23 @@
 		<result property="bb_img8" column="bb_img8"/>
 		<result property="bb_img9" column="bb_img9"/>
 		<result property="bb_img10" column="bb_img10"/>
-	</resultMap>
+	</resultMap> -->
 	
 	<!-- 게시물 수 -->
-	<select id="bsnListCount" resultType="int">
-		select count(*) from businessboard
+	<select id="bsnListCount" parameterType="string" resultType="int">
+		select count(*) from businessboard where m_id=#{m_id}
 	</select>
 	
 	<!-- 게시물 목록 -->
-	<select id="bsnSelectListAll" resultType="arraylist" resultMap="resultBsnBoard">
-		select * from businessboard bb join businessboardadd bba on bb.bb_id=bba.bb_id order by bb_date desc
+	<select id="bsnSelectListAll" parameterType="string" resultType="arraylist" resultMap="resultBsnBoard">
+		select * from businessboard bb join businessboardadd bba on bb.bb_id=bba.bb_id where m_id=#{m_id} order by bb_date desc
 	</select>
 	<!-- 게시물 목록(텍스트) -->
 	<select id="bsnSelectList" resultType="arraylist" resultMap="resultBsnBoard">
 		select * from businessboard
 	</select>
 	<!-- 게시물 목록(이미지) -->
-	<select id="bsnAddSelectList" resultType="BsnBoardAdd" resultMap="resultBsnBoardAdd">
+	<select id="bsnAddSelectList" resultType="BsnBoardAdd" resultMap="resultBsnBoard">
 		select * from businessboardadd
 	</select>
 	
@@ -67,7 +68,7 @@
 		select * from businessboard where bb_id=#{bb_id}
 	</select>
 	<!-- 게시물 상세(이미지) -->
-	<select id="bsnAddSelectOne" parameterType="string" resultType="BsnBoardAdd">
+	<select id="bsnAddSelectOne" parameterType="string" resultType="BsnBoard">
 		select * from businessboardadd where bb_id=#{bb_id}
 	</select>
 	
@@ -76,7 +77,7 @@
 		insert into businessboard values(
 			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BSNBOARD_SEQ.NEXTVAL,3,'0'), #{m_id},
 			#{bb_name}, #{bb_info}, #{bb_price}, #{bb_option1}, #{bb_option2}, #{bb_option3}, #{bb_option4},
-			#{bb_type}, #{bb_topid}, sysdate, 1 
+			#{bb_type}, #{bb_topid}, sysdate, 1
 		)
 	</insert>
 	<!-- 게시물 등록(이미지) -->
@@ -93,7 +94,7 @@
 		where bb_id=#{bb_id}
 	</update>
 	<!-- 게시물 수정(이미지) -->
-	<update id="updateBsnBoardAdd" parameterType="BsnBoardAdd" flushCache="true" statementType="PREPARED">
+	<update id="updateBsnBoardAdd" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
 		update businessboardAdd set bb_img1=#{bb_img1}, bb_img2=#{bb_img2}, bb_img3=#{bb_img3}, 
 			bb_img4=#{bb_img4}, bb_img5=#{bb_img5}, bb_img6=#{bb_img6}, bb_img7=#{bb_img7}, bb_img8=#{bb_img8}, bb_img9=#{bb_img9}, bb_img10=#{bb_img10}
 		where bb_id=#{bb_id}

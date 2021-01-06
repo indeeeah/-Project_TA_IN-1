@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BsnBoardReply">
+	<resultMap type="BsnBoardReply" id="resultBsnBoardReply">
+		<id property="m_id" column="m_id"/>
+		<result property="bb_id" column="bb_id"/>
+		<result property="bb_name" column="bb_name"/>
+		<result property="bb_info" column="bb_info"/>
+		<result property="bb_price" column="bb_price"/>
+		<result property="bb_option1" column="bb_option1"/>
+		<result property="bb_option2" column="bb_option2"/>
+		<result property="bb_option3" column="bb_option3"/>
+		<result property="bb_option4" column="bb_option4"/>
+		<result property="bb_type" column="bb_type"/>
+		<result property="bb_topid" column="bb_topid"/>
+		<result property="bb_date" column="bb_date"/>
+		<result property="t_num" column="t_num"/>
+		<result property="l_date" column="l_date"/>
+		<result property="m_img" column="m_img"/>
+		<result property="rb_reason" column="rb_reason"/>
+		<result property="rb_date" column="rb_date"/>
+	</resultMap>
+	
+	<!-- 댓글 좋아요 수 -->
+	<select id="likeCount" resultType="int">
+		select count(*) from bblike where bb_id=#{bb_id}
+	</select>
+	
+	<!-- 댓글 목록 -->
+	<select id="bbrList" parameterType="string" resultType="arraylist" resultMap="resultBsnBoardReply">
+		select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='C' and m.m_id=${m_id}
+	</select>		
+	
+	<!-- 댓글 등록 -->
+	<insert id="insertBbr" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
+		insert into businessboard values(
+			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BSNBOARD_SEQ.NEXTVAL,3,'0'), #{m_id},
+			#{bb_name}, #{bb_info}, #{bb_price}, #{bb_option1}, #{bb_option2}, #{bb_option3}, #{bb_option4},
+			#{bb_type}, #{bb_topid}, sysdate, 1
+		)
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateBbr" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
+		update businessboard set bb_name=#{bb_name}, bb_info=#{bb_info}, bb_price=#{bb_price}, bb_option1=#{bb_option1}, bb_option2=#{bb_option2}, bb_option3=#{bb_option3}, bb_option4=#{bb_option4}  
+		where bb_id=#{bb_id}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteBbr" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
+		delete from businessboard where bb_id=#{bb_id}
+	</delete>
+	
+	<!-- 대댓글 목록 -->
+	<select id="bbrrList" parameterType="string" resultType="arraylist" resultMap="resultBsnBoardReply">
+		select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='R' and bb_id=#{bb_id}
+	</select>
+</mapper>

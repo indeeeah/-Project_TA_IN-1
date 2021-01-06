@@ -48,6 +48,77 @@
 		display:block;
 	}
 </style>
+
+<!-- 이미지 슬라이드 -->
+<style>
+	.f {display: none}
+	
+	/* Slideshow container */
+	.bbWriteImg {
+	  max-width: 1000px;
+	  position: relative;
+	  margin: auto;
+	}
+	
+	/* Next & previous buttons */
+	.prev, .next {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 50%;
+	  width: auto;
+	  padding: 16px;
+	  margin-top: -22px;
+	  color: white;
+	  font-weight: bold;
+	  font-size: 18px;
+	  transition: 0.6s ease;
+	  border-radius: 0 3px 3px 0;
+	  user-select: none;
+	}
+	
+	/* Position the "next button" to the right */
+	.next {
+	  right: 0;
+	  border-radius: 3px 0 0 3px;
+	}
+	
+	/* On hover, add a black background color with a little bit see-through */
+	.prev:hover, .next:hover {
+	  background-color: rgba(0,0,0,0.8);
+	}
+	
+	/* Number text (1/3 etc) */
+	.numbertext {
+	  color: #f2f2f2;
+	  font-size: 12px;
+	  padding: 8px 12px;
+	  position: absolute;
+	  top: 0;
+	}
+	
+	/* Fading animation */
+	.fade {
+	  -webkit-animation-name: fade;
+	  -webkit-animation-duration: 1.5s;
+	  animation-name: fade;
+	  animation-duration: 1.5s;
+	}
+	
+	@-webkit-keyframes fade {
+	  from {opacity: .4} 
+	  to {opacity: 1}
+	}
+	
+	@keyframes fade {
+	  from {opacity: .4} 
+	  to {opacity: 1}
+	}
+	
+	/* On smaller screens, decrease text size */
+	@media only screen and (max-width: 300px) {
+	  .prev, .next,.text {font-size: 11px}
+	}
+</style>
 </head>
 <body>
 <div id="content">
@@ -59,10 +130,14 @@
 		<div id="bbWriteText" class="bbWriteText">
 			<div id="bbWriteFile" class="bbWriteFile">
 				<div id="bbWriteImg" class="bbWriteImg">
-					<div class="select_img"><img src=""/></div>
+					<div class='select_img fade'>
+					
+					</div>
 				</div>
+				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+				<a class="next" onclick="plusSlides(1)">&#10095;</a>
 				<div id="bbWriteAdd" class="bbWriteAdd">
-					<input type="file" name="imgfile" id="imgfile" multiple required style="display:none">
+					<input type="file" name="imgfile" id="imgfile" accept="image/*" multiple >
 					<label for="imgfile">
 						<div>사진 추가</div>
 					</label>
@@ -110,17 +185,84 @@
 	</div>
 </div>
 	<script>
-		$("#imgfile").change(function(){
+		/* $("#imgfile").change(function(){
 			if(this.files && this.files[0]){
 				var reader = new FileReader;
 				reader.onload = function(data){
-					$(".select_img img").attr("src", data.target.result).width(300).height(300);
+					$(".select_img img").attr("src", data.target.result).width(240).height(240);
 				}
 				reader.readAsDataURL(this.files[0]);
 			}
+		}); */
+		var sel_files=[];
+		$(document).ready(function(){
+			$("#imgfile").on("change", handleImgsFilesSelect);
 		});
+		
+		function fileUploadAction(){
+			console.log("fileUploadAction");
+			$("#imgfile").trigger('click');
+		}
+		
+		function handleImgsFilesSelect(e){
+			sel_files=[];
+			$(".select_img").empty();
+			var files=e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			var index=0;
+			filesArr.forEach(function(f){
+				if(!f.type.match("image.*")){
+					alert("이미지만 가능합니다.");
+					return;
+				}
+				sel_files.push(f);
+				var reader = new FileReader();
+				reader.onload = function(e){
+					/* var img_html = "<img src=\"" + e.target.result+ "\"/>"; */
+					var html = "<div class='f'><a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='" +f.name+"' class='selProductFile' title='Click to remove' width='240px' height='240px'></a></div>"; 
+					
+					$(".select_img").append(html);
+					index++;
+										
+					showSlides(slideIndex);
+					
+				}
+				reader.readAsDataURL(f);
+			});
+			
+		}
+		var slideIndex = 1;
+		function plusSlides(n) {
+			  showSlides(slideIndex += n);
+		}
+		function showSlides(n) {
+			  var i;
+			  var slides = document.getElementsByClassName("f");
+			  console.log(slides.length);
+			  if (n > slides.length) {slideIndex = 1}    
+			  if (n < 1) {slideIndex = slides.length}
+			  for (i = 0; i < slides.length; i++) {
+			      slides[i].style.display = "none";  
+			  }
+			  slides[slideIndex-1].style.display = "block";  
+			}
+		
+		function deleteImageAction(index){
+			console.log("index : " + index);
+			sel_files.splice(index, 1);
+			var img_id = "#img_id_"+index;
+			$(img_id).remove();
+			console.log(sel_files);
+		}
+		
+	<!-- 이미지 슬라이드 -->
+	
 	</script>
-
+	
+	
+	<script>
+	</script>
+	
 <%-- <script>
 $(document).ready(function(){
 	$("#profileImg").click(function(){

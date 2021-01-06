@@ -41,19 +41,33 @@ public class BsnBoardController {
 	
 	@Autowired
 	private BsnBoardService bbService;
+	@Autowired
+	private BsnBoardReplyService bbrService;
 	
 	public static final int LIMIT=10;
 	
 	@RequestMapping(value="/bbList.do", method = RequestMethod.GET)
-	public ModelAndView bbListService(ModelAndView mv) {
+	public ModelAndView bbListService(
+			ModelAndView mv) {
 		// 로그인 대체
 		String m_id= "aaaa";
 		try {
-			mv.addObject("listCount", bbService.listCount());
+			//게시물카운트
+			mv.addObject("listCount", bbService.listCount(m_id));
 			// 게시물 텍스트정보
-			mv.addObject("list", bbService.selectListAll());
+			mv.addObject("list", bbService.selectListAll(m_id));
+			// 게시물 상세
+			System.out.println("게시물 상세");
 			mv.addObject("bbDetail", bbService.selectOne(m_id));
+			System.out.println("게시물 상세 성공");
+			// 리스트이미지
+			System.out.println("리스트 이미지");
 			mv.addObject("listImg", bbService.selectOneImg(m_id));
+			System.out.println("리스트 이미지 성공");
+			// 댓글 리스트
+//			System.out.println("댓글 리스트");
+//			mv.addObject("bbrList", bbrService.bbrList(m_id));
+//			System.out.println("댓글 리스트성공");
 			mv.setViewName("business/bsnMain");
 		} catch(Exception e) {
 			mv.addObject("errorMsg", e.getMessage());

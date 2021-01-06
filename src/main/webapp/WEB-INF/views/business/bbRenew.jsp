@@ -55,6 +55,8 @@
 	
 	<form name="renewForm" action="bbUpdate.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="bb_type" value="G">
+		<input type="hidden" name="bb_id" value="${bbRenew.bb_id }">
+		<input type="hidden" name="bb_img1" value="${bbRenew.bb_img1 }">
 		<!-- <input type="hidden" name="bb_topid" value="123456321"> -->
 		<div id="bbWriteText" class="bbWriteText">
 			<div id="bbWriteFile" class="bbWriteFile">
@@ -62,7 +64,7 @@
 					<div class="select_img"><img src="${pageContext.request.contextPath}/resources/uploadFiles/${bbRenew.bb_img1 }"/></div>
 				</div>
 				<div id="bbWriteAdd" class="bbWriteAdd">
-					<input type="file" name="imgfile" id="imgfile" multiple required style="display:none">
+					<input type="file" name="imgfile" id="imgfile" accept="image/*" multiple style="display:none">
 					<label for="imgfile">
 						<div>사진 추가</div>
 					</label>
@@ -73,7 +75,7 @@
 					<input type="text" name="bb_name" placeholder="상품명" value="${bbRenew.bb_name}">
 				</div>
 				<div id="bbWriteInfo" class="bbWriteInfo">
-					<textarea cols="66" rows="14" name="bb_info" value="${bbRenew.bb_info}">ㅁㅁ</textarea>
+					<textarea cols="66" rows="14" name="bb_info" >${bbRenew.bb_info}</textarea>
 				</div>
 			</div>
 			<div id="bbWriteMore" class="bbWriteMore">
@@ -101,7 +103,7 @@
 				(임시)아이디:<input type="text" name="m_id" value="${bbRenew.m_id}">
 			</div>
 		</div>
-		<input type="submit" value="수정하기">&nbsp;&nbsp;
+		<input type="submit" id="renew" value="수정하기">&nbsp;&nbsp;
 		<c:url var="bbList" value="bbList.do">
 			<c:param name="page" value="1"/>
 		</c:url>

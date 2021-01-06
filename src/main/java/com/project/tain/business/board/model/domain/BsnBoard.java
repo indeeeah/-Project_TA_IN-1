@@ -22,6 +22,7 @@ public class BsnBoard implements java.io.Serializable{
 	private String bb_type;
 	private String bb_topid;
 	private Date bb_date;
+	private int t_num;
 	
 //	비즈니스 첨부파일
 	private String bb_img1;
@@ -34,7 +35,7 @@ public class BsnBoard implements java.io.Serializable{
 	private String bb_img8;
 	private String bb_img9;
 	private String bb_img10;
-////	비즈니스정보
+//	비즈니스정보
 //	private String b_cate;
 //	private String bm_name;
 //	private String bm_addr;
@@ -44,21 +45,21 @@ public class BsnBoard implements java.io.Serializable{
 //	private String bm_intro;
 //	private String bm_phone;
 //	private String bm_approval;
-////	회원정보
+//	회원정보
 //	private String m_intro;
 //	private String m_img;
 //	private String m_usage;
 //	private String m_activity;
 //	private String m_lastact;
 //	private String m_language;
-////	회원 게시판, 댓글, 대댓글
+//	회원 게시판, 댓글, 대댓글
 //	private String b_id;
 //	private String b_title;
 //	private String b_content;
 //	private String b_type;
 //	private String b_topid;
 //	private String b_date;
-////	회원 게시물 첨부파일
+//	회원 게시물 첨부파일
 //	private String b_img1;
 //	private String b_img2;
 //	private String b_img3;
@@ -75,6 +76,7 @@ public class BsnBoard implements java.io.Serializable{
 	
 	public BsnBoard() {}
 	
+	//t_num없는거
 	public BsnBoard(String m_id, String bb_name, String bb_info, int bb_price, String bb_option1, String bb_option2,
 			String bb_option3, String bb_option4, String bb_type, String bb_topid) {
 		super();
@@ -90,8 +92,25 @@ public class BsnBoard implements java.io.Serializable{
 		this.bb_topid = bb_topid;
 	}
 	
+	//t_num있는거
+	public BsnBoard(String m_id, String bb_name, String bb_info, int bb_price, String bb_option1, String bb_option2,
+			String bb_option3, String bb_option4, String bb_type, String bb_topid, int t_num) {
+		super();
+		this.m_id = m_id;
+		this.bb_name = bb_name;
+		this.bb_info = bb_info;
+		this.bb_price = bb_price;
+		this.bb_option1 = bb_option1;
+		this.bb_option2 = bb_option2;
+		this.bb_option3 = bb_option3;
+		this.bb_option4 = bb_option4;
+		this.bb_type = bb_type;
+		this.bb_topid = bb_topid;
+	}
+	
+	//bb전체
 	public BsnBoard(String bb_id, String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
-			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date) {
+			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date, int t_num) {
 		super();
 		this.bb_id = bb_id;
 		this.m_id = m_id;
@@ -105,6 +124,7 @@ public class BsnBoard implements java.io.Serializable{
 		this.bb_type = bb_type;
 		this.bb_topid = bb_topid;
 		this.bb_date = bb_date;
+		this.t_num = t_num;
 	}
 
 	public BsnBoard(String bb_img1) {
@@ -256,7 +276,7 @@ public class BsnBoard implements java.io.Serializable{
 		return "BsnBoard [bb_id=" + bb_id + ", m_id=" + m_id + ", bb_name=" + bb_name + ", bb_info=" + bb_info
 				+ ", bb_price=" + bb_price + ", bb_option1=" + bb_option1 + ", bb_option2=" + bb_option2
 				+ ", bb_option3=" + bb_option3 + ", bb_option4=" + bb_option4 + ", bb_type=" + bb_type + ", bb_topid="
-				+ bb_topid + ", bb_date=" + bb_date + ", bb_img1=" + bb_img1 + ", bb_img2=" + bb_img2 + ", bb_img3="
+				+ bb_topid + ", bb_date=" + bb_date + ", t_num=" + t_num + ", bb_img1=" + bb_img1 + ", bb_img2=" + bb_img2 + ", bb_img3="
 				+ bb_img3 + ", bb_img4=" + bb_img4 + ", bb_img5=" + bb_img5 + ", bb_img6=" + bb_img6 + ", bb_img7="
 				+ bb_img7 + ", bb_img8=" + bb_img8 + ", bb_img9=" + bb_img9 + ", bb_img10=" + bb_img10 + ", getClass()="
 				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
@@ -485,6 +505,14 @@ public class BsnBoard implements java.io.Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public int getT_num() {
+		return t_num;
+	}
+
+	public void setT_num(int t_num) {
+		this.t_num = t_num;
 	}
 
 		

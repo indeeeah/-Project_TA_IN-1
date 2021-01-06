@@ -13,6 +13,7 @@
 		<typeAlias type="com.project.tain.member.model.vo.MemberRegVO" alias="MemberRegVO" />
 		<typeAlias type="com.project.tain.business.board.model.domain.BsnBoard" alias="BsnBoard"/>
 		<typeAlias type="com.project.tain.business.board.model.domain.BsnBoardAdd" alias="BsnBoardAdd"/>
+		<typeAlias type="com.project.tain.business.board.model.domain.BsnBoardReply" alias="BsnBoardReply"/>
 		<typeAlias type="com.project.tain.management.model.domain.BsMemberManage" alias="BsMemberManage"/>
 	</typeAliases>
 
@@ -24,5 +25,6 @@
 		<mapper resource="mappers/bsmemberManage-mapper.xml"/>
 		<mapper resource="mappers/memberReg-mapper.xml" />
 		<mapper resource="mappers/bsnBoard-mapper.xml"/>
+		<mapper resource="mappers/bsnBoardReply-mapper.xml"/>
 	</mappers>
 </configuration>
