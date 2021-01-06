@@ -12,19 +12,35 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<div style="float: none; margin: 0 auto;">
-		<h1>Login</h1>
-		<form action="/member/login" name="LoginForm" method="post">
-			<h1>ID</h1>
-			<input type="text" required name="id">
-			<h1>PW</h1>
-			<input type="password" required name="pw">
-			<button type="submit">Login</button>
-		</form>
-		<button type="button" onclick="location.href='/user/joinPage'">JOIN</button>
-		<button type="button" onclick="location.href='/user/findPage'">Find
-			Id/Pw</button>
+	<div class="login_box">
+		<div class="login_logo">
+			<b>TAIN</b>
+		</div>
+		<div class="login_box_body">
+			<p class="lofin_msg">Login page</p>
+			<form action="${pageContext.request.contextPath}/member/login"
+				name="LoginForm" method="post">
+				<div class="form_group">
+				<input type ="text" name="m_id" class="form_control" placeholder="아이디">
+				</div>
+				<div class="form_group">
+				<input type="password" name="m_pw" class="form_control" placeholder="비밀번호">
+				</div>
+				<div class="row">
+				<div class="login">
+				<button type="submit" class="btn">
+				LOGIN
+				</button> <br>
+				<button type="submit" class="btn">
+				JOIN
+				</button>
+				</div>
+				</div>
+			</form>
+			<div class="find_link">
+			<a href="#">비밀번호 찾기</a> <a href="#">아이디 찾기</a>
+			</div>
+		</div>
 	</div>
-
 </body>
 </html>

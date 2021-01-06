@@ -1,9 +1,13 @@
 package com.project.tain.member.model.vo;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MemberRegVO {
 	private	String m_id;
 	private String m_pw;
@@ -14,7 +18,7 @@ public class MemberRegVO {
 	private String m_addr2;
 	private String m_addr3;
 	private String m_phone;
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@DateTimeFormat(pattern = "YYYYMMDD")
 	private Date m_birth;
 	private String m_img;
 	private char m_usage;
