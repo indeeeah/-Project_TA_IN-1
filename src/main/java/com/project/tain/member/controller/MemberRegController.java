@@ -39,6 +39,7 @@ public class MemberRegController {
 			mav.setViewName("redirect:/timeLine"); // 로그인후 메인페이지 경로 
 		} else {
 			mav.setViewName("/member/login");
+		
 		}
 		return mav;
 	}
