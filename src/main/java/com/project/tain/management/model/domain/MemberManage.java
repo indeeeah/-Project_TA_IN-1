@@ -49,6 +49,13 @@ public class MemberManage implements java.io.Serializable {
 	public MemberManage() {
 		
 	}
+	
+	public MemberManage(String m_id, String m_usage, int m_status) {
+		super();
+		this.m_id = m_id;
+		this.m_usage = m_usage;
+		this.m_status = m_status;
+	}
 
 	public MemberManage(String m_id, String m_name, String m_email, String m_usage, int m_status) {
 		super();

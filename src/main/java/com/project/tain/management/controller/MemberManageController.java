@@ -40,7 +40,7 @@ public class MemberManageController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "memberDetail.do", method = RequestMethod.POST)
+	@RequestMapping(value = "memberManageDetail.do", method = RequestMethod.GET)
 	public ModelAndView memberDetail(@RequestParam(name = "m_id") String m_id,
 			@RequestParam(name = "page", defaultValue = "1") int page, ModelAndView mv) {
 		try {
@@ -48,7 +48,7 @@ public class MemberManageController {
 			// 한 페이지당 출력할 목록 갯수
 			mv.addObject("MemberManage", mmService.selectOne(m_id));
 			mv.addObject("currentPage", currentPage);
-			mv.setViewName("management/memberDetail");
+			mv.setViewName("management/memberManageDetail");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
@@ -56,11 +56,11 @@ public class MemberManageController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "memberRenew.do", method = RequestMethod.POST)
+	@RequestMapping(value = "memberManageRenew.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView memberDetail(@RequestParam(name = "m_id") String m_id, ModelAndView mv) {
 		try {
 			mv.addObject("MemberManage", mmService.selectOne(m_id));
-			mv.setViewName("management/memberRenew");
+			mv.setViewName("management/memberManageRenew");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
@@ -68,13 +68,12 @@ public class MemberManageController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "memberUpdate.do", method = RequestMethod.POST)
-	public ModelAndView memberUpdate(MemberManage m, @RequestParam(name = "page", defaultValue = "1") int page,
-			 ModelAndView mv) {
+	@RequestMapping(value = "memberManageUpdate.do", method = RequestMethod.POST)
+	public ModelAndView memberUpdate(MemberManage m, ModelAndView mv) {
 		try {
 			mv.addObject("m_id", mmService.updateMmanage(m).getM_id());
-			mv.addObject("currentPage", page);
-			mv.setViewName("redirect:memberDetail.do");
+			mv.setViewName("redirect:membermanagelist.do");
+			System.out.println("성공");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
@@ -82,5 +81,15 @@ public class MemberManageController {
 		return mv;
 	}
 	
-	
+	@RequestMapping(value = "memberManageDelete.do", method = RequestMethod.GET)
+	public ModelAndView memberDelete(@RequestParam(name = "m_id") String m_id, ModelAndView mv) {
+		try {
+			mmService.deleteMmanage(m_id);
+			mv.setViewName("redirect:membermanagelist.do");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+		return mv;
+	}
 }

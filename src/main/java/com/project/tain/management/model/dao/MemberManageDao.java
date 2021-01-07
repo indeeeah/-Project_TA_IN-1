@@ -43,7 +43,7 @@ public class MemberManageDao {
 
 	// 회원 삭제
 	public int deleteMmanage(String m_id) {
-		return sqlSession.delete("MemberManage.deleteMmanage", m_id);
+		return sqlSession.update("MemberManage.deleteMmanage", m_id);
 	}
 	
 }

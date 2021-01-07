@@ -35,6 +35,12 @@ public class MemberManageServiceImpl implements MemberManageService {
 
 	@Override
 	public MemberManage updateMmanage(MemberManage m) {
+		int result = mmDao.updateMmanage(m);
+		if (result > 0) {
+			m = mmDao.selectOne(m.getM_id());
+		} else {
+			m = null;
+		}
 		return m;
 		
 	}

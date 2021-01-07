@@ -59,6 +59,6 @@
 	<!-- 회원 삭제 -->
 	<delete id="deleteMmanage" parameterType="string"
 		flushCache="true" statementType="PREPARED">
-		DELETE FROM Member WHERE m_id = #{m_id}
+		update Member set m_status=4 WHERE m_id = #{m_id}
 	</delete>
 </mapper>
