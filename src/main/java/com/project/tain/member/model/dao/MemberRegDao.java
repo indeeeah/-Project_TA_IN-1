@@ -15,7 +15,11 @@ public class MemberRegDao{
 	
 	private static final String NameSpace ="MemberRegMapper";
 	public boolean login(MemberRegVO vo) throws Exception {
+		System.out.println("dao login");
+		System.out.println(vo.getM_id());
+		System.out.println(vo.getM_pw());
 		String name = sqlSession.selectOne(NameSpace + ".login", vo);
+		System.out.println("dao login name: " + name);
 		return (name == null) ? false : true;
 	}
 

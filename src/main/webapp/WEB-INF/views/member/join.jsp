@@ -1,26 +1,103 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <!DOCTYPE html>
-    <html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
 
-    <head>
-        <link href="${pageContext.request.contextPath}/resources/css/join.css" rel="stylesheet" type="text/css" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="UTF-8">
-        <title>회원가입</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <!-- 부트스트랩 -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <!-- daum 도로명주소 찾기 api -->
-        <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-        <style type="text/css">
-            td {
-                border: 1px solid #000000;
-                border-collapse: collapse;
-            }
-        </style>
-        <script type="text/javascript">
+<head>
+<link href="${pageContext.request.contextPath}/resources/css/join.css"
+	rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>회원가입</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- 부트스트랩 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- daum 도로명주소 찾기 api -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+body {
+	min-height: 100vh;
+}
+
+.join_logo {
+	text-align: center;
+}
+
+.join_box {
+	width: 400px;
+	background-color: #f1f1f1;
+	height: 800px;
+	padding: 40px 40px;
+	border-radius: 10px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%)
+}
+
+.join_box h2 {
+	text-align: center;
+	font-size: 25px;
+	margin-bottom: 30px;
+	color: black;
+}
+
+.form_group {
+	border-bottom: 2px solid #adadad;
+	position: relative;
+	margin: 15px 0;
+}
+
+.form_group input {
+	font-size: 15px;
+	color: #333;
+	width: 100%;
+	border: none;
+	padding: 0 5px;
+	height: 40px;
+	outline: none;
+}
+
+.btn-primary {
+	display: block;
+	width: 100%;
+	height: 60px;
+	border: none;
+	background-color: #08AEEA;
+	border-radius: 10px;
+	background-size: 200%;
+	border-color: white;
+	color: #fff;
+	outline: none;
+	cusor: pointer;
+	transition: .5s;
+}
+
+.btn-primary : hover {
+	background-position: right;
+}
+
+.bottom-text {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.bottom-text a {
+	color: #08AEEA;
+}
+</style>
+<script type="text/javascript">
             //모든 공백 체크 정규식 
             var empJ = /\s/g;
             //아이디 정규식 
@@ -35,25 +112,25 @@
             var phoneJ = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/;
             //^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/ 
             var birthJ = false;
-            var address = $('#mem_detailaddress');
+            var address = $('#m_addr3');
 
             $(document).ready(function() {
-                var address = $('#mem_detailaddress');
+                var address = $('#m_addr3');
                 //아이디 중복확인 
-                $("#mem_id").blur(function() {
-                    if ($('#mem_id').val() == '') {
+                $("#m_id").blur(function() {
+                    if ($('#m_id').val() == '') {
                         $('#id_check').text('아이디를 입력하세요.');
                         $('#id_check').css('color', 'red');
-                    } else if (idJ.test($('#mem_id').val()) != true) {
+                    } else if (idJ.test($('#m_id').val()) != true) {
                         $('#id_check').text('4~12자의 영문, 숫자만 사용 가능합니다.');
                         $('#id_check').css('color', 'red');
-                    } else if ($('#mem_id').val() != '') {
-                        var mem_id = $('#mem_id').val();
+                    } else if ($('#m_id').val() != '') {
+                        var m_id = $('#m_id').val();
                         $.ajax({
                             async: true,
                             type: 'POST',
                             data: {
-                                m_id: mem_id
+                                m_id: m_id
                             },
                             url: '${pageContext.request.contextPath}/idCheck',
                             dateType: 'json',
@@ -64,11 +141,11 @@
                                     $('#id_check').css('color', 'red');
                                     $("#usercheck").attr("disabled", true);
                                 } else {
-                                    if (idJ.test(mem_id)) {
+                                    if (idJ.test(m_id)) {
                                         $('#id_check').text('사용가능한 아이디 입니다.');
                                         $('#id_check').css('color', 'blue');
                                         $("#usercheck").attr("disabled", false);
-                                    } else if (mem_id == '') {
+                                    } else if (m_id == '') {
                                         $('#id_check').text('아이디를 입력해주세요.');
                                         $('#id_check').css('color', 'red');
                                         $("#usercheck").attr("disabled", true);
@@ -84,7 +161,7 @@
                 });
                 $('form').on('submit', function() {
                     var inval_Arr = new Array(6).fill(false);
-                    if (idJ.test($('#mem_id').val())) {
+                    if (idJ.test($('#m_id').val())) {
                         inval_Arr[0] = true;
                     } else {
                         inval_Arr[0] = false;
@@ -92,8 +169,7 @@
                         return false;
                     }
                     // 비밀번호가 같은 경우 && 비밀번호 정규식
-                    if (($('#mem_pw').val() == ($('#mem_pw2').val())) &&
-                        pwJ.test($('#mem_pw').val())) {
+                    if (($('#m_pw').val())) {
                         inval_Arr[1] = true;
                     } else {
                         inval_Arr[1] = false;
@@ -101,7 +177,7 @@
                         return false;
                     }
                     // 이름 정규식 
-                    if (nameJ.test($('#mem_name').val())) {
+                    if (nameJ.test($('#m_name').val())) {
                         inval_Arr[2] = true;
                     } else {
                         inval_Arr[2] = false;
@@ -118,8 +194,8 @@
                         return false;
                     }
                     // 이메일 정규식
-                    if (mailJ.test($('#mem_email').val())) {
-                        console.log(mailJ.test($('#mem_email').val()));
+                    if (mailJ.test($('#m_email').val())) {
+                        console.log(mailJ.test($('#m_email').val()));
                         inval_Arr[4] = true;
                     } else {
                         inval_Arr[4] = false;
@@ -127,8 +203,8 @@
                         return false;
                     }
                     // 휴대폰번호 정규식
-                    if (phoneJ.test($('#mem_phone').val())) {
-                        console.log(phoneJ.test($('#mem_phone').val()));
+                    if (phoneJ.test($('#m_phone').val())) {
+                        console.log(phoneJ.test($('#m_phone').val()));
                         inval_Arr[5] = true;
                     } else {
                         inval_Arr[5] = false;
@@ -155,8 +231,8 @@
                         alert('정보를 다시 확인하세요.')
                     }
                 });
-                $('#mem_id').blur(function() {
-                    if (idJ.test($('#mem_id').val())) {
+                $('#m_id').blur(function() {
+                    if (idJ.test($('#m_id').val())) {
                         console.log('true');
                         $('#id_check').text('');
                     } else {
@@ -165,8 +241,8 @@
                         $('#id_check').css('color', 'red');
                     }
                 });
-                $('#mem_pw').blur(function() {
-                    if (pwJ.test($('#mem_pw').val())) {
+                $('#m_pw').blur(function() {
+                    if (pwJ.test($('#m_pw').val())) {
                         console.log('true');
                         $('#pw_check').text('');
                     } else {
@@ -175,17 +251,8 @@
                         $('#pw_check').css('color', 'red');
                     }
                 });
-                //1~2 패스워드 일치 확인
-                $('#mem_pw2').blur(function() {
-                    if ($('#mem_pw').val() != $(this).val()) {
-                        $('#pw2_check').text('비밀번호가 일치하지 않습니다.');
-                        $('#pw2_check').css('color', 'red');
-                    } else {
-                        $('#pw2_check').text('');
-                    }
-                });
                 //이름에 특수문자 들어가지 않도록 설정
-                $("#mem_name").blur(function() {
+                $("#m_name").blur(function() {
                     if (nameJ.test($(this).val())) {
                         console.log(nameJ.test($(this).val()));
                         $("#name_check").text('');
@@ -194,7 +261,7 @@
                         $('#name_check').css('color', 'red');
                     }
                 });
-                $("#mem_email").blur(function() {
+                $("#m_email").blur(function() {
                     if (mailJ.test($(this).val())) {
                         $("#email_check").text('');
                     } else {
@@ -205,7 +272,7 @@
                 // 생일 유효성 검사 
                 var birthJ = false;
                 // 생년월일 birthJ 유효성 검사 
-                $('#mem_birth').blur(function() {
+                $('#m_birth').blur(function() {
                     var dateStr = $(this).val();
                     var year = Number(dateStr.substr(0, 4)); // 입력한 값의 0~4자리까지 (연) 
                     var month = Number(dateStr.substr(4, 2)); // 입력한 값의 4번째 자리부터 2자리 숫자 (월) 
@@ -245,7 +312,7 @@
                     }
                 });
                 // 휴대전화
-                $('#mem_phone').blur(function() {
+                $('#m_phone').blur(function() {
                     if (phoneJ.test($(this).val())) {
                         console.log(phoneJ.test($(this).val()));
                         $("#phone_check").text('');
@@ -290,70 +357,80 @@
                         return false; } */
                         $("[name=m_addr1]").val(data.zonecode);
                         $("[name=m_addr2]").val(fullRoadAddr);
-                        document.getElementById('mem_oaddress').value = data.zonecode; //5자리 새우편번호 사용 
-                        document.getElementById('mem_address').value = fullRoadAddr;
+                        document.getElementById('m_addr1').value = data.zonecode; //5자리 새우편번호 사용 
+                        document.getElementById('m_addr2').value = fullRoadAddr;
                         //document.getElementById('mem_detailaddress').value = data.jibunAddress; 
                     }
                 }).open();
             }
         </script>
-    </head>
+</head>
 
-    <body>
-        <article class="container">
-            <div class="join_header">
-                <div class="col_md col_md_3">
-                    <h3>회원가입</h3>
-                </div>
-            </div>
-            <div class="col_sm col_md_3">
-                <form action="join.do" method="post" id="usercheck">
-                    <div class="form_group">
-                        <label for="id">아이디</label> <input type="text" class="form_control" id="mem_id" name="m_id" placeholder="ID">
-                        <div class="check_font" id="id_check"></div>
-                    </div>
-                    <div class="form_group">
-                        <label for="pw">비밀번호</label> <input type="password" class="form_control" id="mem_pw" name="m_pw" placeholder="PASSWARD">
-                        <div class="check_font" id="pw_check"></div>
-                    </div>
-                    <div class="form_group">
-                        <label for="pw2">비밀번호 확인</label> <input type="password" class="form_control" id="mem_pw2" name="m_pw1" placeholder="Confirm Password">
-                        <div class="check_font" id="pw2_check"></div>
-                    </div>
-                    <div class="form_group">
-                        <label for="mem_name">이름</label> <input type="text" class="form_control" id="mem_name" name="m_name" placeholder="Name">
-                        <div class="check_font" id="name_check"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="mem_birth">생년월일</label> <input type="tel" class="form_control" id="mem_birth" name="m_birth" placeholder="ex) 19990101">
-                        <div class="check_font" id="birth_check"></div>
-                    </div>
-                    <div class="form_group">
-                        <label for="mem_email">이메일 주소</label> <input type="email" class="form_control" id="mem_email" name="m_email" placeholder="E-mail">
-                        <div class="check_font" id="email_check"></div>
-                    </div>
-                    <div class="form_group">
-                        <label for="mem_phone">휴대폰 번호('-'없이 번호만 입력해주세요)</label> <input type="tel" class="form_control" id="mem_phone" name="m_phone" placeholder="Phone Number">
-                        <div class="check_font" id="phone_check"></div>
-                    </div>
-                    <div class="form_group">
-                        <input class="form_control" style="width: 40%; display: inline;" placeholder="우편번호" name="m_addr1" id="mem_oaddress" type="text" readonly="readonly">
-                        <button type="button" class="btn btn-default" onclick="execPostCode();">
-							<i class="fa fa-search"></i> 우편번호 찾기
-						</button>
-                    </div>
-                    <div class="form_group">
-                        <input class="form_control" style="top: 5px;" placeholder="도로명 주소" name="m_addr2" id="mem_address" type="text" readonly="readonly" />
-                    </div>
-                    <div class="form_group">
-                        <input class="form_control" placeholder="상세주소" name="m_addr3" id="mem_detailaddress" type="text" />
-                    </div>
-                    <div class="form_group text_center">
-                        <button type="submit" class="btn btn-primary">회원가입</button>
-                    </div>
-                </form>
-            </div>
-        </article>
-    </body>
+<body>
+		<div class="join_form">
+		<div class="join_logo">
+			<h1>TAIN</h1>
+		</div>
 
-    </html>
+		<form action="${pageContext.request.contextPath}/member/join.do"
+			method="post">
+			<div class="join_box">
+				<h2>회원가입</h2>
+				<div class="form_group">
+					<input type="text" class="form_control" id="m_id" name="m_id"
+						placeholder="아이디">
+					<div class="check_font" id="id_check"></div>
+				</div>
+				<div class="form_group">
+					<input type="text" class="form_control" id="m_name" name="m_name"
+						placeholder="이름">
+					<div class="check_font" id="name_check"></div>
+				</div>
+				<div class="form_group">
+					<input type="password" class="form_control" id="m_pw" name="m_pw"
+						placeholder="비밀번호">
+					<div class="check_font" id="pw_check"></div>
+				</div>
+				<div class="form_group">
+					<input type="tel" class="form_control" id="m_birth" name="m_birth"
+						placeholder="생년월일">
+					<div class="check_font" id="birth_check"></div>
+				</div>
+				<div class="form_group">
+					<input type="tel" class="form_control" id="m_phone" name="m_phone"
+						placeholder="휴대폰 번호">
+					<div class="check_font" id="phone_check"></div>
+				</div>
+				<div class="form_group">
+					<input type="email" class="form_control" id="m_email"
+						name="m_email" placeholder="E-mail">
+					<div class="check_font" id="email_check"></div>
+				</div>
+				<div class="form_group">
+					<input class="form_control" style="width: 40%; display: inline;"
+						placeholder="우편번호" name="m_addr1" id="m_addr1" type="text"
+						readonly="readonly">
+					<button type="button" class="btn btn-default"
+						onclick="execPostCode();">
+						<i class="fa fa-search"></i> 우편번호 찾기
+					</button>
+				</div>
+				<div class="form_group">
+					<input class="form_control" style="top: 5px;" placeholder="도로명 주소"
+						name="m_addr2" id="m_addr2" type="text" readonly="readonly" />
+				</div>
+				<div class="form_group">
+					<input class="form_control" placeholder="상세주소" name="m_addr3"
+						id="m_addr3" type="text" />
+				</div>
+				<div class="form_group text_center">
+					<button type="submit" class="btn btn-primary">회원가입</button>
+					<div class="bottom-text">
+						<a herf="#"> 로그인으로 돌아가기</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -6,12 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MemberRegVO implements java.io.Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private String m_id;
+public class MemberRegVO {
+	private	String m_id;
 	private String m_pw;
 	private String m_name;
 	private String m_intro;
@@ -20,7 +16,7 @@ public class MemberRegVO implements java.io.Serializable {
 	private String m_addr2;
 	private String m_addr3;
 	private String m_phone;
-	@DateTimeFormat(pattern = "YYYYMMDD")
+	@DateTimeFormat(pattern = "yyyyMMdd")
 	private Date m_birth;
 	private String m_img;
 	private char m_usage;
@@ -29,10 +25,7 @@ public class MemberRegVO implements java.io.Serializable {
 	private Date m_lastact;
 	private char m_language;
 	private Date m_joindate;
-
-	public MemberRegVO() {
-	}
-
+	public MemberRegVO() {		}
 	public MemberRegVO(String m_id, String m_pw, String m_name, String m_intro, String m_email, int m_addr1,
 			String m_addr2, String m_addr3, String m_phone, Date m_birth, String m_img, char m_usage, int m_status,
 			int m_activity, Date m_lastact, char m_language, Date m_joindate) {
@@ -199,10 +192,6 @@ public class MemberRegVO implements java.io.Serializable {
 
 	public void setM_joindate(Date m_joindate) {
 		this.m_joindate = m_joindate;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 }
