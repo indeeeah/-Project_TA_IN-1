@@ -190,7 +190,7 @@ $('.myBtn').on('click', function() {
     	dataType:"json",
     	success:function(resp){
     		console.log("댓글갯수 : "+resp.data.length);
-    		if(resp.data[0]!=null){
+    		if(resp.data[0].m_id!=null){
 	    		for(i=0; i<resp.data.length; i++){
 	    			$(".mdReply").append("<div class='mrd'>"+
 					"<div id='bbrImg' class='bbrImg'>"+
