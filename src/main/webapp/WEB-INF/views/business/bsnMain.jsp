@@ -90,7 +90,6 @@ ${listCount } : ${bbrLlke }
 					</button>
 				</div>
 
-			
 			<!-- The Modal -->
 			<div id="${v.bb_id }" class="modal">
 			    <button type="button" class="close" value="${v.bb_id }">&times;</button>
