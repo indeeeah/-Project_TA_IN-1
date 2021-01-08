@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="mManage">
-	<resultMap type="mManage" id="mResultMap">
+<mapper namespace="mMemberVO">
+	<resultMap type="mMemberVO" id="mResultMap">
 		<id property="m_id" column="m_id" />
 		<result property="m_pw" column="m_pw" />
 		<result property="m_name" column="m_name" />
@@ -19,31 +19,34 @@
 		<result property="m_lastact" column="m_lastact" />
 		<result property="m_language" column="m_language" />
 		<result property="m_joindate" column="m_joindate" />
-
 	</resultMap>
 	<!-- 프로필 조회 -->
-	<select id="checkProfile" parameterType="String"
-		resultType="MemberVO">
-		select *
-		from member where m_id=#{m_id}
+	<select id="showProfile" parameterType="string"
+		resultType="mMemberVO">
+		select * from member
+		where m_id = #{m_id}
+	</select>
+	<!-- 이메일 조회 -->
+	<select id="checkEmail" parameterType="string"
+		resultType="mMemberVO">
+		select m_email from member
+		where m_email = #{m_email}
 	</select>
 	<!-- 프로필 수정 -->
-	<update id="updateProfile" parameterType="MemberVO"
+	<update id="updateProfile" parameterType="mMemberVO"
 		flushCache="true">
 		update member set
 		m_name=#{m_name},
 		m_id=#{m_id},
 		m_phone=#{m_phone},
-		m_emial=#{m_email},
+		m_email=#{m_email},
 		m_birth=#{m_birth},
 		m_addr1=#{m_addr1},
 		m_addr2=#{m_addr2},
 		m_addr3=#{m_addr3},
-		m_intro=#{m_intro},
-		m_img=#{m_img},
-		m_language=#{m_language}
+		m_intro=#{m_intro}
 		where
-		m_id=#{userID}
+		m_id=#{m_id}
 	</update>
 	<!-- 비밀번호 변경 -->
 	<!-- 장바구니 조회 -->
