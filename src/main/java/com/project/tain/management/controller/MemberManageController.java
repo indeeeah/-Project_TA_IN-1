@@ -72,7 +72,7 @@ public class MemberManageController {
 	public ModelAndView memberUpdate(MemberManage m, ModelAndView mv) {
 		try {
 			mv.addObject("m_id", mmService.updateMmanage(m).getM_id());
-			mv.setViewName("redirect:membermanagelist.do");
+			mv.setViewName("redirect:memberManageDetail.do");
 			System.out.println("성공");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

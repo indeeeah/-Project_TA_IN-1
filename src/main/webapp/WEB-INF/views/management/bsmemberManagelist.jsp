@@ -6,6 +6,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+a{
+	text-decoration: none;
+}
+a#moveid {
+	color: rgb(207, 3, 3);
+}
+a:hover { 
+	cursor:pointer; 
+}
+.btn-action{
+	text-align: center;
+	padding: 3px 10px;
+	border:1px solid #1a1b1d;
+	border-radius: 3px;
+	box-shadow: 2px 2px 3px #022d72;
+	background-color: #1a1b1d;
+	color: #fff;
+}
+</style>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>
 <script type="text/javascript">
@@ -25,17 +45,18 @@
 </script>
 </head>
 <body>
-<form method="get" name="listForm" action="bsmemberManagelist.do">
-		<input type="hidden" name="page" value="${currentPage}"> 
-		<input type="text" name="keyword"> <input type="submit" value="검색">
-</form><br>
-
-<table border="1">
+<div style="text-align: center; margin-top:70px;"><h2>비지니스 회원 목록</h2></div>
+<table align="center" cellpadding="10" cellspacing="0" border="1" width="60%">
 	<tr>
-		<td align="right" colspan="7" style="border: none;"><input type="button" value="전체목록"
+		<td colspan="4" style="border: none;">
+			<form method="get" name="listForm" action="bsmemberManagelist.do">
+			<input type="hidden" name="page" value="${currentPage}"> 
+			<input type="text" name="keyword"> <input class="btn-action" type="submit" value="검색">
+			</form></td>
+		<td align="right" colspan="8" cellspacing="0" style="border: none;"><input class="btn-action" type="button" value="전체목록"
 				onclick="window.location='bsmemberManagelist.do'"> </td>
 	</tr>
-	
+
 	<tr>
 		<td align="center" width="60">번호</td>
 		<td align="center" width="100">아이디</td>
@@ -56,8 +77,8 @@
 			<c:forEach var="vo" items="${list}" varStatus="status">
 				<tr>
 					<td align="center">${status.count}</td>
-					<td align="left"><a
-						href="bsmemberDetail.do?m_id=${vo.m_id}&page=${currentPage}">
+					<td align="left"><a id="moveid" 
+						href="bsmemberManageDetali.do?m_id=${vo.m_id}&page=${currentPage}">
 							&nbsp;${vo.m_id} </a></td>
 					<td align="center">${vo.bm_name}</td>
 					<td align="center">${vo.bm_addr}</td>

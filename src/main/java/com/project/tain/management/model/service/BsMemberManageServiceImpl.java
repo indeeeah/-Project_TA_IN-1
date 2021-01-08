@@ -36,6 +36,12 @@ public class BsMemberManageServiceImpl implements BsMemberManageService{
 
 	@Override
 	public BsMemberManage updateBsMmanage(BsMemberManage bsm) {
+		int result = bsmmDao.updateBsMmanage(bsm);
+		if (result > 0) {
+			bsm = bsmmDao.selectOne(bsm.getM_id());
+		} else {
+			bsm = null;
+		}
 		return bsm;
 	}
 

@@ -153,4 +153,17 @@ public class BsMemberManage implements java.io.Serializable{
 		return serialVersionUID;
 	}
 	
+	public String getbsm_cate() {
+		if(bm_cate==1) {
+			return "패션";
+		} if(bm_cate==2) {
+			return "전자제품";
+		} if(bm_cate==3) {
+			return "잡화";
+		} if(bm_cate==4) {
+			return "화장품";
+		} else {
+			return "기타";
+		}
+	}
 }
