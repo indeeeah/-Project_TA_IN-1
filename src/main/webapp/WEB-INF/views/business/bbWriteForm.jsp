@@ -137,8 +137,8 @@
 				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 				<a class="next" onclick="plusSlides(1)">&#10095;</a>
 				<div id="bbWriteAdd" class="bbWriteAdd">
-					<input type="file" name="imgfile" id="imgfile" accept="image/*" multiple >
-					<label for="imgfile">
+					<input type="file" name="file" id="file" accept="image/*" multiple >
+					<label for="file">
 						<div>사진 추가</div>
 					</label>
 				</div>
@@ -196,12 +196,12 @@
 		}); */
 		var sel_files=[];
 		$(document).ready(function(){
-			$("#imgfile").on("change", handleImgsFilesSelect);
+			$("#file").on("change", handleImgsFilesSelect);
 		});
 		
 		function fileUploadAction(){
 			console.log("fileUploadAction");
-			$("#imgfile").trigger('click');
+			$("#file").trigger('click');
 		}
 		
 		function handleImgsFilesSelect(e){
@@ -255,7 +255,7 @@
 			console.log(sel_files);
 		}
 		
-	<!-- 이미지 슬라이드 -->
+	
 	
 	</script>
 	

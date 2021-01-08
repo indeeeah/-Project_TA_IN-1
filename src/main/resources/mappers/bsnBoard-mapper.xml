@@ -26,19 +26,6 @@
 		<result property="bb_img9" column="bb_img9"/>
 		<result property="bb_img10" column="bb_img10"/>
 	</resultMap>
-<!--  	<resultMap type="BsnBoardAdd" id="resultBsnBoardAdd">
-		<id property="bb_id" column="bb_id"/>
-		<result property="bb_img1" column="bb_img1"/>
-		<result property="bb_img2" column="bb_img2"/>
-		<result property="bb_img3" column="bb_img3"/>
-		<result property="bb_img4" column="bb_img4"/>
-		<result property="bb_img5" column="bb_img5"/>
-		<result property="bb_img6" column="bb_img6"/>
-		<result property="bb_img7" column="bb_img7"/>
-		<result property="bb_img8" column="bb_img8"/>
-		<result property="bb_img9" column="bb_img9"/>
-		<result property="bb_img10" column="bb_img10"/>
-	</resultMap> -->
 	
 	<!-- 게시물 수 -->
 	<select id="bsnListCount" parameterType="string" resultType="int">

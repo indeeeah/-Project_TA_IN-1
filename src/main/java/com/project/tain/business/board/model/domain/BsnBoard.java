@@ -9,7 +9,7 @@ public class BsnBoard implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 20001L;
 	
-//	비즈니스게시판
+	// 비즈니스게시판
 	private String bb_id;
 	private String m_id;
 	private String bb_name;
@@ -24,7 +24,7 @@ public class BsnBoard implements java.io.Serializable{
 	private Date bb_date;
 	private int t_num;
 	
-//	비즈니스 첨부파일
+	// 비즈니스 첨부파일
 	private String bb_img1;
 	private String bb_img2;
 	private String bb_img3;
@@ -71,9 +71,7 @@ public class BsnBoard implements java.io.Serializable{
 //	private String b_img9;
 //	private String b_img10;
 	
-	
-	
-	
+	// 기본 생성자
 	public BsnBoard() {}
 	
 	//t_num없는거

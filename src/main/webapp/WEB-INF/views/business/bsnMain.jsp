@@ -76,7 +76,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </style>
 </head>
 <body>
-${listCount }
+${listCount } : ${bbrLlke }
 	<div id="content" class="content">
 		<c:if test="${empty list }">
 			게시물이 없습니다.
@@ -119,24 +119,8 @@ ${listCount }
 			  			<pre name="info" class="${v.bb_id}">${v.bb_info}</pre> <br>
 			  			<button class="translate" value="${v.bb_id }">번역하기</button>
 			  			</div>
-			  			<div id="mdReply">
-			  				<c:forEach items="${bbrList }" var="v">
-			  					<div>
-			  						${v.m_img }
-			  					</div>
-			  					<div>
-			  						${v.m_id}
-			  					</div>
-			  					<div>
-			  						${v.bb_info }
-			  					</div>
-			  					<div>
-			  						
-			  					</div>
-			  					<div>
-			  						
-			  					</div>
-			  				</c:forEach>
+			  			<div id="mdReply" class="mdReply">
+			  				
 			  			</div>
 			  		</div>
 			  		<div id="mdMore">
@@ -191,15 +175,49 @@ ${v.bb_option3}
 ${v.bb_option4}
 </c:forEach> --%>
 <script>
-
+// 모달창 open
 $('.myBtn').on('click', function() {
 	var a = $(this).val();
 	console.log(a);
 	var x = document.getElementById(a);
 	console.log(x);
     x.style.display="block";
+    
+    $.ajax({
+    	url:"bbrList",
+    	type:"POST",
+    	async:false,
+    	data:{ bb_id : a },
+    	dataType:"json",
+    	success:function(resp){
+    		console.log("댓글갯수 : "+resp.data.length);
+    		if(resp.data[0]!=null){
+	    		for(i=0; i<resp.data.length; i++){
+	    			$(".mdReply").append("<div class='mrd'>"+
+					"<div id='bbrImg' class='bbrImg'>"+
+					"<img src='#'/>"+
+					"</div>"+
+					"<div id='bbrId' class='bbrId'>"+
+						"<span>" + resp.data[i].m_id + "</span>"+
+					"</div>"+
+					"<div id='bbrCon' class='bbrCon'>"+
+						"<span>"+resp.data[i].bb_info+"</span>"+
+					"</div>"+
+					"<div id='bbrLike' class='bbrLike'>"+
+						"<span>좋아요:"+resp.data[i].bbrlike+"</span>"+
+					"</div>"+
+					"<div id='bbr' class='bbr'>"+
+					"</div></div>");
+	    		}   
+    		} else {
+    			$(".mdReply").append("<div class='mrd'>댓글이 없습니다.</div>");
+    		}
+    	}, error:function(request, status, error){
+    		alert("code : " +request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+		}
+    });
 });
-
+// 모달창 close
 $('.close').on('click', function() {
 	/* $('#modal').hide(); */
 	var a = $(this).val();
@@ -207,8 +225,11 @@ $('.close').on('click', function() {
 	var x = document.getElementById(a);
 	console.log(x);
     x.style.display="none";
+    //클로즈 버튼 누르면 댓글 지워지기
+    $(".mrd").remove();
 });
 
+// 윈도우 누르면 모달창 꺼지기
 // When the user clicks anywhere outside of the modal, close it
 /* $(window).on('click', function() {
 	var modal1 = document.getElementsByClassName('modal');
@@ -220,6 +241,7 @@ $('.close').on('click', function() {
   }
 }); */
 
+// 번역하기(상품소개만)
 $(".translate").on("click", function(){
 	var a = $(this).val();
 	console.log(a);
@@ -263,7 +285,7 @@ $(".translate").on("click", function(){
 });
 </script>
 </body>
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	$(function(){
 		$('#replyForm').on('submit', function(event){
 			if($('#reply_contents').val()==""){
@@ -357,5 +379,5 @@ $(".translate").on("click", function(){
 			}
 		});
 	});
-</script> -->
+</script>
 </html>

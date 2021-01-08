@@ -3,6 +3,7 @@ package com.project.tain.business.board.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -31,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 //import com.project.tain.business.board.model.dao.MediaUtils;
 //import com.project.tain.business.board.model.dao.UploadFileUtils;
 import com.project.tain.business.board.model.domain.BsnBoard;
-import com.project.tain.business.board.model.domain.BsnBoardAdd;
+import com.project.tain.business.board.model.service.BsnBoardReplyService;
 import com.project.tain.business.board.model.service.BsnBoardService;
 
 @Controller
@@ -46,28 +47,20 @@ public class BsnBoardController {
 	
 	public static final int LIMIT=10;
 	
+	// 게시물 목록
 	@RequestMapping(value="/bbList.do", method = RequestMethod.GET)
 	public ModelAndView bbListService(
 			ModelAndView mv) {
-		// 로그인 대체
-		String m_id= "aaaa";
+		
+		String m_id= "aaaa";	// 로그인 대체
+		
+		String bb_id= "BB210104066";	// 게시물아이디 대체
 		try {
-			//게시물카운트
-			mv.addObject("listCount", bbService.listCount(m_id));
-			// 게시물 텍스트정보
-			mv.addObject("list", bbService.selectListAll(m_id));
-			// 게시물 상세
-			System.out.println("게시물 상세");
-			mv.addObject("bbDetail", bbService.selectOne(m_id));
-			System.out.println("게시물 상세 성공");
-			// 리스트이미지
-			System.out.println("리스트 이미지");
-			mv.addObject("listImg", bbService.selectOneImg(m_id));
-			System.out.println("리스트 이미지 성공");
-			// 댓글 리스트
-//			System.out.println("댓글 리스트");
-//			mv.addObject("bbrList", bbrService.bbrList(m_id));
-//			System.out.println("댓글 리스트성공");
+			mv.addObject("listCount", bbService.listCount(m_id));	//게시물카운트
+			mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
+			mv.addObject("bbDetail", bbService.selectOne(m_id));	// 게시물 상세
+			mv.addObject("listImg", bbService.selectOneImg(m_id));	// 리스트이미지
+//			mv.addObject("bbrList", bbrService.bbrList(bb_id));	// 댓글 리스트
 			mv.setViewName("business/bsnMain");
 		} catch(Exception e) {
 			mv.addObject("errorMsg", e.getMessage());
@@ -88,22 +81,32 @@ public class BsnBoardController {
 //		return mv;
 //	}
 	
+	// 게시물 작성 페이지
 	@RequestMapping(value="/bbWriteForm.do", method = RequestMethod.GET)
 	public String bbInsertForm(ModelAndView mv) {
 		return "business/bbWriteForm";
 	}
 	
+	// 작성한 게시물 인서트
 	@RequestMapping(value="/bbInsert.do", method = RequestMethod.POST)
-	public ModelAndView bsnBoardInsert(BsnBoard bb, BsnBoardAdd bba,
-			@RequestParam(name="imgfile", required=false) MultipartFile report,
+	public ModelAndView bsnBoardInsert(BsnBoard bb,
+			@RequestParam(name="file") Map<String, String> fileMap,
 			HttpServletRequest request, ModelAndView mv) {
+		fileMap.entrySet().stream().forEach(System.out::println);
+		System.out.println("파일맵" + fileMap.size());
+		
+		System.out.println("파일맵투스트링"+fileMap.values());
 		try {
-			if(report!=null && !report.equals("")) {
-				saveFile(report, request);
-			}
-			bba.setBb_img1(report.getOriginalFilename());
+			
+//			if(fileMap!=null && !fileMap.equals("")) {
+//				saveFile(fileMap, request);
+//			}
+//			for(int i =0; i<fileMap.size(); i++) {
+//				bba.setBb_imgi(fileMap.get(bb_imgi).va)
+//			}
+//			bba.setBb_img1(fileMap.getOriginalFilename());
 			System.out.println("aaa1");
-			bbService.insertBsnBoard(bb, bba);
+			bbService.insertBsnBoard(bb);
 			System.out.println("인서트완료");
 			mv.setViewName("redirect:bbList.do");
 		} catch(Exception e) {
@@ -112,19 +115,20 @@ public class BsnBoardController {
 		}
 		return mv;
 	}
+	
+	//인서트 맵<> 사용 x
 //	@RequestMapping(value="/bbInsert.do", method = RequestMethod.POST)
-//	public ModelAndView bsnBoardInsert(BsnBoard b, BsnBoardAdd ba,
-//			@RequestParam(name="bb_img1", required=false) MultipartFile report,
+//	public ModelAndView bsnBoardInsert(BsnBoard bb, BsnBoardAdd bba,
+//			@RequestParam(name="imgfile", required=false) MultipartFile report,
 //			HttpServletRequest request, ModelAndView mv) {
 //		try {
 //			if(report!=null && !report.equals("")) {
 //				saveFile(report, request);
 //			}
-	
+//			bba.setBb_img1(report.getOriginalFilename());
 //			System.out.println("aaa1");
-//			ba.setBb_img1(report.getOriginalFilename());
-//			System.out.println("aaa2");
-//			bbService.insertBsnBoard(b, ba);
+//			bbService.insertBsnBoard(bb, bba);
+//			System.out.println("인서트완료");
 //			mv.setViewName("redirect:bbList.do");
 //		} catch(Exception e) {
 //			mv.addObject("errorMsg", e.getMessage());
@@ -132,7 +136,9 @@ public class BsnBoardController {
 //		}
 //		return mv;
 //	}
+
 	
+	// 게시물 수정 페이지
 	@RequestMapping(value="/bbRenew.do", method = RequestMethod.GET)
 	public ModelAndView boardDetail(@RequestParam(name="bb_id") String bb_id, ModelAndView mv) {
 		try {
@@ -145,18 +151,26 @@ public class BsnBoardController {
 		return mv;
 	}
 	
+	// 수정한 게시물 업데이트
 	@RequestMapping(value="/bbUpdate.do", method = RequestMethod.POST)
-	public ModelAndView boardUpdate(BsnBoard bb, BsnBoardAdd bba, 
-			@RequestParam(name="upfile") MultipartFile report, HttpServletRequest request, ModelAndView mv) {
+	public ModelAndView boardUpdate(BsnBoard bb,
+			@RequestParam(name="imgfile") MultipartFile report, HttpServletRequest request, ModelAndView mv) {
+		System.out.println("업데이트 돌입");
 		try {
 			if(report!=null && !report.getOriginalFilename().equals("")) {
-				removeFile(bba.getBb_img1(), request);
-				saveFile(report, request);
-				bba.setBb_img1(report.getOriginalFilename());
+				System.out.println("업데이트 이미지 이프");
+				removeFile(bb.getBb_img1(), request);
+				System.out.println("업데이트 이미지 삭제");
+//				saveFile(report, request);
+				System.out.println("업데이트 이미지 저장");
+				bb.setBb_img1(report.getOriginalFilename());
+				System.out.println("업데이트 이미지 셋");
 			}
-			bbService.updateBsnBoard(bb, bba);
-			if(bbService.updateBsnBoard(bb, bba)!=0) {
-				mv.addObject("board_num", bbService.updateBsnBoard(bb, bba));
+//			bbService.updateBsnBoard(bb, bba);
+			if(bbService.updateBsnBoard(bb)!=null) {
+				System.out.println("업데이트 이프");
+				mv.addObject("board_num", bbService.updateBsnBoard(bb));
+				System.out.println("업데이트 애드");
 //				mv.addObject("board_num", b.getBoard_num());	// 선생님 추천 코드
 				mv.setViewName("redirect:bbList.do");
 			}
@@ -172,10 +186,14 @@ public class BsnBoardController {
 	public ModelAndView boardDelete(@RequestParam(name="bb_id") String bb_id, 
 			HttpServletRequest request, ModelAndView mv) {
 		try {
-			BsnBoardAdd bba = bbService.selectOneImg(bb_id);
-			removeFile(bba.getBb_img1(), request);
+			System.out.println("삭제컨입");
+			BsnBoard bb = bbService.selectOneImg(bb_id);
+			System.out.println("삭제셀원이");
+			removeFile(bb.getBb_img1(), request);
+			System.out.println("삭제리파");
 			
 			bbService.deleteBsnBoard(bb_id);
+			System.out.println("삭제완료");
 			
 			mv.setViewName("redirect:bbList.do");
 		} catch(Exception e) {
@@ -185,20 +203,21 @@ public class BsnBoardController {
 		return mv;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/bbImg.do", method = RequestMethod.POST)
-	public String bsnBoardImg(BsnBoardAdd bba,
-			@RequestParam(name="bb_id", required=false) String bb_id,
-			HttpServletRequest request, ModelAndView mv) {
-		JSONObject job = new JSONObject();
-		try {
-			
-		} catch(Exception e) {
-			mv.addObject("errorMsg", e.getMessage());
-			mv.setViewName("errorPage");
-		}
-		return job.toJSONString();
-	}
+	// 게시물 상세를 에이작스로 하려고 했을 때 쓴 코드
+//	@ResponseBody
+//	@RequestMapping(value="/bbImg.do", method = RequestMethod.POST)
+//	public String bsnBoardImg(BsnBoard bb,
+//			@RequestParam(name="bb_id", required=false) String bb_id,
+//			HttpServletRequest request, ModelAndView mv) {
+//		JSONObject job = new JSONObject();
+//		try {
+//			
+//		} catch(Exception e) {
+//			mv.addObject("errorMsg", e.getMessage());
+//			mv.setViewName("errorPage");
+//		}
+//		return job.toJSONString();
+//	}
 	
 	private void saveFile(MultipartFile report, HttpServletRequest request) {
 
@@ -226,12 +245,12 @@ public class BsnBoardController {
 		}   
 	}
 	
-	private void removeFile(String board_file, HttpServletRequest request) {
+	private void removeFile(String imgfile, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\uploadFiles";
-		String filePath = savePath+"\\" + board_file;
+		String filePath = savePath+"\\" + imgfile;
 		try {
-			System.out.println(board_file + "을 삭제합니다.");
+			System.out.println(imgfile + "을 삭제합니다.");
 			System.out.println("기존 저장 경로 : " + savePath);
 			File delFile = new File(filePath);
 			delFile.delete();
