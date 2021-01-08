@@ -18,7 +18,7 @@
                     display: flex;
                     justify-content: center;
                     position: fixed;
-                    z-index: 5;
+                    z-index: 4;
                     border-bottom: 0.5px solid black;
                 }
                 
@@ -36,7 +36,7 @@
                     justify-content: center;
                     position: fixed;
                     top: 54px;
-                    z-index: 5;
+                    z-index: 4;
                     display: none;
                 }
                 
