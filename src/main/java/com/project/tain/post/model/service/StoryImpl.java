@@ -28,4 +28,18 @@ public class StoryImpl implements StoryService {
 		return sDao.deleteStory(st);
 	}
 
+	@Override
+	public Story showAllStory(String m_id) {
+		return sDao.showAllStory(m_id);
+	}
+	@Override
+	public Story showAllAStory() {
+		return sDao.showAllAStory();
+	}
+
+	@Override
+	public List<Story> storyResult(Story st) {
+		return sDao.storyResult(st);
+	}
+
 }

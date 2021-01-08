@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.tain.post.model.domain.Story;
+import com.project.tain.post.model.domain.TimeLine;
 
 @Repository("yDao")
 public class StoryDao {
@@ -23,6 +24,17 @@ public class StoryDao {
 	
 	public int deleteStory(Story st) {
 		return sqlSession.delete("Story.deleteStory", st);
+	}
+	
+	public Story showAllStory(String m_id){
+		return sqlSession.selectOne("Story.showAllStory", m_id);
+	}
+	public Story showAllAStory(){
+		return sqlSession.selectOne("Story.showAllAStory");
+	}
+	
+	public List<Story> storyResult(Story st) {
+		return sqlSession.selectList("Story.storyResult", st);
 	}
 
 }

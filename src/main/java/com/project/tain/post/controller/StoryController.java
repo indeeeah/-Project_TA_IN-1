@@ -1,12 +1,14 @@
 package com.project.tain.post.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.project.tain.post.model.domain.Story;
+import com.project.tain.post.model.domain.TimeLine;
 import com.project.tain.post.model.service.StoryService;
 import com.project.tain.post.model.service.TimeLineService;
 
@@ -42,8 +48,18 @@ public class StoryController {
 	}
 
 	@RequestMapping(value = "/stories", method = RequestMethod.GET)
-	public String stories(ModelAndView mv) {
-		return "post/stories";
+	public ModelAndView stories(@RequestParam(name = "m_id", required = false) String m_id, ModelAndView mv) {
+		try {
+			mv.addObject("showAllStory", sService.showAllStory(m_id));
+			mv.addObject("showAllAStory", sService.showAllAStory());
+			mv.setViewName("post/stories");
+			System.out.println(mv);
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+			e.printStackTrace();
+		}
+		return mv;
 	}
 
 	// 작성된 글을 insert
@@ -117,4 +133,23 @@ public class StoryController {
 			return job.toJSONString();
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "storyResult.do", method = RequestMethod.POST)
+	public String storyResult(Story st, ModelAndView mv) {
+		JsonObject job = new JsonObject();
+		try {
+			List<Story> story = sService.storyResult(st);
+			if (CollectionUtils.isEmpty(story) == false) {
+				JsonArray jsonArr = new Gson().toJsonTree(story).getAsJsonArray();
+				job.add("story", jsonArr);
+			} else {
+				System.out.println("empty");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return job.toString();
+	}
+	
 }
