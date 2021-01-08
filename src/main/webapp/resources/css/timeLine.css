@@ -109,7 +109,6 @@ body {
     float: right;
 }
 
-
 .timeline_photo {
     width: 100%;
     height: 660px;
@@ -383,8 +382,6 @@ body {
     cursor: pointer;
 }
 
-
-
 .save_icon {
     margin-right: 0px;
     float: right;
@@ -414,7 +411,6 @@ body {
     float: right;
     cursor: pointer;
 }
-
 
 #follow_recom_con {
     height: 200px;
@@ -503,92 +499,4 @@ body {
 
 .countLike_trigger {
     display: none;
-}
-
-#report_back {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: 0.5;
-    display: none;
-    z-index: 1;
-}
-
-#report_modal {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    display: none;
-    z-index: 2;
-}
-
-#report_choose,
-#report_write,
-#report_result,
-#report_already,
-#pre_report_choose,
-#unfollowchk,
-#askunfollow,
-#cantunfollow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    background: #fff;
-    z-index: 3;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 14px;
-}
-
-.modal_in {
-    width: 100%;
-    height: 48px;
-    line-height: 48px;
-    cursor: pointer;
-    border-bottom: 1px solid #8E8E8E;
-    color: #262626;
-}
-
-.cancel {
-    border: none;
-}
-
-#etc_write_con {
-    height: 192px;
-}
-
-#etx_write_space {
-    margin-top: 5px;
-    margin-left: 16px;
-    width: 364px;
-    height: 182px;
-    padding: 0px;
-    border: none;
-    outline: none;
-}
-
-.modal_title {
-    height: 42px;
-}
-
-#report {
-    color: #ED4956;
-}
-
-.modal_nocursor {
-    cursor: default;
-}
-
-.modal_result {
-    height: 96px;
-}
-
-.fa-bars_title {
-    display: block;
-    margin-right: 16px;
-    float: right;
-    line-height: 60px;
 }

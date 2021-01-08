@@ -28,6 +28,16 @@
                     display: none;
                 }
                 
+                .share_icon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-share-1.svg');
+                    background-size: 24px;
+                }
+                
+                .share_icon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/002-share.svg');
+                    background-size: 24px;
+                }
+                
                 .comment_lcon {
                     background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
                     background-size: 12px;
@@ -69,13 +79,102 @@
                     float: right;
                     margin-left: 20px;
                     position: fixed;
-                    z_index: -1;
+                    z-index: -1;
+                }
+                
+                #report_back {
+                    position: fixed;
+                    width: 100%;
+                    height: 100%;
+                    background-color: black;
+                    opacity: 0.5;
+                    display: none;
+                    z-index: 5;
+                }
+                
+                #report_modal {
+                    position: fixed;
+                    width: 100%;
+                    height: 100%;
+                    display: none;
+                    z-index: 6;
+                }
+                
+                #report_choose,
+                #report_write,
+                #report_result,
+                #report_already,
+                #pre_report_choose,
+                #unfollowchk,
+                #askunfollow,
+                #cantunfollow,
+                #share_con,
+                #share_con_result {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 400px;
+                    background: #fff;
+                    z-index: 7;
+                    border-radius: 20px;
+                    text-align: center;
+                    font-size: 14px;
+                }
+                
+                .modal_in {
+                    width: 100%;
+                    height: 48px;
+                    line-height: 48px;
+                    cursor: pointer;
+                    border-bottom: 1px solid #8E8E8E;
+                    color: #262626;
+                }
+                
+                .cancel {
+                    border: none;
+                }
+                
+                #etc_write_con {
+                    height: 192px;
+                }
+                
+                #etx_write_space {
+                    margin-top: 5px;
+                    margin-left: 16px;
+                    width: 364px;
+                    height: 182px;
+                    padding: 0px;
+                    border: none;
+                    outline: none;
+                }
+                
+                .modal_title {
+                    height: 42px;
+                }
+                
+                #report {
+                    color: #ED4956;
+                }
+                
+                .modal_nocursor {
+                    cursor: default;
+                }
+                
+                .modal_result {
+                    height: 96px;
+                }
+                
+                .fa-bars_title {
+                    display: block;
+                    margin-right: 16px;
+                    float: right;
+                    line-height: 60px;
                 }
             </style>
         </head>
 
         <body>
-            <jsp:include page="header.jsp"></jsp:include>
             <div id="report_back"></div>
             <div id="report_modal">
                 <div id="report_choose" style="display: none;">
@@ -115,7 +214,7 @@
                 </div>
                 <div id="cantunfollow" style="display: none;">
                     <div class="modal_in modal_nocursor">나 자신은 팔로우 취소할 수 없어요!</div>
-                    <div id="cancel_7" class="modal_in cancel" onclick="location.href='timeLineList.do?m_id=${myProfile.m_id }'">화면으로 돌아가기</div>
+                    <div id="cancel_8" class="modal_in cancel" onclick="location.href='timeLineList.do?m_id=${myProfile.m_id }'">화면으로 돌아가기</div>
                 </div>
                 <div id="pre_report_choose" style="display: none;">
                     <div id="pre_report_re" class="modal_in toreport" onclick="report('b_id', 'id', 'type');">게시물 신고하기
@@ -124,7 +223,20 @@
                     <div id="pre_go" class="modal_in">게시물로 이동하기</div>
                     <div id="cancel_5" class="modal_in cancel">취소</div>
                 </div>
+                <div id="share_con" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물 공유하기</div>
+                    <div id="url_con" class="modal_in">
+                        <textarea id="url" readonly></textarea>
+                    </div>
+                    <div id="share_chk" class="modal_in">복사하기</div>
+                    <div id="cancel_9" class="modal_in cancel">취소</div>
+                </div>
+                <div id="share_con_result" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물의 주소가 복사됐습니다.</div>
+                    <div id="cancel_10" class="modal_in cancel">화면으로 돌아가기</div>
+                </div>
             </div>
+            <jsp:include page="header.jsp"></jsp:include>
             <div id="content_con">
                 <div id="timeline_big_con">
                     <div id="timeline_left">
@@ -168,7 +280,7 @@
                                                 <div class="icon like_icon likechk${vo.t_id }" onclick="pressLike('${vo.t_id}');"></div>
                                                 <div class="icon unlike_icon unlikechk${vo.t_id }" onclick="pressUnlike('${vo.t_id}');"></div>
                                                 <div class="icon comment_icon"></div>
-                                                <div class="icon share_icon"></div>
+                                                <div class="icon share_icon" onclick="shareurl('${vo.t_id}')"></div>
                                                 <div class="icon save_icon"></div>
                                             </div>
                                             <div class="timeline_likes_con">좋아요 <input type="text" class="lCount${vo.t_id} showlCount" value="" readonly>개</div>
@@ -666,6 +778,26 @@
                 }
             }
 
+            function shareurl(b_id) {
+                $("#report_modal").css("display", "block");
+                $("#report_back").css("display", "block");
+                $("#pre_report_choose").css("display", "none");
+                $("#share_con").css("display", "block");
+                $("#url").val(b_id);
+                $("#share_chk").on('click', function() {
+                    var curl = document.getElementById("url");
+                    curl.select();
+                    document.execCommand('copy');
+                    curl.setSelectionRange(0, 0);
+                    $("#share_con").css("display", "none");
+                    $("#share_con_result").css("display", "block");
+                });
+            }
+
+            function copyToClipboard() {
+
+            }
+
             function pre_report(b_id, id, type) {
                 var memId = $(".m_id").val();
                 $("#report_modal").css("display", "block");
@@ -914,6 +1046,8 @@
                 $("#unfollowchk").css("display", "none");
                 $("#askunfollow").css("display", "none");
                 $("#cantunfollow").css("display", "none");
+                $("#share_con").css("display", "none");
+                $("#share_con_result").css("display", "none");
             });
 
             $("#etc").on('click', function() {
