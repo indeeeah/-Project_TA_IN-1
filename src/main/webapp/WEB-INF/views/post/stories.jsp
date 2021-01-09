@@ -70,23 +70,33 @@
                     width: 1000px;
                     height: 800px;
                 }
+                
+                .buttons {
+                    position: absolute;
+                    height: 18px;
+                    float: left;
+                }
             </style>
         </head>
 
         <body>
+            <jsp:include page="header.jsp"></jsp:include>
             <div id="story_con">
                 <div id="story_big_con">
                     <div id="show_story">
+                        <input type="hidden" id="my_id" value="${myProfile.m_id }">
+
                         <input type="hidden" id="showst" value="${showAllStory.m_id}" onclick="split('${showAllStory.m_id}','${showAllStory.s_type}','${showAllAStory.m_id}','${showAllAStory.s_type}');">
                         <div id="story">
                         </div>
                         <%-- <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.s_img}"> --%>
                     </div>
                 </div>
-                <button type="button" class="slide_btn_prev">Prev</button>
-                <button type="button" class="slide_btn_next">Next</button>
-                <button type="button" class="slide_btn_prev_s">sPrev</button>
-                <button type="button" class="slide_btn_next_s">sNext</button>
+                <button type="button" class="slide_btn_prev" class="buttons">Prev</button>
+                <button type="button" class="slide_btn_next" class="buttons">Next</button>
+                <button type="button" class="slide_btn_prev_s" class="buttons">sPrev</button>
+                <button type="button" class="slide_btn_next_s" class="buttons">sNext</button>
+
             </div>
         </body>
         <script>
@@ -96,20 +106,14 @@
             });
 
             function split(a, a_t, b, b_t) {
-                console.log(a);
-                console.log(a_t);
-                console.log(b);
-                console.log(b_t);
                 var arr = a.split("|");
                 var arrb = b.split("|");
                 for (i = 0; i < arr.length; i += 3) {
                     for (j = i; j < i + 3; j++) {
-                        console.log(arr[j]);
                         if (arr[j] != undefined) {
                             $("#story").append('<div class="story_photo_con" onclick="showeach(\'' + arr[j] + '\',\'' + a_t + '\');">' + '<div class="scon_con scon_con' + arr[j] + '"><div class="scon scon' + arr[j] + a_t + '"></div></div></div>')
                         }
                     }
-                    console.log("광고" + arrb[i]);
                     $("#story").append('<div class="story_photo_con" onclick="showeach(\'' + arrb[i] + '\',\'' + b_t + '\');">' + '<div class="scon_con scon_con' + arrb[i] + '"><div class="scon scon' + arrb[i] + b_t + '"></div></div></div>')
                 }
                 // 게시물 슬라이드
@@ -150,8 +154,7 @@
             }
 
             function showeach(id, s_type) {
-                console.log(id);
-                console.log(s_type);
+                var my_id = $("#my_id").val();
                 $.ajax({
                     url: "${pageContext.request.contextPath}/storyResult.do",
                     method: "POST",
@@ -162,11 +165,15 @@
                     dataType: "json",
                     success: function(story) {
                         var count = story;
-                        console.log(count.story.length);
                         for (var i = 0; i < count.story.length; i++) {
                             var s_img = count.story[i].s_img;
-                            console.log(s_img);
                             $(".scon" + id + s_type).append('<div class="story_each_con story_each_con' + id + '"><img src="${pageContext.request.contextPath}/resources/uploadFiles/' + s_img + '"></div>');
+                            $(".scon" + id + s_type).append(
+                                '<input type="button" value="' + id + '" name="m_id" class="buttons">' +
+                                '<input type="button" value="' + my_id + '" name="id" class="buttons">' +
+                                '<input type="button" value="' + s_img + '" name="s_img" class="buttons">' +
+                                '<input type="text" class="message' + s_img + ' message" name="messagea" value="">' +
+                                '<input type="button" value="send" onclick="sendMessage(\'' + id + '\',\'' + my_id + '\',\'' + s_img + '\');" class="buttons">');
                         }
                         // 게시물 슬라이드
                         var slideWrapper = document.querySelector('.scon_con' + id);
@@ -213,7 +220,54 @@
                             error);
                     }
                 });
+            }
 
+            $(document).ready(function() {
+                connectWS();
+            });
+
+            function sendMessage(id, my_id, s_img) {
+                var message = $(".message").val();
+                console.log(id + ',' + my_id + ',' + s_img + ',' + message);
+                console.log(message);
+
+                if (socket) {
+                    // websocket에 보내기!! (reply,댓글작성자,게시글작성자,글번호)
+                    let socketMsg = message + "," + my_id + "," + id + "," + s_img;
+                    console.debug("sssssssmsg>>", socketMsg)
+                    socket.send(socketMsg);
+                }
+
+            }
+            var socket = null;
+
+            function connectWS() {
+                console.log("tttttttttttttt")
+                var ws = new WebSocket("ws://localhost:8090/tain/replyEcho?s_img=aaa");
+                socket = ws;
+
+                ws.onopen = function() {
+                    console.log('Info: connection opened.');
+                };
+
+                ws.onmessage = function(event) {
+                    console.log("ReceiveMessage:", event.data + '\n');
+                    /* let $socketAlert = $('div#socketAlert');
+                    	$socketAlert.html(event.data);
+                    	$socketAlert.css('display', 'block');
+                        
+                    	setTimeout( function() {
+                    		$socketAlert.css('display', 'none');
+                    	}, 3000); */
+                };
+
+                ws.onclose = function(event) {
+                    console.log('Info: connection closed.');
+                    //setTimeout( function(){ connect(); }, 1000); // retry connection!!
+                };
+                ws.onerror = function(err) {
+                    console.log('Error:', err);
+                };
             }
         </script>
 

@@ -30,8 +30,6 @@ public class TimeLineController {
 	public String testForm(ModelAndView mv) {
 		return "test";
 	}
-	
-	
 
 	// TimeLine Page
 	@RequestMapping(value = "/timeLine", method = RequestMethod.GET)

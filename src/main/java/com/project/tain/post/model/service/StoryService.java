@@ -17,4 +17,6 @@ public interface StoryService {
 	Story showAllAStory();
 
 	List<Story> storyResult(Story st);
+
+	List<Story> eachStory(String id);
 }

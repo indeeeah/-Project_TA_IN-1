@@ -243,13 +243,17 @@
                         <div id="story_con">
                             <div id="blank_for_story"></div>
                             <div id="story_inner_con">
-                                <div class="story_small_con">
-                                    <div class="story_profile my_story_add"></div>
+                                <div class="story_small_con my_story_add">
+                                    <div class="story_profile"></div>
                                     <div class="story_id">내 스토리</div>
+                                </div>
+                                <div class="story_small_con show_all_story">
+                                    <div class="story_profile"></div>
+                                    <div class="story_id">스토리 전체 보기</div>
                                 </div>
                                 <c:if test="${not empty storyList }">
                                     <c:forEach var="vo" items="${storyList }" varStatus="s">
-                                        <div class="story_small_con">
+                                        <div class="story_small_con eachstory" onclick="eachstory('${vo.m_id }');">
                                             <div class="story_profile">${vo.m_img }</div>
                                             <div class="story_id">${vo.m_id }</div>
                                         </div>
@@ -359,6 +363,7 @@
 
         </body>
         <script type="text/javascript">
+            var memId = $(".m_id").val();
             $(function() {
 
                 // 페이지 로딩 시 처음 두개 댓글 나타내기 trigger 호출
@@ -377,7 +382,6 @@
                 $(".hidden_showhashtag").trigger('click');
                 //회원 추천 팔로우
                 $(".followBtn").on('click', function() {
-                    var memId = $(".m_id").val();
                     var r_mid = $(this).next().val();
                     console.log(memId);
                     console.log(r_mid);
@@ -411,10 +415,19 @@
 
             // 스토리 업로드 페이지로 이동
             $(".my_story_add").on('click', function() {
-                var memId = $(".m_id").val();
                 var url = "${pageContext.request.contextPath}/writeStory?m_id=" + memId;
                 $(location).attr('href', url);
             });
+            // 스토리 전체보기 페이지로 이동
+            $(".show_all_story").on('click', function() {
+                var url = "${pageContext.request.contextPath}/stories?m_id=" + memId;
+                $(location).attr('href', url);
+            });
+            // 스토리 각 페이지로 이동
+            function eachstory(id) {
+                var url = "${pageContext.request.contextPath}/eachstory?m_id=" + memId + "&&id=" + id;
+                $(location).attr('href', url);
+            }
 
             // 게시물 이미지 보기 trigger
             function showphoto(t_id, t_img) {
@@ -461,7 +474,6 @@
 
             // 해쉬태그 보기 trigger
             function showhashtag(t_id) {
-                var memId = $(".m_id").val();
                 $.ajax({
                     url: "${pageContext.request.contextPath}/showHashTag.do",
                     type: "post",
@@ -497,7 +509,6 @@
             $(".comment_upload").on('click', function() {
                 var postid = $(this).next().val();
                 var comment = $(this).prev().val();
-                var memId = $(".m_id").val();
                 var type = $(this).next().next().val();
                 console.log(postid);
                 console.log(comment);
@@ -606,8 +617,6 @@
 
             // 게시물 좋아요 체크 trigger - .hidden_likechk
             function likechk(t_id) {
-                var memId = $(".m_id").val();
-
                 $.ajax({
                     url: "${pageContext.request.contextPath}/hiddenShowLike.do",
                     method: "POST",
@@ -637,7 +646,6 @@
 
             // 게시물 좋아요 (일반 & 비즈니스 게시판 분리)
             function pressLike(t_id) {
-                var memId = $(".m_id").val();
                 var type = $(".t_type" + t_id).val();
                 var lcount = $(".lCount" + t_id).val();
                 console.log(t_id);
@@ -713,7 +721,6 @@
 
             // 게시물 좋아요 취소 (일반 & 비즈니스 게시판 분리)
             function pressUnlike(t_id) {
-                var memId = $(".m_id").val();
                 var type = $(".t_type" + t_id).val();
                 var lcount = $(".lCount" + t_id).val();
                 lcount--;
@@ -799,7 +806,6 @@
             }
 
             function pre_report(b_id, id, type) {
-                var memId = $(".m_id").val();
                 $("#report_modal").css("display", "block");
                 $("#report_back").css("display", "block");
                 $("#pre_report_choose").css("display", "block");
@@ -844,7 +850,6 @@
 
             // 댓글 신고 (일반 & 비즈니스 게시판 분리)
             function report(b_id, id, type) {
-                var memId = $(".m_id").val();
                 console.log(b_id);
                 console.log(id);
                 console.log(memId);
@@ -1180,7 +1185,6 @@
 
                             // 댓글 삭제 - 일반 게시판
                             $(".moreCoDe").on('click', function() {
-                                var memId = $(".m_id").val();
                                 var b_id = $(this).next().val();
                                 console.log(memId);
                                 console.log(b_id);
@@ -1257,7 +1261,6 @@
                             $(".moreCoW").on('click', function() {
                                 $(this).parent().next().css("display", "block");
                                 $(".rep_comment_upload").on('click', function() {
-                                    var memId = $(".m_id").val();
                                     var b_id = $(this).next().val();
                                     var r_comment = $(this).prev().val();
                                     var r_type = $(this).next().next().val();
@@ -1373,7 +1376,6 @@
 
                                         // 답글 좋아요 - 일반 게시판
                                         $(".comment_lcon").on('click', function() {
-                                            var memId = $(".m_id").val();
                                             var b_id = $(this).next().next().val();
                                             console.log(memId);
                                             console.log(b_id);
@@ -1410,7 +1412,6 @@
 
                                         // 답글 좋아요 취소 - 일반 게시판
                                         $(".comment_unlcon").on('click', function() {
-                                            var memId = $(".m_id").val();
                                             var b_id = $(this).next().val();
                                             console.log(memId);
                                             console.log(b_id);
@@ -1447,7 +1448,6 @@
 
                                         // 답글 삭제 - 일반 게시판
                                         $(".moreCoDe").on('click', function() {
-                                            var memId = $(".m_id").val();
                                             var b_id = $(this).next().val();
                                             console.log(memId);
                                             console.log(b_id);
@@ -1532,7 +1532,6 @@
 
                             // 댓글 좋아요 - 일반 게시판
                             $(".comment_lcon").on('click', function() {
-                                var memId = $(".m_id").val();
                                 var b_id = $(this).next().next().val();
                                 console.log(memId);
                                 console.log(b_id);
@@ -1569,7 +1568,6 @@
 
                             // 댓글 좋아요 취소 - 일반 게시판
                             $(".comment_unlcon").on('click', function() {
-                                var memId = $(".m_id").val();
                                 var b_id = $(this).next().val();
                                 console.log(memId);
                                 console.log(b_id);
@@ -1722,7 +1720,6 @@
 
                             // 댓글 삭제 - 비즈니스 게시판
                             $(".moreCoDe").on('click', function() {
-                                var memId = $(".m_id").val();
                                 var b_id = $(this).next().val();
                                 console.log(memId);
                                 console.log(b_id);
@@ -1799,7 +1796,6 @@
                             $(".moreCoW").on('click', function() {
                                 $(this).parent().next().css("display", "block");
                                 $(".rep_comment_upload").on('click', function() {
-                                    var memId = $(".m_id").val();
                                     var b_id = $(this).next().val();
                                     var r_comment = $(this).prev().val();
                                     var r_type = $(this).next().next().val();
@@ -1915,7 +1911,6 @@
 
                                         // 답글 좋아요 - 비즈니스 게시판
                                         $(".comment_lcon").on('click', function() {
-                                            var memId = $(".m_id").val();
                                             var b_id = $(this).next().next().val();
                                             console.log(memId);
                                             console.log(b_id);
@@ -1952,7 +1947,6 @@
 
                                         // 답글 좋아요 취소 - 비즈니스 게시판
                                         $(".comment_unlcon").on('click', function() {
-                                            var memId = $(".m_id").val();
                                             var b_id = $(this).next().val();
                                             console.log(memId);
                                             console.log(b_id);
@@ -1989,7 +1983,6 @@
 
                                         // 답글 삭제 - 비즈니스 게시판
                                         $(".moreCoDe").on('click', function() {
-                                            var memId = $(".m_id").val();
                                             var b_id = $(this).next().val();
                                             console.log(memId);
                                             console.log(b_id);
@@ -2074,7 +2067,6 @@
 
                             // 댓글 좋아요 - 비즈니스 게시판
                             $(".comment_lcon").on('click', function() {
-                                var memId = $(".m_id").val();
                                 var b_id = $(this).next().next().val();
                                 console.log(memId);
                                 console.log(b_id);
@@ -2111,7 +2103,6 @@
 
                             // 댓글 좋아요 취소 - 비즈니스 게시판
                             $(".comment_unlcon").on('click', function() {
-                                var memId = $(".m_id").val();
                                 var b_id = $(this).next().val();
                                 console.log(memId);
                                 console.log(b_id);
@@ -2194,7 +2185,6 @@
                 if (type == "G") {
                     // 댓글 좋아요 - 일반 게시판
                     $(".comment_lcon").on('click', function() {
-                        var memId = $(".m_id").val();
                         var b_id = $(this).next().next().val();
                         console.log(memId);
                         console.log(b_id);
@@ -2227,7 +2217,6 @@
 
                     // 댓글 좋아요 취소 - 일반 게시판
                     $(".comment_unlcon").on('click', function() {
-                        var memId = $(".m_id").val();
                         var b_id = $(this).next().val();
                         console.log(memId);
                         console.log(b_id);
@@ -2264,7 +2253,6 @@
 
                     // 댓글 좋아요 - 비즈니스 게시판
                     $(".comment_lcon").on('click', function() {
-                        var memId = $(".m_id").val();
                         var b_id = $(this).next().next().val();
                         console.log(memId);
                         console.log(b_id);
@@ -2297,7 +2285,6 @@
 
                     // 댓글 좋아요 취소 - 비즈니스 게시판
                     $(".comment_unlcon").on('click', function() {
-                        var memId = $(".m_id").val();
                         var b_id = $(this).next().val();
                         console.log(memId);
                         console.log(b_id);

@@ -63,4 +63,8 @@
 		and s_type=#{s_type}
 		and s_date > SYSDATE - 1
 	</select>
+	<select id="eachStory" parameterType="string"
+		resultType="arrayList" resultMap="resultStory">
+		select m_id, s_img from story where m_id=#{id} and s_date > SYSDATE - 1
+	</select>
 </mapper>

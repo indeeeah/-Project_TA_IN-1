@@ -50,9 +50,24 @@ public class StoryController {
 	@RequestMapping(value = "/stories", method = RequestMethod.GET)
 	public ModelAndView stories(@RequestParam(name = "m_id", required = false) String m_id, ModelAndView mv) {
 		try {
+			mv.addObject("myProfile", tService.showMyProf(m_id));
 			mv.addObject("showAllStory", sService.showAllStory(m_id));
 			mv.addObject("showAllAStory", sService.showAllAStory());
 			mv.setViewName("post/stories");
+			System.out.println(mv);
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	@RequestMapping(value = "/eachstory", method = RequestMethod.GET)
+	public ModelAndView eachstory(@RequestParam(name = "m_id", required = false) String m_id, @RequestParam(name = "id", required = false) String id, ModelAndView mv) {
+		try {
+			mv.addObject("myProfile", tService.showMyProf(m_id));
+			mv.addObject("eachstory", sService.eachStory(id));
+			mv.setViewName("post/eachstory");
 			System.out.println(mv);
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

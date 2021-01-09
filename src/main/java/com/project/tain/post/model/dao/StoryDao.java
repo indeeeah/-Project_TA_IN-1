@@ -36,5 +36,9 @@ public class StoryDao {
 	public List<Story> storyResult(Story st) {
 		return sqlSession.selectList("Story.storyResult", st);
 	}
+	
+	public List<Story> eachStory(String id) {
+		return sqlSession.selectList("Story.eachStory", id);
+	}
 
 }

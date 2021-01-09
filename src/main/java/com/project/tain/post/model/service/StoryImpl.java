@@ -41,5 +41,10 @@ public class StoryImpl implements StoryService {
 	public List<Story> storyResult(Story st) {
 		return sDao.storyResult(st);
 	}
+	
+	@Override
+	public List<Story> eachStory(String id) {
+		return sDao.eachStory(id);
+	}
 
 }
