@@ -30,11 +30,6 @@ public class BsnBoardReplyServiceImpl implements BsnBoardReplyService{
 	}
 
 	@Override
-	public int updateBbr(BsnBoardReply bbr) {
-		return bbrDao.updateBbr(bbr);
-	}
-
-	@Override
 	public int deleteBbr(String bb_id) {
 		return bbrDao.deleteBbr(bb_id);
 	}

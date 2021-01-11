@@ -28,50 +28,83 @@ body {font-family: Arial, Helvetica, sans-serif;}
 	height:300px;
 }
 #mdImg img{
-	max-width:500px;
-	max-height:500px;
+	width:100%;
+	height:100%;
 }
 /* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 10; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  	display: none; /* Hidden by default */
+  	position: fixed; /* Stay in place */
+  	z-index: 10; /* Sit on top */
+ 	 padding-top: 100px; /* Location of the box */
+  	left: 0;
+  	top: 0;
+  	width: 100%; /* Full width */
+  	height: 100%; /* Full height */
+  	overflow: auto; /* Enable scroll if needed */
+  	background-color: rgb(0,0,0); /* Fallback color */
+  	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
 .modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  display: flex;
+  	background-color: #fefefe;
+  	margin: auto;
+  	padding: 10px;
+  	border: 1px solid #888;
+  	width: 90%;
+  	max-width:930px;
+  	display: flex;
 }
 
 /* The Close Button */
 .close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+  	color: #aaaaaa;
+  	float: right;
+  	font-size: 28px;
+  	font-weight: bold;
+  	position: fixed;
+    right: 0px;
 }
 
 .close:hover,
 .close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
+  	color: #000;
+  	text-decoration: none;
+  	cursor: pointer;
 }
 #mdImg {
     margin-right: 20px;
+    min-width:450px;
+	min-height:450px;
+	max-width:600px;
+	max-height:600px;
+}
+#mdText {
+    max-height: 600px;
+   	width: 100%;
+}
+#mdInfo {
+    height: 72px;
+    padding-top: 16px;
+    right: 0;
+    width: 335px;
+}
+#mdBoard {
+	height:65%;
+    overflow-x: hidden;
+}
+#mdFooter{
+	background-color: #fefefe;
+	margin: auto;
+  	padding: 10px;
+  	border: 1px solid #888;
+  	width: 90%;
+  	max-width:930px;
+  	display: flex;
+  	margin-top: 20px;
+  	justify-content: space-around;
+  	bottom:0px;
 }
 </style>
 </head>
@@ -109,8 +142,8 @@ ${listCount } : ${bbrLlke }
 			  		<c:url var="bbdel" value="bbDelete.do">
 						<c:param name="bb_id" value="${v.bb_id }"/>
 					</c:url>
-					<a href="${bbdel }">[글 삭제]</a>
-					<a href="${bbupview }">[수정 페이지로 이동]</a>
+					<a href="${bbdel }">삭제</a>
+					<a href="${bbupview }">수정</a>
 			  		</div>
 			  		<div id="mdBoard">
 			  			<div id="mdContent">
@@ -126,60 +159,54 @@ ${listCount } : ${bbrLlke }
 			  		</div>
 			  		<div id="mdWrite">
 			  			<form action="bbrInsert.do" id="bbrInForm" class="bbrInForm" method="get">
-			  				<input type="hidden" id="bb_topid" name="bb_topid" value="${v.bb_id }">
-			  				<input type="hidden" id="bb_name" name="bb_name" value="O">
-			  				<input type="hidden" id="bb_price" name="bb_price" value="0">
+<!-- 			  				<input type="hidden" id="bb_name" name="bb_name" value="O">
 			  				<input type="hidden" id="bb_type" name="bb_type" value="C">
-			  				<input type="text" id="bb_info" class="bb_info" name="bb_info" placeholder="댓글 달기...">
-			  				<input type="submit" value="게시">
+			  				<input type="hidden" id="bb_price" name="bb_price" value="0"> -->
+			  				<input type="hidden" id="bb_topid" class="${v.bb_id }" name="bb_topid" value="${v.bb_id }">
+			  				<input type="text" id="bb_info" class="bb_info" name="${v.bb_id }" placeholder="댓글 달기...">
+			  				<button type="button" id="bbrInsert" class="bbrInsert" name="bbrInsert" value="${v.bb_id }">게시</button>
 			  			</form>
 			  		</div>
 			  		
 			  	</div>
+			  </div>
 			  	<div id="mdFooter">
 			  		<div id="mdPrice">
 			  		가격 : ${v.bb_price}
 			  		</div>
 			  		<div id="mdOption">
 						<select name="option" id="option">
+						<c:if test="${v.bb_option1 ne null }">
 						  <option value="${v.bb_option1}">${v.bb_option1}</option>
+						</c:if>
+						<c:if test="${v.bb_option2 ne null }">
 						  <option value="${v.bb_option2}">${v.bb_option2}</option>
+						</c:if>
+						<c:if test="${v.bb_option3 ne null }">
 						  <option value="${v.bb_option3}">${v.bb_option3}</option>
+						</c:if>
+						<c:if test="${v.bb_option4 ne null }">
 						  <option value="${v.bb_option4}">${v.bb_option4}</option>
+						</c:if>
 						</select>
 			  		</div>
 			  		<div id="mdCart">
 			  			<button type="button" class="cart" onclick="location.href='#';">장바구니</button>
 			  		</div>
 			  	</div>
-			  </div>
-			
 			</div>
 			</c:forEach>
 		</c:if>
 		</div>
 	<input type="button"  value="글쓰기" onclick="window.location='bbWriteForm.do'">
 	</div>
-<%-- <c:forEach items="${listImg }" var="v">
-${v.bb_img1 }
-</c:forEach>
-<c:forEach items="${bbDetail }" var="v">
-${v.m_id }
-${v.bb_name}
-${v.bb_info}
-${v.bb_price}
-${v.bb_option1}
-${v.bb_option2}
-${v.bb_option3}
-${v.bb_option4}
-</c:forEach> --%>
 <script>
 // 모달창 open
 $('.myBtn').on('click', function() {
 	var a = $(this).val();
-	console.log(a);
+	console.log("모달창 열기a:"+a);
 	var x = document.getElementById(a);
-	console.log(x);
+	console.log("모달창 열기x:"+x);
     x.style.display="block";
     
     $.ajax({
@@ -189,43 +216,121 @@ $('.myBtn').on('click', function() {
     	data:{ bb_id : a },
     	dataType:"json",
     	success:function(resp){
-    		console.log("댓글갯수 : "+resp.data.length);
-    		if(resp.data[0].m_id!=null){
+    		var htmls="";
+    		if(resp.data!=null){
 	    		for(i=0; i<resp.data.length; i++){
-	    			$(".mdReply").append("<div class='mrd'>"+
-					"<div id='bbrImg' class='bbrImg'>"+
-					"<img src='#'/>"+
-					"</div>"+
-					"<div id='bbrId' class='bbrId'>"+
-						"<span>" + resp.data[i].m_id + "</span>"+
-					"</div>"+
-					"<div id='bbrCon' class='bbrCon'>"+
-						"<span>"+resp.data[i].bb_info+"</span>"+
-					"</div>"+
-					"<div id='bbrLike' class='bbrLike'>"+
-						"<span>좋아요:"+resp.data[i].bbrlike+"</span>"+
-					"</div>"+
-					"<div id='bbr' class='bbr'>"+
-					"</div></div>");
+	    			htmls += "<div class='mrd' >"+
+								"<div id='bbrImg' class='bbrImg'>"+
+								"<img src='#'/>"+
+								"</div>"+
+								"<div id='bbrId' class='bbrId'>"+
+									"<span>" + resp.data[i].m_id + "</span>"+
+								"</div>"+
+								"<div id='bbrCon' class='bbrCon'>"+
+									"<span>"+resp.data[i].bb_info+"</span>"+
+								"</div>"+
+								"<div id='bbrLike' class='bbrLike' style='cursor:pointer'>"+
+									"<span class='bbrL' >좋아요:"+resp.data[i].bbrlike+"</span>"+
+								"</div>"+
+								"<div id='bbr' class='bbr' style='cursor:pointer'>...."+
+								"</div>"+
+									"<button type='button' id='"+resp.data[i].bb_id+"' class='bbrDelete "+resp.data[i].bb_id+"' onclick=\"bbrDelete('"+resp.data[i].bb_id+"')\">삭제</button>"+
+							"</div>";
 	    		}   
+    			$(".mdReply").html(htmls);
     		} else {
-    			$(".mdReply").append("<div class='mrd'>댓글이 없습니다.</div>");
+    			$(".mdReply").html("<div class='mrd'>댓글이 없습니다.</div>");
     		}
+    		/* $(".bbrDelete").on('click', function(){
+				var bb_id = $(this).val();    			
+    			console.log("댓글삭제 글번호:"+bb_id);
+    			bbrDelete(bb_id);
+				$(this).parent().remove();
+    			
+    		}); */
     	}, error:function(request, status, error){
     		alert("code : " +request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
 		}
     });
 });
+/* 댓글 삭제 */
+function bbrDelete(bb_id){
+	console.log("bbrDelete함수:"+bb_id);
+	var a = bb_id;
+	var b = document.getElementById(bb_id);
+	console.log("bbrDelete함수:"+a+":"+b);
+	$.ajax({
+		url:"bbrDelete",
+		method:"POST",
+		async: false,
+		data:{ bb_id:bb_id},
+		dataType:"json",
+		success:function(resp){
+			console.log("댓글삭제 resp:"+resp+":"+resp.ack);
+			$(b).parent().remove();
+		},
+		error:function(request, status, error){
+			alert("code : " +request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+			event.preventDefault();
+		}
+	});
+	$(this).parent().remove();
+};
+/* 댓글 삭제 (추후삭제)*/
+/* function bbrDelete(bbrv){
+	console.log("댓글삭제클릭:");
+	var a = bbrv.value;
+	var b = $(".bbrDelete").attr("bb_topid");
+	console.log("댓글삭제클릭:"+a+" : "+b);
+	$.ajax({
+		url:"bbrDelete",
+		method:"POST",
+		data:{ bb_id:a, bb_topid:b},
+		dataType:"json",
+		success:function(resp){
+			var htmls="";
+    		if(resp.data!=null){
+	    		for(i=0; i<resp.data.length; i++){
+	    			htmls += "<div class='mrd' >"+
+								"<div id='bbrImg' class='bbrImg'>"+
+								"<img src='#'/>"+
+								"</div>"+
+								"<div id='bbrId' class='bbrId'>"+
+									"<span>" + resp.data[i].m_id + "</span>"+
+								"</div>"+
+								"<div id='bbrCon' class='bbrCon'>"+
+									"<span>"+resp.data[i].bb_info+"</span>"+
+								"</div>"+
+								"<div id='bbrLike' class='bbrLike' style='cursor:pointer'>"+
+									"<span class='bbrL' >좋아요:"+resp.data[i].bbrlike+"</span>"+
+								"</div>"+
+								"<div id='bbr' class='bbr' style='cursor:pointer'>...."+
+								"</div>"+
+									"<button type='button' value='"+resp.data[i].bb_id+";' bb_topid='"+resp.data[i].bb_topid+";' class='test' onclick='bbrDelete(this)' >삭제</button>"+
+							"</div>";
+	    		}   
+    			$(".mdReply").html(htmls);
+    		} else {
+    			$(".mdReply").html("<div class='mrd'>댓글이 없습니다.</div>");
+    		}
+    		
+		},
+		error:function(request, status, error){
+			alert("code : " +request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+		}
+	});
+}; */
+
 // 모달창 close
 $('.close').on('click', function() {
 	/* $('#modal').hide(); */
 	var a = $(this).val();
-	console.log(a);
+	console.log("모달창 닫기a:"+a);
 	var x = document.getElementById(a);
-	console.log(x);
+	console.log("모달창 닫기x:"+x);
     x.style.display="none";
     //클로즈 버튼 누르면 댓글 지워지기
-    $(".mrd").remove();
+    $(".mdReply").empty();
 });
 
 // 윈도우 누르면 모달창 꺼지기
@@ -284,8 +389,15 @@ $(".translate").on("click", function(){
 });
 </script>
 </body>
+
+<!-- 댓글 에이작스 -->
 <script type="text/javascript">
+
 	$(function(){
+		$(".mdr").on('click', function(){
+			alert("bbrLike");
+		});
+/* 	교재
 		$('#replyForm').on('submit', function(event){
 			if($('#reply_contents').val()==""){
 				alert("내용을 입력해 주세요.");
@@ -294,8 +406,11 @@ $(".translate").on("click", function(){
 				$('#comments').val($('#reply_contents').val());
 				return true;
 			}
-		});
+		}); */
 		
+		
+		
+/* 		교재(댓글수정)
 		$(".update").on('click', function(){
 			var parentP = $(this).parent();
 			var parentDiv = parentP.parent();
@@ -315,68 +430,69 @@ $(".translate").on("click", function(){
 				parentP.children(".delete").toggle("fast");
 				parentP.children(".updateConfirm").toggle("fast");
 			}
-		});
+		}); */
 		
-		$(".bbrInForm").on('click', function(){
-			var parentP = $(this).parent();
-			var parentDiv = parentP.parent();
-			/* if(parentDiv.find('input[name=pwd_chk]').val() != parentDiv.children('input[name=rep_pwd]').val()){
-				alert("비밀번호가 일치하지 않습니다.");
-				return false;
-			} else{ 
-				
-			} */
+		/* 댓글등록 */
+		$(".bbrInsert").on('click', function(){
+			var a = $(this).val();
+			var c1 = document.getElementsByName(a);
+			var c2 = $(c1).val();
+			console.log("댓글인서트a:"+a+"c1:"+c1+"c2:"+c2);
+			if(c2==""){
+				alert("내용을 입력해주세요");
+				event.preventDefault();
+			} else {
 				$.ajax({
-					url:"${pageContext.request.contextPath}/bbrInsert.do",
+					url:"bbrInsert",
 					method:"POST",
 					async:false,
 					data:{
-						comment_id:parentDiv.find("input[name=rep_id]").val(),
-						comment_pwd:parentDiv.find("input[name=pwd_chk]").val(),
-						comments:parentDiv.find('.updateContent').val()
+						bb_topid : a,
+						bb_info : c2,
 					},
-					success: function(data){
-						alert(data);
-						parentDiv.find(".comment-body p").text(parentDiv.find('.updateContent').val());
-					},
-					error:function(request, status, error){
-						alert("code : " +request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-					}
-				});
-			
-			parentDiv.find(".updateContent").remove();
-			parentDiv.find(".comment-confirm").val("");
-			parentDiv.find(".comment-confirm").hide();
-			parentP.children(".updateConfirm").toggle("fast");
-			parentP.children(".delete").toggle("fast");
-			parentP.children(".update").text("수정 및 삭제");
-		});
-		
-		$(".delete").on('click', function(){
-			var parentP = $(this).parent();
-			var parentDiv = parentP.parent();
-			
-			if(parentDiv.find('input[name=pwd_chk]').val() != parentDiv.children('input[name=rep_pwd]').val()){
-				alert("비밀번호가 일치하지 않습니다.");
-				return false;
-			} else{
-				$.ajax({
-					url:"${pageContext.request.contextPath}/brDeleteRB.do",
-					method:"POST",
-					data:{
-						comment_id:parentDiv.find("input[name=rep_id]").val(),
-						comment_pwd:parentDiv.find("input[name=pwd_chk]").val()
-					},
-					success:function(data){
-						alert(data);
-						parentDiv.remove();
+					dataType:"json",
+					success: function(resp){
+						console.log(resp.data.length);
+						var htmls="";
+			    		if(resp.data!=null){
+				    		for(i=0; i<resp.data.length; i++){
+				    			htmls += "<div class='mrd' >"+
+											"<div id='bbrImg' class='bbrImg'>"+
+											"<img src='#'/>"+
+											"</div>"+
+											"<div id='bbrId' class='bbrId'>"+
+												"<span>" + resp.data[i].m_id + "</span>"+
+											"</div>"+
+											"<div id='bbrCon' class='bbrCon'>"+
+												"<span>"+resp.data[i].bb_info+"</span>"+
+											"</div>"+
+											"<div id='bbrLike' class='bbrLike' style='cursor:pointer'>"+
+												"<span class='bbrL' >좋아요:"+resp.data[i].bbrlike+"</span>"+
+											"</div>"+
+											"<div id='bbr' class='bbr' style='cursor:pointer'>...."+
+											"</div>"+
+												"<button type='button' value='"+resp.data[i].bb_id+";' class='bbrDelete "+resp.data[i].bb_id+"' onclick=\"bbrDelete('"+resp.data[i].bb_id+"')\">삭제</button>"+
+										"</div>";
+				    		}   
+			    			$(".mdReply").html(htmls);
+			    		} else {
+			    			$(".mdReply").html("<div class='mrd'>댓글이 없습니다.</div>");
+			    		}
 					},
 					error:function(request, status, error){
 						alert("code : " +request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
 					}
 				});
 			}
+			
 		});
+		
+		
+		
+		
+		
+		
 	});
+
 </script>
 </html>

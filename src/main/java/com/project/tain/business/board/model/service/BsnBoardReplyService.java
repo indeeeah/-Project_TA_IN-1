@@ -15,9 +15,6 @@ public interface BsnBoardReplyService {
 	// 댓글 등록
 	int insertBbr(BsnBoardReply bbr);
 	
-	// 댓글 수정
-	int updateBbr(BsnBoardReply bbr);
-	
 	// 댓글 삭제
 	int deleteBbr(String bb_id);
 }

@@ -3,6 +3,9 @@ package com.project.tain.business.board.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 //import com.project.tain.business.board.model.dao.MediaUtils;
@@ -90,13 +95,14 @@ public class BsnBoardController {
 	// 작성한 게시물 인서트
 	@RequestMapping(value="/bbInsert.do", method = RequestMethod.POST)
 	public ModelAndView bsnBoardInsert(BsnBoard bb,
-			@RequestParam(name="file") Map<String, String> fileMap,
-			HttpServletRequest request, ModelAndView mv) {
-		fileMap.entrySet().stream().forEach(System.out::println);
-		System.out.println("파일맵" + fileMap.size());
+			@RequestParam Map<String, MultipartFile> fileMap,
+			MultipartHttpServletRequest request, ModelAndView mv) {
 		
-		System.out.println("파일맵투스트링"+fileMap.values());
+		System.out.println(fileMap.size());
+		System.out.println(request.getParameter("file"));
 		try {
+			Iterator itr = request.getFileNames();
+			
 			
 //			if(fileMap!=null && !fileMap.equals("")) {
 //				saveFile(fileMap, request);
@@ -110,6 +116,7 @@ public class BsnBoardController {
 			System.out.println("인서트완료");
 			mv.setViewName("redirect:bbList.do");
 		} catch(Exception e) {
+			e.printStackTrace();
 			mv.addObject("errorMsg", e.getMessage());
 			mv.setViewName("errorPage");
 		}

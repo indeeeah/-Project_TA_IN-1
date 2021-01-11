@@ -40,8 +40,7 @@ public class BsnBoardReply implements java.io.Serializable{
 	
 	// 등록 및 수정
 	public BsnBoardReply(String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
-			String bb_option2, String bb_option3, String bb_option4, String bb_type,
-			int t_num, String rb_reason) {
+			String bb_option2, String bb_option3, String bb_option4, String bb_type, int t_num) {
 		super();
 		this.m_id = m_id;
 		this.bb_name = bb_name;
@@ -53,16 +52,9 @@ public class BsnBoardReply implements java.io.Serializable{
 		this.bb_option4 = bb_option4;
 		this.bb_type = bb_type;
 		this.t_num = t_num;
-		this.rb_reason = rb_reason;
 	}
 	
 	// 삭제
-	public BsnBoardReply(String bb_id, String m_id) {
-		super();
-		this.bb_id = bb_id;
-		this.m_id = m_id;
-	}
-	// test1
 	public BsnBoardReply(String bb_id) {
 		super();
 		this.bb_id = bb_id;

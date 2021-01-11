@@ -30,6 +30,9 @@ public class BsnBoardReplyController {
 	@Autowired
 	private BsnBoardReplyService bbrService;
 	
+	@Autowired
+	private BsnBoardReply bbr;
+	
 	// 댓글 목록
 	@ResponseBody
 	@RequestMapping(value="/bbrList", method = RequestMethod.POST)
@@ -39,7 +42,6 @@ public class BsnBoardReplyController {
 		BsnBoardReply bbr = new BsnBoardReply();
 		bbr.setBb_id(bb_id);;
 		List<BsnBoardReply> logList = bbrService.bbrList(bb_id);
-		System.out.println("좋아요:"+bbrService.bbrList(bb_id).get(1));
 		if ( logList.isEmpty() ) {
 			String Msg = "이력이 없습니다.";
 			String Code = "1";
@@ -55,103 +57,78 @@ public class BsnBoardReplyController {
 			return result;
 		}
 	}
-//	@ResponseBody
-//	@RequestMapping(value="/bbrList", method = RequestMethod.POST)
-//	public String bbrListService(BsnBoardReply bbr, 
-//			@RequestParam("bb_id") String bb_id){
-//		HashMap<String , String> result = new HashMap<String, String>();
-//		// 로그인 대체
-//		String m_id= "aaaa";
-//		JSONObject job = new JSONObject();
-//		try {
-//			System.out.println("bbrlist 시작");
-//			job.put("ack", bbrService.bbrList(bb_id));
-//			
-//			System.out.println("bbrlist 완료");
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			System.out.println("bbrlist error");
-//			job.put("ack", -1);
-//		}
-//		return job.toJSONString();
-//	}
+
 	
+	// 댓글 등록
 	@ResponseBody
-	@RequestMapping(value="/bbrInsert.do", method = RequestMethod.POST)
-	public String bsnBoardInsert(BsnBoardReply bbr) {
-		
+	@RequestMapping(value="/bbrInsert", method = RequestMethod.POST)
+	public HashMap <String, Object> bbrInsert(BsnBoardReply bbr, Locale locale, Model model, HttpServletRequest request) {
+		System.out.println("댓글등록 컨트롤러");
+		HashMap<String, Object> result = new HashMap <String,Object>();
 		String m_id= "aaaa";
-		JSONObject job = new JSONObject();
+		bbr.setM_id(m_id);
+		System.out.println("댓글등록 아이디"+bbr.getM_id());
+		System.out.println("댓글등록 상위글"+bbr.getBb_topid());
+		System.out.println("댓글등록 내용"+bbr.getBb_info());
 		try {
-			System.out.println("댓글 컨트롤러");
-			job.put("ack", bbrService.insertBbr(bbr));
-			System.out.println("인서트완료");
+			result.put("ack", bbrService.insertBbr(bbr));
+			System.out.println("댓글인서트완료");
+			List<BsnBoardReply> logList = bbrService.bbrList(bbr.getBb_topid());
+			System.out.println("댓글인서트 리스트:"+logList);
+			result.put("data", logList);
 		} catch(Exception e) {
-			job.put("ack", -1);
+			e.printStackTrace();
+			result.put("ack", -1);
 		} finally {
 			
 		}
 		
-		return job.toJSONString();
+		return result;
+	}
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value="/bbrDelete", method = RequestMethod.POST)
+	public HashMap <String, Object> bbrDelete(BsnBoardReply bbr, Locale locale, Model model, HttpServletRequest request) {
+		System.out.println("댓글등록 컨트롤러");
+		HashMap<String, Object> result = new HashMap <String,Object>();
+		System.out.println("댓글등록 글번호"+bbr.getBb_id());
+		try {
+			result.put("ack", bbrService.deleteBbr(bbr.getBb_id()));
+			System.out.println("댓글삭제완료");
+		} catch(Exception e) {
+			e.printStackTrace();
+			result.put("ack", -1);
+		} finally {
+			
+		}
+		
+		return result;
 	}
 	
-	// 시험
-//	@RequestMapping(value="/bbrInsert.do", method = RequestMethod.GET)
-//	public ModelAndView bsnBoardInsert(BsnBoardReply bbr, ModelAndView mv,
-//			@RequestParam(name="m_id") String m_id) {
+//	// 게시물 삭제
+//	@ResponseBody
+//	@RequestMapping(value="/bbrDelete", method = RequestMethod.POST)
+//	public HashMap <String, Object> bbrDelete(BsnBoardReply bbr, Locale locale, Model model, HttpServletRequest request) {
+//		System.out.println("댓글삭제 컨트롤러");
+//		HashMap<String, Object> result = new HashMap <String,Object>();
+//		System.out.println("댓글삭제 글번호"+bbr.getBb_id());
+////		System.out.println("댓글삭제 상위글번호1:"+bb_topid);
 //		
-//		m_id= "aaaa";
 //		try {
-//			
-//			System.out.println("댓글 컨트롤러");
-//			bbrService.insertBbr(bbr);
-//			System.out.println("인서트완료");
-//			mv.setViewName("redirect:bbList.do");
+//			result.put("data", bbrService.deleteBbr(bbr.getBb_id()));
+//			System.out.println("댓글삭제완료");
+////			System.out.println("댓글삭제 상위글번호2:"+bbr.getBb_topid());
+////			List<BsnBoardReply> logList = bbrService.bbrList(bbr.getBb_topid());
+////			System.out.println("댓글삭제 후 리스트:"+logList);
+////			result.put("data", logList);
 //		} catch(Exception e) {
-//			mv.addObject("errorMsg", e.getMessage());
-//			mv.setViewName("errorPage");
-//		}
-//		return mv;
-//	}
-	
-//	// 수정한 게시물 업데이트
-//		@RequestMapping(value="/bbrUpdate.do", method = RequestMethod.POST)
-//		public ModelAndView boardUpdate(BsnBoard bb, HttpServletRequest request, ModelAndView mv) {
-//			System.out.println("업데이트 돌입");
-//			try {
-//				
-//				bbService.updateBsnBoard(bb);
-//				if(bbService.updateBsnBoard(bb)!=null) {
-//					System.out.println("업데이트 이프");
-//					mv.addObject("board_num", bbService.updateBsnBoard(bb));
-//					System.out.println("업데이트 애드");
-//					mv.addObject("bb_id", bb.getBb_id());	// 선생님 추천 코드
-//					mv.setViewName("redirect:bbList.do");
-//				}
-//			} catch(Exception e) {
-//				mv.addObject("msg", e.getMessage());
-//				mv.setViewName("errorPage");
-//			}
-//			return mv;
+//			System.out.println("댓글삭제 catch");
+//			e.printStackTrace();
+//			result.put("ack", -1);
+//		} finally {
+//			
 //		}
 //		
-//		// 게시물 삭제
-//		@RequestMapping(value="/bbrDelete.do")
-//		public ModelAndView boardDelete(@RequestParam(name="bb_id") String bb_id, 
-//				HttpServletRequest request, ModelAndView mv) {
-//			try {
-//				System.out.println("bbr삭제컨입");
-//				BsnBoard bb = bbService.selectOneImg(bb_id);
-//				System.out.println("bbr삭제셀원이");
-//				
-//				bbService.deleteBsnBoard(bb_id);
-//				System.out.println("bbr삭제완료");
-//				
-//				mv.setViewName("redirect:bbList.do");
-//			} catch(Exception e) {
-//				mv.addObject("msg", e.getMessage());
-//				mv.setViewName("errorPage");
-//			}
-//			return mv;
-//		}
+//		return result;
+//	}
 }
