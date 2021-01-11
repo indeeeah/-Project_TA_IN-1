@@ -48,12 +48,6 @@
 		UPDATE BusinessMember SET bm_approval = #{bm_approval}
 		WHERE m_id = #{m_id}
 	</update>
-	
-	<!-- 회원 삭제 -->
-	<delete id="deleteBsMmanage" parameterType="string"
-		flushCache="true" statementType="PREPARED">
-		DELETE FROM BusinessMember WHERE m_id = #{m_id}
-	</delete>
 </mapper>
 
 

@@ -20,6 +20,8 @@
 		<result property="m_lastact" column="m_lastact" />
 		<result property="m_language" column="m_language" />
 		<result property="m_joindate" column="m_joindate" />
+		<result property="approval_key" column="approval_key" />
+		<result property="approval_status" column="approval_status" />
 	</resultMap>
 	
 	<!-- 전체 회원 수 조회 -->

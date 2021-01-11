@@ -45,31 +45,29 @@ a:hover {
 </script>
 </head>
 <body>
-<div style="text-align: center; margin-top:70px;"><h2>비지니스 회원 목록</h2></div>
+<div style="text-align: center; margin-top:70px;"><h2>회원 신고 목록</h2></div>
 <table align="center" cellpadding="10" cellspacing="0" border="1" width="60%">
 	<tr>
 		<td colspan="4" style="border: none;">
-			<form method="get" name="listForm" action="bsmemberManagelist.do">
+			<form method="get" name="listForm" action="reportmemberManagelist.do">
 			<input type="hidden" name="page" value="${currentPage}"> 
 			<input type="text" name="keyword"> <input class="btn-action" type="submit" value="검색">
 			</form></td>
-		<td align="right" colspan="8" cellspacing="0" style="border: none;"><input class="btn-action" type="button" value="전체목록"
-				onclick="window.location='bsmemberManagelist.do'"> </td>
+		<td align="right" colspan="6" cellspacing="0" style="border: none;"><input class="btn-action" type="button" value="전체목록"
+				onclick="window.location='reportmemberManagelist.do'"> </td>
 	</tr>
 
 	<tr>
 		<td align="center" width="60">번호</td>
-		<td align="center" width="100">아이디</td>
-		<td align="center" width="200">회사이름</td>
-		<td align="center" width="300">회사주소</td>
-		<td align="center" width="100">회사전화</td>
-		<td align="center" width="200">계좌번호</td>
-		<td align="center" width="100">승인여부</td>
+		<td align="center" width="100">피신고자</td>
+		<td align="center" width="100">신고자</td>
+		<td align="center" width="300">신고사유</td>
+		<td align="center" width="100">신고날짜</td>
 	</tr>
 	<!-- 글이 없을 경우 -->
 		<c:if test="${listCount eq 0}">
 			<tr>
-				<td colspan="7" align="center"><br> <br> 가입된 회원이 
+				<td colspan="5" align="center"><br> <br> 신고된 회원이 
 					없습니다.<br> <br></td>
 			</tr>
 		</c:if>	
@@ -77,23 +75,22 @@ a:hover {
 			<c:forEach var="vo" items="${list}" varStatus="status">
 				<tr>
 					<td align="center">${status.count}</td>
-					<td align="left"><a id="moveid" 
-						href="bsmemberManageDetali.do?m_id=${vo.m_id}&page=${currentPage}">
-							&nbsp;${vo.m_id} </a></td>
-					<td align="center">${vo.bm_name}</td>
-					<td align="center">${vo.bm_addr}</td>
-					<td align="center">${vo.bm_phone}</td>
-					<td align="center">${vo.bm_account}</td>
-					<td align="center">${vo.bm_approval}</td>
+					<td align="left"><a id="moveid"
+						href="memberManageDetail.do?m_id=${vo.m_id1}&page=${currentPage}">
+							&nbsp;${vo.m_id1} </a></td>
+					
+					<td align="center">${vo.m_id2}</td>
+					<td align="center">${vo.rm_reason}</td>
+					<td align="center">${vo.rm_date}</td>
 				</tr>
 			</c:forEach>
 		</c:if>	
 		<!-- 앞 페이지 번호 처리 -->
 		<tr align="center" height="20">
-			<td colspan="7"><c:if test="${currentPage <= 1}">
+			<td colspan="5"><c:if test="${currentPage <= 1}">
 				 [이전]&nbsp;
 				 </c:if> <c:if test="${currentPage > 1}">
-					<c:url var="blistST" value="bsmemberManagelist.do">
+					<c:url var="blistST" value="reportmemberManagelist.do">
 						<c:param name="page" value="${currentPage-1}" />
 					</c:url>
 					<a href="${blistST}">[이전]</a>
@@ -103,7 +100,7 @@ a:hover {
 						<font color="black" size="4"><b>[${p}]</b></font>
 					</c:if>
 					<c:if test="${p ne currentPage}">
-						<c:url var="blistchk" value="bsmemberManagelist.do">
+						<c:url var="blistchk" value="reportmemberManagelist.do">
 							<c:param name="page" value="${p}" />
 						</c:url>
 						<a href="${blistchk}">${p}</a>
@@ -111,7 +108,7 @@ a:hover {
 				</c:forEach> <c:if test="${currentPage >= maxPage}">
 					 [다음]
 					 </c:if> <c:if test="${currentPage < maxPage}">
-					<c:url var="blistEND" value="bsmemberManagelist.do">
+					<c:url var="blistEND" value="reportmemberManagelist.do">
 						<c:param name="page" value="${currentPage+1}" />
 					</c:url>
 					<a href="${blistEND}">[다음]</a>

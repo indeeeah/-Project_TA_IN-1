@@ -73,14 +73,15 @@ a.btn-action{
 		</tr>
 	
 		<tr align="center" valign="middle">
-			<td colspan="2"><c:url var="bupview" value="memberManageRenew.do">
+			<td colspan="3"><c:url var="bupview" value="memberManageRenew.do">
 					<c:param name="m_id" value="${MemberManage.m_id}" />
 					<c:param name="page" value="${currentPage}" />
 				</c:url> 
-				<a class="btn-action" href="${bupview}">수정 페이지로 이동</a>&nbsp;&nbsp; 
+				<a class="btn-action" href="${bupview}">수정 페이지로 이동</a>&nbsp;&nbsp;
+				<c:url var="manageEmail" value="manageEmail.do">
+				</c:url> <a class="btn-action" href="${manageEmail}">메일보내기</a>&nbsp;&nbsp;
 				<c:url var="membermanagelist" value="membermanagelist.do">
-					
-				</c:url> <a class="btn-action" href="${membermanagelist}">목록</a></td>
+				</c:url> <a class="btn-action" href="${membermanagelist}">목록</a></td>	
 		</tr>
 	</table>
 </body>

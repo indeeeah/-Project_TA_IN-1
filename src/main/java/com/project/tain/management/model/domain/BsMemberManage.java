@@ -155,15 +155,15 @@ public class BsMemberManage implements java.io.Serializable{
 	
 	public String getbsm_cate() {
 		if(bm_cate==1) {
-			return "ÆĞ¼Ç";
+			return "íŒ¨ì…˜";
 		} if(bm_cate==2) {
-			return "ÀüÀÚÁ¦Ç°";
+			return "ì „ìì œí’ˆ";
 		} if(bm_cate==3) {
-			return "ÀâÈ­";
+			return "ì¡í™”";
 		} if(bm_cate==4) {
-			return "È­ÀåÇ°";
+			return "í™”ì¥í’ˆ";
 		} else {
-			return "±âÅ¸";
+			return "ê¸°íƒ€";
 		}
 	}
 }

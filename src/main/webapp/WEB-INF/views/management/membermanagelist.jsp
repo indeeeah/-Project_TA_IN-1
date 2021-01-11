@@ -10,7 +10,7 @@
 a{
 	text-decoration: none;
 }
-a#moveid {
+a.moveid {
 	color: rgb(207, 3, 3);
 }
 a:hover { 
@@ -27,7 +27,7 @@ a:hover {
 }
 </style>
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$('form[name=listForm]').on(
@@ -78,11 +78,13 @@ a:hover {
 			<c:forEach var="vo" items="${list}" varStatus="status">
 				<tr>
 					<td align="center">${status.count}</td>
-					<td align="left"><a id="moveid"
+					<td align="left"><a class="moveid"
 						href="memberManageDetail.do?m_id=${vo.m_id}&page=${currentPage}">
 							&nbsp;${vo.m_id} </a></td>
 					<td align="center">${vo.m_name}</td>
-					<td align="center">${vo.m_email}</td>
+					<td align="center"><a class="moveid" 
+						href="manageEmail.do?m_email=${vo.m_email}&page=${currentPage}">
+							&nbsp;${vo.m_email} </a></td>
 					<td align="center">${vo.m_phone}</td>
 					<td align="center">${vo.m_joindate}</td>
 					<td align="center">${vo.m_usage}</td>
