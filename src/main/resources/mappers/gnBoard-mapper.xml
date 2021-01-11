@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="GnBoard">
+	<resultMap type="GnBoard" id="resultGnBoard">
+		<id property="m_id" column="m_id" />
+		<id property="t_id" column="t_id" />
+		<result property="m_img" column="m_img" />
+	</resultMap>
+
+	<!-- 아이디, 프로필 사진, 팔로워, 소개 -->
+	<select id="showp_one" parameterType="string"
+		resultType="GnBoard">
+		select m_id, m_img, m_intro, count(a.m_id1) follower from
+		member join follow a on m_id = a.m_id2
+		where m_id = #{m_id} group by
+		m_id, m_img, m_intro
+	</select>
+	<!-- 팔로우 -->
+	<select id="showp_two" parameterType="string"
+		resultType="GnBoard">
+		select count(m_id1) follow from follow where m_id1=#{m_id}
+	</select>
+	<!-- 일반 게시글 -->
+	<select id="showp_three" parameterType="string"
+		resultType="GnBoard">
+		select count(board.b_id) post from board where m_id =
+		#{m_id} and b_type='G'
+	</select>
+	<!-- 비즈니스 게시글 -->
+	<select id="showp_four" parameterType="string"
+		resultType="GnBoard">
+		select count(businessboard.bb_id) post from businessboard
+		where m_id =
+		#{m_id} and bb_type='B'
+	</select>
+	<!-- 스토리 유무 -->
+	<select id="storychk" parameterType="string"
+		resultType="GnBoard">
+		select count(*) story from story where s_date > SYSDATE - 1
+		and m_id=#{m_id}
+	</select>
+
+	<!-- 게시글 조회 -->
+	<select id="showpost" parameterType="string"
+		resultType="arrayList" resultMap="resultGnBoard">
+		select * from
+		(select m_id, board.b_id b_id, b_img1 b_img, b_date b_date from board join
+		boardadd on board.b_id = boardadd.b_id
+		union
+		select m_id, businessboard.bb_id b_id, bb_img1 b_img, bb_date b_date from
+		businessboard join businessboardadd on businessboard.bb_id =
+		businessboardadd.bb_id)
+		where m_id=#{m_id}
+		order by b_date desc
+	</select>
+</mapper>

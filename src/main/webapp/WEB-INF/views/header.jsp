@@ -166,12 +166,12 @@
             });
             $("#fix_logo").on('click', function() {
                 var memId = $(".m_id").val();
-                var url = "${pageContext.request.contextPath}/timeLine?m_id=" + memId;
+                var url = "${pageContext.request.contextPath}/timeLine";
                 $(location).attr('href', url);
             });
             $("#fix_home").on('click', function() {
                 var memId = $(".m_id").val();
-                var url = "${pageContext.request.contextPath}/timeLine?m_id=" + memId;
+                var url = "${pageContext.request.contextPath}/timeLine";
                 $(location).attr('href', url);
             });
 
@@ -184,7 +184,7 @@
 
                     } else {
                         hashtag = hashtag.replace(/[#]/g, '')
-                        var url = "${pageContext.request.contextPath}/explore?hashtag=" + hashtag + "&&m_id=" + memId;
+                        var url = "${pageContext.request.contextPath}/explore?hashtag=" + hashtag;
                         $(location).attr('href', url);
 
                     }

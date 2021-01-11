@@ -72,7 +72,7 @@
         </head>
 
         <body>
-            <jsp:include page="header.jsp"></jsp:include>
+            <jsp:include page="../header.jsp"></jsp:include>
             <div id="write_stroy_con">
                 <div id="write_big_con">
                     <div id="top_menu">

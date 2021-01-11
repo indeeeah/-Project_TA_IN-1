@@ -7,6 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="timeLine?m_id=aaab">이동!</a>
+	<form action="testSession.do" method="post">
+	<input type="text" name="m_id">
+	<select name="lan">
+	<option value="K">K</option>
+	<option value="E">E</option>
+	</select>
+	<input type="submit">
+	</form>
 </body>
 </html>

@@ -1,5 +1,8 @@
 package com.project.tain.post.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +21,13 @@ public class SearchListController {
 	private SearchListService sService;
 
 	@RequestMapping(value = "/explore")
-	public ModelAndView SearchList(@RequestParam(name = "m_id", required = false) String m_id,
+	public ModelAndView SearchList(HttpServletRequest request,
 			@RequestParam(name = "hashtag") String hashtag, ModelAndView mv) {
 		try {
-			mv.addObject("myProfile", tService.showMyProf(m_id));
-			mv.addObject("chkfollow", tService.chkfollow(m_id));
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			mv.addObject("myProfile", tService.showMyProf(my_name));
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("searchResult", sService.showHashTag(hashtag));
 			mv.setViewName("post/searchList");
 		} catch (Exception e) {

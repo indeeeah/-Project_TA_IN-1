@@ -22,7 +22,7 @@
 </head>
 
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="../header.jsp"></jsp:include>
 	<div id="searchList_con">
 		<div id="list_big_con">
 			<c:if test="${not empty searchResult }">

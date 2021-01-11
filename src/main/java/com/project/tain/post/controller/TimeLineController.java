@@ -3,10 +3,13 @@ package com.project.tain.post.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,16 +33,40 @@ public class TimeLineController {
 	public String testForm(ModelAndView mv) {
 		return "test";
 	}
+	
+	@RequestMapping(value = "/websockettest.do")
+	public String websockettest(ModelAndView mv) {
+		return "post/websockettest";
+	}
+	
+	@RequestMapping(value = "/testSession.do")
+	public ModelAndView testSession(ModelAndView mv, @RequestParam(name="m_id") String m_id, @RequestParam(name="lan") String lan, Model model, HttpSession session, HttpServletRequest request) {
+		session = request.getSession();
+		String my_name = request.getParameter("m_id");
+		String my_lan = request.getParameter("lan");
+		System.out.println(my_name);
+		System.out.println(my_lan);
+		session.setAttribute("my_name", my_name);
+		session.setAttribute("my_lan", my_lan);
+		
+		mv.setViewName("redirect:/timeLine/");
+		return mv;
+	}
 
 	// TimeLine Page
 	@RequestMapping(value = "/timeLine", method = RequestMethod.GET)
-	public ModelAndView TimeLineList(@RequestParam(name = "m_id", required = false) String m_id, ModelAndView mv) {
+	public ModelAndView TimeLineList(HttpServletRequest request, ModelAndView mv) {
 		try {
-			mv.addObject("myProfile", tService.showMyProf(m_id));
-			mv.addObject("chkfollow", tService.chkfollow(m_id));
-			mv.addObject("storyList", tService.showStoryList(m_id));
-			mv.addObject("timeLineList", tService.showTimeLineList(m_id));
-			mv.addObject("recomFollow", tService.recomFollow(m_id));
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			System.out.println("==============================");
+			System.out.println("세션에 저장 돼 있는 변수 : "+my_name);
+			System.out.println("==============================");
+			mv.addObject("myProfile", tService.showMyProf(my_name));
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("storyList", tService.showStoryList(my_name));
+			mv.addObject("timeLineList", tService.showTimeLineList(my_name));
+			mv.addObject("recomFollow", tService.recomFollow(my_name));
 			mv.setViewName("post/timeline");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

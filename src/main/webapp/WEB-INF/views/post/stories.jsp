@@ -116,7 +116,7 @@
         </head>
 
         <body>
-            <jsp:include page="header.jsp"></jsp:include>
+            <jsp:include page="../header.jsp"></jsp:include>
             <div id="story_con">
                 <button type="button" class="slide_btn_prev" class="buttons">Prev</button>
                 <button type="button" class="slide_btn_prev_s" class="buttons">sPrev</button>
@@ -128,7 +128,6 @@
                         <input type="hidden" id="showst" value="${showAllStory.m_id}" onclick="split('${showAllStory.m_id}','${showAllStory.s_type}','${showAllAStory.m_id}','${showAllAStory.s_type}');">
                         <div id="story">
                         </div>
-                        <%-- <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.s_img}"> --%>
                     </div>
                 </div>
                 <button type="button" class="slide_btn_next_s" class="buttons">sNext</button>
@@ -149,15 +148,11 @@
                         if (arr[j] != undefined) {
                             $("#story").append(
                                 '<div class="story_photo_con" onclick="showeach(\'' + arr[j] + '\',\'' + a_t + '\');">' +
-                                //'<button type="button" class="slide_btn_prev_s" class="buttons">sPrev</button>' +
-                                //'<button type="button" class="slide_btn_next_s" class="buttons">sNext</button>' +
                                 '<div class="scon_con scon_con' + arr[j] + '"><div class="scon scon' + arr[j] + a_t + '"></div></div></div>');
                         }
                     }
                     $("#story").append(
                         '<div class="story_photo_con" onclick="showeach(\'' + arrb[i] + '\',\'' + b_t + '\');">' +
-                        //'<button type="button" class="slide_btn_prev_s" class="buttons">sPrev</button>' +
-                        //'<button type="button" class="slide_btn_next_s" class="buttons">sNext</button>' +
                         '<div class="scon_con scon_con' + arrb[i] + '"><div class="scon scon' + arrb[i] + b_t + '"></div></div></div>');
                 }
                 // 게시물 슬라이드
@@ -209,45 +204,15 @@
                     dataType: "json",
                     success: function(story) {
                         var count = story;
-                        //$(".scon" + id + s_type).append('<button type="button" class="slide_btn_prev_s" class="buttons">sPrev</button>');
                         for (var i = 0; i < count.story.length; i++) {
                             var s_img = count.story[i].s_img;
-                            /* var trims_img = s_img.replace(/ /g,"");
-                            console.log("trim: "+trims_img); */
-
-
-                            /* $(".scon" + id + s_type).append('<div class="story_each_con ">' +
-                            	'<img class="photo story_each_con' + id + '" id="photo" src="${pageContext.request.contextPath}/resources/uploadFiles/' + s_img + '">' +
-                            	'</div>'); */
-
-
-                            /* $(".scon" + id + s_type).append('<div id="send_big_con">' +
-                            	'<div id="send_con">' +
-                            	'<input type="text" id="message${vo.s_img}" class="message${vo.s_img} message" name="messagea" placeholder="' + id + '님에게 메세지 보내기 ...">' +
-                            	'<input type="button" onclick="sendMessage(\'' + id + '\',\'' + my_id + '\',\'' + s_img + '\');" value="보내기" class="send">' +
-                            	'</div></div>'); */
-                            //$(".photo"+ id + i).css("background-image", "url('${pageContext.request.contextPath}/resources/uploadFiles/" + s_img + "')");
-                            /* var photo = document.getElementById("photo" + s_img);
-                            photo.style.backgroundImage = "url('{pageContext.request.contextPath}/resources/uploadFiles/" + s_img + "')"; */
-
-                            // $(".scon" + id + s_type).append(
-                            //     '<input type="button" value="' + id + '" name="m_id" class="buttons">' +
-                            //     '<input type="button" value="' + my_id + '" name="id" class="buttons">' +
-                            //     '<input type="button" value="' + s_img + '" name="s_img" class="buttons">' +
-                            //     '<input type="text" class="message' + s_img + ' message" name="messagea" value="">' +
-                            //     '<input type="button" value="send" onclick="sendMessage(\'' + id + '\',\'' + my_id + '\',\'' + s_img + '\');" class="buttons">');
                             $(".scon" + id + s_type).append('<div class="story_each_con story_each_con' + id + '"><div class="forflex"><img class="photo" src="${pageContext.request.contextPath}/resources/uploadFiles/' + s_img + '"></div>' +
                                 '<div id="send_con">' +
                                 '<input type="text" id="message${vo.s_img}" class="message${vo.s_img} message" name="messagea" placeholder="' + id + '님에게 메세지 보내기 ...">' +
                                 '<input type="button" onclick="sendMessage(\'' + id + '\',\'' + my_id + '\',\'' + s_img + '\');" value="보내기" class="send">' +
                                 '</div></div></div>');
-                            /* $(".scon" + id + s_type).append(
-                            		'<div id="send_con">' +
-                            		'<input type="text" id="message${vo.s_img}" class="message${vo.s_img} message" name="messagea" placeholder="' + id + '님에게 메세지 보내기 ...">' +
-                            		'<input type="button" onclick="sendMessage(\'' + id + '\',\'' + my_id + '\',\'' + s_img + '\');" value="보내기" class="send">' +
-                            		'</div></div>');  */
                         }
-                        //$(".scon" + id + s_type).append('<button type="button" class="slide_btn_next_s" class="buttons">sNext</button>');
+                        
                         // 게시물 슬라이드
                         var slideWrapper = document.querySelector('.scon_con' + id);
                         var slides = document.querySelectorAll('.story_each_con' + id);

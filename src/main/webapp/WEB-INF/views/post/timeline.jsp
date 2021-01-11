@@ -210,11 +210,11 @@
                 </div>
                 <div id="unfollowchk" style="display: none;">
                     <div class="modal_in modal_nocursor">팔로우가 취소되었습니다.</div>
-                    <div id="cancel_6" class="modal_in cancel" onclick="location.href='timeLineList.do?m_id=${myProfile.m_id }'">화면으로 돌아가기</div>
+                    <div id="cancel_6" class="modal_in cancel" onclick="location.href='timeLineList.do'">화면으로 돌아가기</div>
                 </div>
                 <div id="cantunfollow" style="display: none;">
                     <div class="modal_in modal_nocursor">나 자신은 팔로우 취소할 수 없어요!</div>
-                    <div id="cancel_8" class="modal_in cancel" onclick="location.href='timeLineList.do?m_id=${myProfile.m_id }'">화면으로 돌아가기</div>
+                    <div id="cancel_8" class="modal_in cancel" onclick="location.href='timeLineList.do'">화면으로 돌아가기</div>
                 </div>
                 <div id="pre_report_choose" style="display: none;">
                     <div id="pre_report_re" class="modal_in toreport" onclick="report('b_id', 'id', 'type');">게시물 신고하기
@@ -236,7 +236,7 @@
                     <div id="cancel_10" class="modal_in cancel">화면으로 돌아가기</div>
                 </div>
             </div>
-            <jsp:include page="header.jsp"></jsp:include>
+            <jsp:include page="../header.jsp"></jsp:include>
             <div id="content_con">
                 <div id="timeline_big_con">
                     <div id="timeline_left">
@@ -332,7 +332,7 @@
                     <div id="timeline_right">
                         <div id="right_small_con">
                             <div id="my_profile_con">
-                                <div id="my_profile_photo">${myProfile.m_img }</div>
+                                <div id="my_profile_photo"  onclick="goboard('${myProfile.m_id }');" style="cursor:pointer;">${myProfile.m_img }</div>
                                 <div id="my_id">${myProfile.m_id }</div>
                                 <input type="hidden" name="m_id" class="m_id" value="${myProfile.m_id }">
                             </div>
@@ -355,6 +355,7 @@
                             <div id="footer_info"></div>
                             <div id="footer_infoc">© 2020 TA_IN</div>
                         </div>
+                            <div id="test"  onclick="goboard('${myProfile.m_id }');" style="cursor:pointer;">냐</div>
                     </div>
                 </div>
 
@@ -415,17 +416,23 @@
 
             // 스토리 업로드 페이지로 이동
             $(".my_story_add").on('click', function() {
-                var url = "${pageContext.request.contextPath}/writeStory?m_id=" + memId;
+                var url = "${pageContext.request.contextPath}/writeStory";
                 $(location).attr('href', url);
             });
             // 스토리 전체보기 페이지로 이동
             $(".show_all_story").on('click', function() {
-                var url = "${pageContext.request.contextPath}/stories?m_id=" + memId;
+                var url = "${pageContext.request.contextPath}/stories";
                 $(location).attr('href', url);
             });
             // 스토리 각 페이지로 이동
             function eachstory(id) {
-                var url = "${pageContext.request.contextPath}/eachstory?m_id=" + memId + "&&id=" + id;
+                var url = "${pageContext.request.contextPath}/eachstory?id=" + id;
+                $(location).attr('href', url);
+            }
+            
+            // 계정 상세페이지 이동          타입 추가 필요
+            function goboard(id){
+            	var url = "${pageContext.request.contextPath}/gnMain?m_id="+id;
                 $(location).attr('href', url);
             }
 

@@ -94,7 +94,7 @@
         </head>
 
         <body>
-            <jsp:include page="header.jsp"></jsp:include>
+            <jsp:include page="../header.jsp"></jsp:include>
             <div id="story_con">
                 <button type="button" class="slide_btn_prev" class="buttons">Prev</button>
                 <div id="story_big_con">
@@ -186,22 +186,28 @@
                     console.debug("sssssssmsg>>", socketMsg)
                     socket.send(socketMsg);
                 }
+                /* var chat = document.getElementById("message" + s_img).value;
+                sendMsg(); */
 
             }
 
             var socket = null;
+            var ws;
+            /* var userid = "${param.id}" */
 
             function connectWS() {
                 console.log("tttttttttttttt")
-                var ws = new WebSocket("ws://localhost:8090/tain/replyEcho?s_img=aaa");
+                var ws = new WebSocket("ws://localhost:8090/tain/replyEcho");
                 socket = ws;
 
                 ws.onopen = function() {
                     console.log('Info: connection opened.');
+                    /* register(); */
                 };
 
                 ws.onmessage = function(event) {
-                    console.log("ReceiveMessage:", event.data + '\n');
+                    var data = event.data
+                    console.log("ReceiveMessage:", data + '\n');
                     /* let $socketAlert = $('div#socketAlert');
                         $socketAlert.html(event.data);
                         $socketAlert.css('display', 'block');
@@ -209,6 +215,7 @@
                         setTimeout( function() {
                             $socketAlert.css('display', 'none');
                         }, 3000); */
+                    /* addMsg(data); */
                 };
 
                 ws.onclose = function(event) {
@@ -218,7 +225,33 @@
                 ws.onerror = function(err) {
                     console.log('Error:', err);
                 };
+
+                /* function addMsg(msg){
+                	var chat = ${"#message"}.val();
+                	chat = chat +"\n상대방 : " + msg;
+                	${"#message"}.val(chat);
+                } */
+
+                /* function register(){
+                	var msg = {
+                			type : "register",
+                			userid: "${param.id}"
+                	};
+                	ws.send(JSON.stringify(msg));
+                }
+                
+                function sendMsg(){
+                	var msg = {
+                			typd:"chat",
+                			target: $("#s_id").val(),
+                			message : ${"#message"}.val()
+                			
+                	};
+                	ws.send(JSON.stringify(msg));
+                } */
+
             }
+
         </script>
 
         </html>

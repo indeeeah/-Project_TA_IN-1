@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,13 @@ public class StoryController {
 	private StoryService sService;
 
 	@RequestMapping(value = "/writeStory", method = RequestMethod.GET)
-	public ModelAndView writeStory(@RequestParam(name = "m_id", required = false) String m_id, ModelAndView mv) {
+	public ModelAndView writeStory(HttpServletRequest request, ModelAndView mv) {
 		try {
-			mv.addObject("myProfile", tService.showMyProf(m_id));
-			mv.addObject("chkfollow", tService.chkfollow(m_id));
-			mv.addObject("myStory", sService.showMyStory(m_id));
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			mv.addObject("myProfile", tService.showMyProf(my_name));
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("myStory", sService.showMyStory(my_name));
 			mv.setViewName("post/writeStory");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -48,10 +51,12 @@ public class StoryController {
 	}
 
 	@RequestMapping(value = "/stories", method = RequestMethod.GET)
-	public ModelAndView stories(@RequestParam(name = "m_id", required = false) String m_id, ModelAndView mv) {
+	public ModelAndView stories(HttpServletRequest request, ModelAndView mv) {
 		try {
-			mv.addObject("myProfile", tService.showMyProf(m_id));
-			mv.addObject("showAllStory", sService.showAllStory(m_id));
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			mv.addObject("myProfile", tService.showMyProf(my_name));
+			mv.addObject("showAllStory", sService.showAllStory(my_name));
 			mv.addObject("showAllAStory", sService.showAllAStory());
 			mv.setViewName("post/stories");
 			System.out.println(mv);
@@ -63,9 +68,11 @@ public class StoryController {
 		return mv;
 	}
 	@RequestMapping(value = "/eachstory", method = RequestMethod.GET)
-	public ModelAndView eachstory(@RequestParam(name = "m_id", required = false) String m_id, @RequestParam(name = "id", required = false) String id, ModelAndView mv) {
+	public ModelAndView eachstory(HttpServletRequest request, @RequestParam(name = "id", required = false) String id, ModelAndView mv) {
 		try {
-			mv.addObject("myProfile", tService.showMyProf(m_id));
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			mv.addObject("myProfile", tService.showMyProf(my_name));
 			mv.addObject("eachstory", sService.eachStory(id));
 			mv.setViewName("post/eachstory");
 			System.out.println(mv);
