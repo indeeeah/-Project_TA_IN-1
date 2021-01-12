@@ -41,7 +41,7 @@ public class BsnBoardDao {
 	}
 	// 게시물 상세(이미지)
 	public BsnBoard selectOneImg(String bb_id) {
-		System.out.println("셀원디이");
+		System.out.println("셀원이dao");
 		return sqlSession.selectOne("BsnBoard.bsnAddSelectOne", bb_id);
 	}
 	

@@ -106,6 +106,75 @@ body {font-family: Arial, Helvetica, sans-serif;}
   	justify-content: space-around;
   	bottom:0px;
 }
+
+<!-- 이미지 슬라이드 -->
+ 	.md_imgbox {display: none}
+	
+	/* Slideshow container */
+	.mdImg {
+	  max-width: 500px;
+	  position: relative;
+	  margin: auto;
+	}
+	
+	/* Next & previous buttons */
+	.prev, .next {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 50%;
+	  width: auto;
+	  padding: 16px;
+	  margin-top: -22px;
+	  color: white;
+	  font-weight: bold;
+	  font-size: 18px;
+	  transition: 0.6s ease;
+	  border-radius: 0 3px 3px 0;
+	  user-select: none;
+	}
+	
+	/* Position the "next button" to the right */
+	.next {
+	  right: 0;
+	  border-radius: 3px 0 0 3px;
+	}
+	
+	/* On hover, add a black background color with a little bit see-through */
+	.prev:hover, .next:hover {
+	  background-color: rgba(0,0,0,0.8);
+	}
+	
+	/* Number text (1/3 etc) */
+	.numbertext {
+	  color: #f2f2f2;
+	  font-size: 12px;
+	  padding: 8px 12px;
+	  position: absolute;
+	  top: 0;
+	}
+	
+	/* Fading animation */
+	.fade {
+	  -webkit-animation-name: fade;
+	  -webkit-animation-duration: 1.5s;
+	  animation-name: fade;
+	  animation-duration: 1.5s;
+	}
+	
+	@-webkit-keyframes fade {
+	  from {opacity: .4} 
+	  to {opacity: 1}
+	}
+	
+	@keyframes fade {
+	  from {opacity: .4} 
+	  to {opacity: 1}
+	}
+	
+	/* On smaller screens, decrease text size */
+	@media only screen and (max-width: 300px) {
+	  .prev, .next,.text {font-size: 11px}
+	}
 </style>
 </head>
 <body>
@@ -129,8 +198,11 @@ ${listCount } : ${bbrLlke }
 			
 			  <!-- Modal content -->
 			  <div id="modalContent" class="modal-content">
-			  	<div id="mdImg">
-					<img src="${pageContext.request.contextPath}/resources/uploadFiles/${v.bb_img1 }"/>
+			  	<div id="mdImg" class="mdImg">
+			  		
+			  		
+					<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+					<a class="next" onclick="plusSlides(1)">&#10095;</a>
 			  	</div>
 			  	<div id="mdText">
 			  		<div id="mdInfo">
@@ -210,6 +282,78 @@ $('.myBtn').on('click', function() {
     x.style.display="block";
     
     $.ajax({
+    	url:"bbDetail",
+    	type:"post",
+    	async:false,
+    	data:{
+    		bb_id:a
+    	},
+    	dataType:"json",
+    	success:function(resp){
+    		var htmls="";
+    		console.log("bbDetail()"+resp.bbDetail.m_id);
+    		if(resp.bbDetail.bb_img1!=null){
+    		console.log("bbDetail()"+resp.bbDetail.bb_img1);
+    		console.log("bbDetail()"+resp.bbDetail.bb_img10);
+    			if(resp.bbDetail.bb_img1!=null){
+    			htmls += "<div class='md_imgbox fade'>"+
+									"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img1+"'/>"+
+									"</div>";
+    			}
+    			if(resp.bbDetail.bb_img2!=null){
+        			htmls += "<div class='md_imgbox fade'>"+
+    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img2+"'/>"+
+    								"</div>";
+        		}
+    			if(resp.bbDetail.bb_img3!=null){
+        			htmls += "<div class='md_imgbox fade'>"+
+    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img3+"'/>"+
+    								"</div>";
+        		}
+    			if(resp.bbDetail.bb_img4!=null){
+        			htmls += "<div class='md_imgbox fade'>"+
+    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img4+"'/>"+
+    								"</div>";
+        		}
+    			if(resp.bbDetail.bb_img5!=null){
+        			htmls += "<div class='md_imgbox fade'>"+
+    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img5+"'/>"+
+    								"</div>";
+        		}
+    			if(resp.bbDetail.bb_img6!=null){
+        			htmls += "<div class='md_imgbox fade'>"+
+    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img6+"'/>"+
+    								"</div>";
+        		}
+    			if(resp.bbDetail.bb_img7!=null){
+        			htmls += "<div class='md_imgbox fade'>"+
+    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img7+"'/>"+
+    								"</div>";
+        		}
+    			if(resp.bbDetail.bb_img8!=null){
+        			htmls += "<div class='md_imgbox fade'>"+
+    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img8+"'/>"+
+    								"</div>";
+        		}
+    			if(resp.bbDetail.bb_img9!=null){
+        			htmls += "<div class='md_imgbox fade'>"+
+    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img9+"'/>"+
+    								"</div>";
+        		}
+    			if(resp.bbDetail.bb_img10!=null){
+        			htmls += "<div class='md_imgbox fade'>"+
+    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img10+"'/>"+
+    								"</div>";
+        		}
+    		}
+    		$(".mdImg").html(htmls);
+    	},
+    	error:function(){
+    		
+    	}
+    });
+    
+    $.ajax({
     	url:"bbrList",
     	type:"POST",
     	async:false,
@@ -229,10 +373,14 @@ $('.myBtn').on('click', function() {
 								"<div id='bbrCon' class='bbrCon'>"+
 									"<span>"+resp.data[i].bb_info+"</span>"+
 								"</div>"+
-								"<div id='bbrLike' class='bbrLike' style='cursor:pointer'>"+
+								"<div id='bbrLike' class='bbrLike'>"+
 									"<span class='bbrL' >좋아요:"+resp.data[i].bbrlike+"</span>"+
 								"</div>"+
-								"<div id='bbr' class='bbr' style='cursor:pointer'>...."+
+								"<div id='bbrrInBox' class='bbrrInBox' >"+
+									"<button type='button' id='"+resp.data[i].bb_id+"' class='bbrrInsert"+resp.data[i].bb_id+"' onclick=\"bbrrInsert('"+resp.data[i].bb_id+"')\">답글달기</button>"+
+								"</div>"+
+								"<div id='bbrr' class='bbrr' onclick=\"bbrrList('"+resp.data[i].bb_id+"')\">답글보기"+
+									
 								"</div>"+
 									"<button type='button' id='"+resp.data[i].bb_id+"' class='bbrDelete "+resp.data[i].bb_id+"' onclick=\"bbrDelete('"+resp.data[i].bb_id+"')\">삭제</button>"+
 							"</div>";
@@ -276,50 +424,31 @@ function bbrDelete(bb_id){
 	});
 	$(this).parent().remove();
 };
-/* 댓글 삭제 (추후삭제)*/
-/* function bbrDelete(bbrv){
-	console.log("댓글삭제클릭:");
-	var a = bbrv.value;
-	var b = $(".bbrDelete").attr("bb_topid");
-	console.log("댓글삭제클릭:"+a+" : "+b);
+
+/* 답글 조회  */
+function bbrList(bb_id){
+	console.log("bbrDelete함수:"+bb_id);
+	var a = bb_id;
+	var b = document.getElementById(bb_id);
+	console.log("bbrDelete함수:"+a+":"+b);
 	$.ajax({
-		url:"bbrDelete",
+		url:"bbrrList",
 		method:"POST",
-		data:{ bb_id:a, bb_topid:b},
+		async: false,
+		data:{ bb_id:bb_id},
 		dataType:"json",
 		success:function(resp){
-			var htmls="";
-    		if(resp.data!=null){
-	    		for(i=0; i<resp.data.length; i++){
-	    			htmls += "<div class='mrd' >"+
-								"<div id='bbrImg' class='bbrImg'>"+
-								"<img src='#'/>"+
-								"</div>"+
-								"<div id='bbrId' class='bbrId'>"+
-									"<span>" + resp.data[i].m_id + "</span>"+
-								"</div>"+
-								"<div id='bbrCon' class='bbrCon'>"+
-									"<span>"+resp.data[i].bb_info+"</span>"+
-								"</div>"+
-								"<div id='bbrLike' class='bbrLike' style='cursor:pointer'>"+
-									"<span class='bbrL' >좋아요:"+resp.data[i].bbrlike+"</span>"+
-								"</div>"+
-								"<div id='bbr' class='bbr' style='cursor:pointer'>...."+
-								"</div>"+
-									"<button type='button' value='"+resp.data[i].bb_id+";' bb_topid='"+resp.data[i].bb_topid+";' class='test' onclick='bbrDelete(this)' >삭제</button>"+
-							"</div>";
-	    		}   
-    			$(".mdReply").html(htmls);
-    		} else {
-    			$(".mdReply").html("<div class='mrd'>댓글이 없습니다.</div>");
-    		}
-    		
+			console.log("댓글삭제 resp:"+resp+":"+resp.ack);
+			$(b).parent().remove();
 		},
 		error:function(request, status, error){
 			alert("code : " +request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+			event.preventDefault();
 		}
 	});
-}; */
+	$(this).parent().remove();
+};
+
 
 // 모달창 close
 $('.close').on('click', function() {
@@ -387,6 +516,28 @@ $(".translate").on("click", function(){
 		}
 	});
 });
+/* 이미지 슬라이드 */
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("md_imgbox");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  slides[slideIndex-1].style.display = "block";  
+}
 </script>
 </body>
 
@@ -466,10 +617,10 @@ $(".translate").on("click", function(){
 											"<div id='bbrCon' class='bbrCon'>"+
 												"<span>"+resp.data[i].bb_info+"</span>"+
 											"</div>"+
-											"<div id='bbrLike' class='bbrLike' style='cursor:pointer'>"+
+											"<div id='bbrLike' class='bbrLike'>"+
 												"<span class='bbrL' >좋아요:"+resp.data[i].bbrlike+"</span>"+
 											"</div>"+
-											"<div id='bbr' class='bbr' style='cursor:pointer'>...."+
+											"<div id='bbrr' class='bbrr'>...."+
 											"</div>"+
 												"<button type='button' value='"+resp.data[i].bb_id+";' class='bbrDelete "+resp.data[i].bb_id+"' onclick=\"bbrDelete('"+resp.data[i].bb_id+"')\">삭제</button>"+
 										"</div>";

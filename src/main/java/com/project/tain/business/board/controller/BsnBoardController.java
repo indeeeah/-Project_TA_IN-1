@@ -2,10 +2,13 @@ package com.project.tain.business.board.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -59,19 +62,36 @@ public class BsnBoardController {
 		
 		String m_id= "aaaa";	// 로그인 대체
 		
-		String bb_id= "BB210104066";	// 게시물아이디 대체
 		try {
 			mv.addObject("listCount", bbService.listCount(m_id));	//게시물카운트
 			mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
 			mv.addObject("bbDetail", bbService.selectOne(m_id));	// 게시물 상세
 			mv.addObject("listImg", bbService.selectOneImg(m_id));	// 리스트이미지
-//			mv.addObject("bbrList", bbrService.bbrList(bb_id));	// 댓글 리스트
+//			mv.setViewName("business/bsnMain");
 			mv.setViewName("business/bsnMain");
 		} catch(Exception e) {
 			mv.addObject("errorMsg", e.getMessage());
 			mv.setViewName("errorPage");
 		}
 		return mv;
+	}
+	// 게시물 상세
+	@ResponseBody
+	@RequestMapping(value="/bbDetail", method = RequestMethod.POST)
+	public HashMap <String, Object> bbDetailService(BsnBoard bb,
+			Locale locale, Model model, HttpServletRequest request) {
+		HashMap<String, Object> result = new HashMap <String,Object>();	
+		
+		try {
+			result.put("bbDetail", bbService.selectOne(bb.getBb_id()));	// 게시물 상세
+			System.out.println(bbService.selectOne(bb.getBb_id()));
+		} catch(Exception e) {
+			e.printStackTrace();
+			result.put("ack", -1);
+		} finally {
+			
+		}
+		return result;
 	}
 	
 //	public ModelAndView bbListService(@RequestParam(name="m_id") String m_id, ModelAndView mv) {
@@ -94,33 +114,66 @@ public class BsnBoardController {
 	
 	// 작성한 게시물 인서트
 	@RequestMapping(value="/bbInsert.do", method = RequestMethod.POST)
-	public ModelAndView bsnBoardInsert(BsnBoard bb,
-			@RequestParam Map<String, MultipartFile> fileMap,
+	public ModelAndView boardInsert(BsnBoard bb, 
 			MultipartHttpServletRequest request, ModelAndView mv) {
-		
-		System.out.println(fileMap.size());
-		System.out.println(request.getParameter("file"));
+		System.out.println("게시물 등록 컨트롤러" + bb);
+		System.out.println("게시물 등록 컨트롤러" + request);
+		String[] bbImgList = {bb.getBb_img1(), bb.getBb_img2(), bb.getBb_img3(), bb.getBb_img4(), bb.getBb_img5(), bb.getBb_img6(), bb.getBb_img7(), bb.getBb_img8(), bb.getBb_img9(), bb.getBb_img10()};
 		try {
-			Iterator itr = request.getFileNames();
-			
-			
-//			if(fileMap!=null && !fileMap.equals("")) {
-//				saveFile(fileMap, request);
-//			}
-//			for(int i =0; i<fileMap.size(); i++) {
-//				bba.setBb_imgi(fileMap.get(bb_imgi).va)
-//			}
-//			bba.setBb_img1(fileMap.getOriginalFilename());
-			System.out.println("aaa1");
+			if(request!=null && !request.equals("")) {
+				uploadFiles(request);
+			}
+			System.out.println("게시물 등록 파일저장성공");
+			List<MultipartFile> fileList = request.getFiles("file");
+			for(int i = 0 ; i < fileList.size(); i++) {
+				bbImgList[i] = fileList.get(i).getOriginalFilename();
+				System.out.println(bbImgList[i]);
+			}
+			bb.setBb_img1(bbImgList[0]);
+			bb.setBb_img2(bbImgList[1]);
+			bb.setBb_img3(bbImgList[2]);
+			bb.setBb_img4(bbImgList[3]);
+			bb.setBb_img5(bbImgList[4]);
+			bb.setBb_img6(bbImgList[5]);
+			bb.setBb_img7(bbImgList[6]);
+			bb.setBb_img8(bbImgList[7]);
+			bb.setBb_img9(bbImgList[8]);
+			bb.setBb_img10(bbImgList[9]);
 			bbService.insertBsnBoard(bb);
-			System.out.println("인서트완료");
 			mv.setViewName("redirect:bbList.do");
 		} catch(Exception e) {
 			e.printStackTrace();
-			mv.addObject("errorMsg", e.getMessage());
+			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
 		}
 		return mv;
+	}
+	
+	// 이미지 파일 저장
+	public void uploadFiles(MultipartHttpServletRequest request) {
+		List<MultipartFile> fileList = request.getFiles("file");
+		System.out.println("fileSize : " + fileList.size());
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String path= root + "\\uploadFiles";
+		File folder = new File(path);
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+		String filePath = null;
+		for(MultipartFile mf : fileList) {
+//			 String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+//			 String safeFile = path + System.currentTimeMillis() + originFileName;
+	         System.out.println("originFileName : " + mf.getOriginalFilename());
+	         filePath = folder + "\\" + mf.getOriginalFilename(); 
+	         System.out.println("파일 경로 : " + filePath);      
+			try {
+				mf.transferTo(new File(filePath));
+			}  catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+		}
 	}
 	
 	//인서트 맵<> 사용 x

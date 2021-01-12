@@ -30,24 +30,17 @@
 	<!-- 댓글 목록 -->
 	<select id="bbrList" parameterType="string" resultType="arraylist" resultMap="resultBsnBoardReply">
 		select bbr.*, nvl(cnt, 0) bbrlike from (select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='C'and bb_topid=#{bb_id}) bbr 
-    		full outer join (select count(*) cnt, bb_id from bblike group by bb_id) bl on bbr.bb_id=bl.bb_id
+    		left outer join (select count(*) cnt, bb_id from bblike group by bb_id) bl on bbr.bb_id=bl.bb_id order by bb_date desc
 	</select>		
 	
 	<!-- 댓글 등록 -->
 	<insert id="insertBbr" parameterType="BsnBoardReply" flushCache="true" statementType="PREPARED">
 		insert into businessboard values(
 			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BSNBOARD_SEQ.NEXTVAL,3,'0'), #{m_id},
-			#{bb_name}, #{bb_info}, #{bb_price}, #{bb_option1}, #{bb_option2}, #{bb_option3}, #{bb_option4},
-			#{bb_type}, #{bb_topid}, sysdate, 1
+			'O', #{bb_info}, 0, '', '', '', '',
+			'C', #{bb_topid}, sysdate, 1
 		)
 	</insert>
-	
-	<!-- 댓글 수정 -->
-	<update id="updateBbr" parameterType="BsnBoardReply" flushCache="true" statementType="PREPARED">
-		update businessboard set bb_name=#{bb_name}, bb_info=#{bb_info}, bb_price=#{bb_price}, 
-		bb_option1=#{bb_option1}, bb_option2=#{bb_option2}, bb_option3=#{bb_option3}, bb_option4=#{bb_option4}  
-		where bb_id=#{bb_id}
-	</update>
 	
 	<!-- 댓글 삭제 -->
 	<delete id="deleteBbr" parameterType="string" flushCache="true" statementType="PREPARED">
@@ -56,24 +49,18 @@
 	
 	<!-- 대댓글 목록 -->
 	<select id="bbrrList" parameterType="string" resultType="arraylist" resultMap="resultBsnBoardReply">
-		select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='R' and bb_id=#{bb_id}
+		select bbr.*, nvl(cnt, 0) bbrlike from (select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='R'and bb_topid=#{bb_id}) bbr 
+    		left outer join (select count(*) cnt, bb_id from bblike group by bb_id) bl on bbr.bb_id=bl.bb_id order by bb_date desc
 	</select>
 	
 	<!-- 대댓글 등록 -->
 	<insert id="insertBbrr" parameterType="BsnBoardReply" flushCache="true" statementType="PREPARED">
 		insert into businessboard values(
 			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BSNBOARD_SEQ.NEXTVAL,3,'0'), #{m_id},
-			#{bb_name}, #{bb_info}, #{bb_price}, #{bb_option1}, #{bb_option2}, #{bb_option3}, #{bb_option4},
-			#{bb_type}, #{bb_topid}, sysdate, 1
+			'O', #{bb_info}, 0, '', '', '', '',
+			'R', #{bb_topid}, sysdate, 1
 		)
 	</insert>
-	
-	<!-- 대댓글 수정 -->
-	<update id="updateBbrr" parameterType="BsnBoardReply" flushCache="true" statementType="PREPARED">
-		update businessboard set bb_name=#{bb_name}, bb_info=#{bb_info}, bb_price=#{bb_price}, 
-		bb_option1=#{bb_option1}, bb_option2=#{bb_option2}, bb_option3=#{bb_option3}, bb_option4=#{bb_option4}  
-		where bb_id=#{bb_id}
-	</update>
 	
 	<!-- 대댓글 삭제 -->
 	<delete id="deleteBbrr" parameterType="string" flushCache="true" statementType="PREPARED">
