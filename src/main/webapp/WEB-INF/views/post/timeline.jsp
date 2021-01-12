@@ -276,8 +276,8 @@
                                         </ul>
                                         <input type="hidden" class="hidden_showphoto" onclick="showphoto('${vo.t_id }','${vo.t_img }');">
                                     </div>
-                                    <button type="button" class="slide_btn_prev slide_btn_prev${vo.t_id }">Prev</button>
-                                    <button type="button" class="slide_btn_next slide_btn_next${vo.t_id }">Next</button>
+                                    <button type="button" class="slidebtn slidebtn${vo.t_id } slide_btn_prev slide_btn_prev${vo.t_id }" style="display:none;">Prev</button>
+                                    <button type="button" class="slidebtn slidebtn${vo.t_id } slide_btn_next slide_btn_next${vo.t_id }" style="display:none;">Next</button>
                                     <div class="timeline_comment_con">
                                         <div class="inner_comment_con">
                                             <div class="timeline_icon_con">
@@ -440,7 +440,14 @@
             function showphoto(t_id, t_img) {
                 t_img = t_img.split("|");
                 for (i = 0; i < t_img.length; i++) {
+                	if(t_img[i] != "" && t_img[i] != " "){
                     $(".photo" + t_id).append('<li class="show_t_img show_t_img' + t_id + '" >' + t_img[i] + '</li>');
+                	}
+                }
+                
+                var photocount = $(".show_t_img" + t_id).length;
+                if(photocount >1){
+                $(".slidebtn"+t_id).css("display", "block");
                 }
 
                 // 게시물 슬라이드

@@ -11,8 +11,9 @@
 	<select id="showp_one" parameterType="string"
 		resultType="GnBoard">
 		select m_id, m_img, m_intro, count(a.m_id1) follower from
-		member join follow a on m_id = a.m_id2
-		where m_id = #{m_id} group by
+		member left outer join follow a on m_id = a.m_id2
+		where m_id = #{m_id}
+		group by
 		m_id, m_img, m_intro
 	</select>
 	<!-- 팔로우 -->
@@ -44,13 +45,47 @@
 	<select id="showpost" parameterType="string"
 		resultType="arrayList" resultMap="resultGnBoard">
 		select * from
-		(select m_id, board.b_id b_id, b_img1 b_img, b_date b_date from board join
-		boardadd on board.b_id = boardadd.b_id
+		(select m_id, board.b_id
+		b_id, b_img1 b_img, b_date b_date, b_type from board join
+		boardadd on
+		board.b_id = boardadd.b_id
 		union
-		select m_id, businessboard.bb_id b_id, bb_img1 b_img, bb_date b_date from
-		businessboard join businessboardadd on businessboard.bb_id =
+		select m_id, businessboard.bb_id b_id,
+		bb_img1 b_img, bb_date b_date, bb_type b_type from
+		businessboard join businessboardadd
+		on businessboard.bb_id =
 		businessboardadd.bb_id)
 		where m_id=#{m_id}
 		order by b_date desc
+	</select>
+	<!-- 스토리 하이라이트 -->
+	<select id="highlight" parameterType="string"
+		resultType="arrayList" resultMap="resultGnBoard">
+		select h_name, h_img from highlight
+		where m_id=#{m_id} group by h_name, h_img
+	</select>
+
+	<!-- 팔로우 체크 -->
+	<select id="followchk" parameterType="java.util.HashMap"
+		resultType="GnBoard">
+		select count(*) follow from follow where m_id1=#{my_name}
+		and m_id2=#{m_id}
+	</select>
+
+	<!-- 게시물 조회 -->
+	<select id="showeachpost" parameterType="string"
+		resultType="GnBoard">
+		select board.b_id b_id, board.m_id m_id,
+		b_img1||','||b_img2||','||b_img3||','||b_img4||','||b_img5||','||b_img6||','||b_img7||','||b_img8||','||b_img9||','||b_img10
+		b_img,board.b_content b_content, to_char(board.b_date,'YYYY-MM-DD HH24:Mi:SS')
+		b_date, count(blike.b_id) likecount from board
+		left outer join blike on
+		board.b_id = blike.b_id
+		left outer join boardadd on board.b_id =
+		boardadd.b_id
+		where board.b_id=#{b_id} group by board.b_id,
+		board.b_content, board.m_id,
+		to_char(board.b_date,'YYYY-MM-DD HH24:Mi:SS'),
+		b_img1||','||b_img2||','||b_img3||','||b_img4||','||b_img5||','||b_img6||','||b_img7||','||b_img8||','||b_img9||','||b_img10
 	</select>
 </mapper>

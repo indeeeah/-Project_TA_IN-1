@@ -12,7 +12,14 @@ public interface GnBoardService {
 	public GnBoard showp_three(String m_id);
 
 	public GnBoard showp_four(String m_id);
+
 	public GnBoard storychk(String m_id);
 
 	public List<GnBoard> showpost(String m_id);
+
+	public List<GnBoard> highlight(String m_id);
+
+	public GnBoard followchk(String my_name, String m_id);
+
+	public GnBoard showeachpost(String b_id);
 }

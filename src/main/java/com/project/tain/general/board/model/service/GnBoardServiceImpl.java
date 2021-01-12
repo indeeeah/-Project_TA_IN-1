@@ -10,7 +10,7 @@ import com.project.tain.general.board.model.domain.GnBoard;
 
 @Service("gService")
 public class GnBoardServiceImpl implements GnBoardService {
-	
+
 	@Autowired
 	private GnBoardDao gDao;
 
@@ -35,6 +35,7 @@ public class GnBoardServiceImpl implements GnBoardService {
 	public GnBoard showp_four(String m_id) {
 		return gDao.showp_four(m_id);
 	}
+
 	@Override
 	public GnBoard storychk(String m_id) {
 		return gDao.storychk(m_id);
@@ -45,5 +46,18 @@ public class GnBoardServiceImpl implements GnBoardService {
 		return gDao.showpost(m_id);
 	}
 
-	
+	@Override
+	public List<GnBoard> highlight(String m_id) {
+		return gDao.highlight(m_id);
+	}
+
+	@Override
+	public GnBoard followchk(String my_name, String m_id) {
+		return gDao.followchk(my_name, m_id);
+	}
+
+	@Override
+	public GnBoard showeachpost(String b_id) {
+		return gDao.showeachpost(b_id);
+	}
 }

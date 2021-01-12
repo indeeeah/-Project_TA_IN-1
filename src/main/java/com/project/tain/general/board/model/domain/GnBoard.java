@@ -1,5 +1,6 @@
 package com.project.tain.general.board.model.domain;
 
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,6 +13,14 @@ public class GnBoard {
 	private String m_intro;
 	private int story;
 	private String b_img;
+	private String h_name;
+	private String h_img;
+	private String my_name;
+	private String b_id;
+	private String b_content;
+	private String b_date;
+	private int likecount;
+	private String b_type;
 
 	public String getM_id() {
 		return m_id;
@@ -75,6 +84,70 @@ public class GnBoard {
 
 	public void setB_img(String b_img) {
 		this.b_img = b_img;
+	}
+
+	public String getH_name() {
+		return h_name;
+	}
+
+	public void setH_name(String h_name) {
+		this.h_name = h_name;
+	}
+
+	public String getH_img() {
+		return h_img;
+	}
+
+	public void setH_img(String h_img) {
+		this.h_img = h_img;
+	}
+
+	public String getMy_name() {
+		return my_name;
+	}
+
+	public void setMy_name(String my_name) {
+		this.my_name = my_name;
+	}
+
+	public String getB_id() {
+		return b_id;
+	}
+
+	public void setB_id(String b_id) {
+		this.b_id = b_id;
+	}
+
+	public String getB_content() {
+		return b_content;
+	}
+
+	public void setB_content(String b_content) {
+		this.b_content = b_content;
+	}
+
+	public String getB_date() {
+		return b_date;
+	}
+
+	public void setB_date(String b_date) {
+		this.b_date = b_date;
+	}
+
+	public int getLikecount() {
+		return likecount;
+	}
+
+	public void setLikecount(int likecount) {
+		this.likecount = likecount;
+	}
+
+	public String getB_type() {
+		return b_type;
+	}
+
+	public void setB_type(String b_type) {
+		this.b_type = b_type;
 	}
 	
 	
