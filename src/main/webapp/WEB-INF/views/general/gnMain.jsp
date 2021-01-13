@@ -313,7 +313,6 @@
                 #post_right {
                     width: 400px;
                     height: 600px;
-                    background-color: green;
                     float: left;
                 }
                 
@@ -357,7 +356,6 @@
                 #post_right_middle {
                     width: 100%;
                     height: 364px;
-                    background-color: brown;
                     padding-top: 13px;
                     overflow: auto;
                 }
@@ -383,7 +381,7 @@
                 }
                 
                 .reply_right {
-                    margin-left: 18px;
+                    margin-left: 14px;
                     min-height: 47px;
                     width: 313px;
                     float: right;
@@ -393,7 +391,7 @@
                 }
                 
                 .reply_right_com {
-                    margin-left: 18px;
+                    margin-left: 14px;
                     min-height: 47px;
                     width: 277px;
                     float: left;
@@ -420,7 +418,6 @@
                 .save_icon {
                     margin: 0px;
                     float: right;
-                    background-color: black;
                 }
                 
                 .like_icon {
@@ -446,6 +443,26 @@
                 
                 .share_icon:hover {
                     background-image: url('${pageContext.request.contextPath}/resources/images/002-share.svg');
+                    background-size: 24px;
+                }
+                
+                .write_icon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/002-speech-bubble-1.svg');
+                    background-size: 24px;
+                }
+                
+                .write_icon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-speech-bubble.svg');
+                    background-size: 24px;
+                }
+                
+                .save_icon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-tag.svg');
+                    background-size: 24px;
+                }
+                
+                .save_icon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/006-price-tag.svg');
                     background-size: 24px;
                 }
                 
@@ -477,6 +494,7 @@
                 .rebot {
                     margin-right: 12px;
                     float: left;
+                    cursor: pointer;
                 }
                 
                 .show_re_re {
@@ -546,12 +564,124 @@
                     position: absolute;
                     right: 0px;
                 }
+                
+                #report_back {
+                    position: fixed;
+                    width: 100%;
+                    height: 100%;
+                    background-color: black;
+                    opacity: 0.5;
+                    display: none;
+                    z-index: 5;
+                }
+                
+                #report_modal {
+                    position: fixed;
+                    width: 100%;
+                    height: 100%;
+                    display: none;
+                    z-index: 6;
+                }
+                
+                #report_choose,
+                #report_write,
+                #report_result,
+                #report_already,
+                #pre_report_choose,
+                #unfollowchk,
+                #askunfollow,
+                #cantunfollow,
+                #share_con,
+                #share_con_result {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 400px;
+                    background: #fff;
+                    z-index: 7;
+                    border-radius: 20px;
+                    text-align: center;
+                    font-size: 14px;
+                }
+                
+                .modal_in {
+                    width: 100%;
+                    height: 48px;
+                    line-height: 48px;
+                    cursor: pointer;
+                    border-bottom: 1px solid #8E8E8E;
+                    color: #262626;
+                }
+                
+                #etc_write_con {
+                    height: 192px;
+                }
+                
+                #etx_write_space {
+                    margin-top: 5px;
+                    margin-left: 16px;
+                    width: 364px;
+                    height: 182px;
+                    padding: 0px;
+                    border: none;
+                    outline: none;
+                }
+                
+                .modal_title {
+                    height: 42px;
+                }
+                
+                #report {
+                    color: #ED4956;
+                }
+                
+                .modal_nocursor {
+                    cursor: default;
+                }
+                
+                .modal_result {
+                    height: 96px;
+                }
+                
+                .fa-bars_title {
+                    display: block;
+                    margin-right: 16px;
+                    float: right;
+                    line-height: 60px;
+                    height: 14px;
+                }
+                
+                .lcount {
+                    outline: none;
+                    border: none;
+                    background-color: transparent;
+                    padding: 0px;
+                }
             </style>
         </head>
 
         <body>
+            <input type="hidden" class="m_id" value="${my_name }">
+            <input type="hidden" class="post_id" value="${id_img_fwr.m_id }">
+            <div id="report_back"></div>
+            <div id="report_modal">
+                <div id="share_con" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물 공유하기</div>
+                    <div id="url_con" class="modal_in">
+                        <textarea id="url" readonly></textarea>
+                    </div>
+                    <div id="share_chk" class="modal_in">복사하기</div>
+                    <div id="cancel_9" class="modal_in cancel">취소</div>
+                </div>
+                <div id="share_con_result" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물의 주소가 복사됐습니다.</div>
+                    <div id="cancel_10" class="modal_in cancel">화면으로 돌아가기</div>
+                </div>
+            </div>
             <div id="post_back"></div>
             <div id="post_modal">
+                <input type="hidden" id="for_fuc">
                 <div id="post_con" style="display: none;">
                     <div id="for_stay_left">
                         <button type="button" class="slide_btn_prev" class="buttons">Prev</button>
@@ -578,43 +708,22 @@
                                 <div class="reply_right re_main_con" id="re_main_con">
                                 </div>
                                 <div class="reply_right" id="hashtag_con">
-                                    <a href="#">#해시택,</a>
                                 </div>
-                            </div>
-                            <div class="each_reply_con">
-                                <div class="reply_com_con">
-                                    <div class="reply_profile_photo"></div>
-                                    <div class="reply_right_com">
-                                        <div class="reply_con">aaab&nbsp;내용 들어갈 자</div>
-                                        <div class="reply_right" id="hashtag_con_reply">
-                                            <a href="#">#해시택,</a>
-                                        </div>
-                                        <div class="reply_date">
-                                            <div class=" rebot">2020/01/01</div>
-                                            <div class="rebot">좋아요 개</div>
-                                            <div class="rebot">답글 달기</div>
-                                        </div>
-                                    </div>
-                                    <i class="fas fa-bars fa-bars_reply_title"></i>
-                                    <div class="icon_com like_icon comment_lcon"></div>
-                                    <div class="icon_com unlike_icon comment_unlcon"></div>
-                                </div>
-                                <div class="show_re_re">답글 보기</div>
                             </div>
                         </div>
                         <div id="post_right_bottom">
                             <div id="post_icon_box">
-                                <div class="icon like_icon likechk"></div>
-                                <div class="icon unlike_icon unlikechk"></div>
+                                <div class="icon like_icon likechk" onclick="pressLike();"></div>
+                                <div class="icon unlike_icon unlikechk" onclick="pressUnLike();"></div>
                                 <div class="icon write_icon"></div>
-                                <div class="icon share_icon"></div>
+                                <div class="icon share_icon" onclick="shareurl();"></div>
                                 <div class="icon save_icon"></div>
                             </div>
                             <div id="post_like"></div>
                             <div id="post_date"></div>
                             <div id="reply_box">
                                 <input type="text" id="commentbox" placeholder="댓글 달기..">
-                                <div id="sendbtn">게시</div>
+                                <div id="sendbtn" class="comment_upload">게시</div>
                             </div>
                         </div>
                     </div>
@@ -674,48 +783,16 @@
                     <div id="hidden_follow_rec" style="display: none;">
                         <div id="rec_title">
                             <div id="title1">추천계정</div>
+                            <c:if test="${not empty recomFow }">
+                            <c:forEach var="vo" items="${recomFow }" varStatus="s">
                             <div class="each_rec_con">
-                                <div class="each_rec_photo">dd</div>
-                                <div class="each_rec_id">ddd</div>
-                                <div class="each_rec_name">ddd</div>
+                                <div class="each_rec_photo">${vo.m_img }</div>
+                                <div class="each_rec_id">${vo.r_mid }</div>
+                                <div class="each_rec_name">${vo.m_name }</div>
                                 <div class="each_rec_followbtn">팔로우</div>
                             </div>
-                            <div class="each_rec_con">
-                                <div class="each_rec_photo">dd</div>
-                                <div class="each_rec_id">ddd</div>
-                                <div class="each_rec_name">ddd</div>
-                                <div class="each_rec_followbtn">팔로우</div>
-                            </div>
-                            <div class="each_rec_con">
-                                <div class="each_rec_photo">dd</div>
-                                <div class="each_rec_id">ddd</div>
-                                <div class="each_rec_name">ddd</div>
-                                <div class="each_rec_followbtn">팔로우</div>
-                            </div>
-                            <div class="each_rec_con">
-                                <div class="each_rec_photo">dd</div>
-                                <div class="each_rec_id">ddd</div>
-                                <div class="each_rec_name">ddd</div>
-                                <div class="each_rec_followbtn">팔로우</div>
-                            </div>
-                            <div class="each_rec_con">
-                                <div class="each_rec_photo">dd</div>
-                                <div class="each_rec_id">ddd</div>
-                                <div class="each_rec_name">ddd</div>
-                                <div class="each_rec_followbtn">팔로우</div>
-                            </div>
-                            <div class="each_rec_con">
-                                <div class="each_rec_photo">dd</div>
-                                <div class="each_rec_id">ddd</div>
-                                <div class="each_rec_name">ddd</div>
-                                <div class="each_rec_followbtn">팔로우</div>
-                            </div>
-                            <div class="each_rec_con">
-                                <div class="each_rec_photo">dd</div>
-                                <div class="each_rec_id">ddd</div>
-                                <div class="each_rec_name">ddd</div>
-                                <div class="each_rec_followbtn">팔로우</div>
-                            </div>
+                            </c:forEach>
+                            </c:if>
                         </div>
                     </div>
                     <hr id="line">
@@ -749,7 +826,10 @@
             <footer> dddd </footer>
         </body>
         <script>
+            var memId = $(".m_id").val();
             $(function() {
+
+                // flex 화면 맞추기
                 var postcount = $(".each_photo").length;
                 var forflex = postcount % 3;
                 if (forflex == 1) {
@@ -760,6 +840,7 @@
                 }
             });
 
+            // 스토리로 이동
             function goStory(m_id) {
                 var storychk = $("#storychk").val();
                 if (storychk != 0) {
@@ -768,78 +849,561 @@
                 } else {}
             }
 
-            function showpost(b_id, b_type) {
-                if (b_type == 'G') {
-                    $("#post_back").css("display", "block");
-                    $("#post_modal").css("display", "block");
-                    $("#post_con").css("display", "block");
+            // 게시글 상세페이지
+            function showpost(t_id) {
+                $("#post_back").css("display", "block");
+                $("#post_modal").css("display", "block");
+                $("#post_con").css("display", "block");
+
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/hiddenShowLike.do",
+                    method: "POST",
+                    data: {
+                        b_id: t_id,
+                        m_id: memId
+                    },
+                    dataType: "json",
+                    success: function(hLike) {
+                        console.log("hlike" + hLike);
+                        if (hLike >= 1) {
+                            $(".likechk").css("display", "none");
+                            $(".unlikechk").css("display", "block");
+                        }
+                    },
+                    error: function(request,
+                        status, error) {
+                        console.log("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/showeachpost.do",
+                    method: "POST",
+                    data: {
+                        b_id: t_id
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        var b_id = data.showeachpost.b_id;
+                        var m_id = data.showeachpost.m_id;
+                        var b_date = data.showeachpost.b_date;
+                        var likecount = data.showeachpost.likecount;
+                        var b_content = data.showeachpost.b_content;
+                        var b_img = data.showeachpost.b_img.split(",");
+
+                        $("#for_fuc").val(b_id);
+                        for (i = 0; i < b_img.length; i++) {
+                            if (b_img[i] != "" && b_img[i] != " ") {
+                                console.log(b_img[i]);
+                                //$("#photo").append('<img class="photo_all" src="${pageContext.request.contextPath}/resources/uploadFiles/' + b_img[i] + '">');
+                                $("#photo").append('<div class="photo_all">' + b_img[i] + '</div>');
+                            }
+                        }
+                        if (b_content == null) {
+                            b_content = "";
+                            document.getElementById("re_main_con").innerHTML = m_id + "&nbsp;" + b_content;
+                        } else {
+                            document.getElementById("re_main_con").innerHTML = m_id + "&nbsp;" + b_content;
+                        }
+                        document.getElementById("post_like").innerHTML = "<input type='button' id='lCount' value='" + likecount + "'>" + "명이 좋아합니다";
+                        document.getElementById("post_date").innerHTML = b_date;
+
+                        // 게시물 슬라이드
+                        var slideWrapper = document.querySelector('#slide_photo_con');
+                        var slides = document.querySelectorAll('.photo_all');
+                        var totalSlides = slides.length;
+                        var sliderWidth = slideWrapper.clientWidth;
+                        var slideIndex = 0;
+                        var slider = document.querySelector('#photo');
+                        slider.style.width = sliderWidth * totalSlides + 'px';
+
+                        function showSlides(n) {
+                            slideIndex = n;
+                            if (slideIndex == -1) {
+                                slideIndex = totalSlides - 1;
+                            } else if (slideIndex === totalSlides) {
+                                slideIndex = 0;
+                            }
+                            slider.style.left = -(sliderWidth * slideIndex) + 'px';
+                        }
+
+                        function plusSlides(n) {
+                            showSlides(slideIndex += n);
+                        }
+
+                        function currentSlide(n) {
+                            showSlides(slideIndex = n);
+                        }
+                        var nextBtn = document.querySelector('.slide_btn_next');
+                        var prevBtn = document.querySelector('.slide_btn_prev');
+                        nextBtn.addEventListener('click', function() {
+                            plusSlides(1);
+                        });
+                        prevBtn.addEventListener('click', function() {
+                            plusSlides(-1);
+                        });
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+
+
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/showHashTag.do",
+                    method: "POST",
+                    dataType: "json",
+                    data: {
+                        t_id: t_id
+                    },
+                    success: function(hashtag) {
+                        var count = hashtag;
+                        if (count.hashtag == undefined) {} else {
+                            for (var i = 0; i < count.hashtag.length; i++) {
+                                var hashtag1 = count.hashtag[i].h_tag;
+
+                                // 해쉬태그 append - hashtag
+                                $(".reply_right").append('<a href="${pageContext.request.contextPath}/explore?hashtag=' + hashtag1 + '">#' + hashtag1 + '</a>&nbsp;');
+                            }
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
+                    method: "POST",
+                    data: {
+                        t_id: t_id
+                    },
+                    dataType: "json",
+                    success: function(hComment) {
+                        var count = hComment;
+                        console.log(count.hComment.length);
+                        if (count.hComment.length == undefined) {} else {
+                            for (var i = 0; i < count.hComment.length; i++) {
+                                var id = count.hComment[i].m_id;
+                                var b_content = count.hComment[i].b_content;
+                                var b_id = count.hComment[i].b_id;
+                                var b_type = count.hComment[i].b_type;
+                                var countr = count.hComment[i].count;
+                                var b_date = count.hComment[i].b_date;
+                                var m_img = count.hComment[i].m_img;
+                                console.log(i + "는" + b_id);
+                                console.log(i + "는 " + countr);
+                                $("#post_right_middle").append('<div class="each_reply_con">' +
+                                    '<input type="hidden" class="chkCoLike" onclick="chkCoLike(\'' + b_id + '\');">' +
+                                    '<div class="reply_com_con">' +
+                                    '<div class="reply_profile_photo">' + m_img + '</div>' +
+                                    '<div class="reply_right_com">' +
+                                    '<div class="reply_con">' + id + '&nbsp;' + b_content + '</div>' +
+                                    '<div class="reply_date">' +
+                                    '<div class=" rebot">' + b_date + '</div>' +
+                                    '<div class="rebot">좋아요 ' + '<input type="button" class="lcount" value="">' + '개</div>' +
+                                    '<div class="rebot moreCoW" onclick="writeMoreCo(\'' + b_id + '\');">답글 달기</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<i class="fas fa-bars fa-bars_reply_title"></i>' +
+                                    '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\');"></div>' +
+                                    '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
+                                    '</div>' +
+                                    '<div class="show_re_re show_re_re' + b_id + '" onclick ="show_re_re(\'' + b_id + '\');" style="display:none;">답글 보기 (' + countr + ')개</div>' +
+                                    '</div><div class="re_con re_con' + b_id + '"></div>' +
+                                    '<div class="com_detail replyCo replyCo' + b_id + '" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
+                                    id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button></div>'
+                                );
+                                if (countr != 0) {
+                                    $(".show_re_re" + b_id).css("display", "block");
+                                }
+
+
+
+                            }
+                            $(".chkCoLike").trigger('click');
+
+                        }
+
+
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            // 좋아요 체크
+            function chkCoLike(b_id) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/hiddenShowLike.do",
+                    method: "POST",
+                    data: {
+                        b_id: b_id,
+                        m_id: memId
+                    },
+                    dataType: "json",
+                    success: function(hLike) {
+                        console.log("hlike" + hLike);
+                        if (hLike >= 1) {
+                            $(".likechk" + b_id).css("display", "none");
+                            $(".unlikechk" + b_id).css("display", "block");
+                        }
+                    },
+                    error: function(request,
+                        status, error) {
+                        console.log("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            // 답글 좋아요
+            function pressLike_co(b_id) {
+                console.log(memId);
+                console.log(b_id);
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/pressLike.do",
+                    method: "POST",
+                    data: {
+                        m_id: memId,
+                        t_id: b_id
+                    },
+                    async: false,
+                    success: function(data) {
+                        console.log("memId : " +
+                            memId +
+                            " b_id : " +
+                            b_id);
+                        $(".likechk" + b_id).css("display", "none");
+                        $(".unlikechk" + b_id).css("display", "block");
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            // 답글 좋아요 취소
+            function pressUnLike_co(b_id) {
+                console.log(memId);
+                console.log(b_id);
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/pressUnLike.do",
+                    method: "POST",
+                    data: {
+                        m_id: memId,
+                        t_id: b_id
+                    },
+                    success: function(data) {
+                        console.log("memId : " +
+                            memId +
+                            " b_id : " +
+                            b_id);
+                        $(".likechk" + b_id).css("display", "block");
+                        $(".unlikechk" + b_id).css("display", "none");
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+
+            // 답글 보기
+            function show_re_re(t_id) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
+                    method: "POST",
+                    data: {
+                        t_id: t_id
+                    },
+                    dataType: "json",
+                    success: function(hComment) {
+                        var count = hComment;
+
+                        for (var i = 0; i < count.hComment.length; i++) {
+                            var id = count.hComment[i].m_id;
+                            var b_content = count.hComment[i].b_content;
+                            var b_id = count.hComment[i].b_id;
+                            var b_date = count.hComment[i].b_date;
+                            var m_img = count.hComment[i].m_img;
+
+                            $(".re_con" + t_id).append('<div class="each_reply_con">' +
+                                '<input type="hidden" class="chkCoLike" onclick="chkCoLike(\'' + b_id + '\');">' +
+                                '<div class="reply_com_con">' +
+                                '<div class="reply_profile_photo">' + m_img + '</div>' +
+                                '<div class="reply_right_com">' +
+                                '<div class="reply_con">' + id + '&nbsp;' + b_content + '</div>' +
+                                '<div class="reply_date">' +
+                                '<div class=" rebot">' + b_date + '</div>' +
+                                '<div class="rebot">좋아요 ' + '<input type="button" class="lcount" value="">' + '개</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '<i class="fas fa-bars fa-bars_reply_title"></i>' +
+                                '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\');"></div>' +
+                                '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
+                                '</div>' +
+                                '</div>');
+                        }
+
+                        $(".chkCoLike").trigger('click');
+
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            // 답글 달기 
+            function writeMoreCo(b_id) {
+                $(".replyCo" + b_id).css("display", "block");
+
+                $(".rep_comment_upload").on('click', function() {
+                    var r_comment = $(this).prev().val();
+                    console.log(memId);
+                    console.log(b_id);
+                    console.log(r_comment);
+                    if (r_comment == "" || r_comment == null) {
+                        console.log("reply comment won't be uploaded");
+                        $(".replyCo").css("display", "none");
+                        $('.rep_comment_upload').off('click');
+                    } else {
+                        $.ajax({
+                            url: "${pageContext.request.contextPath}/insertReplyComment.do",
+                            method: "POST",
+                            data: {
+                                m_id: memId,
+                                t_comment: r_comment,
+                                t_id: b_id
+                            },
+                            success: function(data) {
+                                console.log("memId : " +
+                                    memId +
+                                    " comment : " +
+                                    r_comment +
+                                    " postid : " +
+                                    b_id);
+                                $(".write_space").val('');
+                                $(".replyCo").css("display", "none");
+                                $('.show_re_re').off('click');
+                            },
+                            error: function(request, status, error) {
+                                alert("code:" +
+                                    request.status +
+                                    "\n" +
+                                    "message:" +
+                                    request.responseText +
+                                    "\n" + "error:" +
+                                    error);
+                            }
+                        });
+                    }
+                });
+            }
+
+
+            // 게시물 좋아요
+            function pressLike() {
+                var lcount = $("#lCount").val();
+                var b_id = $("#for_fuc").val();
+                lcount++;
+                console.log(b_id);
+
+
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/pressLike.do",
+                    method: "POST",
+                    data: {
+                        m_id: memId,
+                        t_id: b_id
+                    },
+                    success: function(data) {
+                        console.log("memId : " +
+                            memId +
+                            " b_id : " +
+                            b_id);
+                        $(".likechk").css("display", "none");
+                        $(".unlikechk").css("display", "block");
+                        $("#lCount").val(lcount);
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+
+            }
+
+            // 게시물 좋아요 취소
+            function pressUnLike() {
+                var lcount = $("#lCount").val();
+                var b_id = $("#for_fuc").val();
+                lcount--;
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/pressUnLike.do",
+                    method: "POST",
+                    data: {
+                        m_id: memId,
+                        t_id: b_id
+                    },
+                    success: function(data) {
+                        console.log("memId : " +
+                            memId +
+                            " b_id : " +
+                            b_id);
+                        $(".likechk").css("display", "block");
+                        $(".unlikechk").css("display", "none");
+                        $("#lCount").val(lcount);
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            // url 공유
+            function shareurl() {
+                var b_id = $("#for_fuc").val();
+                $("#post_back").css("display", "none");
+                $("#post_modal").css("display", "none");
+                $("#post_con").css("display", "none");
+                $("#report_modal").css("display", "block");
+                $("#report_back").css("display", "block");
+                $("#share_con").css("display", "block");
+                $("#url").val(b_id);
+                $("#share_chk").on('click', function() {
+                    var curl = document.getElementById("url");
+                    curl.select();
+                    document.execCommand('copy');
+                    curl.setSelectionRange(0, 0);
+                    $("#share_con").css("display", "none");
+                    $("#share_con_result").css("display", "block");
+                });
+            }
+
+            // 모달 닫기
+            //모달 초기화 수정 필요
+            $(".cancel").on('click', function() {
+                var post_id = $(".post_id").val();
+                //$("#post_back").css("display", "none");
+                //$("#post_modal").css("display", "none");
+                //$("#post_con").css("display", "none");
+                //$("#report_modal").css("display", "none");
+                //$("#report_back").css("display", "none");
+                //$("#share_con").css("display", "none");
+                //$("#share_con_result").css("display", "none");
+                //$(".each_photo").off('click');
+                var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
+                $(location).attr('href', url);
+
+            });
+
+            // 계정 추천
+            $("#rf").change(function() {
+                if ($("#rf").is(":checked")) {
+                    $("#hidden_follow_rec").css("display", "block");
+                } else {
+                    $("#hidden_follow_rec").css("display", "none");
+                }
+            });
+
+
+            // 댓글 작성
+            //모달 초기화 수정 필요
+            $(".comment_upload").on('click', function() {
+                var b_id = $("#for_fuc").val();
+                var comment = $(this).prev().val();
+                var post_id = $(".post_id").val();
+                console.log(comment);
+                console.log(memId);
+                if (comment == "" || comment == null) {
+                    console.log("comment won't be uploaded");
+                    return false;
+                } else {
+                    console.log("board comment upload!");
                     $.ajax({
-                        url: "${pageContext.request.contextPath}/showeachpost.do",
+                        url: "${pageContext.request.contextPath}/coInsert.do",
                         method: "POST",
                         data: {
-                            b_id: b_id
+                            m_id: memId,
+                            t_comment: comment,
+                            t_id: b_id
                         },
-                        dataType: "json",
                         success: function(data) {
-                            console.log(data.showeachpost.b_img);
-                            console.log(data.showeachpost.b_content);
-                            console.log(data.showeachpost.b_date);
-                            console.log(data.showeachpost.likecount);
-                            var m_id = data.showeachpost.m_id;
-                            var b_date = data.showeachpost.b_date;
-                            var likecount = data.showeachpost.likecount;
-                            var b_content = data.showeachpost.b_content;
-                            var b_img = data.showeachpost.b_img.split(",");
-                            for (i = 0; i < b_img.length; i++) {
-                                if (b_img[i] != "" && b_img[i] != " ") {
-                                    console.log(b_img[i]);
-                                    //$("#photo").append('<img class="photo_all" src="${pageContext.request.contextPath}/resources/uploadFiles/' + b_img[i] + '">');
-                                    $("#photo").append('<div class="photo_all">' + b_img[i] + '</div>');
-                                }
-                            }
-                            if (b_content == null) {
-                                b_content = "";
-                                document.getElementById("re_main_con").innerHTML = m_id + "&nbsp;" + b_content;
-                            } else {
-                                document.getElementById("re_main_con").innerHTML = m_id + "&nbsp;" + b_content;
-                            }
-                            document.getElementById("post_like").innerHTML = likecount + "명이 좋아합니다";
-                            document.getElementById("post_date").innerHTML = b_date;
-
-                            // 게시물 슬라이드
-                            var slideWrapper = document.querySelector('#slide_photo_con');
-                            var slides = document.querySelectorAll('.photo_all');
-                            var totalSlides = slides.length;
-                            var sliderWidth = slideWrapper.clientWidth;
-                            var slideIndex = 0;
-                            var slider = document.querySelector('#photo');
-                            slider.style.width = sliderWidth * totalSlides + 'px';
-
-                            function showSlides(n) {
-                                slideIndex = n;
-                                if (slideIndex == -1) {
-                                    slideIndex = totalSlides - 1;
-                                } else if (slideIndex === totalSlides) {
-                                    slideIndex = 0;
-                                }
-                                slider.style.left = -(sliderWidth * slideIndex) + 'px';
-                            }
-
-                            function plusSlides(n) {
-                                showSlides(slideIndex += n);
-                            }
-
-                            function currentSlide(n) {
-                                showSlides(slideIndex = n);
-                            }
-                            var nextBtn = document.querySelector('.slide_btn_next');
-                            var prevBtn = document.querySelector('.slide_btn_prev');
-                            nextBtn.addEventListener('click', function() {
-                                plusSlides(1);
-                            });
-                            prevBtn.addEventListener('click', function() {
-                                plusSlides(-1);
-                            });
+                            console.log("memId : " +
+                                memId +
+                                " b_id : " +
+                                b_id +
+                                " comment : " +
+                                comment);
+                            var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
+                            $(location).attr('href', url);
+                            showpost(b_id);
+                            //$("#commentbox").val('');
+                            //$("#post_back").css("display", "none");
+                            //$("#post_modal").css("display", "none");
+                            //$("#post_con").css("display", "none");
+                            //$(".each_photo").off('click');
                         },
                         error: function(request, status, error) {
                             alert("code:" +
@@ -852,21 +1416,16 @@
                         }
                     });
                 }
-            }
-
-            $(".cancel").on('click', function() {
-                $("#post_back").css("display", "none");
-                $("#post_modal").css("display", "none");
-                $("#post_con").css("display", "none");
             });
 
-            $("#rf").change(function() {
-                if ($("#rf").is(":checked")) {
-                    $("#hidden_follow_rec").css("display", "block");
-                } else {
-                    $("#hidden_follow_rec").css("display", "none");
-                }
-            });
+            //$('#post_modal').on('shown.bs.modal', function (e) {
+            //	   $('#post_modal').owlCarousel('refresh');
+            //	 });
+
+            //$('#post_modal').on('hidden.bs.modal', function () {
+            //	$(this).removeData();
+            //	$("#post_right_middle").removeData();
+            //	});
         </script>
 
         </html>

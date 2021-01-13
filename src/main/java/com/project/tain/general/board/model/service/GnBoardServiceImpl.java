@@ -60,4 +60,10 @@ public class GnBoardServiceImpl implements GnBoardService {
 	public GnBoard showeachpost(String b_id) {
 		return gDao.showeachpost(b_id);
 	}
+
+	@Override
+	public List<GnBoard> recomFow(String my_name, String m_id) {
+		return gDao.recomFow(my_name, m_id);
+	}
+
 }

@@ -21,6 +21,9 @@ public class GnBoard {
 	private String b_date;
 	private int likecount;
 	private String b_type;
+	private String h_tag;
+	private String r_mid;
+	private String m_name;
 
 	public String getM_id() {
 		return m_id;
@@ -148,6 +151,30 @@ public class GnBoard {
 
 	public void setB_type(String b_type) {
 		this.b_type = b_type;
+	}
+
+	public String getH_tag() {
+		return h_tag;
+	}
+
+	public void setH_tag(String h_tag) {
+		this.h_tag = h_tag;
+	}
+
+	public String getR_mid() {
+		return r_mid;
+	}
+
+	public void setR_mid(String r_mid) {
+		this.r_mid = r_mid;
+	}
+
+	public String getM_name() {
+		return m_name;
+	}
+
+	public void setM_name(String m_name) {
+		this.m_name = m_name;
 	}
 	
 	

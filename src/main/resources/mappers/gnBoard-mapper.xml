@@ -52,10 +52,12 @@
 		union
 		select m_id, businessboard.bb_id b_id,
 		bb_img1 b_img, bb_date b_date, bb_type b_type from
-		businessboard join businessboardadd
+		businessboard join
+		businessboardadd
 		on businessboard.bb_id =
 		businessboardadd.bb_id)
-		where m_id=#{m_id}
+		where
+		m_id=#{m_id}
 		order by b_date desc
 	</select>
 	<!-- 스토리 하이라이트 -->
@@ -77,15 +79,39 @@
 		resultType="GnBoard">
 		select board.b_id b_id, board.m_id m_id,
 		b_img1||','||b_img2||','||b_img3||','||b_img4||','||b_img5||','||b_img6||','||b_img7||','||b_img8||','||b_img9||','||b_img10
-		b_img,board.b_content b_content, to_char(board.b_date,'YYYY-MM-DD HH24:Mi:SS')
+		b_img,board.b_content b_content, to_char(board.b_date,'YYYY-MM-DD
+		HH24:Mi:SS')
 		b_date, count(blike.b_id) likecount from board
-		left outer join blike on
+		left outer
+		join blike on
 		board.b_id = blike.b_id
-		left outer join boardadd on board.b_id =
+		left outer join boardadd on
+		board.b_id =
 		boardadd.b_id
 		where board.b_id=#{b_id} group by board.b_id,
 		board.b_content, board.m_id,
-		to_char(board.b_date,'YYYY-MM-DD HH24:Mi:SS'),
+		to_char(board.b_date,'YYYY-MM-DD
+		HH24:Mi:SS'),
 		b_img1||','||b_img2||','||b_img3||','||b_img4||','||b_img5||','||b_img6||','||b_img7||','||b_img8||','||b_img9||','||b_img10
 	</select>
+
+	<!-- 게시물 해시태그 조회 -->
+	<select id="showHashtag" parameterType="string"
+		resultType="arrayList" resultMap="resultGnBoard">
+		select h_tag from hashtag where
+		b_id=#{b_id}
+	</select>
+
+	<!-- 팔로우 추천 -->
+	<select id="recomFow" parameterType="java.util.HashMap"
+		resultType="arrayList" resultMap="resultGnBoard">
+		select a.m_id2 r_mid, m_img, m_name from follow a
+		join  member on a.m_id2 = m_id
+		where a.m_id1 = #{m_id}
+        and a.m_id2 not in
+		(select m_id2 from follow where m_id1=#{my_name})
+		and a.m_id2!=#{my_name}
+        order by dbms_random.value
+	</select>
+	
 </mapper>

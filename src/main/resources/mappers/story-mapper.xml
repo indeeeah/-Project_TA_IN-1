@@ -9,7 +9,7 @@
 	<!-- 스토리 인서트 -->
 	<insert id="storyInsert" flushCache="true"
 		statementType="PREPARED">
-		insert into story (m_id, s_img, s_type) values(#{m_id},
+		insert into story (s_id, m_id, s_img, s_type) values('ST'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(s_seq.NEXTVAL,3,'0'),#{my_name},
 		#{s_img}, 'G')
 	</insert>
 

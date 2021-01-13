@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="GnWrite">
+	<resultMap type="GnWrite" id="resultGnWrite">
+		<id property="m_id" column="m_id" />
+		<id property="t_id" column="t_id" />
+		<result property="m_img" column="m_img" />
+	</resultMap>
+	<select id="chkseq" resultType="int">
+		select g_seq.nextval seq from
+		dual
+	</select>
+
+	<insert id="insertboard" parameterType="GnWrite"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into board
+		(B_ID, M_ID, B_CONTENT) values
+		('BO'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(#{seq},3,'0'),
+		#{my_name},
+		#{b_content})
+	</insert>
+	<insert id="insertboardimg" parameterType="GnWrite"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into
+		boardadd values(
+		'BO'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(#{seq},3,'0'),
+		#{b_img1}, #{b_img2}, #{b_img3}, #{b_img4},
+		#{b_img5}, #{b_img6}, #{b_img7}, #{b_img8}, #{b_img9}, #{b_img10})
+	</insert>
+</mapper>

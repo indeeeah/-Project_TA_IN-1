@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="TimeLine">
 	<resultMap type="TimeLine" id="resultTimeLine">
@@ -122,7 +121,7 @@
 		flushCache="true" statementType="PREPARED" timeout="20">
 		insert into board
 		(b_id, m_id, b_content, b_type, b_topid) values
-		('BO'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BOARD_COMMENT_SEQ.NEXTVAL,3,'0'),
+		('BO'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(g_seq.NEXTVAL,3,'0'),
 		#{m_id}, #{t_comment},'C', #{t_id})
 	</insert>
 	<insert id="insertTimeLineCommentB" parameterType="TimeLine"
@@ -131,7 +130,7 @@
 		businessboard
 		(bb_id, m_id, bb_type, bb_topid, bb_price, bb_name,
 		bb_info) values
-		('BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BOARD_COMMENT_SEQ.NEXTVAL,3,'0'),
+		('BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(b_seq.NEXTVAL,3,'0'),
 		#{m_id}, 'C', #{t_id}, '1', 'n', #{t_comment})
 	</insert>
 
@@ -142,7 +141,7 @@
 		b.m_id as m_id,
 		b.b_content as b_content, to_char(b.b_date,'YYYY-MM-DD
 		HH24:Mi') as b_date, b.b_topid as b_topid, a.b_type as b_type,
-		count(r.b_topid) as count
+		count(r.b_topid) as count, m_img
 		from board b
 		left outer
 		join board a on
@@ -150,11 +149,12 @@
 		= a.b_id
 		left outer join board r on b.b_id =
 		r.b_topid
+		left outer join member m on b.m_id = m.m_id
 		where
 		b.b_topid=#{t_id} group
 		by b.b_id, b.m_id, b.b_content,
 		b.b_date,
-		b.b_topid, a.b_type
+		b.b_topid, a.b_type, m.m_img
 		union
 		select b.bb_id as b_id, b.m_id as m_id,
 		b.bb_info as b_content,
@@ -162,7 +162,7 @@
 		b_date,
 		a.bb_type as b_type,
 		b.bb_topid as b_topid, count(r.bb_topid) as
-		count
+		count, m_img
 		from
 		businessboard b
 		left outer join
@@ -172,12 +172,13 @@
 		left outer join
 		businessboard r
 		on b.bb_id = r.bb_topid
+		left outer join member m on b.m_id = m.m_id
 		where
 		b.bb_topid=#{t_id} group by
 		b.bb_id,
 		b.m_id, b.bb_info, b.bb_date,
 		a.bb_type,
-		b.bb_topid
+		b.bb_topid, m.m_img
 		) order by b_date desc
 	</select>
 
@@ -277,7 +278,7 @@
 		flushCache="true" statementType="PREPARED" timeout="20">
 		insert into board
 		(b_id, m_id, b_content, b_type, b_topid) values
-		('BO'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BOARD_COMMENT_SEQ.NEXTVAL,3,'0'),
+		('BO'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(g_seq.NEXTVAL,3,'0'),
 		#{m_id}, #{t_comment},'R', #{t_id})
 	</insert>
 	<insert id="insertReplyCommentB" parameterType="TimeLine"
@@ -286,7 +287,7 @@
 		businessboard
 		(bb_id, m_id, bb_type, bb_topid, bb_price, bb_name,
 		bb_info) values
-		('BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BOARD_COMMENT_SEQ.NEXTVAL,3,'0'),
+		('BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(b_seq.NEXTVAL,3,'0'),
 		#{m_id}, 'R', #{t_id}, '1', 'n', #{t_comment})
 	</insert>
 
@@ -374,27 +375,3 @@
 		select m_id2 id, m_img, m_activity from member join follow on m_id = m_id2 where m_id1=#{m_id}
 	</select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

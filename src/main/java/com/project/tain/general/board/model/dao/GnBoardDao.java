@@ -53,4 +53,12 @@ public class GnBoardDao {
 	public GnBoard showeachpost(String b_id) {
 		return sqlSession.selectOne("GnBoard.showeachpost", b_id);
 	}
+	
+	public List<GnBoard> recomFow(String my_name, String m_id){
+		HashMap<String, String> rec_fow = new HashMap<String, String>();
+		rec_fow.put("my_name", my_name);
+		rec_fow.put("m_id", m_id);
+		return sqlSession.selectList("GnBoard.recomFow", rec_fow);
+	}
+	
 }

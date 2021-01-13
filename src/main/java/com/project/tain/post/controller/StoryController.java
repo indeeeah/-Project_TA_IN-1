@@ -87,7 +87,7 @@ public class StoryController {
 	// 작성된 글을 insert
 	@RequestMapping(value = "/storyInsert.do", method = RequestMethod.POST)
 	public ModelAndView storyInsert(Story st, @RequestParam(name = "upfile") MultipartFile report,
-			HttpServletRequest request, ModelAndView mv, String m_id) {
+			HttpServletRequest request, ModelAndView mv) {
 		try {
 			// 첨부파일 저장
 			if (report != null && !report.equals("")) {
@@ -96,7 +96,7 @@ public class StoryController {
 			st.setS_img(report.getOriginalFilename());
 
 			sService.storyInsert(st);
-			mv.setViewName("redirect:timeLine?m_id="+m_id);
+			mv.setViewName("redirect:timeLine");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

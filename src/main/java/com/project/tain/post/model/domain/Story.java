@@ -14,6 +14,7 @@ public class Story implements java.io.Serializable {
 	private String s_type;
 	private String m_img;
 	private String id;
+	private String my_name;
 
 	public String getM_id() {
 		return m_id;
@@ -58,5 +59,15 @@ public class Story implements java.io.Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	public String getMy_name() {
+		return my_name;
+	}
+
+	public void setMy_name(String my_name) {
+		this.my_name = my_name;
+	}
+	
+	
 
 }

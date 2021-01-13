@@ -38,6 +38,26 @@
                     background-size: 24px;
                 }
                 
+                .write_icon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/002-speech-bubble-1.svg');
+                    background-size: 24px;
+                }
+                
+                .write_icon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-speech-bubble.svg');
+                    background-size: 24px;
+                }
+                
+                .save_icon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-tag.svg');
+                    background-size: 24px;
+                }
+                
+                .save_icon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/006-price-tag.svg');
+                    background-size: 24px;
+                }
+                
                 .comment_lcon {
                     background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
                     background-size: 12px;
@@ -283,7 +303,7 @@
                                             <div class="timeline_icon_con">
                                                 <div class="icon like_icon likechk${vo.t_id }" onclick="pressLike('${vo.t_id}');"></div>
                                                 <div class="icon unlike_icon unlikechk${vo.t_id }" onclick="pressUnlike('${vo.t_id}');"></div>
-                                                <div class="icon comment_icon"></div>
+                                                <div class="icon write_icon"></div>
                                                 <div class="icon share_icon" onclick="shareurl('${vo.t_id}')"></div>
                                                 <div class="icon save_icon"></div>
                                             </div>
@@ -332,7 +352,7 @@
                     <div id="timeline_right">
                         <div id="right_small_con">
                             <div id="my_profile_con">
-                                <div id="my_profile_photo"  onclick="goboard('${myProfile.m_id }');" style="cursor:pointer;">${myProfile.m_img }</div>
+                                <div id="my_profile_photo" onclick="goboard('${myProfile.m_id }');" style="cursor:pointer;">${myProfile.m_img }</div>
                                 <div id="my_id">${myProfile.m_id }</div>
                                 <input type="hidden" name="m_id" class="m_id" value="${myProfile.m_id }">
                             </div>
@@ -355,7 +375,7 @@
                             <div id="footer_info"></div>
                             <div id="footer_infoc">© 2020 TA_IN</div>
                         </div>
-                            <div id="test"  onclick="goboard('${myProfile.m_id }');" style="cursor:pointer;">냐</div>
+                        <div id="test" onclick="goboard('${myProfile.m_id }');" style="cursor:pointer;">냐</div>
                     </div>
                 </div>
 
@@ -429,10 +449,10 @@
                 var url = "${pageContext.request.contextPath}/eachstory?id=" + id;
                 $(location).attr('href', url);
             }
-            
+
             // 계정 상세페이지 이동          타입 추가 필요
-            function goboard(id){
-            	var url = "${pageContext.request.contextPath}/gnMain?m_id="+id;
+            function goboard(id) {
+                var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
                 $(location).attr('href', url);
             }
 
@@ -440,14 +460,14 @@
             function showphoto(t_id, t_img) {
                 t_img = t_img.split("|");
                 for (i = 0; i < t_img.length; i++) {
-                	if(t_img[i] != "" && t_img[i] != " "){
-                    $(".photo" + t_id).append('<li class="show_t_img show_t_img' + t_id + '" >' + t_img[i] + '</li>');
-                	}
+                    if (t_img[i] != "" && t_img[i] != " ") {
+                        $(".photo" + t_id).append('<li class="show_t_img show_t_img' + t_id + '" >' + t_img[i] + '</li>');
+                    }
                 }
-                
+
                 var photocount = $(".show_t_img" + t_id).length;
-                if(photocount >1){
-                $(".slidebtn"+t_id).css("display", "block");
+                if (photocount > 1) {
+                    $(".slidebtn" + t_id).css("display", "block");
                 }
 
                 // 게시물 슬라이드
@@ -502,7 +522,7 @@
                                 var hashtag1 = count.hashtag[i].h_tag;
 
                                 // 해쉬태그 append - hashtag
-                                $(".hashtag" + t_id).append('<a href="${pageContext.request.contextPath}/explore?hashtag=' + hashtag1 + '&&m_id=' + memId + '">#' + hashtag1 + '</a>');
+                                $(".hashtag" + t_id).append('<a href="${pageContext.request.contextPath}/explore?hashtag=' + hashtag1 + '">#' + hashtag1 + '</a>');
                             }
                         }
                     },

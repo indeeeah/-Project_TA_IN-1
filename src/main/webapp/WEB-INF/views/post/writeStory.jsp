@@ -86,6 +86,7 @@
                             <img class="image">
                         </div>
                         <form action="storyInsert.do?m_id=${myProfile.m_id }" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="my_name" value="${my_name }">
                             <input type="file" name="upfile" class="upfile">
                             <input type="submit" value="스토리 올리기">
                             <input type="button" id="backto_main" value="돌아가기">
@@ -132,11 +133,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </body>
         <script>
-            $(".backto_main").on('click', function() {
+            $("#backto_main").on('click', function() {
                 var memId = $(".m_id").val();
-                var url = "${pageContext.request.contextPath}/timeLine?m_id=" + memId;
+                var url = "${pageContext.request.contextPath}/timeLine";
                 $(location).attr('href', url);
             });
 

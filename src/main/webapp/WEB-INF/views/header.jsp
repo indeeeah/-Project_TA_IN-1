@@ -73,12 +73,13 @@
                     <div id="header_con">
                         <div id="header_left">
                             <div id="fix_logo"></div>
-                            <input type="hidden" name="m_id" class="m_id" value="${myProfile.m_id }">
+                            <input type="hidden" name="m_id" class="m_id" value="${my_name }">
                         </div>
                         <input type="text" id="search" placeholder="검색" style="text-align: center;">
                         <div id="header_right">
                             <div id="header_icon_con">
                                 <div id="fix_home" class="fix_icon"><i class="fas fa-home"></i></div>
+                                <div id="fix_write" class="fix_icon"><i class="fas fa-arrow-circle-up"></i></div>
                                 <div id="fix_message" class="fix_icon"><i class="fas fa-comment-dots"></i></div>
                                 <div id="fix_alert" class="fix_icon"><label for="alert" style="cursor:pointer;"><i
                                             class="fas fa-bell"></i></label></div>
@@ -109,6 +110,7 @@
             <div id="forheader"></div>
         </body>
         <script type="text/javascript">
+        var memId = $(".m_id").val();
             $(function() {
                 $("#search").autocomplete({
                     source: function(request, response) {
@@ -174,11 +176,20 @@
                 var url = "${pageContext.request.contextPath}/timeLine";
                 $(location).attr('href', url);
             });
+            $("#fix_write").on('click', function() {
+                var memId = $(".m_id").val();
+                var url = "${pageContext.request.contextPath}/gnWrite";
+                $(location).attr('href', url);
+            });
+            $("#fix_profile").on('click', function() {
+                var memId = $(".m_id").val();
+                var url = "${pageContext.request.contextPath}/gnMain?m_id="+memId;
+                $(location).attr('href', url);
+            });
 
             $("#search").on("keypress", function(event) {
                 if (window.event.keyCode == 13) {
                     var at = "@";
-                    var memId = $(".m_id").val();
                     var hashtag = $("#search").val();
                     if (hashtag.startsWith(at)) {
 

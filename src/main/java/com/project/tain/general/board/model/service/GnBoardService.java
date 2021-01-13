@@ -22,4 +22,6 @@ public interface GnBoardService {
 	public GnBoard followchk(String my_name, String m_id);
 
 	public GnBoard showeachpost(String b_id);
+	
+	public List<GnBoard> recomFow(String my_name, String m_id);
 }
