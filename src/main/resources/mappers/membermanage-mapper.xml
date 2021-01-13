@@ -32,7 +32,7 @@
 	<!-- 전체 회원 조회 -->
 	<select id="selectList" resultType="arraylist"
 		resultMap="resultMmanage">
-		select * from Member
+		select * from Member order by m_joindate desc
 	</select>
 	
 	<!-- 회원 단일 조회 -->

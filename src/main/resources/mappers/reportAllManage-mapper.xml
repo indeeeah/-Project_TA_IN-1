@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ReportAllManage">
+	<resultMap type="ReportAllManage" id="resultReportAManage">
+		<!-- property에는 vo의 필드명, column에는 db table의 컬럼명 -->
+		<id property="m_id1" column="m_id1" />
+		<result property="m_id2" column="m_id2" />
+		<result property="rm_reason" column="rm_reason" />
+		<result property="rm_date" column="rm_date" />
+	
+		<result property="m_id" column="m_id" />
+		<result property="b_id" column="b_id" />
+		<result property="rb_reason" column="rb_reason" />
+		<result property="rb_date" column="rb_date" />
+	
+		<result property="bb_id" column="bb_id" />
+		<result property="rbb_reason" column="rbb_reason" />
+		<result property="rbb_date" column="rbb_date" />
+	</resultMap>
+	
+	<!-- 전체 신고 수 조회 -->
+	<select id="listCount" resultType="int">
+		select count(*) from ReportMember
+	</select>
+	
+	<!-- 전체 신고 조회 -->
+	<select id="selectList" resultType="arraylist"
+		resultMap="resultReportAManage">
+		select * from ReportMember order by rm_date desc
+	</select>
+
+	<!-- 검색한 회원 조회 -->
+	<select id="searchList" parameterType="string"
+		resultType="arraylist" resultMap="resultReportAManage">
+		SELECT * FROM ReportMember
+		WHERE m_id1 LIKE '%'|| #{keyword} ||'%'
+		ORDER BY m_id1 DESC
+	</select>
+	
+	<!-- 게시글 전체 신고 수 조회 -->
+	<select id="rblistCount" resultType="int">
+		select count(*) from ReportBoard
+	</select>
+	
+	<!-- 게시글 전체 신고 조회 -->
+	<select id="rbselectList" resultType="arraylist"
+		resultMap="resultReportAManage">
+		select * from ReportBoard order by rb_date desc
+	</select>
+
+	<!-- 검색한 게시글 조회 -->
+	<select id="rbsearchList" parameterType="string"
+		resultType="arraylist" resultMap="resultReportAManage">
+		SELECT * FROM ReportBoard
+		WHERE b_id LIKE '%'|| #{keyword} ||'%'
+		ORDER BY b_id DESC
+	</select>
+	
+	<!-- 비지니스게시글 전체 신고 수 조회 -->
+	<select id="rbblistCount" resultType="int">
+		select count(*) from ReportBusinessBoard
+	</select>
+	
+	<!-- 비지니스게시글 전체 신고 조회 -->
+	<select id="rbbselectList" resultType="arraylist"
+		resultMap="resultReportAManage">
+		select * from ReportBusinessBoard order by rbb_date desc
+	</select>
+
+	<!-- 비지니스게시글 검색한 게시글 조회 -->
+	<select id="rbbsearchList" parameterType="string"
+		resultType="arraylist" resultMap="resultReportAManage">
+		SELECT * FROM ReportBusinessBoard
+		WHERE bb_id LIKE '%'|| #{keyword} ||'%'
+		ORDER BY bb_id DESC
+	</select>
+</mapper>

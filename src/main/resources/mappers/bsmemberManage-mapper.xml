@@ -24,7 +24,7 @@
 	<!-- 전체 회원 조회 -->
 	<select id="selectList" resultType="arraylist"
 		resultMap="resultBsMmanage">
-		select * from BusinessMember
+		select * from BusinessMember order by m_id desc
 	</select>
 	
 	<!-- 회원 단일 조회 -->
