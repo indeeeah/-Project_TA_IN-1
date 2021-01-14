@@ -13,46 +13,46 @@ public class MemberRegDao {
 	SqlSession sqlSession;
 	private static final String NameSpace = "MemberRegMapper";
 
-	// È¸¿ø°¡ÀÔ
+	// íšŒì›ê°€ì…
 	@Transactional
 	public int join(MemberRegVO vo) throws Exception {
 		return sqlSession.insert(NameSpace + ".join", vo);
 	}
 
-	// ¾ÆÀÌµğ Áßº¹ °Ë»ç
+	// ì•„ì´ë”” ì¤‘ë³µ ê²€ì‚¬
 	public int check_id(String m_id) throws Exception {
 		return sqlSession.selectOne(NameSpace + ".check_id", m_id);
 	}
 
-	// ÀÌ¸ŞÀÏ Áßº¹ °Ë»ç
+	// ì´ë©”ì¼ ì¤‘ë³µ ê²€ì‚¬
 	public int check_email(String m_email) throws Exception {
 		System.out.println("dao check_email: "+m_email );
 		return sqlSession.selectOne(NameSpace + ".check_email", m_email);
 	}
 
-	// ÀÌ¸ŞÀÏ ÀÎÁõ
+	// ì´ë©”ì¼ ì¸ì¦
 	@Transactional
 	public int approval_member(MemberRegVO vo) throws Exception {
 		return sqlSession.update(NameSpace + ".approval_member", vo);
 	}
 
-	// ·Î±×ÀÎ °Ë»ç
+	// ë¡œê·¸ì¸ ê²€ì‚¬
 	public MemberRegVO login(String m_id) throws Exception {
 		return sqlSession.selectOne(NameSpace + ".login", m_id);
 	}
 
-	// ·Î±×ÀÎ Á¢¼ÓÀÏÀÚ º¯°æ
+	// ë¡œê·¸ì¸ ì ‘ì†ì¼ì ë³€ê²½0
 	@Transactional
 	public int update_log(String m_id) throws Exception {
 		return sqlSession.update(NameSpace + ".update_log", m_id);
 	}
 
-	// ¾ÆÀÌµğ Ã£±â
+	// ì•„ì´ë”” ì°¾ê¸°
 	public String find_id(String m_email) throws Exception {
 		return sqlSession.selectOne(NameSpace + ".find_id", m_email);
 	}
 
-	// ºñ¹Ğ¹øÈ£ º¯°æ
+	// ë¹„ë°€ë²ˆí˜¸ ë³€ê²½
 	@Transactional
 	public int update_pw(MemberRegVO vo) throws Exception {
 		return sqlSession.update(NameSpace +".update_pw", vo);
