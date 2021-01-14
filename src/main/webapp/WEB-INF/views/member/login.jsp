@@ -114,10 +114,10 @@ body {
 				</div>
 			</form>
 			<div class="find_link">
-				<a href="#">아이디/비밀번호를 잊으셨나요?</a>
+				<a href="${pageContext.request.contextPath}/member/memberFindId.do">아이디/비밀번호를 잊으셨나요?</a>
 			</div>
 			<div class="find_link">
-				계정이 없으신가요?<a href="#">가입하기</a>
+				계정이 없으신가요?<a href="${pageContext.request.contextPath}/member/joinPage">가입하기</a>
 			</div>
 		</div>
 	</div>

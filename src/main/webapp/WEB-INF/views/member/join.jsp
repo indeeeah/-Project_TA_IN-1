@@ -426,7 +426,7 @@ body {
 				<div class="form_group text_center">
 					<button type="submit" class="btn btn-primary">회원가입</button>
 					<div class="bottom-text">
-						<a herf="#"> 로그인으로 돌아가기</a>
+						<a href="${pageContext.request.contextPath}/member/loginPage"> 로그인으로 돌아가기</a>
 					</div>
 				</div>
 			</div>
