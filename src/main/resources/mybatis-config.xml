@@ -29,6 +29,7 @@
 		<mapper resource="mappers/bsmemberManage-mapper.xml"/>
 		<mapper resource="mappers/memberReg-mapper.xml" />
 		<mapper resource="mappers/bsnBoard-mapper.xml"/>
+		<mapper resource="mappers/bsnBoardReply-mapper.xml"/>
 		<mapper resource="mappers/gnBoard-mapper.xml"/>
 		<mapper resource="mappers/gnWrite-mapper.xml"/>
 		<mapper resource="mappers/reportAllManage-mapper.xml"/>

@@ -15,8 +15,8 @@ public class BsnBoardReplyServiceImpl implements BsnBoardReplyService{
 	private BsnBoardReplyDao bbrDao;
 	
 	@Override
-	public int likeCount() {
-		return bbrDao.likeCount();
+	public int bbrLike() {
+		return bbrDao.bbrLike();
 	}
 
 	@Override
@@ -32,6 +32,26 @@ public class BsnBoardReplyServiceImpl implements BsnBoardReplyService{
 	@Override
 	public int deleteBbr(String bb_id) {
 		return bbrDao.deleteBbr(bb_id);
+	}
+	
+	@Override
+	public int bbrrLike() {
+		return bbrDao.bbrrLike();
+	}
+
+	@Override
+	public List<BsnBoardReply> bbrrList(String bb_id) {
+		return bbrDao.bbrrList(bb_id);
+	}
+
+	@Override
+	public int insertBbrr(BsnBoardReply bbr) {
+		return bbrDao.insertBbrr(bbr);
+	}
+
+	@Override
+	public int deleteBbrr(String bb_id) {
+		return bbrDao.deleteBbrr(bb_id);
 	}
 
 }

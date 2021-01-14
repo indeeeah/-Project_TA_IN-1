@@ -15,8 +15,8 @@ public class BsnBoardReplyDao {
 	private SqlSession sqlSession;
 	
 	// 댓글 좋아요 수
-	public int likeCount() {
-		return sqlSession.selectOne("BsnBoardReply.likeCount");
+	public int bbrLike() {
+		return sqlSession.selectOne("BsnBoardReply.bbrLike");
 	}
 	
 	// 댓글 목록(전체)
@@ -35,5 +35,28 @@ public class BsnBoardReplyDao {
 	public int deleteBbr(String bb_id) {
 		System.out.println("댓글삭제dao:"+bb_id);
 		return sqlSession.delete("BsnBoardReply.deleteBbr", bb_id);
+	}
+	
+	// 답글 좋아요 수
+	public int bbrrLike() {
+		return sqlSession.selectOne("BsnBoardReply.bbrrLike");
+	}
+	
+	// 답글 목록(전체)
+	public List<BsnBoardReply> bbrrList(String bb_id){
+		System.out.println("답글목록다오 bb_id:" + bb_id);
+		return sqlSession.selectList("BsnBoardReply.bbrrList", bb_id);
+	}
+	
+	// 답글 등록
+	public int insertBbrr(BsnBoardReply bbr) {
+		System.out.println("답글등록dao:"+bbr);
+		return sqlSession.insert("BsnBoardReply.insertBbrr", bbr);
+	}
+	
+	// 답글 삭제
+	public int deleteBbrr(String bb_id) {
+		System.out.println("답글삭제dao:"+bb_id);
+		return sqlSession.delete("BsnBoardReply.deleteBbrr", bb_id);
 	}
 }

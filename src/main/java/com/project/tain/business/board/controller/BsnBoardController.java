@@ -1,46 +1,29 @@
 package com.project.tain.business.board.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.IOUtils;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 //import com.project.tain.business.board.model.dao.MediaUtils;
 //import com.project.tain.business.board.model.dao.UploadFileUtils;
 import com.project.tain.business.board.model.domain.BsnBoard;
-import com.project.tain.business.board.model.service.BsnBoardReplyService;
 import com.project.tain.business.board.model.service.BsnBoardService;
 
 @Controller
@@ -50,8 +33,6 @@ public class BsnBoardController {
 	
 	@Autowired
 	private BsnBoardService bbService;
-	@Autowired
-	private BsnBoardReplyService bbrService;
 	
 	public static final int LIMIT=10;
 	
@@ -65,16 +46,15 @@ public class BsnBoardController {
 		try {
 			mv.addObject("listCount", bbService.listCount(m_id));	//게시물카운트
 			mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
-			mv.addObject("bbDetail", bbService.selectOne(m_id));	// 게시물 상세
-			mv.addObject("listImg", bbService.selectOneImg(m_id));	// 리스트이미지
-//			mv.setViewName("business/bsnMain");
 			mv.setViewName("business/bsnMain");
+//			mv.setViewName("business/bsnMain_backup");	//추후 삭제
 		} catch(Exception e) {
-			mv.addObject("errorMsg", e.getMessage());
+			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
 		}
 		return mv;
 	}
+	
 	// 게시물 상세
 	@ResponseBody
 	@RequestMapping(value="/bbDetail", method = RequestMethod.POST)
@@ -93,18 +73,6 @@ public class BsnBoardController {
 		}
 		return result;
 	}
-	
-//	public ModelAndView bbListService(@RequestParam(name="m_id") String m_id, ModelAndView mv) {
-//		try {
-//			if(m_id!=null&&!m_id.equals(""))
-//				mv.addObject("list", bbService.selectList(m_id));
-//			mv.setViewName("business/bsnMain");
-//		} catch(Exception e) {
-//			mv.addObject("errorMsg", e.getMessage());
-//			mv.setViewName("errorPage");
-//		}
-//		return mv;
-//	}
 	
 	// 게시물 작성 페이지
 	@RequestMapping(value="/bbWriteForm.do", method = RequestMethod.GET)
@@ -164,7 +132,7 @@ public class BsnBoardController {
 //			 String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 //			 String safeFile = path + System.currentTimeMillis() + originFileName;
 	         System.out.println("originFileName : " + mf.getOriginalFilename());
-	         filePath = folder + "\\" + mf.getOriginalFilename(); 
+	         filePath = folder + "\\" + System.currentTimeMillis() +mf.getOriginalFilename(); 
 	         System.out.println("파일 경로 : " + filePath);      
 			try {
 				mf.transferTo(new File(filePath));
@@ -279,11 +247,11 @@ public class BsnBoardController {
 //		return job.toJSONString();
 //	}
 	
+	// 교재(추후삭제)
 	private void saveFile(MultipartFile report, HttpServletRequest request) {
-
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\uploadFiles";
-		File folder = new File(savePath);
+		String path = root + "\\uploadFiles";
+		File folder = new File(path);
 
 		if (!folder.exists()) {
 			folder.mkdir();
@@ -292,7 +260,7 @@ public class BsnBoardController {
 
 		try	{         
 		    System.out.println(report.getOriginalFilename() + "을 저장합니다.");         
-		    System.out.println("저장 경로 : " + savePath);
+		    System.out.println("저장 경로 : " + path);
 		    	 
 		    filePath = folder + "\\" + report.getOriginalFilename(); 
 		    	 
@@ -305,132 +273,18 @@ public class BsnBoardController {
 		}   
 	}
 	
+	//교재(추후삭제)
 	private void removeFile(String imgfile, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\uploadFiles";
-		String filePath = savePath+"\\" + imgfile;
+		String path = root + "\\uploadFiles";
+		String filePath = path+"\\" + imgfile;
 		try {
 			System.out.println(imgfile + "을 삭제합니다.");
-			System.out.println("기존 저장 경로 : " + savePath);
+			System.out.println("기존 저장 경로 : " + path);
 			File delFile = new File(filePath);
 			delFile.delete();
 		} catch(Exception e) {
 			System.out.println("파일 삭제 에러 : " + e.getMessage());
 		}
 	}
-	
-
-//	@Resource(name = "uploadPath")
-//	private String uploadPath;
-//
-//	@RequestMapping(value = "/uploadForm", method = RequestMethod.GET)
-//	public void uploadForm() throws Exception {
-//	}
-//
-//	@RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
-//	public String uploadForm(MultipartFile file, Model model) throws Exception {
-//
-//		logger.info("originalName: " + file.getOriginalFilename());
-//		logger.info("size: " + file.getSize());
-//		logger.info("contentType: " + file.getContentType());
-//
-//		String savedName = uploadFile(file.getOriginalFilename(), file.getBytes());
-//
-//		model.addAttribute("savedName", savedName);
-//
-//		return "uploadResult";
-//	}
-//
-//	private String uploadFile(String originalName, byte[] fileData) throws Exception {
-//
-//		UUID uid = UUID.randomUUID();
-//		String savedName = uid.toString() + "_" + originalName;
-//		File target = new File(uploadPath, savedName);
-//		FileCopyUtils.copy(fileData, target);
-//		return savedName;
-//	}
-//	
-//	@ResponseBody
-//	@RequestMapping(value = "/uploadAjax", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-//	public String uploadAjax(MultipartFile file, String str, HttpSession session,
-//			HttpServletRequest request, Model model) throws Exception {
-//
-//		logger.info("originalName: " + file.getOriginalFilename());
-//
-//			ResponseEntity<String> img_path = new ResponseEntity<>(
-//					UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
-//					HttpStatus.CREATED);
-//			String user_imgPath = (String) img_path.getBody();
-//
-//			logger.info(user_imgPath);
-//			BsnBoard vo = new BsnBoard();
-//			vo.setBb_img1(user_imgPath);
-//			BsnBoard id = (BsnBoard) session.getAttribute("login");
-//			System.out.println(id.getM_id());
-//			vo.setM_id(id.getM_id());
-//			logger.info("file name : " + user_imgPath);
-//
-//			return user_imgPath;
-//	}
-//
-//	@ResponseBody
-//	@RequestMapping("/displayFile")
-//	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
-//
-//		InputStream in = null;
-//		ResponseEntity<byte[]> entity = null;
-//
-//		logger.info("FILE NAME: " + fileName);
-//
-//		try {
-//
-//			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-//
-//			MediaType mType = MediaUtils.getMediaType(formatName);
-//
-//			HttpHeaders headers = new HttpHeaders();
-//
-//			in = new FileInputStream(uploadPath + fileName);
-//
-//			if (mType != null) {
-//				headers.setContentType(mType);
-//			} else {
-//
-//				fileName = fileName.substring(fileName.indexOf("_") + 1);
-//				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-//				headers.add("Content-Disposition",
-//						"attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
-//			}
-//
-//			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
-//		} finally {
-//			in.close();
-//		}
-//		return entity;
-//	}
-//
-//	@ResponseBody
-//	@RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
-//	public ResponseEntity<String> deleteFile(String fileName) {
-//
-//		logger.info("delete file: " + fileName);
-//
-//		String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-//
-//		MediaType mType = MediaUtils.getMediaType(formatName);
-//
-//		if (mType != null) {
-//
-//			String front = fileName.substring(0, 12);
-//			String end = fileName.substring(14);
-//			new File(uploadPath + (front + end).replace('/', File.separatorChar)).delete();
-//		}
-//
-//		new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
-//
-//		return new ResponseEntity<String>("deleted", HttpStatus.OK);
-//	}
 }

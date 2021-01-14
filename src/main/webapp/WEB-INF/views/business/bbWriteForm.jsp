@@ -194,6 +194,9 @@
 				reader.readAsDataURL(this.files[0]);
 			}
 		}); */
+		
+		
+		/* 선택한 이미지 썸네일 */
 		var sel_files=[];
 		$(document).ready(function(){
 			$("#file").on("change", handleImgsFilesSelect);
@@ -231,6 +234,8 @@
 			});
 			
 		}
+		
+		/* 이미지 슬라이드 */
 		var slideIndex = 1;
 		function plusSlides(n) {
 			  showSlides(slideIndex += n);

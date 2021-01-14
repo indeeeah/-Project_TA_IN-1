@@ -1,6 +1,7 @@
 package com.project.tain.business.board.model.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -35,6 +36,9 @@ public class BsnBoard implements java.io.Serializable{
 	private String bb_img8;
 	private String bb_img9;
 	private String bb_img10;
+	
+	// vo리스트
+	private String m_img;
 //	비즈니스정보
 //	private String b_cate;
 //	private String bm_name;
@@ -235,7 +239,7 @@ public class BsnBoard implements java.io.Serializable{
 	public BsnBoard(String bb_id, String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
 			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date,
 			String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5, String bb_img6,
-			String bb_img7, String bb_img8, String bb_img9, String bb_img10) {
+			String bb_img7, String bb_img8, String bb_img9, String bb_img10, String m_img) {
 		super();
 		this.bb_id = bb_id;
 		this.m_id = m_id;
@@ -259,6 +263,7 @@ public class BsnBoard implements java.io.Serializable{
 		this.bb_img8 = bb_img8;
 		this.bb_img9 = bb_img9;
 		this.bb_img10 = bb_img10;
+		this.m_img = m_img;
 	}
 
 //	@Override
@@ -276,7 +281,7 @@ public class BsnBoard implements java.io.Serializable{
 				+ ", bb_option3=" + bb_option3 + ", bb_option4=" + bb_option4 + ", bb_type=" + bb_type + ", bb_topid="
 				+ bb_topid + ", bb_date=" + bb_date + ", t_num=" + t_num + ", bb_img1=" + bb_img1 + ", bb_img2=" + bb_img2 + ", bb_img3="
 				+ bb_img3 + ", bb_img4=" + bb_img4 + ", bb_img5=" + bb_img5 + ", bb_img6=" + bb_img6 + ", bb_img7="
-				+ bb_img7 + ", bb_img8=" + bb_img8 + ", bb_img9=" + bb_img9 + ", bb_img10=" + bb_img10 + ", getClass()="
+				+ bb_img7 + ", bb_img8=" + bb_img8 + ", bb_img9=" + bb_img9 + ", bb_img10=" + bb_img10 + ", m_img=" + m_img + ", getClass()="
 				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
 
@@ -513,8 +518,13 @@ public class BsnBoard implements java.io.Serializable{
 		this.t_num = t_num;
 	}
 
-		
+	public String getM_img() {
+		return m_img;
+	}
 
-	
+	public void setM_img(String m_img) {
+		this.m_img = m_img;
+	}
+
 	
 }

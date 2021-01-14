@@ -25,6 +25,7 @@
 		<result property="bb_img8" column="bb_img8"/>
 		<result property="bb_img9" column="bb_img9"/>
 		<result property="bb_img10" column="bb_img10"/>
+		<result property="m_img" column="m_img"/>
 	</resultMap>
 	
 	<!-- 게시물 수 -->
@@ -47,7 +48,7 @@
 	
 	<!-- 게시물 상세(전체) -->
 	<select id="bsnSelectOne" parameterType="string" resultType="BsnBoard">
-		select * from businessboard bb join businessboardadd bba on bb.bb_id=bba.bb_id
+		select bb.*, bba.*, m.m_name, m.m_img from businessboard bb join businessboardadd bba on bb.bb_id=bba.bb_id join member m on m.m_id=bb.m_id
 		where bb.bb_id=#{bb_id}
 	</select>
 	<!-- 게시물 상세(텍스트) -->

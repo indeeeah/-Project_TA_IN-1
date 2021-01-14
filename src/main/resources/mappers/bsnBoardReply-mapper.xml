@@ -23,7 +23,7 @@
 	</resultMap>
 	
 	<!-- 댓글 좋아요 수 -->
-	<select id="likeCount" parameterType="string" resultType="int">
+	<select id="bbrLike" parameterType="string" resultType="int">
 		select count(*) from bblike where bb_id='BB210104066'
 	</select>
 	
@@ -47,6 +47,11 @@
 		delete from businessboard where bb_id=#{bb_id}
 	</delete>
 	
+	<!-- 답글 좋아요 수 -->
+	<select id="bbrrLike" parameterType="string" resultType="int">
+		select count(*) from bblike where bb_id='BB210104066'
+	</select>
+	
 	<!-- 대댓글 목록 -->
 	<select id="bbrrList" parameterType="string" resultType="arraylist" resultMap="resultBsnBoardReply">
 		select bbr.*, nvl(cnt, 0) bbrlike from (select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='R'and bb_topid=#{bb_id}) bbr 
@@ -66,4 +71,5 @@
 	<delete id="deleteBbrr" parameterType="string" flushCache="true" statementType="PREPARED">
 		delete from businessboard where bb_id=#{bb_id}
 	</delete>
+	
 </mapper>

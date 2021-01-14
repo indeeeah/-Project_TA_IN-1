@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>비즈니스 메인</title>
 <script src="http://code.jquery.com/jquery-3.4.0.js"></script> 
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -89,10 +89,52 @@ body {font-family: Arial, Helvetica, sans-serif;}
     padding-top: 16px;
     right: 0;
     width: 335px;
+    line-height: 50px;
+}
+#mdInfoImg {
+    float: left;
+    margin-right: 10px;
 }
 #mdBoard {
 	height:65%;
     overflow-x: hidden;
+}
+.mrd{
+	margin-bottom:20px;
+}
+.mrrd {
+    padding-left: 40px;
+}
+.bbrImg {
+    float: left;
+    margin-right: 10px;
+}
+.bbrId {
+    margin-right: 15px;
+}
+.mrdDown {
+    display: block;
+    clear: both;
+}
+.bbrrLine{
+	border-bottom: 1px solid rgba(var(--f52,142,142,142),1);
+    display: inline-block;
+    height: 0;
+    margin-right: 16px;
+    margin-left: 16px;
+    vertical-align: middle;
+    width: 24px;
+}
+#bbrr {
+    padding-left: 40px;
+}
+.bbrLike {
+    float: left;
+    margin-right: 10px;
+}
+.bbrrbtn {
+    float: left;
+    margin-right: 10px;
 }
 #mdFooter{
 	background-color: #fefefe;
@@ -175,6 +217,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 	@media only screen and (max-width: 300px) {
 	  .prev, .next,.text {font-size: 11px}
 	}
+	
+	.bbrrInBox{
+		display:none;
+	}
 </style>
 </head>
 <body>
@@ -184,44 +230,41 @@ ${listCount } : ${bbrLlke }
 			게시물이 없습니다.
 		</c:if>
 		<div id="bbList" class="bbList">
-		<c:if test="${not empty list }">
-			<c:forEach items="${list }" var="v">
-				<div id="selectBb" class="selectBb">
-					<button type="button" id="bb" class="myBtn" value="${v.bb_id }" style="border:none; cursor:pointer">
-						<img class="listImg" src="${pageContext.request.contextPath}/resources/uploadFiles/${v.bb_img1 }">
-					</button>
-				</div>
-
-			<!-- The Modal -->
-			<div id="${v.bb_id }" class="modal">
-			    <button type="button" class="close" value="${v.bb_id }">&times;</button>
-			
-			  <!-- Modal content -->
-			  <div id="modalContent" class="modal-content">
-			  	<div id="mdImg" class="mdImg">
-			  		
-			  		
-					<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-					<a class="next" onclick="plusSlides(1)">&#10095;</a>
-			  	</div>
+			<c:if test="${not empty list }">
+				<c:forEach items="${list }" var="v">
+					<div id="selectBb" class="selectBb">
+						<button type="button" id="bb" class="myBtn" value="${v.bb_id }" style="border:none; cursor:pointer">
+							<img class="listImg" src="${pageContext.request.contextPath}/resources/uploadFiles/${v.bb_img1 }">
+						</button>
+					</div>
+				</c:forEach>
+			</c:if>
+		</div>
+	<!-- The Modal -->
+	<div id="modal" class="modal">
+	    <button type="button" class="close">&times;</button>
+		
+		<!-- Modal content -->
+		<div id="modalContent" class="modal-content">
+		  	<div id="mdImg" class="mdImg">
+		  		
+		  	</div>
 			  	<div id="mdText">
 			  		<div id="mdInfo">
-			  		${v.bb_id}
-			  		${v.m_id}
-			  		<c:url var="bbupview" value="bbRenew.do">
-						<c:param name="bb_id" value="${v.bb_id }"/>
-					</c:url>
-			  		<c:url var="bbdel" value="bbDelete.do">
-						<c:param name="bb_id" value="${v.bb_id }"/>
-					</c:url>
-					<a href="${bbdel }">삭제</a>
-					<a href="${bbupview }">수정</a>
+			  			<div id="mdInfoImg">
+			  				
+			  			</div>
+			  			<div id="mdInfoText">
+			  			</div>
+			  		
 			  		</div>
 			  		<div id="mdBoard">
 			  			<div id="mdContent">
-			  			${v.bb_name} <br>
-			  			<pre name="info" class="${v.bb_id}">${v.bb_info}</pre> <br>
-			  			<button class="translate" value="${v.bb_id }">번역하기</button>
+			  				<span id="bbName"></span> 
+			  				<br>
+			  				<pre id="bbInfo" name="bbInfo" class="bbInfo"></pre> 
+			  				<br>
+			  				<button class="translate" >번역하기</button>
 			  			</div>
 			  			<div id="mdReply" class="mdReply">
 			  				
@@ -231,45 +274,25 @@ ${listCount } : ${bbrLlke }
 			  		</div>
 			  		<div id="mdWrite">
 			  			<form action="bbrInsert.do" id="bbrInForm" class="bbrInForm" method="get">
-<!-- 			  				<input type="hidden" id="bb_name" name="bb_name" value="O">
-			  				<input type="hidden" id="bb_type" name="bb_type" value="C">
-			  				<input type="hidden" id="bb_price" name="bb_price" value="0"> -->
-			  				<input type="hidden" id="bb_topid" class="${v.bb_id }" name="bb_topid" value="${v.bb_id }">
-			  				<input type="text" id="bb_info" class="bb_info" name="${v.bb_id }" placeholder="댓글 달기...">
-			  				<button type="button" id="bbrInsert" class="bbrInsert" name="bbrInsert" value="${v.bb_id }">게시</button>
+			  				<input type="text" id="bb_info" class="bb_info" name="bb_info" placeholder="댓글 달기...">
+			  				<button type="button" id="bbrInsert" class="bbrInsert" name="bbrInsert">게시</button>
 			  			</form>
 			  		</div>
-			  		
 			  	</div>
-			  </div>
+		</div>
 			  	<div id="mdFooter">
 			  		<div id="mdPrice">
-			  		가격 : ${v.bb_price}
 			  		</div>
 			  		<div id="mdOption">
 						<select name="option" id="option">
-						<c:if test="${v.bb_option1 ne null }">
-						  <option value="${v.bb_option1}">${v.bb_option1}</option>
-						</c:if>
-						<c:if test="${v.bb_option2 ne null }">
-						  <option value="${v.bb_option2}">${v.bb_option2}</option>
-						</c:if>
-						<c:if test="${v.bb_option3 ne null }">
-						  <option value="${v.bb_option3}">${v.bb_option3}</option>
-						</c:if>
-						<c:if test="${v.bb_option4 ne null }">
-						  <option value="${v.bb_option4}">${v.bb_option4}</option>
-						</c:if>
 						</select>
 			  		</div>
 			  		<div id="mdCart">
 			  			<button type="button" class="cart" onclick="location.href='#';">장바구니</button>
 			  		</div>
 			  	</div>
-			</div>
-			</c:forEach>
-		</c:if>
-		</div>
+	</div>
+		
 	<input type="button"  value="글쓰기" onclick="window.location='bbWriteForm.do'">
 	</div>
 <script>
@@ -277,10 +300,11 @@ ${listCount } : ${bbrLlke }
 $('.myBtn').on('click', function() {
 	var a = $(this).val();
 	console.log("모달창 열기a:"+a);
-	var x = document.getElementById(a);
+	var x = document.getElementById("modal");
 	console.log("모달창 열기x:"+x);
     x.style.display="block";
     
+    // 모달창 내부(상세 페이지) 로드
     $.ajax({
     	url:"bbDetail",
     	type:"post",
@@ -290,69 +314,101 @@ $('.myBtn').on('click', function() {
     	},
     	dataType:"json",
     	success:function(resp){
+    		// 이미지 로드
     		var htmls="";
     		console.log("bbDetail()"+resp.bbDetail.m_id);
-    		if(resp.bbDetail.bb_img1!=null){
     		console.log("bbDetail()"+resp.bbDetail.bb_img1);
     		console.log("bbDetail()"+resp.bbDetail.bb_img10);
-    			if(resp.bbDetail.bb_img1!=null){
-    			htmls += "<div class='md_imgbox fade'>"+
-									"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img1+"'/>"+
-									"</div>";
-    			}
-    			if(resp.bbDetail.bb_img2!=null){
-        			htmls += "<div class='md_imgbox fade'>"+
-    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img2+"'/>"+
-    								"</div>";
-        		}
-    			if(resp.bbDetail.bb_img3!=null){
-        			htmls += "<div class='md_imgbox fade'>"+
-    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img3+"'/>"+
-    								"</div>";
-        		}
-    			if(resp.bbDetail.bb_img4!=null){
-        			htmls += "<div class='md_imgbox fade'>"+
-    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img4+"'/>"+
-    								"</div>";
-        		}
-    			if(resp.bbDetail.bb_img5!=null){
-        			htmls += "<div class='md_imgbox fade'>"+
-    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img5+"'/>"+
-    								"</div>";
-        		}
-    			if(resp.bbDetail.bb_img6!=null){
-        			htmls += "<div class='md_imgbox fade'>"+
-    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img6+"'/>"+
-    								"</div>";
-        		}
-    			if(resp.bbDetail.bb_img7!=null){
-        			htmls += "<div class='md_imgbox fade'>"+
-    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img7+"'/>"+
-    								"</div>";
-        		}
-    			if(resp.bbDetail.bb_img8!=null){
-        			htmls += "<div class='md_imgbox fade'>"+
-    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img8+"'/>"+
-    								"</div>";
-        		}
-    			if(resp.bbDetail.bb_img9!=null){
-        			htmls += "<div class='md_imgbox fade'>"+
-    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img9+"'/>"+
-    								"</div>";
-        		}
-    			if(resp.bbDetail.bb_img10!=null){
-        			htmls += "<div class='md_imgbox fade'>"+
-    								"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img10+"'/>"+
-    								"</div>";
-        		}
-    		}
+   			if(resp.bbDetail.bb_img1!=null){
+   				htmls +="<div class='md_imgbox fade'>"+
+							"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img1+"'/>"+
+						"</div>";
+   			}
+   			if(resp.bbDetail.bb_img2!=null){
+       			htmls +="<div class='md_imgbox fade'>"+
+   							"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img2+"'/>"+
+   						"</div>";
+       		}
+   			if(resp.bbDetail.bb_img3!=null){
+       			htmls +="<div class='md_imgbox fade'>"+
+   							"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img3+"'/>"+
+   						"</div>";
+       		}
+   			if(resp.bbDetail.bb_img4!=null){
+       			htmls +="<div class='md_imgbox fade'>"+
+   							"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img4+"'/>"+
+   						"</div>";
+       		}
+   			if(resp.bbDetail.bb_img5!=null){
+       			htmls +="<div class='md_imgbox fade'>"+
+   							"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img5+"'/>"+
+   						"</div>";
+       		}
+   			if(resp.bbDetail.bb_img6!=null){
+       			htmls +="<div class='md_imgbox fade'>"+
+   							"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img6+"'/>"+
+   						"</div>";
+       		}
+   			if(resp.bbDetail.bb_img7!=null){
+       			htmls +="<div class='md_imgbox fade'>"+
+   							"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img7+"'/>"+
+   						"</div>";
+       		}
+   			if(resp.bbDetail.bb_img8!=null){
+       			htmls +="<div class='md_imgbox fade'>"+
+   							"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img8+"'/>"+
+   						"</div>";
+       		}
+   			if(resp.bbDetail.bb_img9!=null){
+       			htmls +="<div class='md_imgbox fade'>"+
+   							"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img9+"'/>"+
+   						"</div>";
+       		}
+   			if(resp.bbDetail.bb_img10!=null){
+       			htmls +="<div class='md_imgbox fade'>"+
+   							"<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.bb_img10+"'/>"+
+   						"</div>";
+       		}
+   			htmls += "<a class='prev' onclick='plusSlides(-1)''>&#10094;</a>"+
+   					"<a class='next' onclick='plusSlides(1)'>&#10095;</a>";
+    		
+   			// 게시물 이미지
     		$(".mdImg").html(htmls);
+   			// 게정 프로필 이미지
+    		$("#mdInfoImg").html("<img src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.bbDetail.m_img+"' width='50px' height='50px'/>");
+   			// 게시글번호 및 멤버아이디(추후삭제)
+    		$("#mdInfoText").html(resp.bbDetail.bb_id +' : '+resp.bbDetail.m_id +'<a href="bbDelete.do?bb_id='+resp.bbDetail.bb_id+'">삭제</a><a href="bbRenew.do?bb_id='+resp.bbDetail.bb_id+'">수정</a>');
+   			// 상품명
+    		$("#bbName").html(resp.bbDetail.m_id);
+   			// 상품 소개
+    		$("#bbInfo").html(resp.bbDetail.bb_info);
+   			// 댓글 입력시 bb_topid 값을 세팅하기 위한 인풋박스
+    		$("#bbrInForm").append('<input type="hidden" id="bb_topid" name="bb_topid" value="'+resp.bbDetail.bb_id+'">');
+   			// 상품 가격
+    		$("#mdPrice").html('가격 : '+resp.bbDetail.bb_price);
+   			// 상품 옵션
+    		var option = "";
+    		if(resp.bbDetail.bb_option1!=null){
+    			option +="<option value='"+resp.bbDetail.bb_option1+"''>"+resp.bbDetail.bb_option1+"</option>";
+   			}
+   			if(resp.bbDetail.bb_option2!=null){
+   				option +="<option value='"+resp.bbDetail.bb_option2+"''>"+resp.bbDetail.bb_option2+"</option>";
+       		}
+   			if(resp.bbDetail.bb_option3!=null){
+   				option +="<option value='"+resp.bbDetail.bb_option3+"''>"+resp.bbDetail.bb_option3+"</option>";
+       		}
+   			if(resp.bbDetail.bb_option3!=null){
+   				option +="<option value='"+resp.bbDetail.bb_option4+"''>"+resp.bbDetail.bb_option4+"</option>";
+       		}   			
+   			$("#option").html(option);
     	},
     	error:function(){
-    		
+    		alert("이미지를 불러 올 수 없습니다.");
     	}
     });
     
+	/* 댓글 조회 */
+	var m_id = "aaaa";
     $.ajax({
     	url:"bbrList",
     	type:"POST",
@@ -363,32 +419,177 @@ $('.myBtn').on('click', function() {
     		var htmls="";
     		if(resp.data!=null){
 	    		for(i=0; i<resp.data.length; i++){
+	    			var r_m_id = resp.data[i].m_id;
+	    			var r_bb_info = resp.data[i].bb_info;
+	    			var r_bbrlike = resp.data[i].bbrlike;
+	    			var r_bb_id = resp.data[i].bb_id;
 	    			htmls += "<div class='mrd' >"+
-								"<div id='bbrImg' class='bbrImg'>"+
-								"<img src='#'/>"+
+	    						"<div class='mrdUp' >"+
+									"<div class='bbrImg'>"+
+										"<img src='#' width='50px' height='50px'/>"+
+									"</div>"+
+									"<div class='mrrdRight' >"+
+										"<div class='mrrdCont' >"+
+											"<a class='bbrId'>"+
+												"<span>" + r_m_id + "</span>"+
+											"</a>"+
+											"<span>"+r_bb_info+"</span>"+
+										"</div>"+
+										"<div class='mrrdOpt' >"+
+											"<div class='bbrLike'>"+
+												"<span class='bbrL' >좋아요:"+r_bbrlike+"</span>"+
+											"</div>"+
+											"<div class='bbrrbtn' >"+
+												"<button type='button'  class='bbrrbtn "+ r_bb_id+ "' \">답글달기</button>"+
+											"</div>"+
+											"<button type='button' id='"+r_bb_id+"' class='bbrDelete "+ r_bb_id +"' onclick=\"bbrDelete('"+r_bb_id+"')\">댓글삭제</button>"+
+											"<div id='bbrrInBox' class='bbrrInBox' >"+
+												'<input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + r_bb_id + '">'+
+											"</div>"+
+										"</div>"+
+									"</div>"+
 								"</div>"+
-								"<div id='bbrId' class='bbrId'>"+
-									"<span>" + resp.data[i].m_id + "</span>"+
+								"<div class='mrdDown' >"+
+									"<div class='bbrrLine' ></div>"+
+									"<a class='bbrrShow' id='bbrrshow"+r_bb_id+"' onclick=\"bbrrList('"+ r_bb_id +"')\">답글보기</a>"+
+									"<a class='bbrrHide' style='display:none;'>답글숨기기</a>"+
+									"<div id='bbrr' class='bbrr'>"+
+									"</div>"+
 								"</div>"+
-								"<div id='bbrCon' class='bbrCon'>"+
-									"<span>"+resp.data[i].bb_info+"</span>"+
-								"</div>"+
-								"<div id='bbrLike' class='bbrLike'>"+
-									"<span class='bbrL' >좋아요:"+resp.data[i].bbrlike+"</span>"+
-								"</div>"+
-								"<div id='bbrrInBox' class='bbrrInBox' >"+
-									"<button type='button' id='"+resp.data[i].bb_id+"' class='bbrrInsert"+resp.data[i].bb_id+"' onclick=\"bbrrInsert('"+resp.data[i].bb_id+"')\">답글달기</button>"+
-								"</div>"+
-								"<div id='bbrr' class='bbrr' onclick=\"bbrrList('"+resp.data[i].bb_id+"')\">답글보기"+
-									
-								"</div>"+
-									"<button type='button' id='"+resp.data[i].bb_id+"' class='bbrDelete "+resp.data[i].bb_id+"' onclick=\"bbrDelete('"+resp.data[i].bb_id+"')\">삭제</button>"+
 							"</div>";
 	    		}   
     			$(".mdReply").html(htmls);
     		} else {
     			$(".mdReply").html("<div class='mrd'>댓글이 없습니다.</div>");
     		}
+			
+    		/* 답글 조회 (추후삭제)*/
+	    	/* $(".bbrrShow").on('click', function() {
+	            $(this).parent().next().css("display", "block");
+	            $(".rep_comment_upload").on('click', function() {
+	                var memId = $(".m_id").val();
+	                var bb_topid = $(this).next().val();
+	                var bb_info = $(this).prev().val();
+	                console.log(memId);
+	                console.log(bb_topid);
+	                console.log(bb_info);
+	                if (bb_info == "" || bb_info == null) {
+	                    console.log("reply comment won't be uploaded");
+	                    $(".bbrrInBox").css("display", "none");
+	                    $('.rep_comment_upload').off('click');
+	                } else {
+	                    $.ajax({
+	                        url: "bbrrInsert",
+	                        method: "POST",
+	                        data: {
+	                            bb_info: bb_info,
+	                            bb_topid: bb_topid
+	                        },
+	                        success: function(resp) {
+	                            console.log("comment:" + resp.data.bb_info +"postid:" +resp.data.bb_id);
+	                            console.log(resp);
+	                            $(".write_space").val('');
+	                            $(".replyCo").css("display", "none");
+	                            $('.rep_comment_upload').off('click');
+	                            var htmls="";
+	                    		if(resp.data!=null){
+	                	    		for(i=0; i<resp.data.length; i++){
+	                	    			var rr_m_id = resp.data[i].m_id;
+	                	    			var rr_bb_info = resp.data[i].bb_info;
+	                	    			var rr_bbrlike = resp.data[i].bbrlike;
+	                	    			var rr_bb_id = resp.data[i].bb_id;
+	                	    			htmls +="<div class='mrrd' style='padding-left:10px'>"+
+	                								"<div id='bbrrImg' class='bbrrImg'>"+
+	                								"<img src='#' width='50px' height='50px'/>"+
+	                								"</div>"+
+	                								"<div id='bbrrId' class='bbrrId'>"+
+	                									"<span>" + rr_m_id + "</span>"+
+	                								"</div>"+
+	                								"<div id='bbrrCon' class='bbrrCon'>"+
+	                									"<span>"+ rr_bb_info +"</span>"+
+	                								"</div>"+
+	                								"<div id='bbrrLike' class='bbrrLike'>"+
+	                									"<span class='bbrrL' >좋아요:"+ rr_bbrlike +"</span>"+
+	                								"</div>"+
+	                								"<button type='button' id='"+ rr_bb_id +"' class='bbrDelete "+ rr_bb_id +"' onclick=\"bbrDelete('"+ rr_bb_id +"')\">삭제</button>"+
+	                							"</div>";
+	                	    		}   
+	                    			$(".bbrr").html(htmls);
+	                    		}
+	                        },
+	                        error: function(request, status, error) {
+	                            alert("code:" +request.status +"\n" +"message:" + request.responseText +"\n" + "error:" + error);
+	                        }
+	                    });
+	                }
+	            });
+	        }); */
+	        
+    		/* 답글 달기 */
+	    	$(".bbrrbtn").on('click', function() {
+	    		// 답글달기 버튼 클릭시 텍스트입력박스 보여주기
+	            $(this).parent().next().next().css("display", "block");
+	    		// 게시버튼 클릭시(댓글인서트)
+	            $(".rep_comment_upload").on('click', function() {
+	                var memId = $(".m_id").val();
+	                var bb_topid = $(this).next().val();
+	                var bb_info = $(this).prev().val();
+	                console.log(memId);
+	                console.log(bb_topid);
+	                console.log(bb_info);
+	                if (bb_info == "" || bb_info == null) {
+	                    console.log("reply comment won't be uploaded");
+	                    $(".bbrrInBox").css("display", "none");
+	                    $('.rep_comment_upload').off('click');
+	                } else {
+	                    $.ajax({
+	                        url: "bbrrInsert",
+	                        method: "POST",
+	                        data: {
+	                            bb_info: bb_info,
+	                            bb_topid: bb_topid
+	                        },
+	                        success: function(resp) {
+	                            console.log("comment:" + resp.data.bb_info +"postid:" +resp.data.bb_id);
+	                            console.log(resp);
+	                            $(".write_space").val('');
+	                            $(".replyCo").css("display", "none");
+	                            $('.rep_comment_upload').off('click');
+	                            var htmls="";
+	                    		if(resp.data!=null){
+	                	    		for(i=0; i<resp.data.length; i++){
+	                	    			var rr_m_id = resp.data[i].m_id;
+	                	    			var rr_bb_info = resp.data[i].bb_info;
+	                	    			var rr_bbrlike = resp.data[i].bbrlike;
+	                	    			var rr_bb_id = resp.data[i].bb_id;
+	                	    			htmls +="<div class='mrrd' style='padding-left:10px'>"+
+	                								"<div id='bbrrImg' class='bbrrImg'>"+
+	                								"<img src='#' width='50px' height='50px'/>"+
+	                								"</div>"+
+	                								"<div id='bbrrId' class='bbrrId'>"+
+	                									"<span>" + rr_m_id + "</span>"+
+	                								"</div>"+
+	                								"<div id='bbrrCon' class='bbrrCon'>"+
+	                									"<span>"+ rr_bb_info +"</span>"+
+	                								"</div>"+
+	                								"<div id='bbrrLike' class='bbrrLike'>"+
+	                									"<span class='bbrrL' >좋아요:"+ rr_bbrlike +"</span>"+
+	                								"</div>"+
+	                								"<button type='button' id='"+ rr_bb_id +"' class='bbrDelete "+ rr_bb_id +"' onclick=\"bbrDelete('"+ rr_bb_id +"')\">삭제</button>"+
+	                							"</div>";
+	                	    		}   
+	                    			$(".bbrr").html(htmls);
+	                    		}
+	                        },
+	                        error: function(request, status, error) {
+	                            alert("code:" +request.status +"\n" +"message:" + request.responseText +"\n" + "error:" + error);
+	                        }
+	                    });
+	                }
+	            });
+	        });
+	    	
+	        /* 답글지우기 클릭이벤트처리(추후삭제) */
     		/* $(".bbrDelete").on('click', function(){
 				var bb_id = $(this).val();    			
     			console.log("댓글삭제 글번호:"+bb_id);
@@ -399,38 +600,65 @@ $('.myBtn').on('click', function() {
     	}, error:function(request, status, error){
     		alert("code : " +request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
 		}
+    	
     });
+    
+    /* 이미지 슬라이드 */
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("md_imgbox");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+      }
+      slides[slideIndex-1].style.display = "block";  
+    }
+    
 });
+
 /* 댓글 삭제 */
-function bbrDelete(bb_id){
-	console.log("bbrDelete함수:"+bb_id);
-	var a = bb_id;
-	var b = document.getElementById(bb_id);
+function bbrDelete(r_bb_id){
+	console.log("bbrDelete함수:"+r_bb_id);
+	var a = r_bb_id;
+	var b = document.getElementById(r_bb_id);
 	console.log("bbrDelete함수:"+a+":"+b);
 	$.ajax({
 		url:"bbrDelete",
 		method:"POST",
 		async: false,
-		data:{ bb_id:bb_id},
+		data:{ bb_id:r_bb_id},
 		dataType:"json",
 		success:function(resp){
 			console.log("댓글삭제 resp:"+resp+":"+resp.ack);
-			$(b).parent().remove();
+			$(b).parent().parent().parent().parent().remove();
 		},
 		error:function(request, status, error){
 			alert("code : " +request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
 			event.preventDefault();
 		}
 	});
-	$(this).parent().remove();
 };
 
 /* 답글 조회  */
-function bbrList(bb_id){
-	console.log("bbrDelete함수:"+bb_id);
-	var a = bb_id;
+function bbrrList(bb_id){
+	$("#bbrrShow").hide();
+	console.log("bbrrList함수:"+bb_id);
+	var a = "bbrrshow"+bb_id;
+	var a2 = document.getElementById(a);
 	var b = document.getElementById(bb_id);
-	console.log("bbrDelete함수:"+a+":"+b);
+	console.log("bbrrList함수:"+a+":"+b);
 	$.ajax({
 		url:"bbrrList",
 		method:"POST",
@@ -438,24 +666,60 @@ function bbrList(bb_id){
 		data:{ bb_id:bb_id},
 		dataType:"json",
 		success:function(resp){
-			console.log("댓글삭제 resp:"+resp+":"+resp.ack);
-			$(b).parent().remove();
+			var htmls="";
+    		if(resp.data!=null){
+	    		for(i=0; i<resp.data.length; i++){
+	    			var rr_m_id = resp.data[i].m_id;
+	    			var rr_bb_info = resp.data[i].bb_info;
+	    			var rr_bbrlike = resp.data[i].bbrlike;
+	    			var rr_bb_id = resp.data[i].bb_id;
+	    			htmls +="<div class='mrrd' >"+
+								"<div class='bbrrImg'>"+
+									"<img src='#' width='50px' height='50px'/>"+
+								"</div>"+
+								"<div class='mrrdRight' >"+
+									"<div class='mrrdCont' >"+
+										"<div id='bbrrId' class='bbrrId'>"+
+											"<span>" + rr_m_id + "</span>"+
+										"</div>"+
+										"<div id='bbrrCon' class='bbrrCon'>"+
+											"<span>"+ rr_bb_info +"</span>"+
+										"</div>"+
+									"</div>"+
+									"<div class='mrrdOpt' >"+
+										"<div id='bbrrLike' class='bbrrLike'>"+
+											"<span class='bbrrL' >좋아요:"+ rr_bbrlike +"</span>"+
+										"</div>"+
+										"<button type='button' id='"+ rr_bb_id +"' class='bbrDelete "+ rr_bb_id +"' onclick=\"bbrDelete('"+ rr_bb_id +"')\">삭제</button>"+
+									"</div>"+
+								"</div>"+
+							"</div>";
+	    		}   
+    			$(a2).next().next().html(htmls);
+    		} else {
+    			$(a2).next().next().html("답글이 없습니다.");
+    		}
+			
 		},
 		error:function(request, status, error){
 			alert("code : " +request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
 			event.preventDefault();
 		}
 	});
-	$(this).parent().remove();
 };
 
+/* 답글 보여지기(추후삭제) */
+/* function bbrrInBoxShow(bb_id){
+	var a = document.getElementById("bb_id");
+	$(a).show();
+} */
 
 // 모달창 close
 $('.close').on('click', function() {
 	/* $('#modal').hide(); */
 	var a = $(this).val();
 	console.log("모달창 닫기a:"+a);
-	var x = document.getElementById(a);
+	var x = document.getElementById("modal");
 	console.log("모달창 닫기x:"+x);
     x.style.display="none";
     //클로즈 버튼 누르면 댓글 지워지기
@@ -463,24 +727,22 @@ $('.close').on('click', function() {
 });
 
 // 윈도우 누르면 모달창 꺼지기
-// When the user clicks anywhere outside of the modal, close it
-/* $(window).on('click', function() {
-	var modal1 = document.getElementsByClassName('modal');
-	console.log(modal1);
-	var modal2 = document.getElementById('modal1');
-	console.log(modal2);
-  if (event.target == modal1) {
-    modal1.style.display = "none";
+$(window).on('click', function() {
+	var modal = document.getElementById('modal');
+	console.log(modal);
+  if (event.target == modal) {
+    modal.style.display = "none";
   }
-}); */
+});
 
-// 번역하기(상품소개만)
+// 번역(상품소개만)
 $(".translate").on("click", function(){
-	var a = $(this).val();
+	/* var a = $(this).val();
 	console.log(a);
 	var b = document.getElementsByClassName(a);
-	console.log(b);
-	var  source = $(b).html();
+	console.log(b); */
+	var a = document.getElementById("bbInfo");
+	var  source = $(this).prev().prev().html();
 	console.log(source);
 	$.ajax({
 		url : "translate",
@@ -495,7 +757,7 @@ $(".translate").on("click", function(){
 					dataType : "json",
 					data : { source : source },
 					success:function(resp){
-						$(b).html(resp.result);
+						$(a).html(resp.result);
 					}
 				});
 			} else if(resp.result=="en"){
@@ -505,50 +767,26 @@ $(".translate").on("click", function(){
 					dataType : "json",
 					data : { source : source },
 					success:function(resp){
-						$(b).html(resp.result);
+						$(a).html(resp.result);
 					}
 				});
 			} else {
 				alert("번역할 수 없습니다.");
 			}
 		}, error : function(err1){
-			$(b).html("오류가 발생하였습니다.");
+			$(a).html("오류가 발생하였습니다.");
 		}
 	});
 });
-/* 이미지 슬라이드 */
-var slideIndex = 1;
-showSlides(slideIndex);
 
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("md_imgbox");
-  if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";  
-  }
-  slides[slideIndex-1].style.display = "block";  
-}
 </script>
 </body>
 
-<!-- 댓글 에이작스 -->
+<!-- 댓글 입력 에이작스 -->
 <script type="text/javascript">
 
 	$(function(){
-		$(".mdr").on('click', function(){
-			alert("bbrLike");
-		});
-/* 	교재
+/* 		교재삭제
 		$('#replyForm').on('submit', function(event){
 			if($('#reply_contents').val()==""){
 				alert("내용을 입력해 주세요.");
@@ -561,7 +799,7 @@ function showSlides(n) {
 		
 		
 		
-/* 		교재(댓글수정)
+/* 		교재(댓글수정)삭제
 		$(".update").on('click', function(){
 			var parentP = $(this).parent();
 			var parentDiv = parentP.parent();
@@ -585,9 +823,9 @@ function showSlides(n) {
 		
 		/* 댓글등록 */
 		$(".bbrInsert").on('click', function(){
-			var a = $(this).val();
-			var c1 = document.getElementsByName(a);
-			var c2 = $(c1).val();
+			var a = $("#bb_topid").val();
+			var c1 = document.getElementById(a);
+			var c2 = $("#bb_info").val();
 			console.log("댓글인서트a:"+a+"c1:"+c1+"c2:"+c2);
 			if(c2==""){
 				alert("내용을 입력해주세요");
@@ -607,25 +845,45 @@ function showSlides(n) {
 						var htmls="";
 			    		if(resp.data!=null){
 				    		for(i=0; i<resp.data.length; i++){
+				    			var r_m_id = resp.data[i].m_id;
+				    			var r_bb_info = resp.data[i].bb_info;
+				    			var r_bbrlike = resp.data[i].bbrlike;
+				    			var r_bb_id = resp.data[i].bb_id;
 				    			htmls += "<div class='mrd' >"+
-											"<div id='bbrImg' class='bbrImg'>"+
-											"<img src='#'/>"+
+				    						"<div class='mrdUp' >"+
+												"<div class='bbrImg'>"+
+													"<img src='#' width='50px' height='50px'/>"+
+												"</div>"+
+												"<div class='mrrdRight' >"+
+													"<div class='mrrdCont' >"+
+														"<a class='bbrId'>"+
+															"<span>" + r_m_id + "</span>"+
+														"</a>"+
+														"<span>"+r_bb_info+"</span>"+
+													"</div>"+
+													"<div class='mrrdOpt' >"+
+														"<div class='bbrLike'>"+
+															"<span class='bbrL' >좋아요:"+r_bbrlike+"</span>"+
+														"</div>"+
+														"<div class='bbrrbtn' >"+
+															"<button type='button'  class='bbrrbtn "+ r_bb_id+ "' \">답글달기</button>"+
+														"</div>"+
+														"<button type='button' id='"+r_bb_id+"' class='bbrDelete "+ r_bb_id +"' onclick=\"bbrDelete('"+r_bb_id+"')\">댓글삭제</button>"+
+														"<div id='bbrrInBox' class='bbrrInBox' >"+
+															'<input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + r_bb_id + '">'+
+														"</div>"+
+													"</div>"+
+												"</div>"+
 											"</div>"+
-											"<div id='bbrId' class='bbrId'>"+
-												"<span>" + resp.data[i].m_id + "</span>"+
+											"<div class='mrdDown' >"+
+												"<a class='bbrrShow' id='bbrrshow"+r_bb_id+"' onclick=\"bbrrList('"+ r_bb_id +"')\">답글보기</a>"+
+												"<a class='bbrrHide' style='display:none;'>답글숨기기</a>"+
+												"<div id='bbrr' class='bbrr'>"+
+												"</div>"+
 											"</div>"+
-											"<div id='bbrCon' class='bbrCon'>"+
-												"<span>"+resp.data[i].bb_info+"</span>"+
-											"</div>"+
-											"<div id='bbrLike' class='bbrLike'>"+
-												"<span class='bbrL' >좋아요:"+resp.data[i].bbrlike+"</span>"+
-											"</div>"+
-											"<div id='bbrr' class='bbrr'>...."+
-											"</div>"+
-												"<button type='button' value='"+resp.data[i].bb_id+";' class='bbrDelete "+resp.data[i].bb_id+"' onclick=\"bbrDelete('"+resp.data[i].bb_id+"')\">삭제</button>"+
 										"</div>";
 				    		}   
-			    			$(".mdReply").html(htmls);
+				    		$(".mdReply").html(htmls);
 			    		} else {
 			    			$(".mdReply").html("<div class='mrd'>댓글이 없습니다.</div>");
 			    		}
@@ -637,11 +895,6 @@ function showSlides(n) {
 			}
 			
 		});
-		
-		
-		
-		
-		
 		
 	});
 
