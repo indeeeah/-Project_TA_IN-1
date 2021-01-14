@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MemberRegVO {
-	private	String m_id;
+	private String m_id;
 	private String m_pw;
 	private String m_name;
 	private String m_intro;
@@ -25,10 +25,15 @@ public class MemberRegVO {
 	private Date m_lastact;
 	private char m_language;
 	private Date m_joindate;
-	public MemberRegVO() {		}
+	private String approval_key;
+	private String approval_status;
+
+	public MemberRegVO() {
+	}
+
 	public MemberRegVO(String m_id, String m_pw, String m_name, String m_intro, String m_email, int m_addr1,
 			String m_addr2, String m_addr3, String m_phone, Date m_birth, String m_img, char m_usage, int m_status,
-			int m_activity, Date m_lastact, char m_language, Date m_joindate) {
+			int m_activity, Date m_lastact, char m_language, Date m_joindate, String approval_key, String approval_status) {
 		super();
 		this.m_id = m_id;
 		this.m_pw = m_pw;
@@ -47,6 +52,8 @@ public class MemberRegVO {
 		this.m_lastact = m_lastact;
 		this.m_language = m_language;
 		this.m_joindate = m_joindate;
+		this.approval_key = approval_key;
+		this.approval_status = approval_status;
 	}
 
 	@Override
@@ -55,7 +62,8 @@ public class MemberRegVO {
 				+ ", m_email=" + m_email + ", m_addr1=" + m_addr1 + ", m_addr2=" + m_addr2 + ", m_addr3=" + m_addr3
 				+ ", m_phone=" + m_phone + ", m_birth=" + m_birth + ", m_img=" + m_img + ", m_usage=" + m_usage
 				+ ", m_status=" + m_status + ", m_activity=" + m_activity + ", m_lastact=" + m_lastact + ", m_language="
-				+ m_language + ", m_joindate=" + m_joindate + "]";
+				+ m_language + ", m_joindate=" + m_joindate + ", approval_key=" + approval_key + ", approval_status="
+				+ approval_status + "]";
 	}
 
 	public String getM_id() {
@@ -192,6 +200,22 @@ public class MemberRegVO {
 
 	public void setM_joindate(Date m_joindate) {
 		this.m_joindate = m_joindate;
+	}
+
+	public String getApproval_key() {
+		return approval_key;
+	}
+
+	public void setApproval_key(String approval_key) {
+		this.approval_key = approval_key;
+	}
+
+	public String getApproval_status() {
+		return approval_status;
+	}
+
+	public void setApproval_status(String approval_status) {
+		this.approval_status = approval_status;
 	}
 
 }

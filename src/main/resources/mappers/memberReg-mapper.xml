@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MemberRegMapper">
-	
+
 	<insert id="join" parameterType="MemberRegVO">
 		insert into Member (
 		m_id,
@@ -12,7 +12,9 @@
 		m_phone,
 		m_addr1,
 		m_addr2,
-		m_addr3)
+		m_addr3,
+		approval_status
+		)
 		values(
 		#{m_id},
 		#{m_pw},
@@ -22,29 +24,46 @@
 		#{m_phone},
 		#{m_addr1},
 		#{m_addr2},
-		#{m_addr3}
+		#{m_addr3},
+		#{approval_status}
 		)
 	</insert>
-	<select id="login" resultType="string" parameterType="MemberRegVO">
-		select * from member where
-		m_id=#{m_id} and m_pw=#{m_pw}
+	<!-- 아이디 중복 검사 -->
+	<select id="check_id" parameterType="String" resultType="int">
+		select count(*) from member where m_id = #{m_id}
 	</select>
-	<select id="memberFindId" resultType="MemberRegVO">
-		select m_id from member
-		where
-		m_name=#{m_name} and m_email=#{m_email}
+
+	<!-- 이메일 중복 검사 -->
+	<select id="check_email" parameterType="String" resultType="int">
+		select count(*) from member where m_email = #{m_email}
 	</select>
-	<select id="memberFindPw" resultType="String">
-		select m_pw from member
-		where
-		m_id=#{id} and m_email=#{m_email}
+	<!-- 이메일 인증 -->
+	<update id="approval_member" parameterType="String">
+		update member set
+		approval_status = 'true' where m_email = #{m_email} and
+		approval_key =
+		#{approval_key}
+	</update>
+	<!-- 로그인 -->
+	<select id="login" parameterType="String" resultType="MemberRegVO">
+		select *
+		from member where m_id = #{m_id}
 	</select>
-	<select id="idcheck" resultType="_int">
-		select count(*) from member where
-		m_id=#{m_id}
+	<!-- 로그인 접속일자 수정 -->
+	<update id="update_log" parameterType="String">
+		update member set
+		m_lastact = now() where m_id = #{m_id}
+	</update>
+	<!-- 아이디 찾기 -->
+	<select id="find_id" parameterType="String" resultType="MemberRegVO">
+		select
+		m_id
+		from member where m_email = #{m_email}
 	</select>
-	<!--  <update id="newpassword" parameterType="MemberRegVO">
-	update member set m_pw = #{m_pw}
-	where m_email=#{m_email} and
-	</update>-->
+	<!-- 비밀번호 변경 -->
+	<update id="update_pw" parameterType="String">
+		update member set m_pw =
+		#{m_pw} where m_id = #{m_id}
+	</update>
+
 </mapper>
