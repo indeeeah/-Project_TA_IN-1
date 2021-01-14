@@ -1,11 +1,9 @@
 package com.project.tain.member.model.service;
 
 import java.io.PrintWriter;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
