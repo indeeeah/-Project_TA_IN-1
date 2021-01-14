@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardAllManage">
+	<resultMap type="BoardAllManage" id="resultBoardAllManage">
+		<id property="m_id" column="m_id" />
+		<result property="bb_id" column="bb_id" />
+		<result property="bb_name" column="bb_name" />
+		<result property="bb_info" column="bb_info" />
+		<result property="bb_price" column="bb_price" />
+		<result property="bb_option1" column="bb_option1" />
+		<result property="bb_option2" column="bb_option2" />
+		<result property="bb_option3" column="bb_option3" />
+		<result property="bb_option4" column="bb_option4" />
+		<result property="bb_type" column="bb_type" />
+		<result property="bb_topid" column="bb_topid" />
+		<result property="bb_date" column="bb_date" />
+
+		<result property="b_id" column="b_id" />
+		<result property="b_content" column="b_content" />
+		<result property="b_type" column="b_type" />
+		<result property="b_topid" column="b_topid" />
+		<result property="b_date" column="b_date" />
+	</resultMap>
+
+	<!-- 게시물 수 -->
+	<select id="bmListCount" resultType="int">
+		select count(*) from Board
+	</select>
+
+	<!-- 게시물 목록(텍스트) -->
+	<select id="bmSelectList" resultType="arraylist"
+		resultMap="resultBoardAllManage">
+		select * from Board order by b_date desc
+	</select>
+
+	<!-- 검색한 게시물 조회 -->
+	<select id="bmSearchList" parameterType="string"
+		resultType="arraylist" resultMap="resultBoardAllManage">
+		SELECT * FROM Board
+		WHERE m_id
+		LIKE '%'|| #{keyword} ||'%'
+		or b_id LIKE '%'|| #{keyword} ||'%'
+		OR
+		m_id LIKE '%'|| #{keyword} ||'%'
+		ORDER BY m_id DESC
+	</select>
+
+	<!-- 게시물 삭제(텍스트) -->
+	<delete id="deleteBManage" parameterType="BoardAllManage"
+		flushCache="true" statementType="PREPARED">
+		delete from Board where b_id=#{b_id}
+	</delete>
+
+
+	<!-- 비지니스 게시물 수 -->
+	<select id="bsbmListCount" resultType="int">
+		select count(*) from businessboard
+	</select>
+
+	<!-- 비지니스 게시물 목록(텍스트) -->
+	<select id="bsbmSelectList" resultType="arraylist"
+		resultMap="resultBoardAllManage">
+		select * from businessboard order by bb_date desc
+	</select>
+
+	<!-- 검색한 게시물 조회 -->
+	<select id="bsbmSearchList" parameterType="string"
+		resultType="arraylist" resultMap="resultBoardAllManage">
+		SELECT * FROM businessboard
+		WHERE m_id
+		LIKE '%'|| #{keyword} ||'%'
+		or bb_id LIKE '%'|| #{keyword} ||'%'
+		OR
+		m_id LIKE '%'|| #{keyword} ||'%'
+		ORDER BY m_id DESC
+	</select>
+
+	<!-- 비지니스 게시물 삭제(텍스트) -->
+	<delete id="deleteBsbManage" parameterType="BoardAllManage"
+		flushCache="true" statementType="PREPARED">
+		delete from businessboard where
+		bb_id=#{bb_id}
+	</delete>
+</mapper>

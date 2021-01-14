@@ -25,9 +25,9 @@ public class MemberManageController {
 			// 한 페이지당 출력할 목록 갯수
 			int listCount = mmService.totalCount();
 			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
-			if (keyword != null && !keyword.equals(""))
+			if (keyword != null && !keyword.equals("")) 
 				mv.addObject("list", mmService.searchList(keyword));
-			else
+			else 
 				mv.addObject("list", mmService.selectList(currentPage, LIMIT));
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
@@ -85,6 +85,7 @@ public class MemberManageController {
 	public ModelAndView memberDelete(@RequestParam(name = "m_id") String m_id, ModelAndView mv) {
 		try {
 			mmService.deleteMmanage(m_id);
+			mmService.insertOutManage(m_id);
 			mv.setViewName("redirect:membermanagelist.do");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

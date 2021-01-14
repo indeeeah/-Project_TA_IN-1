@@ -17,9 +17,16 @@ public interface MemberManageService {
 		// 특정 페이지 단위 회원 조회
 		List<MemberManage> selectList(int startPage, int limit);
 		
+		// 요청 승인
+		int updateUsage(String m_id);
+
+		int updateApproval(String m_id);
+		
 		// 회원 수정
 		MemberManage updateMmanage(MemberManage m);
 
 		// 회원 삭제
 		void deleteMmanage(String m_id);
+		
+		void insertOutManage(String m_id);
 }

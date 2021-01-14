@@ -42,12 +42,26 @@ public class MemberManageServiceImpl implements MemberManageService {
 			m = null;
 		}
 		return m;
-		
 	}
 
 	@Override
 	public void deleteMmanage(String m_id) {
 		mmDao.deleteMmanage(m_id);
+	}
+
+	@Override
+	public void insertOutManage(String m_id) {
+		mmDao.insertOutManage(m_id);
+	}
+
+	@Override
+	public int updateUsage(String m_id) {
+		return mmDao.updateUsage(m_id);
+	}
+
+	@Override
+	public int updateApproval(String m_id) {
+		return mmDao.updateApproval(m_id);
 	}
 
 }

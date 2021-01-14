@@ -14,28 +14,37 @@ public class MemberManageDao {
 	@Autowired
 	private SqlSession sqlSession;
 
-	
 	// 전체 회원 수 조회
 	public int listCount() {
 		return sqlSession.selectOne("MemberManage.listCount");
 	}
-	
+
 	// 상세 조회
 	public MemberManage selectOne(String m_id) {
 		return sqlSession.selectOne("MemberManage.selectOne", m_id);
 	}
-	// 회원 검색 
+
+	// 회원 검색
 	public List<MemberManage> searchList(String keyword) {
 		return sqlSession.selectList("MemberManage.searchList", keyword);
 	}
-	
+
 	// 특정 페이지 단위의 회원 조회
-	public List<MemberManage> selectList(int startPage, int limit) {  
-		int startRow = (startPage-1)*limit;
+	public List<MemberManage> selectList(int startPage, int limit) {
+		int startRow = (startPage - 1) * limit;
 		RowBounds row = new RowBounds(startRow, limit);
 		return sqlSession.selectList("MemberManage.selectList", null, row);
 	}
-	
+
+	// 요청 승인
+	public int updateUsage(String m_id) {
+		return sqlSession.update("MemberManage.updateUsage", m_id);
+	}
+
+	public int updateApproval(String m_id) {
+		return sqlSession.update("MemberManage.updateApproval", m_id);
+	}
+
 	// 회원 수정
 	public int updateMmanage(MemberManage m) {
 		return sqlSession.update("MemberManage.updateMmanage", m);
@@ -45,5 +54,9 @@ public class MemberManageDao {
 	public int deleteMmanage(String m_id) {
 		return sqlSession.update("MemberManage.deleteMmanage", m_id);
 	}
-	
+
+	public int insertOutManage(String m_id) {
+		return sqlSession.insert("MemberManage.insertOutManage", m_id);
+	}
+
 }

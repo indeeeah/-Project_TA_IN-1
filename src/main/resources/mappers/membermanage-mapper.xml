@@ -23,44 +23,70 @@
 		<result property="approval_key" column="approval_key" />
 		<result property="approval_status" column="approval_status" />
 	</resultMap>
-	
+
 	<!-- 전체 회원 수 조회 -->
 	<select id="listCount" resultType="int">
 		select count(*) from Member
 	</select>
-	
+
 	<!-- 전체 회원 조회 -->
 	<select id="selectList" resultType="arraylist"
 		resultMap="resultMmanage">
 		select * from Member order by m_joindate desc
 	</select>
-	
+
 	<!-- 회원 단일 조회 -->
-	<select id="selectOne" parameterType="string" resultType="MemberManage">
+	<select id="selectOne" parameterType="string"
+		resultType="MemberManage">
 		select * from Member
 		where m_id = #{m_id}
 	</select>
-	
+
 	<!-- 검색한 회원 조회 -->
 	<select id="searchList" parameterType="string"
 		resultType="arraylist" resultMap="resultMmanage">
 		SELECT * FROM Member
-		WHERE m_id LIKE '%'|| #{keyword} ||'%'
+		WHERE m_id LIKE
+		'%'|| #{keyword} ||'%'
 		OR m_name LIKE '%'|| #{keyword} ||'%'
-		ORDER BY m_id DESC
+		ORDER BY
+		m_id DESC
 	</select>
 	
+	<!-- 비지니스 계정 신청자 조회 -->
+	<select id="selectBsApproval" parameterType="string"
+		resultType="arraylist">
+		select m.*, bm.* from member m join businessMember bm on m.m_id = bm.m_id
+		where bm.bm_approval = 'N'
+	</select>
+
 	<!-- 회원 수정 -->
-	<update id="updateMmanage" parameterType="MemberManage" flushCache="true"
-		statementType="PREPARED">
-		UPDATE Member SET m_usage = #{m_usage},
+	<update id="updateMmanage" parameterType="MemberManage"
+		flushCache="true" statementType="PREPARED">
+		UPDATE Member SET m_usage =
+		#{m_usage},
 		m_status = #{m_status}
 		WHERE m_id = #{m_id}
+	</update>
+	
+	<!-- 요청 승인 -->
+	<update id="updateUsage" flushCache="true" statementType="PREPARED">
+		update Member set m_usage='B' WHERE
+		m_id = #{m_id}
+	</update>
+	<update id="updateApproval" flushCache="true" statementType="PREPARED">
+		update BusinessMember set bm_approval ='Y' WHERE
+		m_id = #{m_id}
 	</update>
 	
 	<!-- 회원 삭제 -->
 	<delete id="deleteMmanage" parameterType="string"
 		flushCache="true" statementType="PREPARED">
-		update Member set m_status=4 WHERE m_id = #{m_id}
+		update Member set m_status='4' WHERE
+		m_id = #{m_id}
 	</delete>
+	<insert id="insertOutManage" flushCache="true"
+		statementType="PREPARED">
+		insert into Out (m_id, o_reason) values(#{m_id}, 'F')
+	</insert>
 </mapper>
