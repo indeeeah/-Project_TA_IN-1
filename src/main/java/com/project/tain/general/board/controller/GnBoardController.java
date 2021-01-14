@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.tain.general.board.model.domain.GnBoard;
 import com.project.tain.general.board.model.service.GnBoardService;
+import com.project.tain.post.model.domain.TimeLine;
 
 @Controller
 public class GnBoardController {
@@ -55,5 +58,32 @@ public class GnBoardController {
 		}
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "chkReportMember.do", method = RequestMethod.POST)
+	public int chkReportMember(GnBoard gb) {
+		int result = gService.chkReportMember(gb);
+		try {
+			System.out.println(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "insertReportMember.do", method = RequestMethod.POST)
+	public String insertReportMember(GnBoard gb) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", gService.insertReportMember(gb));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+	
 	
 }

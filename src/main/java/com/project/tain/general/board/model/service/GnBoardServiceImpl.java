@@ -66,4 +66,14 @@ public class GnBoardServiceImpl implements GnBoardService {
 		return gDao.recomFow(my_name, m_id);
 	}
 
+	@Override
+	public int chkReportMember(GnBoard gb) {
+		return gDao.chkReportMember(gb);
+	}
+
+	@Override
+	public int insertReportMember(GnBoard gb) {
+		return gDao.insertReportMember(gb);
+	}
+
 }

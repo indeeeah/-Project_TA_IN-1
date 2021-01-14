@@ -168,4 +168,9 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public List<TimeLine> chkfollow(String m_id) {
 		return tDao.chkfollow(m_id);
 	}
+
+	@Override
+	public String showMemberType(String m_id) {
+		return tDao.showMemberType(m_id);
+	}
 }

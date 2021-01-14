@@ -35,6 +35,7 @@ public class TimeLine implements java.io.Serializable{
 	private String t_img;
 	private String h_tag;
 	private int m_activity;
+	private String m_usage;
 	
 	public TimeLine() {
 		
@@ -320,6 +321,14 @@ public class TimeLine implements java.io.Serializable{
 
 	public void setM_activity(int m_activity) {
 		this.m_activity = m_activity;
+	}
+
+	public String getM_usage() {
+		return m_usage;
+	}
+
+	public void setM_usage(String m_usage) {
+		this.m_usage = m_usage;
 	}
 	
 	
