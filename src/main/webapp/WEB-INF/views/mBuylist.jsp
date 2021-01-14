@@ -26,7 +26,10 @@ a {
 				<li><a href="mBusiness.do">비즈니스 계정</a></li>
 			</ul>
 		</div>
-		<div id="contents">
+		<div id="contents" style="padding-top: 30px;">
+			<span>구매목록 조회</span>
+			<div style="padding-top: 30px;">
+			</div>
 		
 		</div>
 		<div style="clear:both;"></div>

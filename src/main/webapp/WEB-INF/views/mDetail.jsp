@@ -62,7 +62,7 @@ a {
 				<div id="profilecontents">
 					<span style="font-size:20pt;font-weight:100;">${profile.m_id}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 					<button id="mbtn" onclick="location.href='mManage.do'">계정 관리</button>
-					<br><br> 게시물&nbsp;&nbsp;&nbsp;&nbsp;팔로워&nbsp;&nbsp;&nbsp;&nbsp;팔로우<br><br>
+					<br><br> 게시물&nbsp;&nbsp;&nbsp;&nbsp;팔로워&nbsp;&nbsp;${countfollower}&nbsp;&nbsp;팔로우&nbsp;&nbsp;${countfollowing}<br><br>
 					<span style="font-weight:bold;">${profile.m_name}</span><br><br> <span>${profile.m_intro}</span>
 				</div>
 			</div>

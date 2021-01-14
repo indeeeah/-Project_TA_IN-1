@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mLikeVO">
+	<resultMap type="mLikeVO" id="mLikeMap">
+		<id property="m_id" column="m_id" />
+		<result property="l_date" column="l_date" />
+		<result property="b_id" column="b_id" />
+		<result property="b_img1" column="b_img1" />
+		<result property="b_img2" column="b_img2" />
+		<result property="b_img3" column="b_img3" />
+		<result property="b_img4" column="b_img4" />
+		<result property="b_img5" column="b_img5" />
+		<result property="b_img6" column="b_img6" />
+		<result property="b_img7" column="b_img7" />
+		<result property="b_img8" column="b_img8" />
+		<result property="b_img9" column="b_img9" />
+		<result property="b_img10" column="b_img10" />
+	</resultMap>
+	
+	<select id="showLike" parameterType="String"
+		resultType="arraylist" resultMap="mLikeMap">
+		select *
+		from
+		(
+		select b.m_id, b.l_date, ba.*
+		from blike b join boardadd ba
+		on b.b_id =	ba.b_id
+		union
+		select bb.m_id, bb.l_date, bba.*
+		from bblike bb join businessboardadd bba
+		on bb.bb_id = bba.bb_id
+		)
+		where m_id = #{m_id} order by l_date
+	</select>
+</mapper>

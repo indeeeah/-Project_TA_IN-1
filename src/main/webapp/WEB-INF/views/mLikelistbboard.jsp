@@ -40,13 +40,13 @@ a {
 			<span>좋아요 누른 목록</span>
 			<div id="submenu" style="padding-top: 30px;">
 				<input type="button" id="all" class="submenu" value="전체"
-					style="background: white; text-align: center; width: 120px; border: 2px solid black;"
+					style="background: white; text-align: center; width: 120px;"
 					onclick="location.href='mLikelist.do'"> <input
 					type="button" id="board" class="submenu" value="일반 게시글"
 					style="background: white; text-align: center; width: 120px;"
 					onclick="location.href='mLikelistboard.do'"> <input
 					type="button" id="bboard" class="submenu" value="비즈니스 게시글"
-					style="background: white; text-align: center; width: 120px;"
+					style="background: white; text-align: center; width: 120px; border: 2px solid black;"
 					onclick="location.href='mLikelistbboard.do'">
 			</div>
 			<div style="padding: 30px 0 30px 0;">
@@ -69,7 +69,11 @@ a {
 				</c:if>
 				<c:if test="${likelist.size() != 0}">
 					<c:forEach var="ll" items="${likelist}" varStatus="status">
-						<img src="${ll.b_img1}" width="200px" height="200px" onclick="location.href=''"><input type="text" value="${ll.b_id}" style="display:none">
+						<c:set var="value" value="${ll.b_id}" />
+						<c:if test="${fn : contains(value, 'BB')}">
+							<img src="${ll.b_img1}" width="200px" height="200px" onclick="location.href=''">
+							<input type="text" value="${ll.b_id}" style="display: none">
+						</c:if>
 					</c:forEach>
 				</c:if>
 			</div>

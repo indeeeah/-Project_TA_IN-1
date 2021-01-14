@@ -59,6 +59,8 @@ button:focus {
 	type="text/javascript"></script>
 <script src="https://kit.fontawesome.com/2409d81413.js"
 	crossorigin="anonymous"></script>
+<script
+	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <script>
 	$(document).ready(function() {
@@ -88,9 +90,26 @@ button:focus {
 				$("#parentModal").css("display", "none");
 			}
 		});
+
+		$("#changeemail").click(function() {
+			if ($("#changeemail").val() == "이메일 변경하기") {
+				$("#changeemail").attr("value", "취소");
+				$("#emailchk").css("display", "inline-block");
+				$("#emailcheck").attr("value", "N");
+				$("#email").attr("readonly", false);
+				$("#email").css("border-style", "solid");
+			} else {
+				$("#changeemail").attr("value", "이메일 변경하기");
+				$("#emailchk").css("display", "none");
+				$("#emailcheck").attr("value", "Y");
+				$("#email").attr("readonly", true);
+				$("#email").css("border-style", "none");
+			}
+		});
+
 	});
 
-	function emailchk() {
+	function checkemail() {
 		var email = $("#email").val();
 		$.ajax({
 			url : "checkEmail.do",
@@ -120,15 +139,75 @@ button:focus {
 		});
 	}
 
+	function updatepimg() {
+		$("#updatepimg").attr("action", "updateProfileImg.do");
+		$("#updatepimg").submit();
+	}
+
+	function deleteProfileImg() {
+		$("#updatepimg").attr("action", "deleteProfileImg.do");
+		$("#updatepimg").submit();
+	}
+
 	function updatecheck() {
 		var update = $("#emailcheck").val();
 		if (update == "N") {
 			alert("이메일 중복확인 해주세요.");
+			return false;
 		} else {
-			$("form").attr("action", "updateProfile.do");
-			$("form").submit();
+			$("#editProfile").attr("action", "updateProfile.do");
+			$("#editProfile").submit();
 		}
 	}
+
+	function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6_extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").value ="";
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
 </script>
 <body>
 	<header id="header">
@@ -156,20 +235,22 @@ button:focus {
 	<div id="mManage">
 		<div id="imgmanageModal"
 			style="border-radius: 0.5em; border-top-left-radius: 0.5em; border-top-right-radius: 0.5em; border-bottom-left-radius: 0.5em; border-bottom-right-radius: 0.5em;">
-			<h3 style="margin-top: 22px; margin-bottom: 22px;">프로필 사진 바꾸기</h3>
-			<hr style="color: #D5D5D5;">
-			<button id="imgupload"
-				style="width: 100%; height: 16%; border-style: none; background: white; color: #0095f6; font-size: 12pt; font-weight: bold; cursor: pointer">
-				<label for="imgfile" style="cursor: pointer;">사진 업로드</label>
-			</button>
-			<input id="imgfile" type="file" style="display: none;">
-			<hr style="color: #D5D5D5;">
-			<button id="imgdelete"
-				style="width: 100%; height: 16%; border-style: none; background: white; color: #FF4848; font-size: 12pt; font-weight: bold; cursor: pointer">현재
-				사진 삭제</button>
-			<hr style="color: #D5D5D5;">
-			<button id="clear"
-				style="width: 100%; height: 16%; border-style: none; background: white; color: black; font-size: 12pt; font-weight: bold; cursor: pointer">취소</button>
+			<form id="updatepimg" method="post" enctype="multipart/form-data">
+				<h3 style="margin-top: 22px; margin-bottom: 22px;">프로필 사진 바꾸기</h3>
+				<hr style="color: #D5D5D5;">
+				<label for="upfile" id="imgupload"
+					style="display:inline-block; width: 100%; padding:10px 0 10px 0; border-style: none; background: white; color: #0095f6; font-size: 12pt; font-weight: bold; cursor: pointer">사진 업로드</label>
+				<input
+					id="upfile" type="file" name="upfile" onchange="updatepimg()" style="display:none;">
+				<hr style="color: #D5D5D5;">
+				<input type="button" id="imgdelete"
+					style="width: 100%; height: 36px; border-style: none; background: white; color: #FF4848; font-size: 12pt; font-weight: bold; cursor: pointer"
+					value="프로필 사진 삭제" onclick="deleteProfileImg()">
+				<hr style="color: #D5D5D5;">
+				<input type="button" id="clear"
+					style="width: 100%; height: 36px; border-style: none; background: white; color: black; font-size: 12pt; font-weight: bold; cursor: pointer"
+					value="취소">
+			</form>
 		</div>
 		<div id="menu">
 			<ul id="menulist">
@@ -182,9 +263,10 @@ button:focus {
 				<li><a href="mBusiness.do">비즈니스 계정</a></li>
 			</ul>
 		</div>
-		<div id="contents">
+		<div id="contents" style="padding-top: 30px;">
+			<span>회원정보 수정</span>
 			<form id="editProfile" name="myForm" method="post"
-				style="padding-bottom: 30px;">
+				style="padding-bottom: 30px; padding-top: 30px;">
 				<table id="profiletable" style="margin: 0 auto;">
 					<tbody>
 						<tr>
@@ -192,11 +274,12 @@ button:focus {
 						</tr>
 						<tr class="register" height="30">
 							<td width="5%"></td>
-							<td width="30%"><img src="${profile.m_img}"
-								style="width: 50px; height: 50px"></td>
+							<td width="30%"><img
+								src="${pageContext.request.contextPath}/resources/uploadFiles/${profile.m_img}"
+								style="width: 50px; height: 50px; vertical-align: middle;"></td>
 							<td>${profile.m_id }<br> <label id="changeimg"
-								style="color: #0095f6; font-size: 10pt; font-weight: bold; cursor: pointer">프로필
-									사진 바꾸기</label></td>
+								style="color: #0095f6; font-size: 10pt; font-weight: bold; cursor: pointer;">프로필
+									사진 바꾸기</label><br></td>
 						</tr>
 						<tr>
 							<td colspan="3">&nbsp;</td>
@@ -205,7 +288,7 @@ button:focus {
 							<td width="5%">*</td>
 							<td width="30%">회원 ID</td>
 							<td><input type="text" id="id" name="m_id" required readonly
-								value="${profile.m_id}" style="border-style:none;"></td>
+								value="${profile.m_id}" style="border-style: none;"></td>
 						</tr>
 						<tr>
 							<td colspan="3">&nbsp;</td>
@@ -232,10 +315,14 @@ button:focus {
 							<td width="5%">*</td>
 							<td width="30%">이메일</td>
 							<td><input type="email" id="email" name="m_email"
-								value="${profile.m_email}" required><input type="text"
-								id="emailcheck" name="emailcheck" value="N"
-								style="display: none;">&nbsp;<input type="button"
-								value="중복체크" onclick="emailchk()"></td>
+								value="${profile.m_email}" required readonly
+								style="border-style: none"><input type="text"
+								id="emailcheck" name="emailcheck" value="Y"
+								style="display: none;">&nbsp; <input type="button"
+								id="emailchk" value="중복체크"
+								style="display: none; background: white;" onclick="checkemail()">&nbsp;
+								<input type="button" id="changeemail" value="이메일 변경하기"
+								style="background: white; border: 1px solid #D5D5D5;"></td>
 						</tr>
 						<tr>
 							<td colspan="3">&nbsp;</td>
@@ -252,16 +339,12 @@ button:focus {
 						<tr class="register" height="30">
 							<td width="5%">*</td>
 							<td width="30%">주소</td>
-							<td><input type="text" id="sample4_postcode" name="m_addr1"
-								onclick="sample4_execDaumPostcode()" placeholder="우편번호"
-								class="jck_join_input" value="${profile.m_addr1}"> <input
-								type="button" onclick="sample4_execDaumPostcode()"
-								value="우편번호 찾기"><br> <input type="text"
-								id="sample4_roadAddress" name="m_addr2" placeholder="도로명주소"
-								value="${profile.m_addr2}" class="jck_join_input"><br>
-								<input type="text" size="43" id="sample4_detailAddress"
-								name="m_addr3" placeholder="상세주소를 입력해주세요."
-								value="${profile.m_addr3}" class="jck_join_input"></td>
+							<td><input type="text" name="m_addr1" id="sample6_postcode"
+								placeholder="우편번호" value="${profile.m_addr1}">
+								<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="background: white; border: 1px solid #D5D5D5;"><br>
+								<input type="text"name="m_addr2" id="sample6_address" placeholder="주소" value="${profile.m_addr2}"><br>
+								<input type="text"name="m_addr3" id="sample6_detailAddress" placeholder="상세주소" value="${profile.m_addr3}" style="width:295px;">
+								<input type="text" id="sample6_extraAddress" placeholder="참고항목" style="display:none;"></td>
 						</tr>
 						<tr>
 							<td colspan="3">&nbsp;</td>
@@ -277,9 +360,9 @@ button:focus {
 						</tr>
 					</tbody>
 				</table>
-				<br> <input type="submit"
+				<br> <input type="button"
 					style="background: #0095f6; border-style: none; padding: 5px 5px 5px 5px; color: white;"
-					value="저장하기" onclick="updatecheck()">&nbsp;&nbsp;&nbsp;<input
+					value="저장" onclick="updatecheck()">&nbsp;&nbsp;&nbsp;<input
 					type="button"
 					style="background: #0095f6; border-style: none; padding: 5px 5px 5px 5px; color: white;"
 					value="취소" onclick="location.href='mManage.do'">

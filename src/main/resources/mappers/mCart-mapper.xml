@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mCartVO">
+	<resultMap type="mCartVO" id="mCartMap">
+		<id property="m_id" column="m_id" />
+		<result property="bb_id" column="bb_id" />
+		<result property="sb_date" column="sb_date" />
+		<result property="sb_buy" column="sb_buy" />
+		<result property="bb_id_1" column="bb_id_1" />
+		<result property="m_id_1" column="m_id_1" />
+		<result property="bb_name" column="bb_name" />
+		<result property="bb_info" column="bb_info" />
+		<result property="bb_price" column="bb_price" />
+		<result property="bb_option1" column="bb_option1" />
+		<result property="bb_option2" column="bb_option2" />
+		<result property="bb_option3" column="bb_option3" />
+		<result property="bb_option4" column="bb_option4" />
+		<result property="bb_type" column="bb_type" />
+		<result property="bb_topid" column="bb_topid" />
+		<result property="bb_date" column="bb_date" />
+		<result property="bb_id_2" column="bb_id_2" />
+		<result property="bb_img1" column="bb_img1" />
+		<result property="bb_img2" column="bb_img2" />
+		<result property="bb_img3" column="bb_img3" />
+		<result property="bb_img4" column="bb_img4" />
+		<result property="bb_img5" column="bb_img5" />
+		<result property="bb_img6" column="bb_img6" />
+		<result property="bb_img7" column="bb_img7" />
+		<result property="bb_img8" column="bb_img8" />
+		<result property="bb_img9" column="bb_img9" />
+		<result property="bb_img10" column="bb_img10" />
+	</resultMap>
+
+	<!-- 장바구니 조회 -->
+	<select id="showCart" parameterType="String"
+		resultType="arraylist" resultMap="mCartMap">
+		select *
+		from ShoppingBasket SB, BusinessBoard BB, BusinessBoardAdd BBA
+		where SB.bb_id = BB.bb_id and BB.bb_id = BBA.bb_id and SB.m_id = #{m_id}
+	</select>
+	
+	<!-- 장바구니 삭제 -->
+	<delete id="deleteCart" parameterType="string"
+		statementType="PREPARED">
+		delete from ShoppingBasket
+		where bb_id=#{bb_id}
+	</delete>
+	
+	<!-- 주문내역 작성 -->
+	<select id="showOrder" parameterType="String"
+		resultType="mCartVO" resultMap="mCartMap">
+		select *
+		from ShoppingBasket SB, BusinessBoard BB, BusinessBoardAdd BBA
+		where SB.bb_id = BB.bb_id and BB.bb_id = BBA.bb_id and SB.m_id = #{m_id} and SB.bb_id = #{bb_id}
+	</select>
+</mapper>

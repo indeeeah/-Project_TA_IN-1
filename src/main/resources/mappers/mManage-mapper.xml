@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mMemberVO">
-	<resultMap type="mMemberVO" id="mResultMap">
+	<resultMap type="mMemberVO" id="mManageMap">
 		<id property="m_id" column="m_id" />
 		<result property="m_pw" column="m_pw" />
 		<result property="m_name" column="m_name" />
@@ -32,6 +32,7 @@
 		select m_email from member
 		where m_email = #{m_email}
 	</select>
+	
 	<!-- 프로필 수정 -->
 	<update id="updateProfile" parameterType="mMemberVO"
 		flushCache="true">
@@ -48,8 +49,24 @@
 		where
 		m_id=#{m_id}
 	</update>
+	
+		<!-- 프로필사진 수정 -->
+	<update id="updateProfileImg" parameterType="String"
+		flushCache="true">
+		update member set
+		m_img = #{m_img}
+		where
+		m_id=#{m_id}
+	</update>
+	
 	<!-- 비밀번호 변경 -->
-	<!-- 장바구니 조회 -->
+	<update id="changepw" parameterType="String"
+		flushCache="true">
+		update member set
+		m_pw=#{m_pw}
+		where
+		m_id=#{m_id}
+	</update>
 	<!-- 구매목록 조회 -->
 	<!-- 좋아요 목록 조회 -->
 	<!-- 비즈니스 계정 변경 -->
