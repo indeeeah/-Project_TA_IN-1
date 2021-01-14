@@ -139,5 +139,9 @@ public class TimeLineDao {
 	public List<TimeLine> chkfollow(String m_id) {
 		return sqlSession.selectList("TimeLine.chkfollow", m_id);
 	}
+	
+	public String showMemberType(String m_id) {
+		return sqlSession.selectOne("TimeLine.showMemberType", m_id);
+	}
 
 }

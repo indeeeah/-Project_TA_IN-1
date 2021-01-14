@@ -114,4 +114,15 @@
         order by dbms_random.value
 	</select>
 	
+	<!-- 회원 신고 체크 -->
+	<select id="chkReportMember" resultType="int">
+	select count(*) from reportmember where m_id1=#{my_name} and m_id2 = #{m_id}
+	</select>
+	
+	<!-- 회원 신고 -->
+	<insert id="insertReportMember" parameterType="GnBoard"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into reportmember (m_id1, m_id2, rm_reason) values (#{my_name}, #{m_id}, #{rm_reason})
+	</insert>
+	
 </mapper>

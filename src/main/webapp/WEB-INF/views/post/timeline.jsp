@@ -95,11 +95,9 @@
                 
                 #right_small_con {
                     width: 320px;
-                    background-color: darkorange;
                     float: right;
                     margin-left: 20px;
                     position: fixed;
-                    z-index: -1;
                 }
                 
                 #report_back {
@@ -216,7 +214,7 @@
                 </div>
                 <div id="report_result" style="display: none;">
                     <div class="modal_in  modal_title modal_nocursor">신고 완료</div>
-                    <div class="modal_in modal_nocursor modal_result">${myProfile.m_id }님의 신고가 정상적으로 접수되었습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.</div>
+                    <div class="modal_in modal_nocursor modal_result">${my_name }님의 신고가 정상적으로 접수되었습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.</div>
                     <div id="cancel_3" class="modal_in cancel">화면으로 돌아가기</div>
                 </div>
                 <div id="report_already" style="display: none;">
@@ -286,8 +284,8 @@
                             <c:forEach var="vo" items="${timeLineList }" varStatus="s">
                                 <div class="timeline_contents">
                                     <div class="timeline_profile">
-                                        <div class="t_prof_photo">${vo.m_img }</div>
-                                        <div class="t_prof_id">${vo.m_id }
+                                        <div class="t_prof_photo" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_img }</div>
+                                        <div class="t_prof_id" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_id }
                                         </div>
                                         <i class="fas fa-bars fa-bars_title" onclick="pre_report('${vo.t_id}','${vo.m_id }','${vo.t_type}');"></i>
                                     </div>
@@ -310,7 +308,7 @@
                                             <div class="timeline_likes_con">좋아요 <input type="text" class="lCount${vo.t_id} showlCount" value="" readonly>개</div>
                                             <div class="comment_con">
                                                 <div class="com_detail post_title">
-                                                    <div class="post_id">${vo.m_id }</div>
+                                                    <div class="post_id" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_id }</div>
                                                     <div class="post_content">${vo.t_content }</div>
                                                 </div>
                                                 <ul class="hashtag${vo.t_id }">
@@ -352,18 +350,18 @@
                     <div id="timeline_right">
                         <div id="right_small_con">
                             <div id="my_profile_con">
-                                <div id="my_profile_photo" onclick="goboard('${myProfile.m_id }');" style="cursor:pointer;">${myProfile.m_img }</div>
-                                <div id="my_id">${myProfile.m_id }</div>
-                                <input type="hidden" name="m_id" class="m_id" value="${myProfile.m_id }">
+                                <div id="my_profile_photo" onclick="goboard('${my_name }');" style="cursor:pointer;">${myProfile.m_img }</div>
+                                <div id="my_id" onclick="goboard('${my_name }');" style="cursor:pointer;">${my_name }</div>
+                                <input type="hidden" name="m_id" class="m_id" value="${my_name }">
                             </div>
                             <div id="follow_recom_title">회원님을 위한 추천</div>
                             <div id="follow_recom_con">
                                 <c:if test="${not empty recomFollow }">
                                     <c:forEach var="vo" items="${recomFollow }" varStatus="s">
                                         <div class="follow_recom_id">
-                                            <div class="recom_profile">${vo.m_img }</div>
+                                            <div class="recom_profile" onclick="goboard('${vo.r_mid }');" style="cursor:pointer;">${vo.m_img }</div>
                                             <div class="recom_middle">
-                                                <div class="recom_id">${vo.r_mid }</div>
+                                                <div class="recom_id" onclick="goboard('${vo.r_mid }');" style="cursor:pointer;">${vo.r_mid }</div>
                                                 <div class="recom_info">${vo.count }명이 팔로우합니다</div>
                                             </div>
                                             <button class="recom_follow followBtn" style="cursor:pointer;">팔로우</button>
@@ -375,7 +373,6 @@
                             <div id="footer_info"></div>
                             <div id="footer_infoc">© 2020 TA_IN</div>
                         </div>
-                        <div id="test" onclick="goboard('${myProfile.m_id }');" style="cursor:pointer;">냐</div>
                     </div>
                 </div>
 
@@ -1127,7 +1124,7 @@
                                 $(".cm2" + t_id).remove();
 
                                 // 전체 댓글 append - cm3  // 댓글 좋아요 체크 trigger 사용
-                                $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id">' +
+                                $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                     id + '</div><div class="commentResult post_content">' +
                                     b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + ' lbtn"></div>' +
                                     '<div class="comment_unlcon clcon unlikechk' + b_id + ' unlbtn"></div>' +
@@ -1366,7 +1363,7 @@
                                             var b_date = count.hComment[i].b_date;
 
                                             $(".cm4" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
-                                                mother_id + '</div><div class="commentRId post_id" style="margin-left:5px;">' +
+                                                mother_id + '</div><div class="commentRId post_id" style="margin-left:5px;" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                                 id + '</div><div class="commentResult post_content reply_commentResult">' +
                                                 b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
@@ -1662,7 +1659,7 @@
                                 $(".cm2" + t_id).remove();
 
                                 // 전체 댓글 append - cm3  // 댓글 좋아요 체크 trigger 사용
-                                $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id">' +
+                                $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                     id + '</div><div class="commentResult post_content">' +
                                     b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                     '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
@@ -1901,7 +1898,7 @@
                                             var b_date = count.hComment[i].b_date;
 
                                             $(".cm4" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
-                                                mother_id + '</div><div class="commentRId post_id" style="margin-left:5px;">' +
+                                                mother_id + '</div><div class="commentRId post_id" style="margin-left:5px;" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                                 id + '</div><div class="commentResult post_content reply_commentResult">' +
                                                 b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
@@ -2201,7 +2198,7 @@
                             var b_date = count.hComment[i].b_date;
 
                             // 댓글 append - cm2 // 댓글 좋아요 체크 trigger 사용
-                            $(".cm2" + t_id).append('<div class="com_detail"><div class="commentRId post_id">' +
+                            $(".cm2" + t_id).append('<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                 id + '</div><div class="commentResult post_content">' +
                                 b_content + '</div><a class="commentViewAll"></a><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +

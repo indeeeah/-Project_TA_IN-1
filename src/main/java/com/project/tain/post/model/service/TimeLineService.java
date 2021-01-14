@@ -67,4 +67,5 @@ public interface TimeLineService {
 	List<TimeLine> showHashTag(String t_id);
 	List<TimeLine> chkfollow(String m_id);
 
+	String showMemberType(String m_id);
 }

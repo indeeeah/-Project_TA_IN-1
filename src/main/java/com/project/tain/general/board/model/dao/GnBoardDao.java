@@ -60,5 +60,13 @@ public class GnBoardDao {
 		rec_fow.put("m_id", m_id);
 		return sqlSession.selectList("GnBoard.recomFow", rec_fow);
 	}
+
+	public int chkReportMember(GnBoard gb) {
+		return sqlSession.selectOne("GnBoard.chkReportMember", gb);
+	}
+
+	public int insertReportMember(GnBoard gb) {
+		return sqlSession.insert("GnBoard.insertReportMember", gb);
+	}
 	
 }

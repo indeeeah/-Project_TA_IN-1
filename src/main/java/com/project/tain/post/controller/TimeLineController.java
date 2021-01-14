@@ -371,4 +371,17 @@ public class TimeLineController {
 		}
 		return job.toString();
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "showMemberType.do", method = RequestMethod.POST)
+	public String showMemberType(String m_id) {
+		String result = tService.showMemberType(m_id);
+		try {
+			System.out.println(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }

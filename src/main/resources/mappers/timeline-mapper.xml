@@ -374,4 +374,9 @@
 		resultType="arrayList" resultMap="resultTimeLine">
 		select m_id2 id, m_img, m_activity from member join follow on m_id = m_id2 where m_id1=#{m_id}
 	</select>
+	
+	<!-- 회원 타입 조회 -->
+	<select id="showMemberType" parameterType="string" resultType="string">
+	select m_usage from member where m_id=#{m_id}
+	</select>
 </mapper>

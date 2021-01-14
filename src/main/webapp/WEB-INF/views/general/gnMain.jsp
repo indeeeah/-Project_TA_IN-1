@@ -572,7 +572,7 @@
                     background-color: black;
                     opacity: 0.5;
                     display: none;
-                    z-index: 5;
+                    z-index: 7;
                 }
                 
                 #report_modal {
@@ -580,7 +580,7 @@
                     width: 100%;
                     height: 100%;
                     display: none;
-                    z-index: 6;
+                    z-index: 8;
                 }
                 
                 #report_choose,
@@ -592,14 +592,17 @@
                 #askunfollow,
                 #cantunfollow,
                 #share_con,
-                #share_con_result {
+                #share_con_result,
+                #report_member,
+                #modal_more_con_not_me,
+                #modal_more_con_me {
                     position: absolute;
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
                     width: 400px;
                     background: #fff;
-                    z-index: 7;
+                    z-index: 9;
                     border-radius: 20px;
                     text-align: center;
                     font-size: 14px;
@@ -672,11 +675,66 @@
                         <textarea id="url" readonly></textarea>
                     </div>
                     <div id="share_chk" class="modal_in">복사하기</div>
-                    <div id="cancel_9" class="modal_in cancel">취소</div>
+                    <div id="cancel_9" class="modal_in cancel notcancelAll">취소</div>
                 </div>
                 <div id="share_con_result" style="display: none;">
                     <div class="modal_in modal_title modal_nocursor">게시물의 주소가 복사됐습니다.</div>
-                    <div id="cancel_10" class="modal_in cancel">화면으로 돌아가기</div>
+                    <div id="cancel_10" class="modal_in cancel notcancelAll">화면으로 돌아가기</div>
+                </div>
+                <div id="askunfollow" style="display: none;">
+                    <div class="modal_in modal_nocursor">팔로우를 취소하시겠습니까?</div>
+                    <div id="yes_unfollow" class="modal_in">팔로우 취소하기</div>
+                    <div id="cancel_7" class="modal_in cancel">화면으로 돌아가기</div>
+                </div>
+                <div id="unfollowchk" style="display: none;">
+                    <div class="modal_in modal_nocursor">팔로우가 취소되었습니다.</div>
+                    <div id="cancel_6" class="modal_in cancel" onclick="location.href='timeLineList.do'">화면으로 돌아가기</div>
+                </div>
+                <div id="report_member" style="display:none;">
+                    <div id="goreportmember" class="modal_in send_report">이 사용자 신고하기</div>
+                    <div class="cancel" class="modal_in cancel">돌아가기</div>
+                </div>
+                <div id="modal_more_con_not_me" style="display:none;">
+                    <div class="goreportmember_modal modal_in">게시물 신고</div>
+                    <div class="unfollow_modal modal_in">팔로우 취소</div>
+                    <div class="gothispost_modal modal_in">게시물로 이동</div>
+                    <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
+                    <div class="savepost_modal modal_in">게시물 저장하기</div>
+                    <div class="cancel modal_in cancel notcancelAll">돌아가기</div>
+                </div>
+                <div id="modal_more_con_me" style="display:none;">
+                    <div class="goreportmember_modal modal_in">게시물 수정</div>
+                    <div class="unfollow_modal modal_in">게시물 삭제</div>
+                    <div class="gothispost_modal modal_in">게시물로 이동</div>
+                    <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
+                    <div class="savepost_modal modal_in">게시물 저장하기</div>
+                    <div class="cancel modal_in cancel notcancelAll">돌아가기</div>
+                </div>
+                <div id="report_choose" style="display: none;">
+                    <div id="report" class="modal_in modal_title modal_nocursor">신고하기</div>
+                    <div id="fword" class="modal_in send_report">욕설</div><input type="hidden" value="욕설">
+                    <div id="pornography" class="modal_in send_report">음란물</div><input type="hidden" value="음란물">
+                    <div id="falsecon" class="modal_in send_report">허위내용</div><input type="hidden" value="허위내용">
+                    <div id="embezzlement" class="modal_in send_report">도용된 자료 포함</div><input type="hidden" value="도용된 자료 포함">
+                    <div id="etc" class="modal_in">기타</div>
+                    <div class="cancel" class="modal_in cancel">취소</div>
+                </div>
+                <div id="report_write" style="display: none;">
+                    <div id="etc_con" class="modal_in modal_title modal_nocursor">이 게시물을 신고한는 이유</div>
+                    <div id="etc_write_con" class="modal_in">
+                        <textarea id="etx_write_space"></textarea>
+                    </div>
+                    <div id="send_r" class="modal_in send_report_text">신고하기</div>
+                    <div id="cancel_2" class="modal_in cancel">취소</div>
+                </div>
+                <div id="report_result" style="display: none;">
+                    <div class="modal_in  modal_title modal_nocursor">신고 완료</div>
+                    <div class="modal_in modal_nocursor modal_result">${my_name }님의 신고가 정상적으로 접수되었습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.</div>
+                    <div id="cancel_3" class="modal_in cancel">화면으로 돌아가기</div>
+                </div>
+                <div id="report_already" style="display: none;">
+                    <div class="modal_in modal_nocursor modal_result">이미 신고하셨습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.</div>
+                    <div id="cancel_4" class="modal_in cancel">화면으로 돌아가기</div>
                 </div>
             </div>
             <div id="post_back"></div>
@@ -695,11 +753,15 @@
                             <div id="post_profile_photo">${id_img_fwr.m_img }</div>
                             <div id="post_profile_id">${id_img_fwr.m_id }</div>
                             <c:if test="${id_img_fwr.m_id eq my_name}">
-                                <i class="fas fa-bars fa-bars_post"></i>
+                                <input type="hidden" id="for_modal_con">
+                                <i class="fas fa-bars fa-bars_post" onclick="toModalMore('${id_img_fwr.m_id }');" style="cursor: pointer;"></i>
                             </c:if>
                             <c:if test="${id_img_fwr.m_id ne my_name}">
-                                <div id="followbtn">팔로잉</div>
-                                <i class="fas fa-bars fa-bars_post"></i>
+                                <c:if test="${followchk.follow eq 0}">
+                                    <div id="followbtn" onclick="followinmodal('${id_img_fwr.m_id }');">팔로잉</div>
+                                </c:if>
+                                <input type="hidden" id="for_modal_con">
+                                <i class="fas fa-bars fa-bars_post" onclick="toModalMore('${id_img_fwr.m_id }');" style="cursor: pointer;"></i>
                             </c:if>
                         </div>
                         <div id="post_right_middle">
@@ -745,21 +807,23 @@
                                 </c:if>
                                 <c:if test="${id_img_fwr.m_id ne my_name}">
                                     <div id="send_message" class="profile_btn">메시지 보내기</div>
-                                    <div id="followchk" class="profile_btn">
-                                        <c:if test="${followchk.follow ne 0}">
-                                            <i class="fas fa-user-check"></i>
-                                        </c:if>
-                                        <c:if test="${followchk.follow eq 0}">
+                                    <c:if test="${followchk.follow ne 0}">
+                                        <div id="followchk" class="profile_btn" onclick="pre_unfollow('${id_img_fwr.m_id}');">
+                                            <i class="fas fa-user-check" id="pre_unfollow"></i>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${followchk.follow eq 0}">
+                                        <div id="followchk" class="profile_btn" onclick="followBtn('${id_img_fwr.m_id}');">
                                             팔로우
-                                        </c:if>
-                                    </div>
+                                        </div>
+                                    </c:if>
                                     <label for="rf">
-										<div id="recom_follow" class="profile_btn">
-											<i class="fas fa-caret-down"></i>
-										</div>
-									</label>
+                                        <div id="recom_follow" class="profile_btn">
+                                            <i class="fas fa-caret-down"></i>
+                                        </div>
+                                    </label>
                                     <input type="checkbox" id="rf" style="display: none;">
-                                    <i class="fas fa-bars setting_icon"></i>
+                                    <i class="fas fa-bars setting_icon" id="memberReport" onclick="memberReport('${id_img_fwr.m_id}');"></i>
                                 </c:if>
                             </div>
                             <div id="profile_middle">
@@ -784,14 +848,14 @@
                         <div id="rec_title">
                             <div id="title1">추천계정</div>
                             <c:if test="${not empty recomFow }">
-                            <c:forEach var="vo" items="${recomFow }" varStatus="s">
-                            <div class="each_rec_con">
-                                <div class="each_rec_photo">${vo.m_img }</div>
-                                <div class="each_rec_id">${vo.r_mid }</div>
-                                <div class="each_rec_name">${vo.m_name }</div>
-                                <div class="each_rec_followbtn">팔로우</div>
-                            </div>
-                            </c:forEach>
+                                <c:forEach var="vo" items="${recomFow }" varStatus="s">
+                                    <div class="each_rec_con each_rec_con${vo.r_mid }">
+                                        <div class="each_rec_photo">${vo.m_img }</div>
+                                        <div class="each_rec_id">${vo.r_mid }</div>
+                                        <div class="each_rec_name">${vo.m_name }</div>
+                                        <div class="each_rec_followbtn" id="each_rec_followbtn${vo.r_mid }" onclick="followBtn('${vo.r_mid}');">팔로우</div>
+                                    </div>
+                                </c:forEach>
                             </c:if>
                         </div>
                     </div>
@@ -827,7 +891,12 @@
         </body>
         <script>
             var memId = $(".m_id").val();
+            var recCount = $(".each_rec_con").length;
             $(function() {
+                console.log(recCount);
+                if (recCount == 0) {
+                    $("#recom_follow").css("display", "none");
+                }
 
                 // flex 화면 맞추기
                 var postcount = $(".each_photo").length;
@@ -839,6 +908,132 @@
                     $("#photo_con").append('<div class="each_photo nocursor"></div>');
                 }
             });
+
+            // 멤버 신고
+            function memberReport(id) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/chkReportMember.do",
+                    method: "POST",
+                    data: {
+                        my_name: memId,
+                        m_id: id
+                    },
+                    success: function(data) {
+                        $("#report_modal").css("display", "block");
+                        $("#report_back").css("display", "block");
+                        console.log(data);
+                        if (data == 0) {
+                            $("#report_member").css("display", "block");
+                            $("#goreportmember").on('click', function() {
+                                $("#report_member").css("display", "none");
+                                $("#report_choose").css("display", "block");
+                                $(".send_report").on('click', function() {
+                                    var report_reason = $(this).next().val();
+                                    console.log(report_reason);
+                                    console.log(id);
+                                    console.log(memId);
+
+                                    $.ajax({
+                                        url: "${pageContext.request.contextPath}/insertReportMember.do",
+                                        method: "POST",
+                                        data: {
+                                            m_id: id,
+                                            my_name: memId,
+                                            rm_reason: report_reason
+                                        },
+                                        success: function(data) {
+                                            console.log("신고 완료");
+                                            $("#report_choose").css("display", "none");
+                                            $("#report_write").css("display", "none");
+                                            $("#pre_report_choose").css("display", "none");
+                                            $("#report_result").css("display", "block");
+                                            $(".send_report").off('click');
+                                            $(".toreport").off('click');
+
+                                        },
+                                        error: function(request, status, error) {
+                                            alert("code:" +
+                                                request.status +
+                                                "\n" +
+                                                "message:" +
+                                                request.responseText +
+                                                "\n" + "error:" +
+                                                error);
+                                        }
+                                    });
+
+                                });
+                                $("#etc").on('click', function() {
+                                    $("#report_choose").css("display", "none");
+                                    $("#report_write").css("display", "block");
+                                    $(".send_report_text").on('click', function() {
+                                        var report_reason = $("#etx_write_space").val();
+                                        console.log(report_reason);
+                                        console.log(memId);
+
+                                        $.ajax({
+                                            url: "${pageContext.request.contextPath}/insertReportMember.do",
+                                            method: "POST",
+                                            data: {
+                                                m_id: id,
+                                                my_name: memId,
+                                                rm_reason: report_reason
+                                            },
+                                            success: function(data) {
+                                                console.log("신고 완료");
+                                                $("#report_choose").css("display", "none");
+                                                $("#report_write").css("display", "none");
+                                                $("#report_result").css("display", "block");
+                                                $("#pre_report_choose").css("display", "none");
+                                                $("#etx_write_space").val('');
+                                                $(".send_report_text").off('click');
+                                                $(".toreport").off('click');
+                                            },
+                                            error: function(request, status, error) {
+                                                alert("code:" +
+                                                    request.status +
+                                                    "\n" +
+                                                    "message:" +
+                                                    request.responseText +
+                                                    "\n" + "error:" +
+                                                    error);
+                                            }
+                                        });
+                                    });
+                                });
+
+                            });
+                        } else {
+                            $("#report_already").css("display", "block");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            // 게시물 모달의 모달
+            function toModalMore(m_id) {
+                var b_id = $("#for_modal_con").val();
+                console.log(b_id);
+                $("#report_modal").css("display", "block");
+                $("#report_back").css("display", "block");
+                console.log(m_id);
+                console.log(memId);
+                if (m_id == memId) {
+                    $("#modal_more_con_me").css("display", "block");
+                } else {
+                    $("#modal_more_con_not_me").css("display", "block");
+
+                }
+            }
 
             // 스토리로 이동
             function goStory(m_id) {
@@ -897,6 +1092,7 @@
                         var b_content = data.showeachpost.b_content;
                         var b_img = data.showeachpost.b_img.split(",");
 
+                        $("#for_modal_con").val(b_id);
                         $("#for_fuc").val(b_id);
                         for (i = 0; i < b_img.length; i++) {
                             if (b_img[i] != "" && b_img[i] != " ") {
@@ -1013,13 +1209,14 @@
                                 console.log(i + "는 " + countr);
                                 $("#post_right_middle").append('<div class="each_reply_con">' +
                                     '<input type="hidden" class="chkCoLike" onclick="chkCoLike(\'' + b_id + '\');">' +
+                                    '<input type="hidden" class="countLike_trigger" onclick="countLike(\'' + b_id + '\');">' +
                                     '<div class="reply_com_con">' +
                                     '<div class="reply_profile_photo">' + m_img + '</div>' +
                                     '<div class="reply_right_com">' +
                                     '<div class="reply_con">' + id + '&nbsp;' + b_content + '</div>' +
                                     '<div class="reply_date">' +
                                     '<div class=" rebot">' + b_date + '</div>' +
-                                    '<div class="rebot">좋아요 ' + '<input type="button" class="lcount" value="">' + '개</div>' +
+                                    '<div class="rebot">좋아요 ' + '<input type="button" class="lcount" id="lcount' + b_id + '"value="">' + '개</div>' +
                                     '<div class="rebot moreCoW" onclick="writeMoreCo(\'' + b_id + '\');">답글 달기</div>' +
                                     '</div>' +
                                     '</div>' +
@@ -1040,7 +1237,7 @@
 
                             }
                             $(".chkCoLike").trigger('click');
-
+                            $(".countLike_trigger").trigger('click');
                         }
 
 
@@ -1172,13 +1369,14 @@
 
                             $(".re_con" + t_id).append('<div class="each_reply_con">' +
                                 '<input type="hidden" class="chkCoLike" onclick="chkCoLike(\'' + b_id + '\');">' +
+                                '<input type="hidden" class="countLike_trigger" onclick="countLike(\'' + b_id + '\');">' +
                                 '<div class="reply_com_con">' +
                                 '<div class="reply_profile_photo">' + m_img + '</div>' +
                                 '<div class="reply_right_com">' +
                                 '<div class="reply_con">' + id + '&nbsp;' + b_content + '</div>' +
                                 '<div class="reply_date">' +
                                 '<div class=" rebot">' + b_date + '</div>' +
-                                '<div class="rebot">좋아요 ' + '<input type="button" class="lcount" value="">' + '개</div>' +
+                                '<div class="rebot">좋아요 ' + '<input type="button" class="lcount lcount' + b_id + '" id="lcount' + b_id + '" value="">' + '개</div>' +
                                 '</div>' +
                                 '</div>' +
                                 '<i class="fas fa-bars fa-bars_reply_title"></i>' +
@@ -1189,6 +1387,7 @@
                         }
 
                         $(".chkCoLike").trigger('click');
+                        $(".countLike_trigger").trigger('click');
 
                     },
                     error: function(request, status, error) {
@@ -1324,9 +1523,11 @@
             // url 공유
             function shareurl() {
                 var b_id = $("#for_fuc").val();
-                $("#post_back").css("display", "none");
-                $("#post_modal").css("display", "none");
-                $("#post_con").css("display", "none");
+                // $("#post_back").css("display", "none");
+                // $("#post_modal").css("display", "none");
+                // $("#post_con").css("display", "none");
+                $("#modal_more_con_me").css("display", "none");
+                $("#modal_more_con_not_me").css("display", "none");
                 $("#report_modal").css("display", "block");
                 $("#report_back").css("display", "block");
                 $("#share_con").css("display", "block");
@@ -1338,6 +1539,130 @@
                     curl.setSelectionRange(0, 0);
                     $("#share_con").css("display", "none");
                     $("#share_con_result").css("display", "block");
+                });
+            }
+
+            // 게시글 좋아요 카운트 trigger - countLike_trigger
+            function countLike(b_id) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/countLike.do",
+                    method: "POST",
+                    data: {
+                        t_id: b_id
+                    },
+                    success: function(data) {
+                        var result = data;
+                        console.log("좋아요 수는 : " + data);
+                        document.getElementById("lcount" + b_id).value = data;
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            // 팔로우
+            function followBtn(id) {
+                console.log(recCount);
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/insertFollow.do",
+                    method: "POST",
+                    data: {
+                        m_id: memId,
+                        r_mid: id
+                    },
+                    success: function(data) {
+                        console.log("memId : " +
+                            memId +
+                            " id : " +
+                            id);
+                        var post_id = $(".post_id").val();
+                        if (post_id == id) {
+                            var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
+                            $(location).attr('href', url);
+                        } else {
+                            recCount--;
+                            console.log("follow Result : " + recCount);
+                            if (recCount == 0) {
+                                $("#recom_follow").css("display", "none");
+                                $("#hidden_follow_rec").css("display", "none");
+                            }
+                            $(".each_rec_con" + id).css("display", "none");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            function followinmodal(id) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/insertFollow.do",
+                    method: "POST",
+                    data: {
+                        m_id: memId,
+                        r_mid: id
+                    },
+                    success: function(data) {
+                        $("#followbtn").css("display", "none");
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            // 언팔로우
+            function pre_unfollow(id) {
+                $("#post_back").css("display", "none");
+                $("#post_modal").css("display", "none");
+                $("#post_con").css("display", "none");
+                $("#report_modal").css("display", "block");
+                $("#report_back").css("display", "block");
+                $("#askunfollow").css("display", "block");
+                $("#yes_unfollow").on('click', function() {
+
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/unfollow.do",
+                        method: "POST",
+                        data: {
+                            m_id: memId,
+                            id: id
+                        },
+                        success: function(data) {
+                            console.log("언팔 완료");
+                            $("#askunfollow").css("display", "none");
+                            $("#unfollowchk").css("display", "block");
+                        },
+                        error: function(request, status, error) {
+                            alert("code:" +
+                                request.status +
+                                "\n" +
+                                "message:" +
+                                request.responseText +
+                                "\n" + "error:" +
+                                error);
+                        }
+                    });
                 });
             }
 
@@ -1353,11 +1678,18 @@
                 //$("#share_con").css("display", "none");
                 //$("#share_con_result").css("display", "none");
                 //$(".each_photo").off('click');
+                $("#unfollowchk").css("display", "none");
                 var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
                 $(location).attr('href', url);
 
             });
 
+           /*  $(".notcancelAll").on('click', function() {
+            	$("#report_modal").css("display", "none");
+                $("#report_back").css("display", "none");
+                $("#share_con_result").css("display", "none");
+            });
+ */
             // 계정 추천
             $("#rf").change(function() {
                 if ($("#rf").is(":checked")) {

@@ -49,12 +49,12 @@
                     width: 500px;
                     height: 65px;
                     background-color: crimson;
-                    overflow:auto;
+                    overflow: auto;
                 }
                 
                 .fo_con {
                     float: left;
-                    margin-left:16px;
+                    margin-left: 16px;
                     margin-top: 11px;
                 }
                 
@@ -98,8 +98,9 @@
                             <c:forEach var="vo" items="${chkfollow }" varStatus="s">
                                 <div class="fo_con">
                                     <div class="fo_photo fo_photo${vo.id }">${vo.m_img }</div>
-                                    <%-- <div class="fo_id">${vo.id }</div> --%>
-                                    <input type="hidden" class="fo_act fo_act${vo.id }" onclick="showfollowchk('${vo.id }', '${vo.m_activity }');" value="${vo.m_activity }">
+                                    <%-- <div class="fo_id">${vo.id }
+                                </div> --%>
+                                        <input type="hidden" class="fo_act fo_act${vo.id }" onclick="showfollowchk('${vo.id }', '${vo.m_activity }');" value="${vo.m_activity }">
                                 </div>
                             </c:forEach>
                         </c:if>
@@ -110,7 +111,7 @@
             <div id="forheader"></div>
         </body>
         <script type="text/javascript">
-        var memId = $(".m_id").val();
+            var memId = $(".m_id").val();
             $(function() {
                 $("#search").autocomplete({
                     source: function(request, response) {
@@ -162,9 +163,9 @@
                         $("#alert_con").css("display", "none");
                     }
                 });
-                
+
                 $(".fo_act").trigger('click');
-                
+
             });
             $("#fix_logo").on('click', function() {
                 var memId = $(".m_id").val();
@@ -183,7 +184,7 @@
             });
             $("#fix_profile").on('click', function() {
                 var memId = $(".m_id").val();
-                var url = "${pageContext.request.contextPath}/gnMain?m_id="+memId;
+                var url = "${pageContext.request.contextPath}/gnMain?m_id=" + memId;
                 $(location).attr('href', url);
             });
 
@@ -192,20 +193,46 @@
                     var at = "@";
                     var hashtag = $("#search").val();
                     if (hashtag.startsWith(at)) {
+                        hashtag = hashtag.replace(/[@]/g, '');
 
+                        $.ajax({
+                            url: "${pageContext.request.contextPath}/showMemberType.do",
+                            type: "post",
+                            data: {
+                                m_id: hashtag
+                            },
+                            success: function(data) {
+                                console.log(data);
+                                if (data == 'G') {
+                                    var url = "${pageContext.request.contextPath}/gnMain?m_id=" + hashtag;
+                                    $(location).attr('href', url);
+                                } else if (data == 'B'){
+                                	
+                                }
+                            },
+                            error: function(request, status, error) {
+                                alert("code:" +
+                                    request.status +
+                                    "\n" +
+                                    "message:" +
+                                    request.responseText +
+                                    "\n" + "error:" +
+                                    error);
+                            }
+                        });
                     } else {
-                        hashtag = hashtag.replace(/[#]/g, '')
+                        hashtag = hashtag.replace(/[#]/g, '');
                         var url = "${pageContext.request.contextPath}/explore?hashtag=" + hashtag;
                         $(location).attr('href', url);
 
                     }
                 }
             });
-            
-            function showfollowchk(id, m_activity){
-            	if(m_activity==1){
-            		$(".fo_photo" + id).css("background-color", "blue");
-            	}
+
+            function showfollowchk(id, m_activity) {
+                if (m_activity == 1) {
+                    $(".fo_photo" + id).css("background-color", "blue");
+                }
             }
         </script>
 
