@@ -1,6 +1,8 @@
 package com.project.tain.member.model.dao;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +11,7 @@ import com.project.tain.member.model.vo.MemberRegVO;
 
 @Repository
 public class MemberRegDao {
+	private static Logger logger = LoggerFactory.getLogger(MemberRegDao.class);
 	@Autowired
 	SqlSession sqlSession;
 	private static final String NameSpace = "MemberRegMapper";
@@ -31,9 +34,27 @@ public class MemberRegDao {
 	}
 
 	// 이메일 인증
-	@Transactional
-	public int approval_member(MemberRegVO vo) throws Exception {
-		return sqlSession.update(NameSpace + ".approval_member", vo);
+	public int approval_member(MemberRegVO vo) {
+		int result = 0;
+		logger.info("aaa");
+		try {
+			System.out.println("dao getApproval_key: "+vo.getApproval_key());
+			System.out.println("dao getM_email: "+vo.getM_email());
+			vo.setApproval_status("true");
+			logger.info("bbb");
+			result =  sqlSession.update(NameSpace + ".approval_member", vo);
+			logger.info("ccc : " + result);
+		}catch (Exception e) {
+			logger.info("ddd");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			logger.info("eee");
+			result = 0;
+		}finally {
+			logger.info("fff");
+		}
+		logger.info("ggg");
+		return result;
 	}
 
 	// 로그인 검사

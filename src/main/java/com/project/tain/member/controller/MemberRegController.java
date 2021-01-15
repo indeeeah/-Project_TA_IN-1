@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.tain.common.model.service.EmailService;
@@ -26,27 +27,35 @@ public class MemberRegController {
 	private MemberRegServicelmpl service;
 	@Autowired
 	private EmailService emailService;
-//
-//	// 로그인 페이지
-//	@RequestMapping("/loginPage")
-//	public String loginPage() {
-//		return "/member/login";
-//	}
-//
-//	// 로그인
-//	@RequestMapping(value="/login.do", method = RequestMethod.POST)
-//	public ModelAndView login(@ModelAttribute MemberRegVO vo, 
-//			HttpSession session, ModelAndView mav) throws Exception  {
-//		boolean result = service.login(vo, session);  // 로그인 db 확인
-////		ModelAndView mav = new ModelAndView();
-//		if (result == true) {
-//			mav.setViewName("redirect:/timeLine"); // 로그인후 메인페이지 경로
-//		} else {
-//			mav.setViewName("/member/login");
-//
-//		}
-//		return mav;
-//	}
+
+	// 회원가입 페이지
+	@RequestMapping("/joinPage")
+	public String JoinPage() throws Exception {
+		return "/member/join"; // jsp
+	}
+
+	// 회원 인증
+	@RequestMapping(value = "/approval_member.do", method = RequestMethod.POST)
+	public ModelAndView approval_member(@ModelAttribute MemberRegVO vo, ModelAndView mv)  {
+		int result = 0;
+		try {
+			result = service.approval_member(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(result == 1) { // 정상적인 경우
+				mv.setViewName("redirect:/member/loginPage");
+			} else if(result == 0) { // 비정상적인 경우
+				mv.addObject("msg", "메일 인증에 실패했습니다");
+				mv.setViewName("redirect:/errorPage");
+			} else {
+				mv.addObject("msg", "인증에 실패했습니다");
+				mv.setViewName("redirect:/errorPage");
+			}
+		}
+		return mv;
+	}
+
 	// 로그인 폼 이동
 	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
 	public String loginPage() throws Exception {
@@ -57,15 +66,15 @@ public class MemberRegController {
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login(@ModelAttribute MemberRegVO vo, HttpSession session, HttpServletResponse response)
 			throws Exception {
-		vo = service.login(vo, response);
-		session.setAttribute("vo", vo);
-		return "index";
-	}
-
-	// 회원가입 페이지
-	@RequestMapping("/joinPage")
-	public String JoinPage() throws Exception {
-		return "/member/join"; // jsp
+		try {
+			vo = service.login(vo, response);
+			session.setAttribute("vo", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			// TODO: handle finally clause
+		}
+		return "redirect:/timeLine/";
 	}
 
 //	// 회원가입
@@ -88,7 +97,7 @@ public class MemberRegController {
 //		rttr.addFlashAttribute("result", service.join(vo, response));
 
 			vo.setApproval_key(create_key());
-			vo.setApproval_status("FAIL");
+			vo.setApproval_status("false");
 			result = service.join(vo);
 			if (result == -1) {
 				// 오류 상황 처리
@@ -135,11 +144,7 @@ public class MemberRegController {
 		return String.valueOf(result);
 	}
 
-	// 회원 인증
-	@RequestMapping(value = "/approval_member.do", method = RequestMethod.POST)
-	public void approval_member(@ModelAttribute MemberRegVO vo, HttpServletResponse response) throws Exception {
-		service.approval_member(vo, response);
-	}
+
 
 	// 아이디 찾기 폼
 	@RequestMapping("/memberFindId.do")
@@ -172,7 +177,7 @@ public class MemberRegController {
 		String key = "";
 		Random rd = new Random();
 
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 10; i++) {
 			key += rd.nextInt(10);
 		}
 		return key;
@@ -184,7 +189,7 @@ public class MemberRegController {
 		String fromEmail = "zx6160@naver.com";
 		String subject = "";
 		String msg = "";
-
+		System.out.println("vo.getApproval_key(): "+ vo.getApproval_key() );
 		if (div.equals("join")) {
 			subject = "Spring Homepage 회원가입 인증 메일입니다.";
 			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
@@ -192,8 +197,8 @@ public class MemberRegController {
 			msg += vo.getM_id() + "님 회원가입을 환영합니다.</h3>";
 			msg += "<div style='font-size: 130%'>";
 			msg += "하단의 인증 버튼 클릭 시 정상적으로 회원가입이 완료됩니다.</div><br/>";
-			msg += "<form method='post' action='http://localhost:8081/homepage/member/approval_member.do'>";
-			msg += "<input type='hidden' name='email' value='" + vo.getM_email() + "'>";
+			msg += "<form method='post' action='http://localhost:8090/tain/member/approval_member.do'>";
+			msg += "<input type='hidden' name='m_email' value='" + vo.getM_email() + "'>";
 			msg += "<input type='hidden' name='approval_key' value='" + vo.getApproval_key() + "'>";
 			msg += "<input type='submit' value='인증'></form><br/></div>";
 		} else if (div.equals("find_pw")) {

@@ -14,7 +14,7 @@ public interface MemberRegService {
 
 //	String create_key() throws Exception;
 
-	void approval_member(MemberRegVO vo, HttpServletResponse response) throws Exception;
+	int approval_member(MemberRegVO vo);
 
 	MemberRegVO login(MemberRegVO vo, HttpServletResponse response) throws Exception;
 
