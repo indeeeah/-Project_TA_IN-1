@@ -76,4 +76,9 @@ public class GnBoardServiceImpl implements GnBoardService {
 		return gDao.insertReportMember(gb);
 	}
 
+	@Override
+	public String userType(String m_id) {
+		return gDao.userType(m_id);
+	}
+
 }

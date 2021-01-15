@@ -29,4 +29,5 @@ public interface GnBoardService {
 
 	int insertReportMember(GnBoard gb);
 
+	String userType(String m_id);
 }

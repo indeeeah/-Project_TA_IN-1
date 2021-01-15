@@ -565,6 +565,11 @@
                     right: 0px;
                 }
                 
+                .notcancelAll {
+                    position: absolute;
+                    right: 0px;
+                }
+                
                 #report_back {
                     position: fixed;
                     width: 100%;
@@ -595,7 +600,12 @@
                 #share_con_result,
                 #report_member,
                 #modal_more_con_not_me,
-                #modal_more_con_me {
+                #modal_more_con_me,
+                #modal_delete,
+                #modal_modifypost,
+                #modify_con_result,
+                #modal_more_con_not_me_not_follow,
+                #report_write_mem {
                     position: absolute;
                     top: 50%;
                     left: 50%;
@@ -675,24 +685,44 @@
                         <textarea id="url" readonly></textarea>
                     </div>
                     <div id="share_chk" class="modal_in">복사하기</div>
-                    <div id="cancel_9" class="modal_in cancel notcancelAll">취소</div>
+                    <div class="modal_in notcancelAll">취소</div>
                 </div>
                 <div id="share_con_result" style="display: none;">
                     <div class="modal_in modal_title modal_nocursor">게시물의 주소가 복사됐습니다.</div>
-                    <div id="cancel_10" class="modal_in cancel notcancelAll">화면으로 돌아가기</div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
+                </div>
+                <div id="modal_modifypost" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물 수정하기</div>
+                    <div id="modify_con" class="modal_in">
+                        <textarea id="modify_text"></textarea>
+                    </div>
+                    <div id="savemodify" class="modal_in">수정하기</div>
+                    <div class="modal_in notcancelAll">취소</div>
+                </div>
+                <div id="modify_con_result" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물이 수정되었습니다.</div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
                 </div>
                 <div id="askunfollow" style="display: none;">
                     <div class="modal_in modal_nocursor">팔로우를 취소하시겠습니까?</div>
                     <div id="yes_unfollow" class="modal_in">팔로우 취소하기</div>
-                    <div id="cancel_7" class="modal_in cancel">화면으로 돌아가기</div>
+                    <div class="modal_in cancel">화면으로 돌아가기</div>
                 </div>
                 <div id="unfollowchk" style="display: none;">
                     <div class="modal_in modal_nocursor">팔로우가 취소되었습니다.</div>
-                    <div id="cancel_6" class="modal_in cancel" onclick="location.href='timeLineList.do'">화면으로 돌아가기</div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
                 </div>
                 <div id="report_member" style="display:none;">
                     <div id="goreportmember" class="modal_in send_report">이 사용자 신고하기</div>
-                    <div class="cancel" class="modal_in cancel">돌아가기</div>
+                    <div class="modal_in cancel">돌아가기</div>
+                </div>
+                <div id="modal_more_con_not_me_not_follow" style="display:none;">
+                    <div class="goreportmember_modal modal_in">게시물 신고</div>
+                    <div class="follow_modal modal_in">팔로우</div>
+                    <div class="gothispost_modal modal_in">게시물로 이동</div>
+                    <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
+                    <div class="savepost_modal modal_in">게시물 저장하기</div>
+                    <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="modal_more_con_not_me" style="display:none;">
                     <div class="goreportmember_modal modal_in">게시물 신고</div>
@@ -700,15 +730,20 @@
                     <div class="gothispost_modal modal_in">게시물로 이동</div>
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
                     <div class="savepost_modal modal_in">게시물 저장하기</div>
-                    <div class="cancel modal_in cancel notcancelAll">돌아가기</div>
+                    <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="modal_more_con_me" style="display:none;">
-                    <div class="goreportmember_modal modal_in">게시물 수정</div>
-                    <div class="unfollow_modal modal_in">게시물 삭제</div>
+                    <div class="modifypost_modal modal_in" onclick="modifypost('${id_img_fwr.m_id }');">게시물 수정</div>
+                    <div class="deletepost_modal modal_in" onclick="deletepost();">게시물 삭제</div>
                     <div class="gothispost_modal modal_in">게시물로 이동</div>
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
                     <div class="savepost_modal modal_in">게시물 저장하기</div>
-                    <div class="cancel modal_in cancel notcancelAll">돌아가기</div>
+                    <div class="modal_in notcancelAll">돌아가기</div>
+                </div>
+                <div id="modal_delete" style="display:none;">
+                    <div id="delete" class="modal_in modal_title modal_nocursor">이 게시물을 삭제하시겠습니까?</div>
+                    <div class="delete_modal modal_in">삭제하기</div>
+                    <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="report_choose" style="display: none;">
                     <div id="report" class="modal_in modal_title modal_nocursor">신고하기</div>
@@ -716,8 +751,16 @@
                     <div id="pornography" class="modal_in send_report">음란물</div><input type="hidden" value="음란물">
                     <div id="falsecon" class="modal_in send_report">허위내용</div><input type="hidden" value="허위내용">
                     <div id="embezzlement" class="modal_in send_report">도용된 자료 포함</div><input type="hidden" value="도용된 자료 포함">
-                    <div id="etc" class="modal_in">기타</div>
-                    <div class="cancel" class="modal_in cancel">취소</div>
+                    <div id="etc" class="modal_in etc_mem">기타</div>
+                    <div class="modal_in notcancelAll">취소</div>
+                </div>
+                <div id="report_write_mem" style="display: none;">
+                    <div id="etc_con_mem" class="modal_in modal_title modal_nocursor">이 회원을 신고한는 이유</div>
+                    <div id="etc_write_con_mem" class="modal_in">
+                        <textarea id="etx_write_space_mem"></textarea>
+                    </div>
+                    <div id="send_r_mem" class="modal_in send_report_text">신고하기</div>
+                    <div class="modal_in notcancelAll">취소</div>
                 </div>
                 <div id="report_write" style="display: none;">
                     <div id="etc_con" class="modal_in modal_title modal_nocursor">이 게시물을 신고한는 이유</div>
@@ -725,21 +768,25 @@
                         <textarea id="etx_write_space"></textarea>
                     </div>
                     <div id="send_r" class="modal_in send_report_text">신고하기</div>
-                    <div id="cancel_2" class="modal_in cancel">취소</div>
+                    <div class="modal_in notcancelAll">취소</div>
                 </div>
                 <div id="report_result" style="display: none;">
                     <div class="modal_in  modal_title modal_nocursor">신고 완료</div>
-                    <div class="modal_in modal_nocursor modal_result">${my_name }님의 신고가 정상적으로 접수되었습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.</div>
-                    <div id="cancel_3" class="modal_in cancel">화면으로 돌아가기</div>
+                    <div class="modal_in modal_nocursor modal_result">${my_name }님의 신고가 정상적으로 접수되었습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.
+                    </div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
                 </div>
                 <div id="report_already" style="display: none;">
                     <div class="modal_in modal_nocursor modal_result">이미 신고하셨습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.</div>
-                    <div id="cancel_4" class="modal_in cancel">화면으로 돌아가기</div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
                 </div>
             </div>
             <div id="post_back"></div>
             <div id="post_modal">
                 <input type="hidden" id="for_fuc">
+                <input type="hidden" id="for_modal_con">
+                <input type="hidden" id="for_modal_content">
+                <input type="button" id="for_modal_fchk" value="${followchk.follow}">
                 <div id="post_con" style="display: none;">
                     <div id="for_stay_left">
                         <button type="button" class="slide_btn_prev" class="buttons">Prev</button>
@@ -750,23 +797,21 @@
                     </div>
                     <div id="post_right">
                         <div id="post_right_top">
-                            <div id="post_profile_photo">${id_img_fwr.m_img }</div>
-                            <div id="post_profile_id">${id_img_fwr.m_id }</div>
+                            <div id="post_profile_photo" style="cursor: pointer;" onclick="goEachAcount('${id_img_fwr.m_id }');">${id_img_fwr.m_img }</div>
+                            <div id="post_profile_id" style="cursor: pointer;" onclick="goEachAcount('${id_img_fwr.m_id }');">${id_img_fwr.m_id }</div>
                             <c:if test="${id_img_fwr.m_id eq my_name}">
-                                <input type="hidden" id="for_modal_con">
                                 <i class="fas fa-bars fa-bars_post" onclick="toModalMore('${id_img_fwr.m_id }');" style="cursor: pointer;"></i>
                             </c:if>
                             <c:if test="${id_img_fwr.m_id ne my_name}">
                                 <c:if test="${followchk.follow eq 0}">
                                     <div id="followbtn" onclick="followinmodal('${id_img_fwr.m_id }');">팔로잉</div>
                                 </c:if>
-                                <input type="hidden" id="for_modal_con">
                                 <i class="fas fa-bars fa-bars_post" onclick="toModalMore('${id_img_fwr.m_id }');" style="cursor: pointer;"></i>
                             </c:if>
                         </div>
                         <div id="post_right_middle">
                             <div class="each_reply_con">
-                                <div class="reply_profile_photo">${id_img_fwr.m_img }</div>
+                                <div class="reply_profile_photo" style="cursor: pointer;" onclick="goEachAcount('${id_img_fwr.m_id }');">${id_img_fwr.m_img }</div>
                                 <div class="reply_right re_main_con" id="re_main_con">
                                 </div>
                                 <div class="reply_right" id="hashtag_con">
@@ -808,12 +853,12 @@
                                 <c:if test="${id_img_fwr.m_id ne my_name}">
                                     <div id="send_message" class="profile_btn">메시지 보내기</div>
                                     <c:if test="${followchk.follow ne 0}">
-                                        <div id="followchk" class="profile_btn" onclick="pre_unfollow('${id_img_fwr.m_id}');">
+                                        <div id="followchk" class="profile_btn profile_btn_ok" onclick="main_pre_unfollow('${id_img_fwr.m_id}');">
                                             <i class="fas fa-user-check" id="pre_unfollow"></i>
                                         </div>
                                     </c:if>
                                     <c:if test="${followchk.follow eq 0}">
-                                        <div id="followchk" class="profile_btn" onclick="followBtn('${id_img_fwr.m_id}');">
+                                        <div id="followchk" class="profile_btn profile_btn_no" onclick="main_followBtn('${id_img_fwr.m_id}');">
                                             팔로우
                                         </div>
                                     </c:if>
@@ -827,7 +872,7 @@
                                 </c:if>
                             </div>
                             <div id="profile_middle">
-                                <div class="small_con">게시물 ${gboard.post }+${bboard.post }</div>
+                                <div class="small_con">게시물 ${gboard.post }</div>
                                 <div class="small_con">팔로워 ${id_img_fwr.follower }</div>
                                 <div class="small_con">팔로우 ${fw.follow }</div>
                             </div>
@@ -850,9 +895,9 @@
                             <c:if test="${not empty recomFow }">
                                 <c:forEach var="vo" items="${recomFow }" varStatus="s">
                                     <div class="each_rec_con each_rec_con${vo.r_mid }">
-                                        <div class="each_rec_photo">${vo.m_img }</div>
-                                        <div class="each_rec_id">${vo.r_mid }</div>
-                                        <div class="each_rec_name">${vo.m_name }</div>
+                                        <div class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_img }</div>
+                                        <div class="each_rec_id" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.r_mid }</div>
+                                        <div class="each_rec_name" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_name }</div>
                                         <div class="each_rec_followbtn" id="each_rec_followbtn${vo.r_mid }" onclick="followBtn('${vo.r_mid}');">팔로우</div>
                                     </div>
                                 </c:forEach>
@@ -892,6 +937,7 @@
         <script>
             var memId = $(".m_id").val();
             var recCount = $(".each_rec_con").length;
+            var fchk = $("#for_modal_fchk").val();
             $(function() {
                 console.log(recCount);
                 if (recCount == 0) {
@@ -909,6 +955,20 @@
                 }
             });
 
+            //해당 계정 페이지 이동
+            function goEachAcount(id) {
+                var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
+                $(location).attr('href', url);
+            }
+
+            // 게시물 페이지 이동
+            $(".gothispost_modal").on('click', function() {
+                var postid = $(".post_id").val();
+                var b_id = $("#for_modal_con").val();
+                var url = "${pageContext.request.contextPath}/gnEachPage?b_id=" + b_id;
+                $(location).attr('href', url);
+            });
+
             // 멤버 신고
             function memberReport(id) {
                 $.ajax({
@@ -921,7 +981,6 @@
                     success: function(data) {
                         $("#report_modal").css("display", "block");
                         $("#report_back").css("display", "block");
-                        console.log(data);
                         if (data == 0) {
                             $("#report_member").css("display", "block");
                             $("#goreportmember").on('click', function() {
@@ -929,10 +988,6 @@
                                 $("#report_choose").css("display", "block");
                                 $(".send_report").on('click', function() {
                                     var report_reason = $(this).next().val();
-                                    console.log(report_reason);
-                                    console.log(id);
-                                    console.log(memId);
-
                                     $.ajax({
                                         url: "${pageContext.request.contextPath}/insertReportMember.do",
                                         method: "POST",
@@ -963,14 +1018,11 @@
                                     });
 
                                 });
-                                $("#etc").on('click', function() {
+                                $(".etc_mem").on('click', function() {
                                     $("#report_choose").css("display", "none");
-                                    $("#report_write").css("display", "block");
+                                    $("#report_write_mem").css("display", "block");
                                     $(".send_report_text").on('click', function() {
-                                        var report_reason = $("#etx_write_space").val();
-                                        console.log(report_reason);
-                                        console.log(memId);
-
+                                        var report_reason = $("#etx_write_space_mem").val();
                                         $.ajax({
                                             url: "${pageContext.request.contextPath}/insertReportMember.do",
                                             method: "POST",
@@ -982,10 +1034,10 @@
                                             success: function(data) {
                                                 console.log("신고 완료");
                                                 $("#report_choose").css("display", "none");
-                                                $("#report_write").css("display", "none");
+                                                $("#report_write_mem").css("display", "none");
                                                 $("#report_result").css("display", "block");
                                                 $("#pre_report_choose").css("display", "none");
-                                                $("#etx_write_space").val('');
+                                                $("#etx_write_space_mem").val('');
                                                 $(".send_report_text").off('click');
                                                 $(".toreport").off('click');
                                             },
@@ -1022,17 +1074,200 @@
             // 게시물 모달의 모달
             function toModalMore(m_id) {
                 var b_id = $("#for_modal_con").val();
-                console.log(b_id);
                 $("#report_modal").css("display", "block");
                 $("#report_back").css("display", "block");
-                console.log(m_id);
-                console.log(memId);
+                console.log(fchk);
                 if (m_id == memId) {
                     $("#modal_more_con_me").css("display", "block");
-                } else {
-                    $("#modal_more_con_not_me").css("display", "block");
 
+                    // 게시글 삭제
+                    $(".deletepost_modal").on('click', function() {
+                        $("#report_modal").css("display", "block");
+                        $("#report_back").css("display", "block");
+                        $("#modal_more_con_me").css("display", "none");
+                        $("#modal_delete").css("display", "block");
+                        $(".delete_modal").on('click', function() {});
+                    });
+
+                    // 게시글 수정
+                    $(".modifypost_modal").on('click', function() {
+                        var b_content = $("#for_modal_content").val();
+                        $("#modify_text").val(b_content);
+                        $("#modal_more_con_me").css("display", "none");
+                        $("#modal_modifypost").css("display", "block");
+                        $("#savemodify").on('click', function() {
+                            var mo_content = $("#modify_text").val();
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/updateComment.do",
+                                method: "POST",
+                                data: {
+                                    t_comment: mo_content,
+                                    t_id: b_id
+                                },
+                                success: function(data) {
+                                    console.log(" mo_content : " +
+                                        mo_content +
+                                        " b_id : " +
+                                        b_id);
+                                    $("#modal_modifypost").css("display", "none");
+                                    $("#modify_con_result").css("display", "block");
+                                    $('#savemodify').off('click');
+                                    document.getElementById("re_main_con").innerHTML = m_id + "&nbsp;" + mo_content;
+                                },
+                                error: function(request, status, error) {
+                                    alert("code:" +
+                                        request.status +
+                                        "\n" +
+                                        "message:" +
+                                        request.responseText +
+                                        "\n" + "error:" +
+                                        error);
+                                }
+                            });
+                        });
+                    });
+                } else {
+                    if (fchk == 0) {
+                        $("#modal_more_con_not_me_not_follow").css("display", "block");
+
+                        // 모달 팔로우
+                        $(".follow_modal").on('click', function() {
+                            followinmodal(m_id);
+                        });
+                    } else {
+                        $("#modal_more_con_not_me").css("display", "block");
+
+                        // 모달 언팔로우
+                        $(".unfollow_modal").on('click', function() {
+                            pre_unfollow(m_id);
+                        });
+                    }
+
+                    // 모달 신고
+                    $(".goreportmember_modal").on('click', function() {
+                        var b_id = $("#for_modal_con").val();
+                        reportpost(b_id);
+                    });
                 }
+
+                // 게시글 신고
+                function reportpost(b_id) {
+                    $("#modal_more_con_not_me_not_follow").css("display", "none");
+                    $("#modal_more_con_not_me").css("display", "none");
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/reportchk.do",
+                        method: "POST",
+                        data: {
+                            m_id: memId,
+                            b_id: b_id
+                        },
+                        success: function(data) {
+                            if (data == 0) {
+                                $("#report_choose").css("display", "block");
+                                $(".send_report").on('click', function() {
+                                    var report_reason = $(this).next().val();
+                                    $.ajax({
+                                        url: "${pageContext.request.contextPath}/insertReport.do",
+                                        method: "POST",
+                                        data: {
+                                            b_id: b_id,
+                                            m_id: memId,
+                                            r_reason: report_reason
+                                        },
+                                        success: function(data) {
+                                            console.log("신고 완료");
+                                            $("#report_choose").css("display", "none");
+                                            $("#report_write").css("display", "none");
+                                            $("#pre_report_choose").css("display", "none");
+                                            $("#report_result").css("display", "block");
+                                            $(".send_report").off('click');
+                                            $(".toreport").off('click');
+
+                                        },
+                                        error: function(request, status, error) {
+                                            alert("code:" +
+                                                request.status +
+                                                "\n" +
+                                                "message:" +
+                                                request.responseText +
+                                                "\n" + "error:" +
+                                                error);
+                                        }
+                                    });
+
+                                });
+                                $("#etc").on('click', function() {
+                                    $("#report_choose").css("display", "none");
+                                    $("#report_write").css("display", "block");
+                                    $(".send_report_text").on('click', function() {
+                                        var report_reason = $("#etx_write_space").val();
+                                        $.ajax({
+                                            url: "${pageContext.request.contextPath}/insertReport.do",
+                                            method: "POST",
+                                            data: {
+                                                b_id: b_id,
+                                                m_id: memId,
+                                                r_reason: report_reason
+                                            },
+                                            success: function(data) {
+                                                console.log("신고 완료");
+                                                $("#report_choose").css("display", "none");
+                                                $("#report_write").css("display", "none");
+                                                $("#report_result").css("display", "block");
+                                                $("#pre_report_choose").css("display", "none");
+                                                $("#etx_write_space").val('');
+                                                $(".send_report_text").off('click');
+                                                $(".toreport").off('click');
+                                            },
+                                            error: function(request, status, error) {
+                                                alert("code:" +
+                                                    request.status +
+                                                    "\n" +
+                                                    "message:" +
+                                                    request.responseText +
+                                                    "\n" + "error:" +
+                                                    error);
+                                            }
+                                        });
+                                    });
+                                });
+
+                            } else {
+                                $("#report_already").css("display", "block");
+                            }
+                        },
+                        error: function(request, status, error) {
+                            alert("code:" +
+                                request.status +
+                                "\n" +
+                                "message:" +
+                                request.responseText +
+                                "\n" + "error:" +
+                                error);
+                        }
+                    });
+                }
+
+                // url 공유
+                $(".sharepost_modal").on('click', function() {
+                    var b_id = $("#for_fuc").val();
+                    var postid = $(".post_id").val();
+                    $("#modal_more_con_me").css("display", "none");
+                    $("#modal_more_con_not_me").css("display", "none");
+                    $("#report_modal").css("display", "block");
+                    $("#report_back").css("display", "block");
+                    $("#share_con").css("display", "block");
+                    var url = "http://localhost:8090/tain/gnEachPage?b_id=" + b_id;
+                    $("#url").val(url);
+                    $("#share_chk").on('click', function() {
+                        var curl = document.getElementById("url");
+                        curl.select();
+                        document.execCommand('copy');
+                        curl.setSelectionRange(0, 0);
+                        $("#share_con").css("display", "none");
+                        $("#share_con_result").css("display", "block");
+                    });
+                });
             }
 
             // 스토리로 이동
@@ -1059,7 +1294,6 @@
                     },
                     dataType: "json",
                     success: function(hLike) {
-                        console.log("hlike" + hLike);
                         if (hLike >= 1) {
                             $(".likechk").css("display", "none");
                             $(".unlikechk").css("display", "block");
@@ -1093,6 +1327,7 @@
                         var b_img = data.showeachpost.b_img.split(",");
 
                         $("#for_modal_con").val(b_id);
+                        $("#for_modal_content").val(b_content);
                         $("#for_fuc").val(b_id);
                         for (i = 0; i < b_img.length; i++) {
                             if (b_img[i] != "" && b_img[i] != " ") {
@@ -1103,9 +1338,9 @@
                         }
                         if (b_content == null) {
                             b_content = "";
-                            document.getElementById("re_main_con").innerHTML = m_id + "&nbsp;" + b_content;
+                            document.getElementById("re_main_con").innerHTML = '<div style="cursor: pointer;" onclick="goEachAcount(\'' + m_id + '\');">' + m_id + "</div>&nbsp;" + b_content;
                         } else {
-                            document.getElementById("re_main_con").innerHTML = m_id + "&nbsp;" + b_content;
+                            document.getElementById("re_main_con").innerHTML = '<div style="cursor: pointer;" onclick="goEachAcount(\'' + m_id + '\');">' + m_id + "</div>&nbsp;" + b_content;
                         }
                         document.getElementById("post_like").innerHTML = "<input type='button' id='lCount' value='" + likecount + "'>" + "명이 좋아합니다";
                         document.getElementById("post_date").innerHTML = b_date;
@@ -1195,7 +1430,6 @@
                     dataType: "json",
                     success: function(hComment) {
                         var count = hComment;
-                        console.log(count.hComment.length);
                         if (count.hComment.length == undefined) {} else {
                             for (var i = 0; i < count.hComment.length; i++) {
                                 var id = count.hComment[i].m_id;
@@ -1205,15 +1439,13 @@
                                 var countr = count.hComment[i].count;
                                 var b_date = count.hComment[i].b_date;
                                 var m_img = count.hComment[i].m_img;
-                                console.log(i + "는" + b_id);
-                                console.log(i + "는 " + countr);
                                 $("#post_right_middle").append('<div class="each_reply_con">' +
                                     '<input type="hidden" class="chkCoLike" onclick="chkCoLike(\'' + b_id + '\');">' +
                                     '<input type="hidden" class="countLike_trigger" onclick="countLike(\'' + b_id + '\');">' +
                                     '<div class="reply_com_con">' +
                                     '<div class="reply_profile_photo">' + m_img + '</div>' +
                                     '<div class="reply_right_com">' +
-                                    '<div class="reply_con">' + id + '&nbsp;' + b_content + '</div>' +
+                                    '<div class="reply_con">' + '<div style="cursor: pointer;" onclick="goEachAcount(\'' + id + '\');">' + id + "</div>&nbsp;" + b_content + '</div>' +
                                     '<div class="reply_date">' +
                                     '<div class=" rebot">' + b_date + '</div>' +
                                     '<div class="rebot">좋아요 ' + '<input type="button" class="lcount" id="lcount' + b_id + '"value="">' + '개</div>' +
@@ -1265,7 +1497,6 @@
                     },
                     dataType: "json",
                     success: function(hLike) {
-                        console.log("hlike" + hLike);
                         if (hLike >= 1) {
                             $(".likechk" + b_id).css("display", "none");
                             $(".unlikechk" + b_id).css("display", "block");
@@ -1286,8 +1517,6 @@
 
             // 답글 좋아요
             function pressLike_co(b_id) {
-                console.log(memId);
-                console.log(b_id);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/pressLike.do",
                     method: "POST",
@@ -1318,8 +1547,6 @@
 
             // 답글 좋아요 취소
             function pressUnLike_co(b_id) {
-                console.log(memId);
-                console.log(b_id);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/pressUnLike.do",
                     method: "POST",
@@ -1373,7 +1600,7 @@
                                 '<div class="reply_com_con">' +
                                 '<div class="reply_profile_photo">' + m_img + '</div>' +
                                 '<div class="reply_right_com">' +
-                                '<div class="reply_con">' + id + '&nbsp;' + b_content + '</div>' +
+                                '<div class="reply_con">' + '<div style="cursor: pointer;" onclick="goEachAcount(\'' + id + '\');">' + id + "</div>&nbsp;" + b_content + '</div>' +
                                 '<div class="reply_date">' +
                                 '<div class=" rebot">' + b_date + '</div>' +
                                 '<div class="rebot">좋아요 ' + '<input type="button" class="lcount lcount' + b_id + '" id="lcount' + b_id + '" value="">' + '개</div>' +
@@ -1408,9 +1635,6 @@
 
                 $(".rep_comment_upload").on('click', function() {
                     var r_comment = $(this).prev().val();
-                    console.log(memId);
-                    console.log(b_id);
-                    console.log(r_comment);
                     if (r_comment == "" || r_comment == null) {
                         console.log("reply comment won't be uploaded");
                         $(".replyCo").css("display", "none");
@@ -1455,8 +1679,6 @@
                 var lcount = $("#lCount").val();
                 var b_id = $("#for_fuc").val();
                 lcount++;
-                console.log(b_id);
-
 
                 $.ajax({
                     url: "${pageContext.request.contextPath}/pressLike.do",
@@ -1523,15 +1745,17 @@
             // url 공유
             function shareurl() {
                 var b_id = $("#for_fuc").val();
-                // $("#post_back").css("display", "none");
-                // $("#post_modal").css("display", "none");
-                // $("#post_con").css("display", "none");
-                $("#modal_more_con_me").css("display", "none");
-                $("#modal_more_con_not_me").css("display", "none");
+                var postid = $(".post_id").val();
+                console.log(postid);
+                console.log(b_id);
                 $("#report_modal").css("display", "block");
                 $("#report_back").css("display", "block");
+                $("#modal_more_con_not_me_not_follow").css("display", "none");
+                $("#modal_more_con_me").css("display", "none");
+                $("#modal_more_con_not_me").css("display", "none");
                 $("#share_con").css("display", "block");
-                $("#url").val(b_id);
+                var url = "http://localhost:8090/tain/gnEachPage?b_id=" + b_id;
+                $("#url").val(url);
                 $("#share_chk").on('click', function() {
                     var curl = document.getElementById("url");
                     curl.select();
@@ -1541,6 +1765,7 @@
                     $("#share_con_result").css("display", "block");
                 });
             }
+
 
             // 게시글 좋아요 카운트 trigger - countLike_trigger
             function countLike(b_id) {
@@ -1567,7 +1792,68 @@
                 });
             }
 
-            // 팔로우
+            // 메인 팔로우
+            function main_followBtn(id) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/insertFollow.do",
+                    method: "POST",
+                    data: {
+                        m_id: memId,
+                        r_mid: id
+                    },
+                    success: function(data) {
+                        $("#for_modal_fchk").val("1");
+                        console.log("memId : " +
+                            memId +
+                            " id : " +
+                            id);
+                        $(".profile_btn_ok").css("display", "block");
+                        $("#pre_unfollow").css("display", "block");
+                        $(".profile_btn_no").css("display", "none");
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            // 메인 언팔로우
+            function main_pre_unfollow(id) {
+
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/unfollow.do",
+                    method: "POST",
+                    data: {
+                        m_id: memId,
+                        id: id
+                    },
+                    success: function(data) {
+                        console.log("언팔 완료");
+                        $("#for_modal_fchk").val("0");
+                        $(".profile_btn_ok").css("display", "none");
+                        $("#pre_unfollow").css("display", "none");
+                        $(".profile_btn_no").css("display", "block");
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+
+            // 추천 계정 팔로우
             function followBtn(id) {
                 console.log(recCount);
                 $.ajax({
@@ -1578,6 +1864,7 @@
                         r_mid: id
                     },
                     success: function(data) {
+                        $("#for_modal_fchk").val("1");
                         console.log("memId : " +
                             memId +
                             " id : " +
@@ -1608,6 +1895,8 @@
                 });
             }
 
+
+            // 모달 팔로우
             function followinmodal(id) {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/insertFollow.do",
@@ -1617,7 +1906,9 @@
                         r_mid: id
                     },
                     success: function(data) {
-                        $("#followbtn").css("display", "none");
+                        $("#for_modal_fchk").val("1");
+                        $(".profile_btn_ok").css("display", "block");
+                        $(".profile_btn_no").css("display", "none");
                     },
                     error: function(request, status, error) {
                         alert("code:" +
@@ -1633,11 +1924,7 @@
 
             // 언팔로우
             function pre_unfollow(id) {
-                $("#post_back").css("display", "none");
-                $("#post_modal").css("display", "none");
-                $("#post_con").css("display", "none");
-                $("#report_modal").css("display", "block");
-                $("#report_back").css("display", "block");
+                $("#modal_more_con_not_me").css("display", "none");
                 $("#askunfollow").css("display", "block");
                 $("#yes_unfollow").on('click', function() {
 
@@ -1650,6 +1937,9 @@
                         },
                         success: function(data) {
                             console.log("언팔 완료");
+                            $("#for_modal_fchk").val("0");
+                            $(".profile_btn_ok").css("display", "none");
+                            $(".profile_btn_no").css("display", "block");
                             $("#askunfollow").css("display", "none");
                             $("#unfollowchk").css("display", "block");
                         },
@@ -1684,12 +1974,23 @@
 
             });
 
-           /*  $(".notcancelAll").on('click', function() {
-            	$("#report_modal").css("display", "none");
+            // 모달 안닫히는 cencel
+            $(".notcancelAll").on('click', function() {
+                $("#report_modal").css("display", "none");
                 $("#report_back").css("display", "none");
                 $("#share_con_result").css("display", "none");
+                $("#share_con").css("display", "none");
+                $("#modal_more_con_me").css("display", "none");
+                $("#modal_more_con_not_me").css("display", "none");
+                $("#modal_delete").css("display", "none");
+                $("#modal_modifypost").css("display", "none");
+                $("#modify_con_result").css("display", "none");
+                $("#report_already").css("display", "none");
+                $("#report_result").css("display", "none");
+                $("#report_write").css("display", "none");
+                $("#report_choose").css("display", "none");
             });
- */
+
             // 계정 추천
             $("#rf").change(function() {
                 if ($("#rf").is(":checked")) {
@@ -1700,14 +2001,13 @@
             });
 
 
+
             // 댓글 작성
             //모달 초기화 수정 필요
             $(".comment_upload").on('click', function() {
                 var b_id = $("#for_fuc").val();
                 var comment = $(this).prev().val();
                 var post_id = $(".post_id").val();
-                console.log(comment);
-                console.log(memId);
                 if (comment == "" || comment == null) {
                     console.log("comment won't be uploaded");
                     return false;

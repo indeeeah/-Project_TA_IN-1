@@ -69,4 +69,8 @@ public class GnBoardDao {
 		return sqlSession.insert("GnBoard.insertReportMember", gb);
 	}
 	
+	public String userType(String m_id) {
+		return sqlSession.selectOne("GnBoard.userType", m_id);
+	}
+	
 }

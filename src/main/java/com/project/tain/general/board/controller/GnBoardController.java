@@ -24,20 +24,26 @@ public class GnBoardController {
 	private GnBoardService gService;
 
 	@RequestMapping(value = "/gnMain", method = RequestMethod.GET)
-	public ModelAndView gnMain(HttpServletRequest request,@RequestParam(name = "m_id") String m_id, ModelAndView mv) {
+	public ModelAndView gnMain(HttpServletRequest request, @RequestParam(name = "m_id") String m_id, ModelAndView mv) {
 		try {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
-			mv.addObject("id_img_fwr", gService.showp_one(m_id));
-			mv.addObject("fw", gService.showp_two(m_id));
-			mv.addObject("gboard", gService.showp_three(m_id));
-			mv.addObject("bboard", gService.showp_four(m_id));
-			mv.addObject("storychk", gService.storychk(m_id));
-			mv.addObject("showpost", gService.showpost(m_id));
-			mv.addObject("highlight", gService.highlight(m_id));
-			mv.addObject("followchk", gService.followchk(my_name, m_id));
-			mv.addObject("recomFow", gService.recomFow(my_name, m_id));
-			mv.setViewName("general/gnMain");
+			String result = gService.userType(m_id);
+			System.out.println("usertype:" + result);
+			if (result.equals("G")) {
+				mv.addObject("id_img_fwr", gService.showp_one(m_id));
+				mv.addObject("fw", gService.showp_two(m_id));
+				mv.addObject("gboard", gService.showp_three(m_id));
+				mv.addObject("bboard", gService.showp_four(m_id));
+				mv.addObject("storychk", gService.storychk(m_id));
+				mv.addObject("showpost", gService.showpost(m_id));
+				mv.addObject("highlight", gService.highlight(m_id));
+				mv.addObject("followchk", gService.followchk(my_name, m_id));
+				mv.addObject("recomFow", gService.recomFow(my_name, m_id));
+				mv.setViewName("general/gnMain");
+			} else if (result.equals("B")) {
+
+			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
@@ -45,11 +51,30 @@ public class GnBoardController {
 		}
 		return mv;
 	}
-	
+
+	@RequestMapping(value = "/gnEachPage", method = RequestMethod.GET)
+	public ModelAndView gnEachPage(HttpServletRequest request, String b_id, ModelAndView mv) {
+		try {
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			System.out.println("boardType : " + b_id);
+			if (b_id.startsWith("BO")) {
+				mv.setViewName("general/gnEachPage");
+			} else if (b_id.startsWith("BB")) {
+
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+			e.printStackTrace();
+		}
+		return mv;
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/showeachpost.do", method = RequestMethod.POST)
-	public HashMap <String, Object> showeachpost(@RequestParam(name = "b_id") String b_id, ModelAndView mv) {
-		HashMap<String, Object> result = new HashMap <String,Object>();	
+	public HashMap<String, Object> showeachpost(@RequestParam(name = "b_id") String b_id, ModelAndView mv) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
 			result.put("showeachpost", gService.showeachpost(b_id));
 		} catch (Exception e) {
@@ -58,7 +83,7 @@ public class GnBoardController {
 		}
 		return result;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "chkReportMember.do", method = RequestMethod.POST)
 	public int chkReportMember(GnBoard gb) {
@@ -71,7 +96,7 @@ public class GnBoardController {
 		}
 		return result;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "insertReportMember.do", method = RequestMethod.POST)
 	public String insertReportMember(GnBoard gb) {
@@ -84,6 +109,5 @@ public class GnBoardController {
 			return job.toJSONString();
 		}
 	}
-	
-	
+
 }

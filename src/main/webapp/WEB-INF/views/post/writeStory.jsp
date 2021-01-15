@@ -85,7 +85,7 @@
                         <div class="story_img_con">
                             <img class="image">
                         </div>
-                        <form action="storyInsert.do?m_id=${myProfile.m_id }" method="post" enctype="multipart/form-data">
+                        <form action="storyInsert.do" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="my_name" value="${my_name }">
                             <input type="file" name="upfile" class="upfile">
                             <input type="submit" value="스토리 올리기">
@@ -98,7 +98,6 @@
                         <canvas id="canvas" width="960" height="720"></canvas>
                         <button type="button" id="webcamBtn">캡쳐하기</button>
                         <a href="" download="capture.png">다운로드</a> <input type="button" class="backto_main" value="돌아가기">
-                        <input type="hidden" name="m_id" class="m_id" value="${myProfile.m_id }">
                     </div>
                     <div class="upload edit" style="display: none;">
                         <canvas id="canvas1" width="600" height="600"></canvas>

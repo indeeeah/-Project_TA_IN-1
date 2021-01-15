@@ -92,8 +92,7 @@ canvas {
 						<input type="text" value="${chkseq}" name="seq" id="for_seq">
 					<textarea rows="5" cols="40" name="b_content"></textarea>
 					<input type="submit" value="게시물 올리기"> <input type="button"
-						id="backto_main" value="돌아가기"> <input type="hidden"
-						name="m_id" class="m_id" value="${myProfile.m_id }">
+						id="backto_main" value="돌아가기"> 
 				</form>
 			</div>
 			<div class="upload capture_video" style="display: none;">

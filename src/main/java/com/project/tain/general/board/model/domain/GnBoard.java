@@ -25,6 +25,7 @@ public class GnBoard {
 	private String r_mid;
 	private String m_name;
 	private String rm_reason;
+	private String m_usage;
 
 	public String getM_id() {
 		return m_id;
@@ -184,6 +185,14 @@ public class GnBoard {
 
 	public void setRm_reason(String rm_reason) {
 		this.rm_reason = rm_reason;
+	}
+
+	public String getM_usage() {
+		return m_usage;
+	}
+
+	public void setM_usage(String m_usage) {
+		this.m_usage = m_usage;
 	}
 
 

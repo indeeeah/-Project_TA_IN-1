@@ -94,9 +94,8 @@ public class StoryController {
 				saveFile(report, request);
 			}
 			st.setS_img(report.getOriginalFilename());
-
 			sService.storyInsert(st);
-			mv.setViewName("redirect:timeLine");
+			mv.setViewName("redirect:/timeLine/");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

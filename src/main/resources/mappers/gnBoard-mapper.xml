@@ -125,4 +125,8 @@
 		insert into reportmember (m_id1, m_id2, rm_reason) values (#{my_name}, #{m_id}, #{rm_reason})
 	</insert>
 	
+	<!-- 멤버 계정 타입 -->
+	<select id="userType" parameterType="string" resultType="string">
+	select m_usage from member where m_id=#{m_id}
+	</select>
 </mapper>

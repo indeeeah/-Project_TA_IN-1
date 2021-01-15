@@ -302,7 +302,7 @@
                                                 <div class="icon like_icon likechk${vo.t_id }" onclick="pressLike('${vo.t_id}');"></div>
                                                 <div class="icon unlike_icon unlikechk${vo.t_id }" onclick="pressUnlike('${vo.t_id}');"></div>
                                                 <div class="icon write_icon"></div>
-                                                <div class="icon share_icon" onclick="shareurl('${vo.t_id}')"></div>
+                                                <div class="icon share_icon" onclick="shareurl('${vo.m_id }','${vo.t_id}')"></div>
                                                 <div class="icon save_icon"></div>
                                             </div>
                                             <div class="timeline_likes_con">좋아요 <input type="text" class="lCount${vo.t_id} showlCount" value="" readonly>개</div>
@@ -452,6 +452,8 @@
                 var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
                 $(location).attr('href', url);
             }
+
+
 
             // 게시물 이미지 보기 trigger
             function showphoto(t_id, t_img) {
@@ -816,12 +818,13 @@
                 }
             }
 
-            function shareurl(b_id) {
+            function shareurl(m_id, b_id) {
                 $("#report_modal").css("display", "block");
                 $("#report_back").css("display", "block");
                 $("#pre_report_choose").css("display", "none");
                 $("#share_con").css("display", "block");
-                $("#url").val(b_id);
+                var url = "http://localhost:8090/tain/gnEachPage?b_id=" + b_id;
+                $("#url").val(url);
                 $("#share_chk").on('click', function() {
                     var curl = document.getElementById("url");
                     curl.select();
@@ -832,10 +835,6 @@
                 });
             }
 
-            function copyToClipboard() {
-
-            }
-
             function pre_report(b_id, id, type) {
                 $("#report_modal").css("display", "block");
                 $("#report_back").css("display", "block");
@@ -843,6 +842,10 @@
                 $(".toreport").on('click', function() {
                     $("#pre_report_choose").css("display", "none");
                     report(b_id, id, type);
+                });
+                $("#pre_go").on('click', function() {
+                    var url = "${pageContext.request.contextPath}/gnEachPage?&b_id=" + b_id;
+                    $(location).attr('href', url);
                 });
                 $("#pre_unfollow").on('click', function() {
                     $("#pre_report_choose").css("display", "none");
