@@ -20,18 +20,24 @@
 	}
 	.bbWriteFile{
 		display:block;
+		margin-right: 20px;
+	}
+	.bbWriteImg{
+		width:240px;
+		height:240px;
+		border:1px solid black;
 	}
 	.bbWriteImg img{
 		width:240px;
 		height:240px;
-		border:1px solid black;
 	}
 	.bbWriteAdd{
 		width:240px;
 		text-align:center;
 	}
-	.bbWriteCon{
+	#bbWriteCon{
 		width:480px;
+		margin-right:20px;
 	}
 	.bbWriteMore{
 		display:block;
@@ -48,34 +54,119 @@
 		display:block;
 	}
 </style>
+
+<!-- 이미지 슬라이드 -->
+<style>
+	.f {display: none}
+	
+	/* Slideshow container */
+	.bbWriteImg {
+	  max-width: 1000px;
+	  position: relative;
+	  margin: auto;
+	}
+	
+	/* Next & previous buttons */
+	.prev, .next {
+	  cursor: pointer;
+	  width: auto;
+	  padding: 2px;
+	  font-weight: bold;
+	  font-size: 18px;
+	  transition: 0.6s ease;
+	  border-radius: 0 3px 3px 0;
+	  user-select: none;
+	}
+	
+	/* Position the "next button" to the right */
+	.next {
+	  right: 0;
+	  border-radius: 3px 0 0 3px;
+	}
+	
+	/* On hover, add a black background color with a little bit see-through */
+	.prev:hover, .next:hover {
+	  background-color: rgba(0,0,0,0.8);
+	  color:white;
+	}
+	
+	/* Number text (1/3 etc) */
+	.numbertext {
+	  color: #f2f2f2;
+	  font-size: 12px;
+	  padding: 8px 12px;
+	  position: absolute;
+	  top: 0;
+	}
+	
+	/* Fading animation */
+	.fade {
+	  -webkit-animation-name: fade;
+	  -webkit-animation-duration: 1.5s;
+	  animation-name: fade;
+	  animation-duration: 1.5s;
+	}
+	
+	@-webkit-keyframes fade {
+	  from {opacity: .4} 
+	  to {opacity: 1}
+	}
+	
+	@keyframes fade {
+	  from {opacity: .4} 
+	  to {opacity: 1}
+	}
+	
+	/* On smaller screens, decrease text size */
+	@media only screen and (max-width: 300px) {
+	  .prev, .next,.text {font-size: 11px}
+	}
+</style>
 </head>
 <body>
 <div id="content">
 	<div id="bbWrite" class="bbWrite">
 	
 	<form name="renewForm" action="bbUpdate.do" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="bb_type" value="G">
+		<input type="hidden" name="bb_type" value="B">
 		<input type="hidden" name="bb_id" value="${bbRenew.bb_id }">
-		<input type="hidden" name="bb_img1" value="${bbRenew.bb_img1 }">
-		<!-- <input type="hidden" name="bb_topid" value="123456321"> -->
 		<div id="bbWriteText" class="bbWriteText">
 			<div id="bbWriteFile" class="bbWriteFile">
 				<div id="bbWriteImg" class="bbWriteImg">
-					<div class="select_img"><img src="${pageContext.request.contextPath}/resources/uploadFiles/${bbRenew.bb_img1 }"/></div>
+					<div id="select_img" class='select_img fade'>
+						<c:if test="${bbRenew.bb_img1 ne null}">
+							<div class='f' >
+								<img src="${pageContext.request.contextPath}/resources/uploadFiles/${bbRenew.bb_img1 }"/>
+							</div>
+						</c:if>
+						<c:if test="${bbRenew.bb_img2 ne null}">
+							<div class='f'>
+								<img src="${pageContext.request.contextPath}/resources/uploadFiles/${bbRenew.bb_img2 }"/>
+							</div>
+						</c:if>
+						<c:if test="${bbRenew.bb_img3 ne null}">
+							<div class='f'>
+								<img src="${pageContext.request.contextPath}/resources/uploadFiles/${bbRenew.bb_img3 }"/>
+							</div>
+						</c:if>
+					</div>
 				</div>
+					<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+					<a class="next" onclick="plusSlides(1)">&#10095;</a>
 				<div id="bbWriteAdd" class="bbWriteAdd">
-					<input type="file" name="imgfile" id="imgfile" accept="image/*" multiple style="display:none">
-					<label for="imgfile">
-						<div>사진 추가</div>
+					<label for="file">
+						사진 추가
 					</label>
+					<input type="file" name="file" id="file" accept="image/*" multiple style="display:none">
 				</div>
 			</div>
 			<div id="bbWriteCon" class="bbWriteInfoCon">
 				<div id="bbWriteName" class="bbWriteName">
-					<input type="text" name="bb_name" placeholder="상품명" value="${bbRenew.bb_name}">
+					<input type="text" name="bb_name" placeholder="상품명" value="${bbRenew.bb_name}"></input>
 				</div>
 				<div id="bbWriteInfo" class="bbWriteInfo">
-					<textarea cols="66" rows="14" name="bb_info" >${bbRenew.bb_info}</textarea>
+					<textarea cols="66" rows="12" name="bb_info" placeholder="상품 소개">${bbRenew.bb_info}</textarea>
+					<input type="text" class="tags" id="tags" name="tags" value="<c:forEach items="${bbTags }" var="v">#${v.h_tag }</c:forEach>">
 				</div>
 			</div>
 			<div id="bbWriteMore" class="bbWriteMore">
@@ -84,16 +175,16 @@
 				</div>
 				<div id="bbWriteOption" class="bbWriteOption">
 					<div class="bbWriteOptionList">
-						옵션1 : <input type="text" name="bb_option1" placeholder="option + price" value="${bbRenew.bb_option1 }">
+						옵션1 : <input type="text" id="bb_option1" name="bb_option1" onblur="option_onblur(this)" placeholder="option + price" value="${bbRenew.bb_option1 }">
 					</div>
 					<div class="bbWriteOptionList">
-						옵션2 : <input type="text" name="bb_option2" placeholder="option + price" value="${bbRenew.bb_option2 }">
+						옵션2 : <input type="text" id="bb_option2" name="bb_option2" onblur="option_onblur(this)" placeholder="option + price" value="${bbRenew.bb_option2 }">
 					</div>
 					<div class="bbWriteOptionList">
-						옵션3 : <input type="text" name="bb_option3" placeholder="option + price" value="${bbRenew.bb_option3 }">
+						옵션3 : <input type="text" id="bb_option3" name="bb_option3" onblur="option_onblur(this)" placeholder="option + price" value="${bbRenew.bb_option3 }">
 					</div>
 					<div class="bbWriteOptionList">
-						옵션4 : <input type="text" name="bb_option4" placeholder="option + price" value="${bbRenew.bb_option4 }">
+						옵션4 : <input type="text" id="bb_option4" name="bb_option4" onblur="option_onblur(this)" placeholder="option + price" value="${bbRenew.bb_option4 }">
 					</div>
 				</div>
 			</div>
@@ -112,7 +203,7 @@
 	</div>
 </div>
 	<script>
-		$("#imgfile").change(function(){
+		/* $("#imgfile").change(function(){
 			if(this.files && this.files[0]){
 				var reader = new FileReader;
 				reader.onload = function(data){
@@ -120,7 +211,84 @@
 				}
 				reader.readAsDataURL(this.files[0]);
 			}
+		}); */
+	
+
+	
+
+	/* 선택한 이미지 썸네일 */
+		var sel_files=[];
+		$(document).ready(function(){
+			$("#file").on("change", handleImgsFilesSelect);
 		});
+		
+		function fileUploadAction(){
+			console.log("fileUploadAction");
+			$("#file").trigger('click');
+		}
+		
+		function handleImgsFilesSelect(e){
+			sel_files=[];
+			$(".select_img").empty();
+			var files=e.target.files;
+			var filesArr = Array.prototype.slice.call(files);
+			var index=0;
+			filesArr.forEach(function(f){
+				if(!f.type.match("image.*")){
+					alert("이미지만 가능합니다.");
+					return;
+				}
+				sel_files.push(f);
+				var reader = new FileReader();
+				reader.onload = function(e){
+					/* var img_html = "<img src=\"" + e.target.result+ "\"/>"; */
+					var html = "<div class='f'><img src=\"" + e.target.result + "\" data-file='" +f.name+"' class='selProductFile' title='Click to remove' width='240px' height='240px'></div>"; 
+					
+					$(".select_img").append(html);
+					index++;
+										
+					showSlides(slideIndex);
+					
+				}
+				reader.readAsDataURL(f);
+			});
+			
+		}
+		
+		/* 이미지 슬라이드 */
+		var slideIndex = 1;
+		function plusSlides(n) {
+			  showSlides(slideIndex += n);
+		}
+		function showSlides(n) {
+			  var i;
+			  var slides = document.getElementsByClassName("f");
+			  console.log(slides.length);
+			  if (n > slides.length) {slideIndex = 1}    
+			  if (n < 1) {slideIndex = slides.length}
+			  for (i = 0; i < slides.length; i++) {
+			      slides[i].style.display = "none";  
+			  }
+			  slides[slideIndex-1].style.display = "block";  
+			}
+	$(function(){
+		console.log($("#select_img").children().attr("class"));
+		console.log($("#select_img").children().children().attr("class"));
+		$("#select_img").children().first().show();
+	});
+
+	// 옵션 정규표현식
+	var regEx=/^([0-9a-zA-Z가-힣]{1,30})[+]([0-9]{1,8})$/;
+	function option_onblur(e){
+		console.log($(e).val());
+		if(regEx.test($(e).val())){
+			
+		} else{
+			alert("형식에 맞게 입력해주세요!!");
+			$(e).focus();
+			return false;
+		}
+	};
 	</script>
 </body>
 </html>

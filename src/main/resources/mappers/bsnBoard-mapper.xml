@@ -14,7 +14,6 @@
 		<result property="bb_type" column="bb_type"/>
 		<result property="bb_topid" column="bb_topid"/>
 		<result property="bb_date" column="bb_date"/>
-		<result property="t_num" column="t_num"/>
 		<result property="bb_img1" column="bb_img1"/>
 		<result property="bb_img2" column="bb_img2"/>
 		<result property="bb_img3" column="bb_img3"/>
@@ -26,6 +25,7 @@
 		<result property="bb_img9" column="bb_img9"/>
 		<result property="bb_img10" column="bb_img10"/>
 		<result property="m_img" column="m_img"/>
+		<result property="h_tag" column="h_tag"/>
 	</resultMap>
 	
 	<!-- 게시물 수 -->
@@ -59,13 +59,17 @@
 	<select id="bsnAddSelectOne" parameterType="string" resultType="BsnBoard">
 		select * from businessboardadd where bb_id=#{bb_id}
 	</select>
+	<!-- 게시물 상세(해시태그) -->
+	<select id="bsnTagSelectOne" parameterType="string" resultType="arraylist"  resultMap="resultBsnBoard">
+		select * from businesshashtag where bb_id=#{bb_id}
+	</select>
 	
 	<!-- 게시물 등록(텍스트) -->
 	<insert id="insertBsnBoard" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
 		insert into businessboard values(
 			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BSNBOARD_SEQ.NEXTVAL,3,'0'), #{m_id},
 			#{bb_name}, #{bb_info}, #{bb_price}, #{bb_option1}, #{bb_option2}, #{bb_option3}, #{bb_option4},
-			#{bb_type}, #{bb_topid}, sysdate, 1
+			#{bb_type}, #{bb_topid}, sysdate
 		)
 	</insert>
 	<!-- 게시물 등록(이미지) -->
@@ -96,4 +100,10 @@
 	<delete id="deleteBsnBoardAdd" parameterType="string" flushCache="true" statementType="PREPARED">
 		delete from businessboardAdd where bb_id=#{bb_id}
 	</delete>
+	
+	<!-- 해쉬태그 저장 -->
+	<insert id="saveBsnTag" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
+		insert into businesshashtag values('BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD((BSNBOARD_SEQ.CURRVAL),3,'0'), #{h_tag})
+	</insert>
+	
 </mapper>

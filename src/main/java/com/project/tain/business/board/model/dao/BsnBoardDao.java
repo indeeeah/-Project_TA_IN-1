@@ -44,6 +44,11 @@ public class BsnBoardDao {
 		System.out.println("셀원이dao");
 		return sqlSession.selectOne("BsnBoard.bsnAddSelectOne", bb_id);
 	}
+	// 게시물 상세(해시태그)
+	public List<String> selectOneTags(String bb_id) {
+		System.out.println("셀원태dao");
+		return sqlSession.selectList("BsnBoard.bsnTagSelectOne", bb_id);
+	}
 	
 	// 게시물 등록(텍스트)
 	public int insertBsnBoard(BsnBoard bb) {
@@ -80,5 +85,12 @@ public class BsnBoardDao {
 		return sqlSession.delete("BsnBoard.deleteBsnBoardAdd", bb_id);
 	}
 	
+	// hashtag
+	public int saveBsnTag(BsnBoard bb) {
+		System.out.println("해시태그저장");
+		System.out.println("H_tag : "+bb.getH_tag());
+		System.out.println("Tags : "+bb.getTags());
+		return sqlSession.insert("BsnBoard.saveBsnTag", bb);
+	}
 	
 }

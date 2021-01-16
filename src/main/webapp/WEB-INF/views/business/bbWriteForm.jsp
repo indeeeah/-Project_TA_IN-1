@@ -20,6 +20,7 @@
 	}
 	.bbWriteFile{
 		display:block;
+		margin-right: 20px;
 	}
 	.bbWriteImg{
 		width:240px;
@@ -30,8 +31,9 @@
 		width:240px;
 		text-align:center;
 	}
-	.bbWriteCon{
+	#bbWriteCon{
 		width:480px;
+		margin-right:20px;
 	}
 	.bbWriteMore{
 		display:block;
@@ -63,12 +65,8 @@
 	/* Next & previous buttons */
 	.prev, .next {
 	  cursor: pointer;
-	  position: absolute;
-	  top: 50%;
 	  width: auto;
-	  padding: 16px;
-	  margin-top: -22px;
-	  color: white;
+	  padding: 2px;
 	  font-weight: bold;
 	  font-size: 18px;
 	  transition: 0.6s ease;
@@ -85,6 +83,7 @@
 	/* On hover, add a black background color with a little bit see-through */
 	.prev:hover, .next:hover {
 	  background-color: rgba(0,0,0,0.8);
+	  color:white;
 	}
 	
 	/* Number text (1/3 etc) */
@@ -125,8 +124,7 @@
 	<div id="bbWrite" class="bbWrite">
 	
 	<form action="bbInsert.do" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="bb_type" value="G">
-		<!-- <input type="hidden" name="bb_topid" value="123456321"> -->
+		<input type="hidden" name="bb_type" value="B">
 		<div id="bbWriteText" class="bbWriteText">
 			<div id="bbWriteFile" class="bbWriteFile">
 				<div id="bbWriteImg" class="bbWriteImg">
@@ -134,13 +132,13 @@
 					
 					</div>
 				</div>
-				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-				<a class="next" onclick="plusSlides(1)">&#10095;</a>
+					<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+					<a class="next" onclick="plusSlides(1)">&#10095;</a>
 				<div id="bbWriteAdd" class="bbWriteAdd">
-					<input type="file" name="file" id="file" accept="image/*" multiple >
 					<label for="file">
-						<div>사진 추가</div>
+						사진 추가
 					</label>
+					<input type="file" name="file" id="file" accept="image/*" multiple>
 				</div>
 			</div>
 			<div id="bbWriteCon" class="bbWriteInfoCon">
@@ -148,7 +146,8 @@
 					<input type="text" name="bb_name" placeholder="상품명">
 				</div>
 				<div id="bbWriteInfo" class="bbWriteInfo">
-					<textarea cols="66" rows="14" name="bb_info">ㅁㅁ</textarea>
+					<textarea cols="66" rows="12" name="bb_info" placeholder="상품 소개">ㅁㅁ</textarea>
+					<input type="text" class="tags" id="tags" name="tags" placeholder="태그 입력" />
 				</div>
 			</div>
 			<div id="bbWriteMore" class="bbWriteMore">
@@ -157,16 +156,16 @@
 				</div>
 				<div id="bbWriteOption" class="bbWriteOption">
 					<div class="bbWriteOptionList">
-						옵션1 : <input type="text" name="bb_option1" placeholder="option + price">
+						옵션1 : <input type="text" id="bb_option1" name="bb_option1" onblur="option_onblur(this)" placeholder="option + price">
 					</div>
 					<div class="bbWriteOptionList">
-						옵션2 : <input type="text" name="bb_option2" placeholder="option + price">
+						옵션2 : <input type="text" id="bb_option2" name="bb_option2" onblur="option_onblur(this)" placeholder="option + price">
 					</div>
 					<div class="bbWriteOptionList">
-						옵션3 : <input type="text" name="bb_option3" placeholder="option + price">
+						옵션3 : <input type="text" id="bb_option3" name="bb_option3" onblur="option_onblur(this)" placeholder="option + price">
 					</div>
 					<div class="bbWriteOptionList">
-						옵션4 : <input type="text" name="bb_option4" placeholder="option + price">
+						옵션4 : <input type="text" id="bb_option4" name="bb_option4" onblur="option_onblur(this)" placeholder="option + price">
 					</div>
 				</div>
 			</div>
@@ -184,194 +183,89 @@
 	</form>
 	</div>
 </div>
-	<script>
-		/* $("#imgfile").change(function(){
-			if(this.files && this.files[0]){
-				var reader = new FileReader;
-				reader.onload = function(data){
-					$(".select_img img").attr("src", data.target.result).width(240).height(240);
-				}
-				reader.readAsDataURL(this.files[0]);
+<script>
+	/* $("#imgfile").change(function(){
+		if(this.files && this.files[0]){
+			var reader = new FileReader;
+			reader.onload = function(data){
+				$(".select_img img").attr("src", data.target.result).width(240).height(240);
 			}
-		}); */
-		
-		
-		/* 선택한 이미지 썸네일 */
-		var sel_files=[];
-		$(document).ready(function(){
-			$("#file").on("change", handleImgsFilesSelect);
+			reader.readAsDataURL(this.files[0]);
+		}
+	}); */
+	
+	
+	/* 선택한 이미지 썸네일 */
+	var sel_files=[];
+	$(document).ready(function(){
+		$("#file").on("change", handleImgsFilesSelect);
+	});
+	
+	function fileUploadAction(){
+		console.log("fileUploadAction");
+		$("#file").trigger('click');
+	}
+	
+	function handleImgsFilesSelect(e){
+		sel_files=[];
+		$(".select_img").empty();
+		var files=e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+		var index=0;
+		filesArr.forEach(function(f){
+			if(!f.type.match("image.*")){
+				alert("이미지만 가능합니다.");
+				return;
+			}
+			sel_files.push(f);
+			var reader = new FileReader();
+			reader.onload = function(e){
+				/* var img_html = "<img src=\"" + e.target.result+ "\"/>"; */
+				var html = "<div class='f'><img src=\"" + e.target.result + "\" data-file='" +f.name+"' class='selProductFile' title='Click to remove' width='240px' height='240px'></div>"; 
+				
+				$(".select_img").append(html);
+				index++;
+									
+				showSlides(slideIndex);
+				
+			}
+			reader.readAsDataURL(f);
 		});
 		
-		function fileUploadAction(){
-			console.log("fileUploadAction");
-			$("#file").trigger('click');
-		}
-		
-		function handleImgsFilesSelect(e){
-			sel_files=[];
-			$(".select_img").empty();
-			var files=e.target.files;
-			var filesArr = Array.prototype.slice.call(files);
-			var index=0;
-			filesArr.forEach(function(f){
-				if(!f.type.match("image.*")){
-					alert("이미지만 가능합니다.");
-					return;
-				}
-				sel_files.push(f);
-				var reader = new FileReader();
-				reader.onload = function(e){
-					/* var img_html = "<img src=\"" + e.target.result+ "\"/>"; */
-					var html = "<div class='f'><a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='" +f.name+"' class='selProductFile' title='Click to remove' width='240px' height='240px'></a></div>"; 
-					
-					$(".select_img").append(html);
-					index++;
-										
-					showSlides(slideIndex);
-					
-				}
-				reader.readAsDataURL(f);
-			});
-			
-		}
-		
-		/* 이미지 슬라이드 */
-		var slideIndex = 1;
-		function plusSlides(n) {
-			  showSlides(slideIndex += n);
-		}
-		function showSlides(n) {
-			  var i;
-			  var slides = document.getElementsByClassName("f");
-			  console.log(slides.length);
-			  if (n > slides.length) {slideIndex = 1}    
-			  if (n < 1) {slideIndex = slides.length}
-			  for (i = 0; i < slides.length; i++) {
-			      slides[i].style.display = "none";  
-			  }
-			  slides[slideIndex-1].style.display = "block";  
-			}
-		
-		function deleteImageAction(index){
-			console.log("index : " + index);
-			sel_files.splice(index, 1);
-			var img_id = "#img_id_"+index;
-			$(img_id).remove();
-			console.log(sel_files);
-		}
-		
+	}
 	
-	
-	</script>
-	
-	
-	<script>
-	</script>
-	
-<%-- <script>
-$(document).ready(function(){
-	$("#profileImg").click(function(){
-		$("#input_img").click() ;
-		})			
-	})
-
-</script>
-
-
-<script>
-var sel_file;
-
-$(document).ready(function() {
-    $("#input_img").on("change", fileChange);
-});
-
-function fileChange(e) {
-	e.preventDefault();
-
-
-	var files = e.target.files;
-    var filesArr = Array.prototype.slice.call(files);
-
-    filesArr.forEach(function(f) {
-        if(!f.type.match("image.*")) {
-            alert("확장자는 이미지 확장자만 가능합니다.");
-            return;
-        }
-
-        sel_file = f;
-
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            $("#profileImg").attr("src", e.target.result);
-        	$("#profileImg").css("height", "100px")
-        }
-        reader.readAsDataURL(f);
-    });
-
-    var file = files[0]
-    console.log(file)
-    var formData = new FormData();
-
-    formData.append("file", file);
-
-		$.ajax({
-    	url: '/uploadAjax',
-		  data: formData,
-		  dataType:'text',
-		  processData: false,
-		  contentType: false,
-		  type: 'POST',
-		  success: function(data){
-
-			alert("프로필 이미지가 변경 되었습니다.")
-
+	/* 이미지 슬라이드 */
+	var slideIndex = 1;
+	function plusSlides(n) {
+		  showSlides(slideIndex += n);
+	}
+	function showSlides(n) {
+		  var i;
+		  var slides = document.getElementsByClassName("f");
+		  console.log(slides.length);
+		  if (n > slides.length) {slideIndex = 1}    
+		  if (n < 1) {slideIndex = slides.length}
+		  for (i = 0; i < slides.length; i++) {
+		      slides[i].style.display = "none";  
 		  }
-		})
+		  slides[slideIndex-1].style.display = "block";  
+		}
 
+	
+	// 옵션 정규표현식
+	var regEx=/^([0-9a-zA-Z가-힣]{1,30})[+]([0-9]{1,8})$/;
+	function option_onblur(e){
+		console.log($(e).val());
+		if(regEx.test($(e).val())){
+			
+		} else{
+			alert("형식에 맞게 입력해주세요!!");
+			$(e).focus();
+			return false;
+		}
+	};
+	
 
- 		function checkImageType(fileName){
- 			var pattern = /jpg$|gif$|png$|jpeg$/i;
- 			return fileName.match(pattern);
- 		}
-
-
- 		function getOriginalName(fileName){
- 			if(checkImageType(fileName)){
- 				return;
- 			}
-
- 			var idx = fileName.indexOf("_") + 1 ;
- 			return fileName.substr(idx);
-
- 		}
-
-
- 		function getImageLink(fileName){
-
- 			if(!checkImageType(fileName)){
- 				return;
- 			}
- 			var front = fileName.substr(0,12);
- 			var end = fileName.substr(14);
-
- 			return front + end;
-
- 		}
-
-}
 </script>
-
-<c:choose>
-			 	<c:when test="${empty userImage }">
-				<div>
-					<img id ="profileImg" src = "/displayFile?fileName=/lion.gif" style = "border-radius:0%; padding-top : 10px; height:100px; width:100px;">
-				</div>
-				</c:when>
-				<c:otherwise>
-				<div>
-					<img id ="profileImg" src = "/displayFile?fileName=${userImage }" style = "border-radius:0%; padding-top : 10px; height:100px; width:100px;">
-				</div>
-				</c:otherwise>
-</c:choose> --%>
 </body>
 </html>

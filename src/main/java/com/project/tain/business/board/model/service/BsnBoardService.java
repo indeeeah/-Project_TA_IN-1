@@ -21,6 +21,8 @@ public interface BsnBoardService {
 	BsnBoard selectOneText(String bb_id);
 	// 게시물 상세(이미지)
 	BsnBoard selectOneImg(String bb_id);
+	// 게시물 상세(해시태그)
+	List<String> selectOneTags(String bb_id);
 	
 	// 게시물 등록
 	int insertBsnBoard(BsnBoard bb);
@@ -31,5 +33,6 @@ public interface BsnBoardService {
 	// 게시물 삭제
 	int deleteBsnBoard(String bb_id);
 
-	
+	// hashtag
+	int saveBsnTag(BsnBoard bb);
 }

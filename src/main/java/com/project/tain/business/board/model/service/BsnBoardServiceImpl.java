@@ -71,6 +71,18 @@ public class BsnBoardServiceImpl implements BsnBoardService{
 		return bbDao.deleteBsnBoard(bb_id);
 	}
 
+	@Override
+	public int saveBsnTag(BsnBoard bb) {
+//		BsnBoard bb1 = new BsnBoard();
+//		bb1.setH_tag(bb.getH_tag());
+		return bbDao.saveBsnTag(bb);
+	}
+
+	// 게시물 상세(해시태그)
+	public List<String> selectOneTags(String bb_id) {
+		return bbDao.selectOneTags(bb_id);
+	}
+
 	
 
 
