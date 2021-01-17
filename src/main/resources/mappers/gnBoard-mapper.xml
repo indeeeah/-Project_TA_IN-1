@@ -105,28 +105,80 @@
 	<!-- 팔로우 추천 -->
 	<select id="recomFow" parameterType="java.util.HashMap"
 		resultType="arrayList" resultMap="resultGnBoard">
-		select a.m_id2 r_mid, m_img, m_name from follow a
-		join  member on a.m_id2 = m_id
+		select a.m_id2 r_mid, m_img, m_name
+		from follow a
+		join member on a.m_id2 = m_id
 		where a.m_id1 = #{m_id}
-        and a.m_id2 not in
+		and
+		a.m_id2 not in
 		(select m_id2 from follow where m_id1=#{my_name})
-		and a.m_id2!=#{my_name}
-        order by dbms_random.value
+		and
+		a.m_id2!=#{my_name}
+		order by dbms_random.value
 	</select>
-	
+
 	<!-- 회원 신고 체크 -->
 	<select id="chkReportMember" resultType="int">
-	select count(*) from reportmember where m_id1=#{my_name} and m_id2 = #{m_id}
+		select count(*) from
+		reportmember where m_id1=#{my_name} and m_id2 = #{m_id}
 	</select>
-	
+
 	<!-- 회원 신고 -->
 	<insert id="insertReportMember" parameterType="GnBoard"
 		flushCache="true" statementType="PREPARED" timeout="20">
-		insert into reportmember (m_id1, m_id2, rm_reason) values (#{my_name}, #{m_id}, #{rm_reason})
+		insert into
+		reportmember (m_id1, m_id2, rm_reason) values (#{my_name}, #{m_id},
+		#{rm_reason})
 	</insert>
-	
+
 	<!-- 멤버 계정 타입 -->
 	<select id="userType" parameterType="string" resultType="string">
-	select m_usage from member where m_id=#{m_id}
+		select
+		m_usage from member where m_id=#{m_id}
 	</select>
+
+	<!-- 팔로우 조회 -->
+	<select id="selectFollow" parameterType="string"
+		resultType="arrayList" resultMap="resultGnBoard">
+		select m_id2 followid, m_img, m_name
+		from follow join member on m_id2 = m_id
+		where m_id1=#{m_id}
+	</select>
+	<select id="selectFollower" parameterType="string"
+		resultType="arrayList" resultMap="resultGnBoard">
+		select m_id1 followerid, m_img,
+		m_name from follow join member on m_id1=m_id
+		where m_id2=#{m_id}
+	</select>
+
+	<!-- 개별 개시글 조회 (일반게시글) -->
+	<select id="selectEachPost" parameterType="string"
+		resultType="GnBoard" resultMap="resultGnBoard">
+		select m_img, board.b_id b_id,
+		board.m_id m_id, b_content, to_char(b_date,'YYYY-MM-DD HH24:Mi:SS')
+		time, count(blike.b_id) likes from board left outer join blike on
+		board.b_id = blike.b_id
+		join member on board.m_id = member.m_id
+		where board.b_id = #{b_id}
+		group by board.b_id, board.m_id, b_content, b_date, m_img
+	</select>
+	<select id="selectEachPostComments" parameterType="string"
+		resultType="arrayList" resultMap="resultGnBoard">
+		select m_img, a.b_id b_id, a.m_id
+		m_id, a.b_content b_content, to_char(a.b_date,'YYYY-MM-DD HH24:Mi:SS')
+		time, count(b.b_id) comments from board a left outer join board b on
+		a.b_id = b.b_topid
+		join member on a.m_id = member.m_id
+		where a.b_topid = #{b_id}
+		group by a.b_id, a.m_id, a.b_content, a.b_date, m_img
+	</select>
+	<select id="selectEachPostPhotos" parameterType="string" resultType="string">
+	select b_img1
+		||'#^@%'|| b_img2 ||'#^@%'||b_img3
+		||'#^@%'||b_img4 ||'#^@%'||b_img5
+		||'#^@%'||b_img6
+		||'#^@%'||b_img7 ||'#^@%'||b_img8
+		||'#^@%'||b_img9 ||'#^@%'||b_img10 as t_img from boardadd where b_id=#{b_id}
+	</select>
+	
 </mapper>

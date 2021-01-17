@@ -19,7 +19,8 @@
                     justify-content: center;
                     position: fixed;
                     z-index: 4;
-                    border-bottom: 0.5px solid black;
+                    border-bottom: 1px solid #C7C7C7;
+                    background-color:white;
                 }
                 
                 #big_con {
@@ -51,6 +52,15 @@
                     background-color: crimson;
                     overflow: auto;
                 }
+                
+                #search {
+	width: 215px;
+	height: 28px;
+	margin-top: 13px;
+	outline: none;
+	box-sizing: border-box;
+	border: 1px solid #C7C7C7;
+}
                 
                 .fo_con {
                     float: left;

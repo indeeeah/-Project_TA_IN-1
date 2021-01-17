@@ -72,24 +72,8 @@ public class TimeLineDao {
 		return sqlSession.delete("TimeLine.deleteComment", b_id);
 	}
 
-	public int deleteCommentl(String b_id) {
-		return sqlSession.delete("TimeLine.deleteCommentl", b_id);
-	}
-
-	public int deleteCommentt(String b_id) {
-		return sqlSession.delete("TimeLine.deleteCommentt", b_id);
-	}
-
 	public int deleteCommentB(String b_id) {
 		return sqlSession.delete("TimeLine.deleteCommentB", b_id);
-	}
-
-	public int deleteCommentlB(String b_id) {
-		return sqlSession.delete("TimeLine.deleteCommentlB", b_id);
-	}
-
-	public int deleteCommenttB(String b_id) {
-		return sqlSession.delete("TimeLine.deleteCommenttB", b_id);
 	}
 
 	public int insertReplyComment(TimeLine tl) {

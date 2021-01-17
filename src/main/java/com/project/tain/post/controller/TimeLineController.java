@@ -55,7 +55,7 @@ public class TimeLineController {
 
 	// TimeLine Page
 	@RequestMapping(value = "/timeLine", method = RequestMethod.GET)
-	public ModelAndView TimeLineList(HttpServletRequest request, ModelAndView mv) {
+	public ModelAndView timeLineList(HttpServletRequest request, ModelAndView mv) {
 		try {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
@@ -68,6 +68,31 @@ public class TimeLineController {
 			mv.addObject("timeLineList", tService.showTimeLineList(my_name));
 			mv.addObject("recomFollow", tService.recomFollow(my_name));
 			mv.setViewName("post/timeline");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	
+	// 고객센터
+	@RequestMapping(value = "/aboutUs", method = RequestMethod.GET)
+	public ModelAndView aboutUs(HttpServletRequest request, ModelAndView mv) {
+		try {
+			mv.setViewName("serviceCenter/aboutUs");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	// 고객센터
+	@RequestMapping(value = "/serviceCenter", method = RequestMethod.GET)
+	public ModelAndView serviceCenter(HttpServletRequest request, ModelAndView mv) {
+		try {
+			mv.setViewName("serviceCenter/serviceCenter");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
@@ -204,8 +229,6 @@ public class TimeLineController {
 	public String deleteComment(String b_id) {
 		JSONObject job = new JSONObject();
 		try {
-			job.put("ack", tService.deleteCommentl(b_id));
-			job.put("ack2", tService.deleteCommentt(b_id));
 			job.put("ack3", tService.deleteComment(b_id));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -219,8 +242,6 @@ public class TimeLineController {
 	public String deleteCommentB(String b_id) {
 		JSONObject job = new JSONObject();
 		try {
-			job.put("ack", tService.deleteCommentlB(b_id));
-			job.put("ack2", tService.deleteCommenttB(b_id));
 			job.put("ack3", tService.deleteCommentB(b_id));
 		} catch (Exception e) {
 			e.printStackTrace();

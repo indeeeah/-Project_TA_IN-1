@@ -72,5 +72,25 @@ public class GnBoardDao {
 	public String userType(String m_id) {
 		return sqlSession.selectOne("GnBoard.userType", m_id);
 	}
+
+	public List<GnBoard> selectFollow(String m_id) {
+		return sqlSession.selectList("GnBoard.selectFollow", m_id);
+	}
+
+	public List<GnBoard> selectFollower(String m_id) {
+		return sqlSession.selectList("GnBoard.selectFollower", m_id);
+	}
+
+	public GnBoard selectEachPost(String b_id) {
+		return sqlSession.selectOne("GnBoard.selectEachPost", b_id);
+	}
+
+	public List<GnBoard> selectEachPostComments(String b_id) {
+		return sqlSession.selectList("GnBoard.selectEachPostComments", b_id);
+	}
+
+	public String selectEachPostPhotos(String b_id) {
+		return sqlSession.selectOne("GnBoard.selectEachPostPhotos", b_id);
+	}
 	
 }

@@ -53,7 +53,6 @@
 		from (select max(s_date) as s_date, m_id, s_type
 		from story join follow on m_id = m_id2
 		and s_type='A'
-		and s_date > SYSDATE - 1
 		group by m_id, s_type)
 		group by s_type
 	</select>

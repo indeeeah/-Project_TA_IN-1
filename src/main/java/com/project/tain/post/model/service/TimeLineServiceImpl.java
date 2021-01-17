@@ -85,28 +85,8 @@ public class TimeLineServiceImpl implements TimeLineService {
 	}
 
 	@Override
-	public int deleteCommentl(String b_id) {
-		return tDao.deleteCommentl(b_id);
-	}
-
-	@Override
-	public int deleteCommentt(String b_id) {
-		return tDao.deleteCommentt(b_id);
-	}
-
-	@Override
 	public int deleteCommentB(String b_id) {
 		return tDao.deleteCommentB(b_id);
-	}
-
-	@Override
-	public int deleteCommentlB(String b_id) {
-		return tDao.deleteCommentlB(b_id);
-	}
-
-	@Override
-	public int deleteCommenttB(String b_id) {
-		return tDao.deleteCommenttB(b_id);
 	}
 
 	@Override

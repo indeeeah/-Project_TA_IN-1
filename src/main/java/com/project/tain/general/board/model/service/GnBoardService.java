@@ -30,4 +30,14 @@ public interface GnBoardService {
 	int insertReportMember(GnBoard gb);
 
 	String userType(String m_id);
+
+	List<GnBoard> selectFollow(String m_id);
+
+	List<GnBoard> selectFollower(String m_id);
+
+	GnBoard selectEachPost(String b_id);
+
+	List<GnBoard> selectEachPostComments(String b_id);
+
+	String selectEachPostPhotos(String b_id);
 }

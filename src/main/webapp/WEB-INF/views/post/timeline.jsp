@@ -370,7 +370,10 @@
                                     </c:forEach>
                                 </c:if>
                             </div>
-                            <div id="footer_info"></div>
+                            <div id="footer_info">
+                            <a href="${pageContext.request.contextPath}/serviceCenter">고객센터</a>
+                            <a href="${pageContext.request.contextPath}/aboutUs">사이트 소개</a>
+                            </div>
                             <div id="footer_infoc">© 2020 TA_IN</div>
                         </div>
                     </div>

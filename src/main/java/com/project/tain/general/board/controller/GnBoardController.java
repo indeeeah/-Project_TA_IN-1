@@ -40,6 +40,8 @@ public class GnBoardController {
 				mv.addObject("highlight", gService.highlight(m_id));
 				mv.addObject("followchk", gService.followchk(my_name, m_id));
 				mv.addObject("recomFow", gService.recomFow(my_name, m_id));
+				mv.addObject("selectFollow", gService.selectFollow(m_id));
+				mv.addObject("selectFollower", gService.selectFollower(m_id));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
 
@@ -53,12 +55,16 @@ public class GnBoardController {
 	}
 
 	@RequestMapping(value = "/gnEachPage", method = RequestMethod.GET)
-	public ModelAndView gnEachPage(HttpServletRequest request, String b_id, ModelAndView mv) {
+	public ModelAndView gnEachPage(HttpServletRequest request, String m_id, String b_id, ModelAndView mv) {
 		try {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
 			System.out.println("boardType : " + b_id);
 			if (b_id.startsWith("BO")) {
+				mv.addObject("selectEachPost", gService.selectEachPost(b_id));
+				mv.addObject("selectEachPostComments", gService.selectEachPostComments(b_id));
+				mv.addObject("selectEachPostPhotos", gService.selectEachPostPhotos(b_id));
+				System.out.println(gService.selectEachPostPhotos(b_id));
 				mv.setViewName("general/gnEachPage");
 			} else if (b_id.startsWith("BB")) {
 
@@ -108,6 +114,19 @@ public class GnBoardController {
 		} finally {
 			return job.toJSONString();
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "followchkf.do", method = RequestMethod.POST)
+	public GnBoard followchkf(String my_name, String m_id) {
+		
+		GnBoard result = gService.followchk(my_name, m_id);
+		try {
+			System.out.println(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

@@ -34,15 +34,7 @@ public interface TimeLineService {
 
 	int deleteComment(String b_id);
 
-	int deleteCommentl(String b_id);
-
-	int deleteCommentt(String b_id);
-
 	int deleteCommentB(String b_id);
-
-	int deleteCommentlB(String b_id);
-
-	int deleteCommenttB(String b_id);
 
 	int insertReplyComment(TimeLine tl);
 

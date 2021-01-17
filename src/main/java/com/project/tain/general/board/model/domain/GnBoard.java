@@ -1,6 +1,5 @@
 package com.project.tain.general.board.model.domain;
 
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,6 +25,11 @@ public class GnBoard {
 	private String m_name;
 	private String rm_reason;
 	private String m_usage;
+	private String followid;
+	private String followerid;
+	private String time;
+	private String comments;
+	private String likes;
 
 	public String getM_id() {
 		return m_id;
@@ -195,5 +199,45 @@ public class GnBoard {
 		this.m_usage = m_usage;
 	}
 
+	public String getFollowid() {
+		return followid;
+	}
 
+	public void setFollowid(String followid) {
+		this.followid = followid;
+	}
+
+	public String getFollowerid() {
+		return followerid;
+	}
+
+	public void setFollowerid(String followerid) {
+		this.followerid = followerid;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public String getLikes() {
+		return likes;
+	}
+
+	public void setLikes(String likes) {
+		this.likes = likes;
+	}
+
+	
 }

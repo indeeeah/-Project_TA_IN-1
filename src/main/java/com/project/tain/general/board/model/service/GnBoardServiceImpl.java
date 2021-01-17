@@ -81,4 +81,29 @@ public class GnBoardServiceImpl implements GnBoardService {
 		return gDao.userType(m_id);
 	}
 
+	@Override
+	public List<GnBoard> selectFollow(String m_id) {
+		return gDao.selectFollow(m_id);
+	}
+
+	@Override
+	public List<GnBoard> selectFollower(String m_id) {
+		return gDao.selectFollower(m_id);
+	}
+
+	@Override
+	public GnBoard selectEachPost(String b_id) {
+		return gDao.selectEachPost(b_id);
+	}
+
+	@Override
+	public List<GnBoard> selectEachPostComments(String b_id) {
+		return gDao.selectEachPostComments(b_id);
+	}
+
+	@Override
+	public String selectEachPostPhotos(String b_id) {
+		return gDao.selectEachPostPhotos(b_id);
+	}
+
 }

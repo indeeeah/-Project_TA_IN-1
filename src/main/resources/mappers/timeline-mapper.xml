@@ -242,30 +242,10 @@
 	</insert>
 
 	<!-- 댓글 삭제 -->
-	<delete id="deleteCommentl" parameterType="string"
-		flushCache="true" statementType="PREPARED" timeout="20">
-		delete from blike
-		where b_id= #{b_id}
-	</delete>
-	<delete id="deleteCommentt" parameterType="string"
-		flushCache="true" statementType="PREPARED" timeout="20">
-		delete from board
-		where b_topid = #{b_id}
-	</delete>
 	<delete id="deleteComment" parameterType="string"
 		flushCache="true" statementType="PREPARED" timeout="20">
 		delete from board
 		where board.b_id= #{b_id}
-	</delete>
-	<delete id="deleteCommentlB" parameterType="string"
-		flushCache="true" statementType="PREPARED" timeout="20">
-		delete from bblike
-		where bb_id= #{b_id}
-	</delete>
-	<delete id="deleteCommenttB" parameterType="string"
-		flushCache="true" statementType="PREPARED" timeout="20">
-		delete from
-		businessboard where bb_topid = #{b_id}
 	</delete>
 	<delete id="deleteCommentB" parameterType="string"
 		flushCache="true" statementType="PREPARED" timeout="20">
