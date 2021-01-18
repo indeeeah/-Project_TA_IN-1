@@ -6,7 +6,7 @@
 					<form id="frmFindPw" action="${pageContext.request.contextPath}/member/find_pw.do" method="post">
 						<div class="form-group">
 							<input type="text" class="form-control" id="m_id" name="m_id"
-								placeholder="¾ÆÀÌµð">
+								placeholder="ì•„ì´ë””">
 						</div>
 						<div class="form-group">
 							<input type="text" class="form-control" id="m_email"
@@ -14,11 +14,11 @@
 						</div>
 						<div class="form-group">
 							<button id="myBtn" type="button" onclick="idSearch_click()"
-								class="btn btn-primary btn-block">ÀÌ¸ÞÀÏ Àü¼Û</button>
+								class="btn btn-primary btn-block">ì´ë©”ì¼ ì „ì†¡</button>
 						</div>
 						<div class="bottom-text">
-							<a href="${pageContext.request.contextPath}/member/loginPage">·Î±×ÀÎÀ¸·Î
-								µ¹¾Æ°¡±â</a>
+							<a href="${pageContext.request.contextPath}/member/loginPage">ë¡œê·¸ì¸ìœ¼ë¡œ
+								ëŒì•„ê°€ê¸°</a>
 						</div>
 					</form>
 				</div>

@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>¾ÆÀÌµğ Ã£±â</title>
+<title>ì•„ì´ë”” ì°¾ê¸°</title>
 <style type="text/css">
 body {
 	font-family: Arial;
@@ -46,7 +46,7 @@ p label {
 		<div class="w3-container w3-card-4">
 			<form action="../member/find_Id.do" method="post">
 				<div class="w3-center w3-large w3-margin-top">
-					<h3>¾ÆÀÌµğ Ã£±â</h3>
+					<h3>ì•„ì´ë”” ì°¾ê¸°</h3>
 				</div>
 				<div>
 					<p>
