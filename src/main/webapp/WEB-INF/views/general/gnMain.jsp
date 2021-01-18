@@ -1245,7 +1245,34 @@
                 var url = "${pageContext.request.contextPath}/eachHighlight?m_id=" + postid + "&h_name=" + h_name;
                 $(location).attr('href', url);
             }
-
+            
+        	// 로그아웃
+            function logout(id) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/member/logout.do",
+                    method: "POST",
+                    data: {
+                        m_id: id
+                    },
+                    success: function(data) {
+                        console.log("success");                   
+                        alert(data);
+                        var url = "${pageContext.request.contextPath}/member/loginPage";
+                        $(location).attr('href', url);
+                    },
+                    error: function(request, status, error) {
+                    	console.log("error");  
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+            
             // 멤버 신고
             function memberReport(id) {
                 $.ajax({
