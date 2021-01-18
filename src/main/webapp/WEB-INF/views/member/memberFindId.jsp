@@ -3,209 +3,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아이디 찾기</title>
+<style type="text/css">
 body {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Arial;
 }
 
-/* The Modal (background) */
-.modal {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	padding-top: 100px;
-	left: 0;
-	top: 0;
+.w3-black {
+	font-size: 15px;
+	text-align: center;
+	position: relative;
+	margin: 7px 0;
+	color: #f7f7f7;
+	background-color: #144d2af8;
 	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgb(0, 0, 0);
-	background-color: rgba(0, 0, 0, 0.4);
-}
-
-/* Modal Content */
-.modal-content {
-	text-align: center;
-	font-size: 30px;
-	background-color: white;
-	margin: auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 50%;
-	height: 50%;
-}
-
-/* The Close Button */
-.close {
-	color: #aaaaaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-}
-
-.close:hover, .close:focus {
-	color: #000;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.full {
-	width: 400px;
-	background-color: #f1f1f1;
-	height: 800px;
-	padding: 40px 40px;
+	border: none;
+	padding: 0 5px;
+	height: 40px;
+	outline: none;
 	border-radius: 10px;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%)
+	text-align: center;
 }
 
-.sub_title h3 {
-	text-align: center;
-	font-size: 30px;
+.w3-input {
+	color: #333;
+	width: 100%;
+	border: none;
+	padding: 0 5px;
+	height: 40px;
+	outline: none;
+}
+
+p label {
+	font-size: 15px;
 }
 </style>
 </head>
 <body>
-
-	<div class="full">
-		<div class="container">
-			<div class="area_inputs wow fadeIn">
-				<div class="sub_title font-weight-bold text-white">
-					<h3>아이디/비밀번호 찾기</h3>
-					<p>인증된 이메일만 정보 찾기가 가능합니다 :)</p>
+	<div class="w3-content w3-container w3-margin-top">
+		<div class="w3-container w3-card-4">
+			<form action="../member/find_Id.do" method="post">
+				<div class="w3-center w3-large w3-margin-top">
+					<h3>아이디 찾기</h3>
 				</div>
-				<div style="margin-bottom: 10px;"
-					class="custom-control custom-radio custom-control-inline">
-					<input type="radio" class="custom-control-input" id="search_1"
-						name="search_total" onclick="search_check(1)" checked="checked">
-					<label class="custom-control-label font-weight-bold text-white"
-						for="search_1">아이디 찾기</label>
+				<div>
+					<p>
+						<label>Email</label> <input class="w3-input" type="text"
+							id="email" name="m_email" required>
+					</p>
+					<p class="w3-center">
+						<button type="submit" id=findBtn
+							class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">find</button>
+						<button type="button" onclick="history.go(-1);"
+							class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-margin-bottom w3-round">Cancel</button>
+					</p>
 				</div>
-				<div class="custom-control custom-radio custom-control-inline">
-					<input type="radio" class="custom-control-input" id="search_2"
-						name="search_total" onclick="search_check(2)"> <label
-						class="custom-control-label font-weight-bold text-white"
-						for="search_2">비밀번호 찾기</label>
-				</div>
-				<div id="searchI">
-					<div class="form-group">
-						<label class="font-weight-bold text-white" for="m_name">이름</label>
-						<div>
-							<input type="text" class="form-control" id="m_name" name="m_name">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="font-weight-bold text-white" for="m_phone">휴대폰번호</label>
-						<div>
-							<input type="text" class="form-control" id="m_phone"
-								name="m_phone">
-						</div>
-					</div>
-					<div class="form-group">
-						<button id="myBtn" type="button" onclick="idSearch_click()"
-							class="btn btn-primary btn-block">확인</button>
-						<a class="btn btn-danger btn-block"
-							href="${pageContext.request.contextPath}/member/loginPage">취소</a>
-					</div>
-				</div>
-				<div id="searchP" style="display: none;">
-					<div class="form-group">
-						<label class="font-weight-bold text-white" for="m_id">아이디</label>
-						<div>
-							<input type="text" class="form-control" id="m_id" name="m_id">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="font-weight-bold text-white" for="m_id">이메일</label>
-						<div>
-							<input type="email" class="form-control" id="m_email"
-								name="m_email">
-						</div>
-					</div>
-					<div class="form-group">
-						<button id="searchBtn2" type="button"
-							class="btn btn-primary btn-block">확인</button>
-						<a class="btn btn-danger btn-block"
-							href="${pageContext.request.contextPath}/member/loginPage">취소</a>
-					</div>
-				</div>
-			</div>
+			</form>
 		</div>
 	</div>
-
-	<!-- Modal -->
-	<div id="myModal" class="modal">
-		<div class="modal_content">
-			<h4>
-				<b>아이디는?</b><span class="close">&times;</span>
-			</h4>
-			<br>
-			<h2 id="id_value"></h2>
-			<br>
-			<button type="button" id="pwSearch_btn"
-				class="btn peach-gradient btn-rounded waves-effect">
-				<i class="fa fa-envelope"></i>비밀번호 찾기
-			</button>
-		</div>
-
-	</div>
-
-	<script>
-		var modal = document.getElementById("myModal");
-		var btn = document.getElementById("myBtn");
-		var span = document.getElementsByClassName("close")[0];
-		btn.onclick = function() {
-			modal.style.display = "block";
-		}
-		span.onclick = function() {
-			modal.style.display = "none";
-		}
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-		}
-	</script>
-	<script>
-		//체크 버튼에 따라 아이디/비밀번호 기능이 달라진다
-		function search_check(num) {
-			if (num == '1') {
-				document.getElementById("searchP").style.display = "none";
-				document.getElementById("searchI").style.display = "";
-			} else {
-				document.getElementById("searchI").style.display = "none";
-				document.getElementById("searchP").style.display = "";
-			}
-		}
-	</script>
-	<script>
-		//아이디 & 스토어 값 저장하기 위한 변수
-		var idV = "";
-		// 아이디 값 받고 출력하는 ajax
-		var idSearch_click = function() {
-			$
-					.ajax({
-						type : "POST",
-						url : "${pageContext.request.contextPath}/member/memberFindId?m_name="
-								+ $('#m_name').val()
-								+ "&m_phone="
-								+ $('#m_phone').val(),
-						success : function(data) {
-							if (data == 0) {
-								$('#id_value').text("회원 정보를 확인해주세요!");
-							} else {
-								$('#id_value').text(data);
-								// 아이디값 별도로 저장
-								idV = data;
-							}
-						}
-					});
-		}
-	</script>
-
 </body>
 </html>

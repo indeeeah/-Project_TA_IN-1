@@ -11,21 +11,65 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style type="text/css">
-* {
-	margin: 0;
-	padding: 0;
-	text-decoration: none;
-	box-sizing: border-box;
+html, body {
+	height: 100%;
+	font-weight: 800;
 }
 
 body {
-	min-height: 100vh;
+	font-family: Arial;
 }
 
+svg {
+	display: block;
+	font: 10.5em 'Montserrat';
+	width: 960px;
+	height: 300px;
+	margin: 0 auto;
+}
+
+.text-copy {
+	fill: none;
+	stroke: white;
+	stroke-dasharray: 6% 29%;
+	stroke-width: 3px;
+	stroke-dashoffset: 0%;
+	animation: stroke-offset 5.5s infinite linear;
+}
+
+.text-copy:nth-child(1){
+	stroke: #dd5d20;
+	animation-delay: -1;
+}
+
+.text-copy:nth-child(2){
+	stroke: #144d2a;
+	animation-delay: -2s;
+}
+
+.text-copy:nth-child(3){
+	stroke: #df871b;
+	animation-delay: -3s;
+}
+
+.text-copy:nth-child(4){
+	stroke: #da3931;
+	animation-delay: -4s;
+}
+
+.text-copy:nth-child(5){
+	stroke: #3291b6;
+	animation-delay: -5s;
+}
+@keyframes stroke-offset { 
+100% {
+	stroke-dashoffset: -30%;
+}
+
+}
 .login_box {
 	width: 400px;
-	background-color: #f1f1f1;
-	height: 500px;
+	height: 450px;
 	padding: 80px 40px;
 	border-radius: 10px;
 	position: absolute;
@@ -34,12 +78,9 @@ body {
 	transform: translate(-50%, -50%)
 }
 
-.login_logo {
-	text-align: center;
-	font-size: 30px;
-}
-
 .lofin_msg {
+	font-size: 25px;
+	color: #144d2af8;
 	text-align: center;
 	margin-bottom: 60px;
 }
@@ -65,22 +106,17 @@ body {
 	width: 100%;
 	height: 50px;
 	border: none;
-	background: -webkit-linear-gradient(to right, #ff9068, #fd746c);
-	background: linear-gradient(120deg, #ff9068, #fd746c); D 0%, #B721FF
-	100%);
 	border-radius: 10px;
 	background-size: 200%;
 	border-color: white;
 	color: #fff;
 	outline: none;
-	cusor: pointer;
 	transition: .5s;
-	background: linear-gradient(120deg, #ff9068, #fd746c); D 0%, #B721FF
-	100%);
 	border-radius: 10px;
+	background-color: #144d2af8;
 }
 
-.btn-primary: hover {
+.btn-primary:hover {
 	background-position: right;
 }
 
@@ -88,15 +124,32 @@ body {
 	margin-top: 30px;
 	text-align: center;
 }
+
+.find_link a {
+	text-decoration: none;
+	color: #df871b;
+}
 </style>
 </head>
 <body>
+	<svg viewBox="0 0 960 300">
+        <symbol id="s-text">
+            <text text-anchor="middle" x="50%" y="80%">Tain</text>
+        </symbol>
+    
+        <g class="g-ants">
+            <use xlink:href="#s-text" class="text-copy"></use>
+            <use xlink:href="#s-text" class="text-copy"></use>
+            <use xlink:href="#s-text" class="text-copy"></use>
+            <use xlink:href="#s-text" class="text-copy"></use>
+            <use xlink:href="#s-text" class="text-copy"></use>
+        </g>
+    </svg>
 	<div class="login_box">
-		<div class="login_logo">
-			<b>TAIN</b>
-		</div>
 		<div class="login_box_body">
-			<p class="lofin_msg">Login page</p>
+			<div class="lofin_msg">
+				<p>Login</p>
+			</div>
 			<form action="${pageContext.request.contextPath}/member/login.do"
 				method="post">
 				<div class="form_group">
@@ -114,10 +167,12 @@ body {
 				</div>
 			</form>
 			<div class="find_link">
-				<a href="${pageContext.request.contextPath}/member/memberFindId.do">아이디/비밀번호를 잊으셨나요?</a>
+				<a href="${pageContext.request.contextPath}/member/memberFindId.do">아이디/비밀번호를
+					잊으셨나요?</a>
 			</div>
 			<div class="find_link">
-				계정이 없으신가요?<a href="${pageContext.request.contextPath}/member/joinPage">가입하기</a>
+				계정이 없으신가요?<a
+					href="${pageContext.request.contextPath}/member/joinPage">가입하기</a>
 			</div>
 		</div>
 	</div>

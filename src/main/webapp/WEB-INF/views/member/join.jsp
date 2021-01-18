@@ -19,24 +19,120 @@
 <!-- daum 도로명주소 찾기 api -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <style type="text/css">
-* {
+<
+style>* {
 	margin: 0;
 	padding: 0;
-	text-decoration: none;
-	box-sizing: border-box;
 }
 
 body {
-	min-height: 100vh;
+	background: white;
+	font-family: 'PT Sans';
 }
 
-.join_logo {
-	text-align: center;
+button:hover {
+	cursor: pointer;
 }
 
+.login-hide {
+	padding: 0px 30px 0px;
+	display: none;
+}
+
+.wrapper {
+	background: rgba(0, 0, 0, 0.6);
+	background-color: #91d370;
+	background-image: linear-gradient(319deg, #91d370 0%, #bca0ff 37%, #f2cd54 100%);
+	position: relative;
+	width: 1000px;
+	height: 750px;
+	margin: 0 auto;
+	margin-top: 100px;
+	position: relative;
+	background-image: linear-gradient(319deg, #91d370 0%, #bca0ff 37%, #f2cd54 100%);
+}
+
+.left, .right {
+	width: 50%;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right
+}
+
+.back-header, .back-p {
+	margin: 50px;
+	color: #fafafa;
+	letter-spacing: 1px;
+	color: #fafafa;
+}
+
+.back-header {
+	font-family: 'Ubuntu';
+	font-size: 50px;
+	font-weight: 500;
+}
+
+.back-p {
+	font-family: 'PT Sans';
+	letter-spacing: 1px;
+	font-size: 20px;
+	line-height: 30px;
+	margin-right: 60px;
+}
+
+.background button {
+	position: absolute;
+	left: 0;
+	bottom: 100px;
+}
+
+.background .left button {
+	left: 150px;
+}
+
+.background .right button {
+	left: 700px;
+}
+
+.form-container {
+	position: absolute;
+	width: 500px;
+	height: 800px;
+	background-color: white;
+	top: -25px;
+	left: 10px;
+	box-shadow: 9px 13px 16px 0px rgba(0, 0, 0, 0.75);
+}
+
+.sign-up, .login {
+	margin: 40px;
+}
+
+.back-btn {
+	width: 120px;
+	height: 50px;
+	font-size: 15px;
+	border: 0;
+	border-radius: 13px;
+	background: transparent;
+	border: 1px solid white;
+	color: #fafafa;
+	transition: .3s all;
+}
+
+.back-btn:hover {
+	background-color: #685fb494;
+	border: 1px solid #0d1631;
+}
+</style>
+<style type="text/css">
 .join_box {
 	width: 400px;
-	background-color: #f1f1f1;
 	height: 800px;
 	padding: 40px 40px;
 	border-radius: 10px;
@@ -47,8 +143,9 @@ body {
 }
 
 .join_box h2 {
+	letter-spacing: 2px;
 	text-align: center;
-	font-size: 25px;
+	font-size: 50px;
 	margin-bottom: 30px;
 	color: black;
 }
@@ -56,7 +153,7 @@ body {
 .form_group {
 	border-bottom: 2px solid #adadad;
 	position: relative;
-	margin: 15px 0;
+	margin: 10px 0;
 }
 
 .form_group input {
@@ -70,12 +167,13 @@ body {
 }
 
 .btn-primary {
+	font-size: 20px;
 	display: block;
 	width: 100%;
 	height: 60px;
 	border: none;
-	background-color: #08AEEA;
-	border-radius: 10px;
+	background-color: #082330;;
+	border-radius: 50px;
 	background-size: 200%;
 	border-color: white;
 	color: #fff;
@@ -91,12 +189,51 @@ body {
 .bottom-text {
 	margin-top: 30px;
 	text-align: center;
+	text-decoration: none;
 }
 
 .bottom-text a {
-	color: #08AEEA;
+	color: black;
+}
+
+.bssbtn {
+	font-size: 10px;
+	display: block;
+	width: 100%;
+	height: 20px;
+	border: none;
+	background-color: #082330;;
+	border-radius: 50px;
+	background-size: 200%;
+	border-color: white;
+	color: #fff;
+	outline: none;
 }
 </style>
+<script>
+	$(document).ready(function() {
+		var signUp = $('.signup-but');
+		var logIn = $('.login-but');
+
+		signUp.on('click', function() {
+			$('.login-hide').fadeOut('slow').css('display', 'none');
+			$('.sign-up').fadeIn('slow');
+
+			$('.form-container').animate({
+				left : '10px'
+			}, 'slow');
+		});
+
+		logIn.on('click', function() {
+			$('.login-hide').fadeIn('slow');
+			$('.sign-up').fadeOut('slow').css('display', 'none');
+
+			$('.form-container').animate({
+				left : '400px'
+			}, 'slow');
+		});
+	});
+</script>
 <script type="text/javascript">
             //모든 공백 체크 정규식 
             var empJ = /\s/g;
@@ -159,7 +296,7 @@ body {
                         });
                     }
                 });
-                $('form').on('submit', function() {
+                $('#frm_join').on('submit', function() {
                     var inval_Arr = new Array(6).fill(false);
                     if (idJ.test($('#m_id').val())) {
                         inval_Arr[0] = true;
@@ -169,7 +306,8 @@ body {
                         return false;
                     }
                     // 비밀번호가 같은 경우 && 비밀번호 정규식
-                    if (($('#m_pw').val())) {
+                    if (($('#m_pw').val() == ($('#m_pw2').val()))
+                    		&& pwJ.test($('m_pw').val())){
                         inval_Arr[1] = true;
                     } else {
                         inval_Arr[1] = false;
@@ -251,6 +389,16 @@ body {
                         $('#pw_check').css('color', 'red');
                     }
                 });
+              //1~2 패스워드 일치 확인
+              $('#m_pw2').blur(function() { 
+            	  if ($('#m_pw').val() != $(this).val()) { 
+            		  $('#pw2_check').text('비밀번호가 일치하지 않습니다.'); 
+            		  $('#pw2_check').css('color', 'red'); 
+            		  } else {
+            			  $('#pw2_check').text(''); 
+            			  } 
+            	  });
+
                 //이름에 특수문자 들어가지 않도록 설정
                 $("#m_name").blur(function() {
                     if (nameJ.test($(this).val())) {
@@ -364,73 +512,100 @@ body {
                 }).open();
             }
         </script>
+
 </head>
 
 <body>
-		<div class="join_form">
-		<div class="join_logo">
-			<h1>TAIN</h1>
+	<div class="wrapper">
+		<div class="background">
+			<div class="left">
+				<h2 class="back-header">Tain</h2>
+				<p class="back-p">..</p>
+				<button class="back-btn signup-but">일반 회원</button>
+			</div>
+			<div class="right">
+				<h2 class="back-header">Business</h2>
+				<p class="back-p">..</p>
+				<button class="back-btn login-but">비지니스 회원</button>
+			</div>
 		</div>
+		<div class="form-container">
+			<div class="sign-up">
+				<div class="join_form">
+					<form id="frm_join"
+						action="${pageContext.request.contextPath}/member/join.do"
+						method="post">
+						<div class="join_box">
+							<h2>Join</h2>
+							<div class="form_group">
+								<input type="text" class="form_control" id="m_id" name="m_id"
+									placeholder="아이디">
+								<div class="check_font" id="id_check"></div>
+							</div>
+							<div class="form_group">
+								<input type="text" class="form_control" id="m_name"
+									name="m_name" placeholder="이름">
+								<div class="check_font" id="name_check"></div>
+							</div>
+							<div class="form_group">
+								<input type="password" class="form_control" id="m_pw"
+									name="m_pw" placeholder="비밀번호">
+								<div class="check_font" id="pw_check"></div>
+							</div>
+							<div class="form_group">
+								<input type="password" class="form_control" id="m_pw2"
+									name="m_pw2" placeholder="비밀번호 확인">
+								<div class="check_font" id="pw2_check"></div>
+							</div>
 
-		<form action="${pageContext.request.contextPath}/member/join.do"
-			method="post">
-			<div class="join_box">
-				<h2>회원가입</h2>
-				<div class="form_group">
-					<input type="text" class="form_control" id="m_id" name="m_id"
-						placeholder="아이디">
-					<div class="check_font" id="id_check"></div>
-				</div>
-				<div class="form_group">
-					<input type="text" class="form_control" id="m_name" name="m_name"
-						placeholder="이름">
-					<div class="check_font" id="name_check"></div>
-				</div>
-				<div class="form_group">
-					<input type="password" class="form_control" id="m_pw" name="m_pw"
-						placeholder="비밀번호">
-					<div class="check_font" id="pw_check"></div>
-				</div>
-				<div class="form_group">
-					<input type="tel" class="form_control" id="m_birth" name="m_birth"
-						placeholder="생년월일">
-					<div class="check_font" id="birth_check"></div>
-				</div>
-				<div class="form_group">
-					<input type="tel" class="form_control" id="m_phone" name="m_phone"
-						placeholder="휴대폰 번호">
-					<div class="check_font" id="phone_check"></div>
-				</div>
-				<div class="form_group">
-					<input type="email" class="form_control" id="m_email"
-						name="m_email" placeholder="E-mail">
-					<div class="check_font" id="email_check"></div>
-				</div>
-				<div class="form_group">
-					<input class="form_control" style="width: 40%; display: inline;"
-						placeholder="우편번호" name="m_addr1" id="m_addr1" type="text"
-						readonly="readonly">
-					<button type="button" class="btn btn-default"
-						onclick="execPostCode();">
-						<i class="fa fa-search"></i> 우편번호 찾기
-					</button>
-				</div>
-				<div class="form_group">
-					<input class="form_control" style="top: 5px;" placeholder="도로명 주소"
-						name="m_addr2" id="m_addr2" type="text" readonly="readonly" />
-				</div>
-				<div class="form_group">
-					<input class="form_control" placeholder="상세주소" name="m_addr3"
-						id="m_addr3" type="text" />
-				</div>
-				<div class="form_group text_center">
-					<button type="submit" class="btn btn-primary">회원가입</button>
-					<div class="bottom-text">
-						<a href="${pageContext.request.contextPath}/member/loginPage"> 로그인으로 돌아가기</a>
-					</div>
+							<div class="form_group">
+								<input type="tel" class="form_control" id="m_birth"
+									name="m_birth" placeholder="생년월일">
+								<div class="check_font" id="birth_check"></div>
+							</div>
+							<div class="form_group">
+								<input type="tel" class="form_control" id="m_phone"
+									name="m_phone" placeholder="휴대폰 번호">
+								<div class="check_font" id="phone_check"></div>
+							</div>
+							<div class="form_group">
+								<input type="email" class="form_control" id="m_email"
+									name="m_email" placeholder="E-mail">
+								<div class="check_font" id="email_check"></div>
+							</div>
+							<div class="form_group">
+								<input class="form_control" style="width: 40%; display: inline;"
+									placeholder="우편번호" name="m_addr1" id="m_addr1" type="text"
+									readonly="readonly">
+								<button type="button" class="btn btn-default"
+									onclick="execPostCode();">
+									<i class="fa fa-search"></i> 우편번호 찾기
+								</button>
+							</div>
+							<div class="form_group">
+								<input class="form_control" style="top: 5px;"
+									placeholder="도로명 주소" name="m_addr2" id="m_addr2" type="text"
+									readonly="readonly" />
+							</div>
+							<div class="form_group">
+								<input class="form_control" placeholder="상세주소" name="m_addr3"
+									id="m_addr3" type="text" />
+							</div>
+							<div class="text_center">
+								<button type="submit" class="btn btn-primary">회원가입</button>
+								<div class="bottom-text">
+									<a href="${pageContext.request.contextPath}/member/loginPage">
+										로그인으로 돌아가기</a>
+								</div>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
-		</form>
+			<div class="login-hide">
+				<%@ include file="/WEB-INF/views/member/businessjoin.jsp"%>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

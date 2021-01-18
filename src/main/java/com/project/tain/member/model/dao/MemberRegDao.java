@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.tain.member.model.vo.BusinessMemberVO;
 import com.project.tain.member.model.vo.MemberRegVO;
 
 @Repository
@@ -20,6 +21,17 @@ public class MemberRegDao {
 	@Transactional
 	public int join(MemberRegVO vo) throws Exception {
 		return sqlSession.insert(NameSpace + ".join", vo);
+	}
+
+	// 비즈니스 회원가입
+	@Transactional
+	public int businessJoin(BusinessMemberVO vo) throws Exception {
+		return sqlSession.insert(NameSpace + ".businessJoin", vo);
+	}
+	
+	// 비즈니스 회원 중복 검사
+	public String check_businessId(BusinessMemberVO vo) throws Exception {
+		return sqlSession.selectOne(NameSpace + ".check_businessId", vo);
 	}
 
 	// 아이디 중복 검사
@@ -62,7 +74,7 @@ public class MemberRegDao {
 		return sqlSession.selectOne(NameSpace + ".login", m_id);
 	}
 
-	// 로그인 접속일자 변경0
+	// 로그인 접속일자 변경
 	@Transactional
 	public int update_log(String m_id) throws Exception {
 		return sqlSession.update(NameSpace + ".update_log", m_id);

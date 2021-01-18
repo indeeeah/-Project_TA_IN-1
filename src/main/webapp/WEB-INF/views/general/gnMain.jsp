@@ -1122,8 +1122,13 @@
                         저장된 콘텐츠!!
                     </div>
                 </div>
-            </div>
-            <footer> dddd </footer>
+            <footer> 
+            <c:if test="${not empty my_name }">
+            	<div class="" onclick="logout('${my_name }');">로그아웃</div>
+            	<br>
+            </c:if>
+            dddd             
+            </footer>
         </body>
         <script>
             var memId = $(".m_id").val();
