@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +33,20 @@ public class BsnBoardController {
 	@Autowired
 	private BsnBoardService bbService;
 	
-	public static final int LIMIT=10;
+	public static final int LIMIT=9;
 	
 	// 게시물 목록
 	@RequestMapping(value="/bbList.do", method = RequestMethod.GET)
-	public ModelAndView bbListService(
+	public ModelAndView bbListService(@RequestParam(name="page", defaultValue = "1") int page, 
 			ModelAndView mv) {
 		
 		String m_id= "aaaa";	// 로그인 대체
-		
+		int currentPage=page;
 		try {
-			mv.addObject("listCount", bbService.listCount(m_id));	//게시물카운트
+			mv.addObject("listCount", bbService.listCount(m_id));	// 게시물카운트
+			mv.addObject("category", bbService.selectCategory(m_id));//카테고리 목록
 			mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
+			mv.addObject("list", bbService.selectListPage(m_id, currentPage, LIMIT));	// 게시물 텍스트정보
 			mv.setViewName("business/bsnMain");
 //			mv.setViewName("business/bsnMain_backup");	//추후 삭제
 		} catch(Exception e) {
@@ -51,6 +54,26 @@ public class BsnBoardController {
 			mv.setViewName("errorPage");
 		}
 		return mv;
+	}
+	
+	// 게시물 스크롤 페이징
+	@ResponseBody
+	@RequestMapping(value="/bbListA", method = RequestMethod.POST)
+	public HashMap<String, Object> bbListAjax(Model model, HttpServletRequest request,
+			@RequestParam(name="page", defaultValue = "1") int page) {
+		HashMap<String, Object> result = new HashMap <String,Object>();
+		String m_id= "aaaa";	// 로그인 대체
+		int currentPage=page;
+		int listCount=bbService.listCount(m_id);
+		int maxPage=(int)((double)listCount/LIMIT+0.9);
+		List<BsnBoard> logList = bbService.selectListPage(m_id, currentPage, LIMIT);
+		result.put("listCount", bbService.listCount(m_id));	// 게시물카운트
+		result.put("currentPage", currentPage);				// 현재 페이지
+		result.put("maxPage", maxPage);						// 최대 페이지
+		result.put("category", bbService.selectCategory(m_id));//카테고리 목록
+		result.put("list", logList);	// 게시물 텍스트정보
+		System.out.println("list:"+ logList);
+		return result;
 	}
 	
 	// 게시물 상세
@@ -76,8 +99,18 @@ public class BsnBoardController {
 	
 	// 게시물 작성 페이지
 	@RequestMapping(value="/bbWriteForm.do", method = RequestMethod.GET)
-	public String bbInsertForm(ModelAndView mv) {
-		return "business/bbWriteForm";
+	public ModelAndView bbInsertForm(ModelAndView mv) {
+		String m_id = "aaaa";
+		try {
+			mv.addObject("category", bbService.selectCategory(m_id));
+			System.out.println("category: "+bbService.selectCategory(m_id));
+			mv.setViewName("business/bbWriteForm");
+		} catch(Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+		return mv;
 	}
 	
 	// 작성한 게시물 인서트
@@ -150,9 +183,11 @@ public class BsnBoardController {
 	// 게시물 수정 페이지
 	@RequestMapping(value="/bbRenew.do", method = RequestMethod.GET)
 	public ModelAndView boardDetail(@RequestParam(name="bb_id") String bb_id, ModelAndView mv) {
+		String m_id = "aaaa";
 		try {
 			mv.addObject("bbRenew", bbService.selectOne(bb_id));
 			mv.addObject("bbTags", bbService.selectOneTags(bb_id));
+			mv.addObject("category", bbService.selectCategory(m_id));
 			System.out.println("bbTags:"+bbService.selectOneTags(bb_id));
 			mv.setViewName("business/bbRenew");
 		} catch(Exception e) {
@@ -225,5 +260,27 @@ public class BsnBoardController {
 		} catch(Exception e) {
 			System.out.println("파일 삭제 에러 : " + e.getMessage());
 		}
+	}
+	
+	// 장바구니 담기
+	@ResponseBody
+	@RequestMapping(value="/cartInsert", method = RequestMethod.POST)
+	public String cartInsert(BsnBoard bb) {
+		System.out.println("카트담기 컨트롤러");
+		JSONObject job = new JSONObject();
+		String m_id= "aaaa";
+		bb.setM_id(m_id);
+		System.out.println("카트담기 아이디"+bb.getM_id());
+		System.out.println("카트담기 글번호"+bb.getBb_id());
+		try {
+			job.put("ack", bbService.addToCart(bb));
+			System.out.println("카트담기 완료");
+		} catch(Exception e) {
+			e.printStackTrace();
+			job.put("ack", -1);
+		} finally {
+			
+		}
+		return job.toJSONString();
 	}
 }

@@ -26,16 +26,26 @@
 		<result property="bb_img10" column="bb_img10"/>
 		<result property="m_img" column="m_img"/>
 		<result property="h_tag" column="h_tag"/>
+		<result property="bb_like" column="bb_like"/>
+		<result property="c_name" column="c_name"/>
 	</resultMap>
 	
 	<!-- 게시물 수 -->
 	<select id="bsnListCount" parameterType="string" resultType="int">
-		select count(*) from businessboard where m_id=#{m_id}
+		select count(*) from businessboard where m_id=#{m_id} and bb_type='B'
 	</select>
 	
 	<!-- 게시물 목록 -->
 	<select id="bsnSelectListAll" parameterType="string" resultType="arraylist" resultMap="resultBsnBoard">
-		select * from businessboard bb join businessboardadd bba on bb.bb_id=bba.bb_id where m_id=#{m_id} order by bb_date desc
+		select bb.*, bba.*, nvl(cnt, 0) bblikecnt from 
+			(select bb1.*, nvl(cnt, 0) bbrcnt from 
+				(select * from businessboard) bb1 full outer join 
+					(select count(*) cnt, bb_topid from businessboard where not(bb_topid is null) group by bb_topid) bb2 
+					on bb1.bb_id=bb2.bb_topid 
+				where bb_type='B' and m_id='aaaa') bb join 
+				businessboardadd bba on bb.bb_id=bba.bb_id full outer join 
+					(SELECT count(*) cnt, bb_id FROM bblike group by bb_id) bl on bb.bb_id=bl.bb_id
+    	where m_id=#{m_id} order by bb_date desc
 	</select>
 	<!-- 게시물 목록(텍스트) -->
 	<select id="bsnSelectList" resultType="arraylist" resultMap="resultBsnBoard">
@@ -48,8 +58,9 @@
 	
 	<!-- 게시물 상세(전체) -->
 	<select id="bsnSelectOne" parameterType="string" resultType="BsnBoard">
-		select bb.*, bba.*, m.m_name, m.m_img from businessboard bb join businessboardadd bba on bb.bb_id=bba.bb_id join member m on m.m_id=bb.m_id
-		where bb.bb_id=#{bb_id}
+		select bbr.*, bba.*, nvl(cnt, 0) bb_like from (select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='B' and bb_id=#{bb_id}) bbr 
+    		left outer join (select count(*) cnt, bb_id from bblike group by bb_id) bl on bbr.bb_id=bl.bb_id
+            left outer join businessboardadd bba on bbr.bb_id=bba.bb_id
 	</select>
 	<!-- 게시물 상세(텍스트) -->
 	<select id="bsnTextSelectOne" parameterType="string" resultType="BsnBoard">
@@ -69,7 +80,7 @@
 		insert into businessboard values(
 			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BSNBOARD_SEQ.NEXTVAL,3,'0'), #{m_id},
 			#{bb_name}, #{bb_info}, #{bb_price}, #{bb_option1}, #{bb_option2}, #{bb_option3}, #{bb_option4},
-			#{bb_type}, #{bb_topid}, sysdate
+			#{bb_type}, #{bb_topid}, sysdate, #{c_name}
 		)
 	</insert>
 	<!-- 게시물 등록(이미지) -->
@@ -82,7 +93,8 @@
 	
 	<!-- 게시물 수정(텍스트) -->
 	<update id="updateBsnBoard" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
-		update businessboard set bb_name=#{bb_name}, bb_info=#{bb_info}, bb_price=#{bb_price}, bb_option1=#{bb_option1}, bb_option2=#{bb_option2}, bb_option3=#{bb_option3}, bb_option4=#{bb_option4}  
+		update businessboard set bb_name=#{bb_name}, bb_info=#{bb_info}, bb_price=#{bb_price}, bb_option1=#{bb_option1}, bb_option2=#{bb_option2}, 
+			bb_option3=#{bb_option3}, bb_option4=#{bb_option4}, c_name=#{c_name}
 		where bb_id=#{bb_id}
 	</update>
 	<!-- 게시물 수정(이미지) -->
@@ -106,4 +118,34 @@
 		insert into businesshashtag values('BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD((BSNBOARD_SEQ.CURRVAL),3,'0'), #{h_tag})
 	</insert>
 	
+	
+	<!-- 장바구니 저장 -->
+	<insert id="addToCart" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
+		insert into shoppingbasket values(#{m_id}, #{bb_id}, sysdate)
+	</insert>
+	
+	
+	<!-- 카테고리 목록 -->
+	<select id="categoryList" parameterType="string" resultType="arraylist" resultMap="resultBsnBoard">
+		select * from category where m_id=#{m_id}
+	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

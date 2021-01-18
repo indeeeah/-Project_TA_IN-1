@@ -60,33 +60,33 @@ public class BsnBoardReplyController {
 
 	
 	// 댓글 등록
-		@ResponseBody
-		@RequestMapping(value="/bbrInsert", method = RequestMethod.POST)
-		public HashMap <String, Object> bbrInsert(BsnBoardReply bbr, 
-				@RequestParam(name="bb_topid")String bb_topid, @RequestParam(name="bb_info")String bb_info, 
-				Locale locale, Model model, HttpServletRequest request) {
-			System.out.println("댓글등록 컨트롤러");
-			HashMap<String, Object> result = new HashMap <String,Object>();
-			String m_id= "aaaa";
-			bbr.setM_id(m_id);
-			System.out.println("댓글등록 아이디"+bbr.getM_id());
-			System.out.println("댓글등록 상위글"+bb_topid);
-			System.out.println("댓글등록 내용"+bb_info);
-			try {
-				result.put("ack", bbrService.insertBbr(bbr));
-				System.out.println("댓글인서트완료");
-				List<BsnBoardReply> logList = bbrService.bbrList(bbr.getBb_topid());
-				System.out.println("댓글인서트 리스트:"+logList);
-				result.put("data", logList);
-			} catch(Exception e) {
-				e.printStackTrace();
-				result.put("ack", -1);
-			} finally {
-				
-			}
+	@ResponseBody
+	@RequestMapping(value="/bbrInsert", method = RequestMethod.POST)
+	public HashMap <String, Object> bbrInsert(BsnBoardReply bbr, 
+			@RequestParam(name="bb_topid")String bb_topid, @RequestParam(name="bb_info")String bb_info, 
+			Locale locale, Model model, HttpServletRequest request) {
+		System.out.println("댓글등록 컨트롤러");
+		HashMap<String, Object> result = new HashMap <String,Object>();
+		String m_id= "aaaa";
+		bbr.setM_id(m_id);
+		System.out.println("댓글등록 아이디"+bbr.getM_id());
+		System.out.println("댓글등록 상위글"+bb_topid);
+		System.out.println("댓글등록 내용"+bb_info);
+		try {
+			result.put("ack", bbrService.insertBbr(bbr));
+			System.out.println("댓글인서트완료");
+			List<BsnBoardReply> logList = bbrService.bbrList(bbr.getBb_topid());
+			System.out.println("댓글인서트 리스트:"+logList);
+			result.put("data", logList);
+		} catch(Exception e) {
+			e.printStackTrace();
+			result.put("ack", -1);
+		} finally {
 			
-			return result;
 		}
+		
+		return result;
+	}
 		
 	// 댓글 삭제
 	@ResponseBody

@@ -2,6 +2,7 @@ package com.project.tain.business.board.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,12 @@ public class BsnBoardDao {
 	// 게시물 목록(전체)
 	public List<BsnBoard> selectListAll(String m_id){
 		return sqlSession.selectList("BsnBoard.bsnSelectListAll", m_id);
+	}
+	// 게시물 목록(전체) 페이징
+	public List<BsnBoard> selectListPage(String m_id, int startPage, int limit){
+		int startRow=(startPage-1)*limit;
+		RowBounds row = new RowBounds(startRow, limit);
+		return sqlSession.selectList("BsnBoard.bsnSelectListAll", m_id, row);
 	}
 	// 게시물 목록(텍스트)
 	public List<BsnBoard> selectList(){
@@ -91,6 +98,22 @@ public class BsnBoardDao {
 		System.out.println("H_tag : "+bb.getH_tag());
 		System.out.println("Tags : "+bb.getTags());
 		return sqlSession.insert("BsnBoard.saveBsnTag", bb);
+	}
+	
+	
+	
+	// 장바구니 담기
+	public int addToCart(BsnBoard bb) {
+		System.out.println("장바구니 담기");
+		System.out.println("장바구니 담기 bb_id : "+bb.getBb_id());
+		System.out.println("장바구니 담기 m_id: "+bb.getM_id());
+		return sqlSession.insert("BsnBoard.addToCart", bb);
+	}
+	
+	
+	// 카테고리 목록
+	public List<BsnBoard> selectCategory(String m_id) {
+		return sqlSession.selectList("BsnBoard.categoryList", m_id);
 	}
 	
 }

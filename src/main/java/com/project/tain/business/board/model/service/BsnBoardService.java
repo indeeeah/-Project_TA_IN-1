@@ -8,8 +8,10 @@ public interface BsnBoardService {
 	// 게시물 수
 	int listCount(String m_id);
 	
-	// 게시물 목록(텍스트) 
+	// 게시물 목록(전체) 
 	List<BsnBoard> selectListAll(String m_id);
+	// 게시물 목록(페이징) 
+	List<BsnBoard> selectListPage(String m_id, int startPage, int limit);
 	// 게시물 목록(텍스트) 
 	List<BsnBoard> selectList();
 	// 게시물 목록(이미지)
@@ -35,4 +37,13 @@ public interface BsnBoardService {
 
 	// hashtag
 	int saveBsnTag(BsnBoard bb);
+	
+	
+	
+	
+	// 장바구니 담기
+	public int addToCart(BsnBoard bb);
+	
+	// 카테고리 목록
+	public List<BsnBoard> selectCategory(String m_id);
 }

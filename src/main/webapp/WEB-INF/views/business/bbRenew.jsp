@@ -187,6 +187,17 @@
 						옵션4 : <input type="text" id="bb_option4" name="bb_option4" onblur="option_onblur(this)" placeholder="option + price" value="${bbRenew.bb_option4 }">
 					</div>
 				</div>
+				<div id="categoryBox">
+					<div>
+						카테고리 설정
+					</div>
+					<select id="category" name="c_name">
+						<option value=''>옵션을 선택해주세요.</option>
+						<c:forEach items="${category }" var="v">
+							<option value="${v.c_name }"> ${v.c_name }</option>
+						</c:forEach>
+					</select>
+				</div>
 			</div>
 		</div>
 		<div id="bbWriteEdit" class="bbWriteEdit">
@@ -289,6 +300,22 @@
 			return false;
 		}
 	};
+	
+	// 파일 업로드 개수 제한(10개)
+	$('#file').on('change', function(){
+		var x = document.getElementById("file");
+		console.log("x:"+x);
+		console.log("x길이:"+x.files.length);
+		var txt = "";
+		if ('files' in x) {
+		    if (x.files.length > 10) {
+		        alert("파일 개수가 초과되었습니다.");
+		        document.getElementById("file").value = "";
+		        return;
+		        /* event.preventDefault(); */
+		    }
+		}
+	});
 	</script>
 </body>
 </html>
