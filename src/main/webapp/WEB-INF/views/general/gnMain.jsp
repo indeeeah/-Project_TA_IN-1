@@ -14,6 +14,8 @@
                 body {
                     width: 100%;
                     height: 100%;
+                    color: #262626;
+                    background-color: #FAFAFA;
                 }
                 
                 #content_con {
@@ -34,7 +36,6 @@
                 #profile_photo {
                     width: 150px;
                     height: 150px;
-                    background-color: beige;
                     margin-left: 50px;
                     border-radius: 50%;
                     float: left;
@@ -64,7 +65,7 @@
                     margin-top: 5px;
                     height: 18px;
                     padding: 5px 9px 5px 9px;
-                    border: 1px solid black;
+                    border: 1px solid #C7C7C7;
                     font-size: 14px;
                     line-height: 18px;
                     cursor: pointer;
@@ -113,6 +114,8 @@
                     border-radius: 50%;
                     margin-top: 10px;
                     cursor: pointer;
+                    border: 1px solid #C7C7C7;
+                    box-sizing: border-box;
                 }
                 
                 .highlight_title {
@@ -128,7 +131,7 @@
                     width: 988px;
                     height: 280px;
                     white-space: nowrap;
-                    border: 1px solid black;
+                    border: 1px solid #C7C7C7;
                     box-sizing: border-box;
                     padding: 20px 0px 20px 12px;
                     margin-bottom: 28px;
@@ -149,7 +152,7 @@
                     width: 134px;
                     height: 156px;
                     padding: 20px;
-                    border: 1px solid black;
+                    border: 1px solid #C7C7C7;
                     margin-right: 24px;
                     text-align: center;
                     display: inline-block;
@@ -181,7 +184,7 @@
                     width: 114px;
                     height: 18px;
                     padding: 5px 9px 5px 9px;
-                    border: 1px solid black;
+                    border: 1px solid #C7C7C7;
                     font-size: 14px;
                     line-height: 18px;
                     margin-top: 12px;
@@ -189,6 +192,7 @@
                 
                 #line {
                     margin: 0px;
+                    background: #C7C7C7;
                 }
                 
                 #cate {
@@ -224,7 +228,6 @@
                 .each_photo {
                     width: 312px;
                     height: 312px;
-                    background-color: beige;
                     margin-bottom: 32px;
                     cursor: pointer;
                 }
@@ -307,7 +310,6 @@
                 .photo_all {
                     width: 600px;
                     height: 600px;
-                    background-color: beige;
                 }
                 
                 #post_right {
@@ -326,7 +328,6 @@
                 #post_profile_photo {
                     width: 40px;
                     height: 40px;
-                    background-color: black;
                     border-radius: 50%;
                     float: left;
                 }
@@ -695,13 +696,13 @@
                     border-radius: 20px;
                     text-align: center;
                     font-size: 14px;
-                    over-flow: auto;
+                    overflow: auto;
                 }
                 
                 .top_con {
                     width: 100%;
                     height: 42px;
-                    border-bottom: 1px solid black;
+                    border-bottom: 1px solid #C7C7C7;
                 }
                 
                 .blank {
@@ -754,7 +755,12 @@
                     line-height: 38px;
                     height: 32px;
                     width: 56px;
-                    border: 1px solid black;
+                    border: 1px solid #C7C7C7;
+                }
+                
+                .cate_mine {
+                    color: #C7C7C7;
+                    cursor: pointer;
                 }
             </style>
         </head>
@@ -990,6 +996,7 @@
                                 <div class="reply_right" id="hashtag_con">
                                 </div>
                             </div>
+                            <div id="reply_bcon"></div>
                         </div>
                         <div id="post_right_bottom">
                             <div id="post_icon_box">
@@ -1057,8 +1064,8 @@
                         <c:if test="${not empty highlight }">
                             <c:forEach var="vo" items="${highlight }" varStatus="s">
                                 <div class="highlight_small_con">
-                                    <div class="highlight_photo">${vo.h_img }</div>
-                                    <div class="highlight_title">${vo.h_name }</div>
+                                    <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
+                                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }</div>
                                 </div>
                             </c:forEach>
                         </c:if>
@@ -1079,6 +1086,8 @@
                         </div>
                     </div>
                     <hr id="line">
+                    <input type="radio" id="ctm1" name="x" checked style="display: none;">
+                    <input type="radio" id="ctm2" name="x" style="display: none;">
                     <div id="cate">
                         <c:if test="${id_img_fwr.m_id ne my_name}">
                             <div class="cate_1">
@@ -1087,22 +1096,30 @@
                             </div>
                         </c:if>
                         <c:if test="${id_img_fwr.m_id eq my_name}">
-                            <div class="cate_1" style="margin-right: 60px;">
-                                <i class="fas fa-border-all cate_con"></i>
-                                <div class="category">게시물</div>
-                            </div>
-                            <div class="cate_1">
-                                <i class="fas fa-tags cate_con"></i>
-                                <div class="category">저장됨</div>
-                            </div>
+                            <label for="ctm1">
+                                <div class="cate_1 cate_mine forctm1" style="margin-right: 60px;">
+                                    <i class="fas fa-border-all cate_con"></i>
+                                    <div class="category">게시물</div>
+                                </div>
+                            </label>
+                            <label for="ctm2">
+                                <div class="cate_1 cate_mine forctm2">
+                                    <i class="fas fa-tags cate_con"></i>
+                                    <div class="category">저장됨</div>
+                                </div>
+                            </label>
                         </c:if>
                     </div>
                     <div id="photo_con">
                         <c:if test="${not empty showpost }">
                             <c:forEach var="vo" items="${showpost }" varStatus="s">
-                                <div class="each_photo" onclick="showpost('${vo.b_id }','${vo.b_type }');">${vo.b_id } ${vo.b_img }</div>
+                                <div onclick="showpost('${vo.b_id }','${vo.b_type }');"><img class="each_photo" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.b_img }">
+                                </div>
                             </c:forEach>
                         </c:if>
+                    </div>
+                    <div id="photo_save_con" style="display:none;">
+                        저장된 콘텐츠!!
                     </div>
                 </div>
             </div>
@@ -1129,6 +1146,28 @@
                 }
 
                 $(".fochkWithMe").trigger('click');
+
+                $(".forctm1").css("color", "#262626");
+                $(".forctm2").css("color", "#C7C7C7");
+                $("#ctm1").change(function() {
+                    if ($("#ctm1").is(':checked')) {
+                        $(".forctm1").css("color", "#262626");
+                        $(".forctm2").css("color", "#C7C7C7");
+                        $("#photo_con").css("display", "flex");
+                        $("#photo_save_con").css("display", "none");
+                    }
+
+                });
+                $("#ctm2").change(function() {
+                    if ($("#ctm2").is(':checked')) {
+                        $(".forctm1").css("color", "#C7C7C7");
+                        $(".forctm2").css("color", "#262626");
+                        $("#photo_con").css("display", "none");
+                        $("#photo_save_con").css("display", "block");
+                    }
+
+                });
+
             });
 
             // 팔로워 조회
@@ -1193,6 +1232,14 @@
                 var url = "${pageContext.request.contextPath}/gnEachPage?b_id=" + b_id;
                 $(location).attr('href', url);
             });
+
+            // 하이라이트 페이지 이동
+            function highlight(h_name) {
+                var postid = $(".post_id").val();
+
+                var url = "${pageContext.request.contextPath}/eachHighlight?m_id=" + postid + "&h_name=" + h_name;
+                $(location).attr('href', url);
+            }
 
             // 멤버 신고
             function memberReport(id) {
@@ -1714,6 +1761,10 @@
                 $("#post_back").css("display", "block");
                 $("#post_modal").css("display", "block");
                 $("#post_con").css("display", "block");
+                $(".slide_btn_prev").css("display", "none");
+                $(".slide_btn_next").css("display", "none");
+                $(".likechk").css("display", "block");
+                $(".unlikechk").css("display", "none");
 
                 $.ajax({
                     url: "${pageContext.request.contextPath}/hiddenShowLike.do",
@@ -1755,17 +1806,18 @@
                         var likecount = data.showeachpost.likecount;
                         var b_content = data.showeachpost.b_content;
                         var b_img = data.showeachpost.b_img.split(",");
-
+                        var htmls = "";
+                        var a = document.getElementById("photo");
                         $("#for_modal_con").val(b_id);
                         $("#for_modal_content").val(b_content);
                         $("#for_fuc").val(b_id);
                         for (i = 0; i < b_img.length; i++) {
                             if (b_img[i] != "" && b_img[i] != " ") {
                                 console.log(b_img[i]);
-                                //$("#photo").append('<img class="photo_all" src="${pageContext.request.contextPath}/resources/uploadFiles/' + b_img[i] + '">');
-                                $("#photo").append('<div class="photo_all">' + b_img[i] + '</div>');
+                                htmls += '<div><img class="photo_all" src="${pageContext.request.contextPath}/resources/uploadFiles/' + b_img[i] + '"></div>';
                             }
                         }
+                        $(a).html(htmls);
 
                         var photoCount = $(".photo_all").length;
                         if (photoCount > 1) {
@@ -1776,7 +1828,7 @@
                             b_content = "";
                             document.getElementById("re_main_con").innerHTML = '<div style="cursor: pointer;" onclick="goEachAcount(\'' + m_id + '\');">' + m_id + "</div>&nbsp;<div id='newcon'>" + b_content + '</div>';
                         } else {
-                            document.getElementById("re_main_con").innerHTML = '<div style="cursor: pointer;" onclick="goEachAcount(\'' + m_id + '\');">' + m_id + "</div>&nbsp;<div id='newcon'>" + b_content + '</div>';
+                            document.getElementById("re_main_con").innerHTML = '<div style="cursor: pointer;" onclick="goEachAcount(\'' + m_id + '\');">' + m_id + "</div>&nbsp;<div id='newcon'>" + b_content + '</div><div class="translate" onclick="translatec(\'' + b_content + '\');">번역하기</div>';
                         }
                         document.getElementById("post_like").innerHTML = "<input type='button' id='lCount' value='" + likecount + "'>" + "명이 좋아합니다";
                         document.getElementById("post_date").innerHTML = b_date;
@@ -1837,14 +1889,18 @@
                     },
                     success: function(hashtag) {
                         var count = hashtag;
+                        var htmls = "";
+                        var a = document.getElementById("hashtag_con");
                         if (count.hashtag == undefined) {} else {
                             for (var i = 0; i < count.hashtag.length; i++) {
                                 var hashtag1 = count.hashtag[i].h_tag;
 
                                 // 해쉬태그 append - hashtag
-                                $(".reply_right").append('<a href="${pageContext.request.contextPath}/explore?hashtag=' + hashtag1 + '">#' + hashtag1 + '</a>&nbsp;');
+
+                                htmls += '<a href="${pageContext.request.contextPath}/explore?hashtag=' + hashtag1 + '">#' + hashtag1 + '</a>&nbsp;';
                             }
                         }
+                        $(a).html(htmls);
                     },
                     error: function(request, status, error) {
                         alert("code:" +
@@ -1866,6 +1922,9 @@
                     dataType: "json",
                     success: function(hComment) {
                         var count = hComment;
+                        var htmls = "";
+                        var a = document.getElementById("reply_bcon");
+                        htmls += '<div id="reset_con"></div>';
                         if (count.hComment.length == undefined) {} else {
                             for (var i = 0; i < count.hComment.length; i++) {
                                 var id = count.hComment[i].m_id;
@@ -1875,13 +1934,14 @@
                                 var countr = count.hComment[i].count;
                                 var b_date = count.hComment[i].b_date;
                                 var m_img = count.hComment[i].m_img;
-                                $("#post_right_middle").append('<div class="each_reply_con each_reply_con' + b_id + '">' +
+                                console.log("답글 개수" + countr);
+                                htmls += '<div class="each_reply_con each_reply_con' + b_id + '">' +
                                     '<input type="hidden" class="chkCoLike" onclick="chkCoLike(\'' + b_id + '\');">' +
                                     '<input type="hidden" class="countLike_trigger" onclick="countLike(\'' + b_id + '\');">' +
                                     '<div class="reply_com_con">' +
                                     '<div class="reply_profile_photo">' + m_img + '</div>' +
                                     '<div class="reply_right_com">' +
-                                    '<div class="reply_con">' + '<div style="cursor: pointer;" onclick="goEachAcount(\'' + id + '\');">' + id + "</div>&nbsp;<div id='newcon" + b_id + "'>" + b_content + '</div></div>' +
+                                    '<div class="reply_con">' + '<div style="cursor: pointer;" onclick="goEachAcount(\'' + id + '\');">' + id + "</div>&nbsp;<div id='newcon" + b_id + "'>" + b_content + '</div><div class="translate" onclick="translater(\'' + b_content + '\',\'' + b_id + '\');">번역하기</div></div>' +
                                     '<div class="reply_date">' +
                                     '<div class=" rebot">' + b_date + '</div>' +
                                     '<div class="rebot">좋아요 ' + '<input type="button" class="lcount" id="lcount' + b_id + '"value="">' + '개</div>' +
@@ -1892,21 +1952,22 @@
                                     '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\');"></div>' +
                                     '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
                                     '</div>' +
-                                    '<div class="show_re_re show_re_re' + b_id + '" onclick ="show_re_re(\'' + b_id + '\');" style="display:none;">답글 보기 (' + countr + ')개</div>' +
-                                    '</div><div class="re_con re_con' + b_id + '"></div>' +
-                                    '<div class="com_detail replyCo replyCo' + b_id + '" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                    id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button></div>'
-                                );
-                                if (countr != 0) {
-                                    $(".show_re_re" + b_id).css("display", "block");
+                                    '<div class="show_re_re show_re_re' + b_id + '" onclick ="show_re_re(\'' + b_id + '\');">답글 보기 (' + countr + ')개</div>' +
+                                    '</div><div class="re_con re_con' + b_id + '" id="re_con' + b_id + '"></div>' +
+                                    '<div class="com_detail replyCo replyCo' + b_id + '" id="replyCo' + b_id + '" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
+                                    id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button></div>';
+                                if (countr == 0) {
+                                    $(".show_re_re" + b_id).css("display", "none");
                                 }
 
 
 
                             }
-                            $(".chkCoLike").trigger('click');
-                            $(".countLike_trigger").trigger('click');
+
                         }
+                        $(a).html(htmls);
+                        $(".chkCoLike").trigger('click');
+                        $(".countLike_trigger").trigger('click');
 
 
                     },
@@ -1918,6 +1979,103 @@
                             request.responseText +
                             "\n" + "error:" +
                             error);
+                    }
+                });
+            }
+
+            // 번역하기
+            function translatec(source) {
+                /* var hcount = $(".hashtag" + b_id).length;
+                console.log(hcount);
+                $(".hashtag" + b_id).trigger('click'); */
+                var a = document.getElementById("newcon");
+                console.log(source);
+                $.ajax({
+                    url: "translate",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        source: source
+                    },
+                    success: function(resp) {
+                        if (resp.result == "ko") {
+                            $.ajax({
+                                url: "TranslateProcKo",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else if (resp.result == "en") {
+                            $.ajax({
+                                url: "TranslateProcEn",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else {
+                            alert("번역할 수 없습니다.");
+                        }
+                    },
+                    error: function(err1) {
+                        $(a).html("오류가 발생하였습니다.");
+                    }
+                });
+            }
+            // 번역하기
+            function translater(source, b_id) {
+                /* var hcount = $(".hashtag" + b_id).length;
+                console.log(hcount);
+                $(".hashtag" + b_id).trigger('click'); */
+                var a = document.getElementById("newcon" + b_id);
+                console.log(source);
+                $.ajax({
+                    url: "translate",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        source: source
+                    },
+                    success: function(resp) {
+                        if (resp.result == "ko") {
+                            $.ajax({
+                                url: "TranslateProcKo",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else if (resp.result == "en") {
+                            $.ajax({
+                                url: "TranslateProcEn",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else {
+                            alert("번역할 수 없습니다.");
+                        }
+                    },
+                    error: function(err1) {
+                        $(a).html("오류가 발생하였습니다.");
                     }
                 });
             }
@@ -1950,6 +2108,7 @@
                     }
                 });
             }
+
 
             // 답글 좋아요
             function pressLike_co(b_id) {
@@ -2022,6 +2181,8 @@
                     dataType: "json",
                     success: function(hComment) {
                         var count = hComment;
+                        var htmls = "";
+                        var a = document.getElementById("re_con" + t_id);
 
                         for (var i = 0; i < count.hComment.length; i++) {
                             var id = count.hComment[i].m_id;
@@ -2030,13 +2191,13 @@
                             var b_date = count.hComment[i].b_date;
                             var m_img = count.hComment[i].m_img;
 
-                            $(".re_con" + t_id).append('<div class="each_reply_con each_reply_con' + b_id + '">' +
+                            htmls += '<div class="each_reply_con each_reply_con' + b_id + '">' +
                                 '<input type="hidden" class="chkCoLike" onclick="chkCoLike(\'' + b_id + '\');">' +
                                 '<input type="hidden" class="countLike_trigger" onclick="countLike(\'' + b_id + '\');">' +
                                 '<div class="reply_com_con">' +
                                 '<div class="reply_profile_photo">' + m_img + '</div>' +
                                 '<div class="reply_right_com">' +
-                                '<div class="reply_con">' + '<div style="cursor: pointer;" onclick="goEachAcount(\'' + id + '\');">' + id + "</div>&nbsp;<div id='newcon" + b_id + "'>" + b_content + '</div></div>' +
+                                '<div class="reply_con">' + '<div style="cursor: pointer;" onclick="goEachAcount(\'' + id + '\');">' + id + "</div>&nbsp;<div id='newcon" + b_id + "'>" + b_content + '</div><div class="translate" onclick="translater(\'' + b_content + '\',\'' + b_id + '\');">번역하기</div></div>' +
                                 '<div class="reply_date">' +
                                 '<div class=" rebot">' + b_date + '</div>' +
                                 '<div class="rebot">좋아요 ' + '<input type="button" class="lcount lcount' + b_id + '" id="lcount' + b_id + '" value="">' + '개</div>' +
@@ -2046,8 +2207,10 @@
                                 '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\');"></div>' +
                                 '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
                                 '</div>' +
-                                '</div>');
+                                '</div>';
                         }
+
+                        $(a).html(htmls);
 
                         $(".chkCoLike").trigger('click');
                         $(".countLike_trigger").trigger('click');
@@ -2396,17 +2559,17 @@
             //모달 초기화 수정 필요
             $(".cancel").on('click', function() {
                 var post_id = $(".post_id").val();
-                //$("#post_back").css("display", "none");
-                //$("#post_modal").css("display", "none");
-                //$("#post_con").css("display", "none");
+                $("#post_back").css("display", "none");
+                $("#post_modal").css("display", "none");
+                $("#post_con").css("display", "none");
                 //$("#report_modal").css("display", "none");
                 //$("#report_back").css("display", "none");
                 //$("#share_con").css("display", "none");
                 //$("#share_con_result").css("display", "none");
                 //$(".each_photo").off('click');
-                $("#unfollowchk").css("display", "none");
-                var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
-                $(location).attr('href', url);
+                //$("#unfollowchk").css("display", "none");
+                //var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
+                //$(location).attr('href', url);
 
             });
 

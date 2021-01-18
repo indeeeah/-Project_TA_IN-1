@@ -41,4 +41,24 @@ public class StoryDao {
 		return sqlSession.selectList("Story.eachStory", id);
 	}
 
+	public int insertHighlight(Story st) {
+		return sqlSession.insert("Story.insertHighlight", st);
+	}
+
+	public List<Story> selectHighlight(String my_name) {
+		return sqlSession.selectList("Story.selectHighlight", my_name);
+	}
+
+	public int deleteHname(Story st) {
+		return sqlSession.delete("Story.deleteHname", st);
+	}
+
+	public int deleteh(Story st) {
+		return sqlSession.delete("Story.deleteh", st);
+	}
+
+	public List<Story> selectEachHighlight(Story st) {
+		return sqlSession.selectList("Story.selectEachHighlight", st);
+	}
+
 }

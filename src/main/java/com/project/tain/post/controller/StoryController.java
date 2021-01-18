@@ -41,6 +41,7 @@ public class StoryController {
 			mv.addObject("myProfile", tService.showMyProf(my_name));
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("myStory", sService.showMyStory(my_name));
+			mv.addObject("selectHighlight", sService.selectHighlight(my_name));
 			mv.setViewName("post/writeStory");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -67,8 +68,27 @@ public class StoryController {
 		}
 		return mv;
 	}
+
+	@RequestMapping(value = "/eachHighlight", method = RequestMethod.GET)
+	public ModelAndView selectEachHighlight(HttpServletRequest request, @RequestParam(name = "h_name") String h_name,
+			@RequestParam(name = "m_id") String m_id, ModelAndView mv, Story st) {
+		try {
+			mv.addObject("selectEachHighlight", sService.selectEachHighlight(st));
+			System.out.println(h_name);
+			System.out.println(m_id);
+			System.out.println(sService.selectEachHighlight(st));
+			mv.setViewName("post/highlight");
+			System.out.println(mv);
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+			e.printStackTrace();
+		}
+		return mv;
+	}
+
 	@RequestMapping(value = "/eachstory", method = RequestMethod.GET)
-	public ModelAndView eachstory(HttpServletRequest request, @RequestParam(name = "id", required = false) String id, ModelAndView mv) {
+	public ModelAndView eachstory(HttpServletRequest request, @RequestParam(name = "id") String id, ModelAndView mv) {
 		try {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
@@ -102,6 +122,19 @@ public class StoryController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/insertHighlight.do", method = RequestMethod.POST)
+	public ModelAndView insertHighlight(Story st, ModelAndView mv) {
+		try {
+			sService.insertHighlight(st);
+			mv.setViewName("redirect:/writeStory");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return mv;
+		}
+	}
+
 	private void removeFile(String s_img, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "//uploadFiles";
@@ -122,7 +155,7 @@ public class StoryController {
 		String savePath = root + "//uploadFiles";
 		File folder = new File(savePath);
 		if (!folder.exists()) {
-			folder.mkdir(); // 폴더가 없다면 생성한다.
+			folder.mkdir();
 		}
 		String filePath = null;
 		try {
@@ -139,22 +172,48 @@ public class StoryController {
 			System.out.println("파일 전송 에러 : " + e.getMessage());
 		}
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "deleteStory.do", method = RequestMethod.POST)
-	public String deleteStory(@RequestParam(name = "m_id") String m_id,
-			@RequestParam(name = "s_img") String s_img, Story st, HttpServletRequest request, ModelAndView mv) {
+	public String deleteStory(@RequestParam(name = "m_id") String m_id, @RequestParam(name = "s_img") String s_img,
+			Story st, HttpServletRequest request, ModelAndView mv) {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", sService.deleteStory(st));
 			removeFile(s_img, request);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			return job.toJSONString();
 		}
 	}
-	
+
+	@ResponseBody
+	@RequestMapping(value = "deleteHname.do", method = RequestMethod.POST)
+	public String deleteHname(Story st, HttpServletRequest request, ModelAndView mv) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", sService.deleteHname(st));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "deleteh.do", method = RequestMethod.POST)
+	public String deleteh(Story st, HttpServletRequest request, ModelAndView mv) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", sService.deleteh(st));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "storyResult.do", method = RequestMethod.POST)
 	public String storyResult(Story st, ModelAndView mv) {
@@ -172,5 +231,5 @@ public class StoryController {
 		}
 		return job.toString();
 	}
-	
+
 }

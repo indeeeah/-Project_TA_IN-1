@@ -34,6 +34,7 @@ public class TranslateController {
 			
 		} catch(Exception e) {
 			obj.put("ack", -1);
+			e.printStackTrace();
 		} finally {
 		}
 		return obj.toJSONString();
@@ -58,6 +59,7 @@ public class TranslateController {
 			
 		} catch(Exception e) {
 			obj.put("ack", -1);
+			e.printStackTrace();
 		} finally {
 		}
 		return obj.toJSONString();
@@ -82,6 +84,7 @@ public class TranslateController {
 			
 		} catch(Exception e) {
 			obj.put("ack", -1);
+			e.printStackTrace();
 		} finally {
 		}
 		return obj.toJSONString();

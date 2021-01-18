@@ -47,4 +47,29 @@ public class StoryImpl implements StoryService {
 		return sDao.eachStory(id);
 	}
 
+	@Override
+	public int insertHighlight(Story st) {
+		return sDao.insertHighlight(st);
+	}
+
+	@Override
+	public List<Story> selectHighlight(String my_name) {
+		return sDao.selectHighlight(my_name);
+	}
+
+	@Override
+	public int deleteHname(Story st) {
+		return sDao.deleteHname(st);
+	}
+
+	@Override
+	public int deleteh(Story st) {
+		return sDao.deleteh(st);
+	}
+
+	@Override
+	public List<Story> selectEachHighlight(Story st) {
+		return sDao.selectEachHighlight(st);
+	}
+
 }

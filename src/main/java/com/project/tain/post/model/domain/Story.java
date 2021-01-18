@@ -15,6 +15,9 @@ public class Story implements java.io.Serializable {
 	private String m_img;
 	private String id;
 	private String my_name;
+	private String s_id;
+	private String h_name;
+	private String h_img;
 
 	public String getM_id() {
 		return m_id;
@@ -66,6 +69,30 @@ public class Story implements java.io.Serializable {
 
 	public void setMy_name(String my_name) {
 		this.my_name = my_name;
+	}
+
+	public String getS_id() {
+		return s_id;
+	}
+
+	public void setS_id(String s_id) {
+		this.s_id = s_id;
+	}
+
+	public String getH_name() {
+		return h_name;
+	}
+
+	public void setH_name(String h_name) {
+		this.h_name = h_name;
+	}
+
+	public String getH_img() {
+		return h_img;
+	}
+
+	public void setH_img(String h_img) {
+		this.h_img = h_img;
 	}
 	
 	

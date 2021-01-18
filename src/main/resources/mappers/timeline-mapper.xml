@@ -359,4 +359,9 @@
 	<select id="showMemberType" parameterType="string" resultType="string">
 	select m_usage from member where m_id=#{m_id}
 	</select>
+	
+	<!-- 비밀번호 체크 -->
+	<select id="chkpwd" parameterType="TimeLine" resultType="int">
+	select count(*) from member where m_id=#{m_id} and m_pw=#{m_pw}
+	</select>
 </mapper>

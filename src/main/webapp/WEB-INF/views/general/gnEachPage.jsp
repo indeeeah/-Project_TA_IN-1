@@ -13,6 +13,8 @@
                 body {
                     width: 100%;
                     height: 100%;
+                    color: #262626;
+                    background-color: #FAFAFA;
                 }
                 
                 #post_modal {
@@ -32,7 +34,7 @@
                     font-size: 14px;
                     background: #fff;
                     display: inline;
-                    border: 1px solid black;
+                    border: 1px solid #C7C7C7;
                 }
                 
                 #for_stay_left {
@@ -81,7 +83,6 @@
                 #post_profile_photo {
                     width: 40px;
                     height: 40px;
-                    background-color: black;
                     border-radius: 50%;
                     float: left;
                 }
@@ -618,8 +619,17 @@
                                         ${selectEachPost.m_id }</div>&nbsp;
                                     <div id='newcon'>${selectEachPost.b_content }
                                     </div>
+                                    <div class="translate" onclick="translatec('${selectEachPost.b_content }');">번역하기
+                                    </div>
                                 </div>
-                                <div class="reply_right" id="hashtag_con"></div>
+                                <div class="reply_right" id="hashtag_con">
+                                    <c:if test="${not empty hashtag }">
+                                        <c:forEach var="vo" items="${hashtag }" varStatus="s">
+                                            <a href="${pageContext.request.contextPath}/explore?hashtag=${vo.h_tag }">#${vo.h_tag
+												}</a>
+                                        </c:forEach>
+                                    </c:if>
+                                </div>
                             </div>
                             <c:if test="${not empty selectEachPostComments }">
                                 <c:forEach var="vo" items="${selectEachPostComments }" varStatus="s">
@@ -629,10 +639,12 @@
                                         <div class="reply_com_con">
                                             <div class="reply_profile_photo" style="cursor: pointer;" onclick="goEachAcount('${vo.m_id}');">${vo.m_img }</div>
                                             <div class="reply_right_com">
-                                                <div class="reply_con">
-                                                    <div style="cursor: pointer;" onclick="goEachAcount('${vo.m_id}');">
+                                                <div class="reply_con" style="position:inline;">
+                                                    <div style="cursor: pointer;" onclick="goEachAcount('${vo.m_id}');" style="float:left;">
                                                         ${vo.m_id}</div>&nbsp;
-                                                    <div id='newcon${vo.b_id}'>${vo.b_content }
+                                                    <div id='newcon${vo.b_id}' style="float:left;">${vo.b_content }
+                                                    </div>
+                                                    <div class="translate" onclick="translater('${vo.b_content }','${vo.b_id}');">번역하기
                                                     </div>
                                                 </div>
                                                 <div class="reply_date">
@@ -649,7 +661,7 @@
                                         <input type="hidden" id="for_reco${vo.b_id}" class="for_reco" onclick="show_re_more('${vo.b_id}','${vo.comments }');" value="${vo.comments }">
                                         <div class="show_re_re show_re_re${vo.b_id}" onclick="show_re_re('${vo.b_id}');" style="display:none;">답글 보기 (${vo.comments })개</div>
                                     </div>
-                                    <div class="re_con re_con${vo.b_id}"></div>
+                                    <div class="re_con re_con${vo.b_id}" id="re_con${vo.b_id}"></div>
                                     <div class="com_detail replyCo replyCo${vo.b_id}" style="display:none;">
                                         <div class="commentRId post_id" style="color:transparent;">${vo.m_id}</div>
                                         <input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button>
@@ -689,7 +701,7 @@
             for (i = 0; i < b_img.length; i++) {
                 if (b_img[i] != "" && b_img[i] != " ") {
                     console.log(b_img[i]);
-                    $("#photo").append('<div class="photo_all">' + b_img[i] + '</div>');
+                    $("#photo").append('<div><img class="photo_all" src="${pageContext.request.contextPath}/resources/uploadFiles/' + b_img[i] + '"></div>');
                 }
             }
 
@@ -780,7 +792,7 @@
                         	$(".people_follow" + fid).css("display", "none");
                         	$(".people_alfollow" + fid).css("display", "block");
 
-						} */
+                        } */
                         if (hLike.follow == 0) {
                             $("#followbtn").css("display", "block");
                         }
@@ -801,6 +813,104 @@
 
                 $(".countLike_trigger").trigger('click');
             });
+
+            // 번역하기
+            function translatec(source) {
+                /* var hcount = $(".hashtag" + b_id).length;
+                console.log(hcount);
+                $(".hashtag" + b_id).trigger('click'); */
+                var a = document.getElementById("newcon");
+                console.log(source);
+                $.ajax({
+                    url: "translate",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        source: source
+                    },
+                    success: function(resp) {
+                        if (resp.result == "ko") {
+                            $.ajax({
+                                url: "TranslateProcKo",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else if (resp.result == "en") {
+                            $.ajax({
+                                url: "TranslateProcEn",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else {
+                            alert("번역할 수 없습니다.");
+                        }
+                    },
+                    error: function(err1) {
+                        $(a).html("오류가 발생하였습니다.");
+                    }
+                });
+            }
+            // 번역하기
+            function translater(source, b_id) {
+                /* var hcount = $(".hashtag" + b_id).length;
+                console.log(hcount);
+                $(".hashtag" + b_id).trigger('click'); */
+                var a = document.getElementById("newcon" + b_id);
+                console.log(source);
+                $.ajax({
+                    url: "translate",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        source: source
+                    },
+                    success: function(resp) {
+                        if (resp.result == "ko") {
+                            $.ajax({
+                                url: "TranslateProcKo",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else if (resp.result == "en") {
+                            $.ajax({
+                                url: "TranslateProcEn",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else {
+                            alert("번역할 수 없습니다.");
+                        }
+                    },
+                    error: function(err1) {
+                        $(a).html("오류가 발생하였습니다.");
+                    }
+                });
+            }
+
 
             //답글 더 보기
             function show_re_more(b_id, comments) {
@@ -1330,7 +1440,8 @@
                     dataType: "json",
                     success: function(hComment) {
                         var count = hComment;
-
+                        var htmls = "";
+                        var a = document.getElementById("re_con" + t_id);
                         for (var i = 0; i < count.hComment.length; i++) {
                             var id = count.hComment[i].m_id;
                             var b_content = count.hComment[i].b_content;
@@ -1338,13 +1449,13 @@
                             var b_date = count.hComment[i].b_date;
                             var m_img = count.hComment[i].m_img;
 
-                            $(".re_con" + t_id).append('<div class="each_reply_con each_reply_con' + b_id + '">' +
+                            htmls += '<div class="each_reply_con each_reply_con' + b_id + '">' +
                                 '<input type="hidden" class="chkCoLike" onclick="chkCoLike(\'' + b_id + '\');">' +
                                 '<input type="hidden" class="countLike_trigger" onclick="countLike(\'' + b_id + '\');">' +
                                 '<div class="reply_com_con">' +
                                 '<div class="reply_profile_photo">' + m_img + '</div>' +
                                 '<div class="reply_right_com">' +
-                                '<div class="reply_con">' + '<div style="cursor: pointer;" onclick="goEachAcount(\'' + id + '\');">' + id + "</div>&nbsp;<div id='newcon" + b_id + "'>" + b_content + '</div></div>' +
+                                '<div class="reply_con">' + '<div style="cursor: pointer;" onclick="goEachAcount(\'' + id + '\');">' + id + "</div>&nbsp;<div id='newcon" + b_id + "'>" + b_content + '</div><div class="translate" onclick="translater(\'' + b_content + '\',\'' + b_id + '\');">번역하기</div></div>' +
                                 '<div class="reply_date">' +
                                 '<div class=" rebot">' + b_date + '</div>' +
                                 '<div class="rebot">좋아요 ' + '<input type="button" class="lcount lcount' + b_id + '" id="lcount' + b_id + '" value="">' + '개</div>' +
@@ -1354,8 +1465,10 @@
                                 '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\');"></div>' +
                                 '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
                                 '</div>' +
-                                '</div>');
+                                '</div>';
                         }
+
+                        $(a).html(htmls);
 
                         $(".chkCoLike").trigger('click');
                         $(".countLike_trigger").trigger('click');

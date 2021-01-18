@@ -21,6 +21,7 @@
                     z-index: 4;
                     border-bottom: 1px solid #C7C7C7;
                     background-color:white;
+                    color: #262626;
                 }
                 
                 #big_con {

@@ -11,7 +11,7 @@ public class GnWrite implements java.io.Serializable {
 	private String b_id;
 	private String b_content;
 	private String my_name;
-	
+	private String h_tag;
 	private String b_img1;
 	private String b_img2;
 	private String b_img3;
@@ -145,6 +145,14 @@ public class GnWrite implements java.io.Serializable {
 
 	public void setB_img10(String b_img10) {
 		this.b_img10 = b_img10;
+	}
+
+	public String getH_tag() {
+		return h_tag;
+	}
+
+	public void setH_tag(String h_tag) {
+		this.h_tag = h_tag;
 	}
 	
 	

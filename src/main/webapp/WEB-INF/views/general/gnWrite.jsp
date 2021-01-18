@@ -91,6 +91,7 @@ canvas {
 					<input type="file" name="upfile" class="upfile" multiple>
 						<input type="text" value="${chkseq}" name="seq" id="for_seq">
 					<textarea rows="5" cols="40" name="b_content"></textarea>
+					<textarea rows="5" cols="40" name="h_tag"></textarea>
 					<input type="submit" value="게시물 올리기"> <input type="button"
 						id="backto_main" value="돌아가기"> 
 				</form>

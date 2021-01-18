@@ -128,4 +128,8 @@ public class TimeLineDao {
 		return sqlSession.selectOne("TimeLine.showMemberType", m_id);
 	}
 
+	public int chkpwd(TimeLine tl) {
+		return sqlSession.selectOne("TimeLine.chkpwd", tl);
+	}
+
 }

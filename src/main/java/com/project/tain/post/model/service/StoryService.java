@@ -19,4 +19,14 @@ public interface StoryService {
 	List<Story> storyResult(Story st);
 
 	List<Story> eachStory(String id);
+
+	int insertHighlight(Story st);
+
+	List<Story> selectHighlight(String my_name);
+
+	int deleteHname(Story st);
+
+	int deleteh(Story st);
+
+	List<Story> selectEachHighlight(Story st);
 }

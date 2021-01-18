@@ -23,4 +23,8 @@ public class GnWriteDao {
 	public int insertboardimg(GnWrite gw) {
 		return sqlSession.insert("GnWrite.insertboardimg", gw);
 	}
+
+	public int insertboardhashtag(GnWrite gw) {
+		return sqlSession.insert("GnWrite.insertboardhashtag", gw);
+	}
 }

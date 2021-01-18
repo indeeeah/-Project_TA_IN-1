@@ -100,6 +100,18 @@ public class TimeLineController {
 		}
 		return mv;
 	}
+	// 탈퇴
+	@RequestMapping(value = "/out", method = RequestMethod.GET)
+	public ModelAndView out(HttpServletRequest request, ModelAndView mv) {
+		try {
+			mv.setViewName("serviceCenter/out");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+			e.printStackTrace();
+		}
+		return mv;
+	}
 
 	// Insert Comment
 	@ResponseBody
@@ -401,6 +413,19 @@ public class TimeLineController {
 			System.out.println(result);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "chkpwd.do", method = RequestMethod.POST)
+	public int chkpwd(TimeLine tl) {
+		int result = tService.chkpwd(tl);
+		try {
+			System.out.println(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
 		}
 		return result;
 	}

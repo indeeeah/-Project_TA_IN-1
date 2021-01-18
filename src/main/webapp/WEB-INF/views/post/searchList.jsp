@@ -27,7 +27,7 @@
 		<div id="list_big_con">
 			<c:if test="${not empty searchResult }">
 				<c:forEach var="vo" items="${searchResult }" varStatus="s">
-					<div class="eachPost" onclick="location.href='${pageContext.request.contextPath}/gnEachPage?b_id=${vo.b_id}'">${vo.hashtag } ${vo.b_img }</div>
+					<img class="eachPost" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.b_img }" onclick="location.href='${pageContext.request.contextPath}/gnEachPage?b_id=${vo.b_id}'">
 				</c:forEach>
 			</c:if>
 		</div>

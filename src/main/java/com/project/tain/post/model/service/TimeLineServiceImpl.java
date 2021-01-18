@@ -153,4 +153,9 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public String showMemberType(String m_id) {
 		return tDao.showMemberType(m_id);
 	}
+
+	@Override
+	public int chkpwd(TimeLine tl) {
+		return tDao.chkpwd(tl);
+	}
 }

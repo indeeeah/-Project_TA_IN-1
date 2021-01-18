@@ -63,8 +63,9 @@
 	<!-- 스토리 하이라이트 -->
 	<select id="highlight" parameterType="string"
 		resultType="arrayList" resultMap="resultGnBoard">
-		select h_name, h_img from highlight
-		where m_id=#{m_id} group by h_name, h_img
+		select * from(select h_name, h_img, row_number() over (partition by h_name order by h_img) as num from highlight
+		where m_id=#{m_id}
+        group by h_name, h_img) where num = 1
 	</select>
 
 	<!-- 팔로우 체크 -->

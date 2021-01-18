@@ -108,7 +108,7 @@
                                         <div id="send_big_con">
                                             <div id="send_con">
                                                 <input type="text" id="message${vo.s_img}" class="message${vo.s_img} message" name="messagea" placeholder="${vo.m_id}님에게 메세지 보내기 ...">
-                                                <input type="button" onclick="sendMessage('${vo.m_id}','${myProfile.m_id }','${vo.s_img}');" value="보내기" class="send">
+                                                <%-- <input type="button" onclick="sendMessage('${vo.m_id}','${my_id }','${vo.s_img}');" value="보내기" class="send"> --%>
                                             </div>
                                         </div>
                                     </div>
@@ -164,93 +164,6 @@
                     plusSlides(-1);
                 });
             });
-
-            $(document).ready(function() {
-                connectWS();
-                var s_id = $("#s_id").val();
-                var s_img = $("#s_img").val();
-                var my_id = $("#my_id").val();
-            });
-
-            function sendMessage(id, my_id, s_img) {
-                //var message = $("#message" + s_img).val();
-                //var message = $(".message").val();
-                var message = document.getElementById("message" + s_img).value;
-                console.log(id + ',' + my_id + ',' + s_img + ',' + message);
-                console.log(message);
-                $(".message").val('');
-
-                if (socket) {
-                    // websocket에 보내기!! (reply,댓글작성자,게시글작성자,글번호)
-                    let socketMsg = message + "," + my_id + "," + id + "," + s_img;
-                    console.debug("sssssssmsg>>", socketMsg)
-                    socket.send(socketMsg);
-                }
-                /* var chat = document.getElementById("message" + s_img).value;
-                sendMsg(); */
-
-            }
-
-            var socket = null;
-            var ws;
-            /* var userid = "${param.id}" */
-
-            function connectWS() {
-                console.log("tttttttttttttt")
-                var ws = new WebSocket("ws://localhost:8090/tain/replyEcho");
-                socket = ws;
-
-                ws.onopen = function() {
-                    console.log('Info: connection opened.');
-                    /* register(); */
-                };
-
-                ws.onmessage = function(event) {
-                    var data = event.data
-                    console.log("ReceiveMessage:", data + '\n');
-                    /* let $socketAlert = $('div#socketAlert');
-                        $socketAlert.html(event.data);
-                        $socketAlert.css('display', 'block');
-                        
-                        setTimeout( function() {
-                            $socketAlert.css('display', 'none');
-                        }, 3000); */
-                    /* addMsg(data); */
-                };
-
-                ws.onclose = function(event) {
-                    console.log('Info: connection closed.');
-                    //setTimeout( function(){ connect(); }, 1000); // retry connection!!
-                };
-                ws.onerror = function(err) {
-                    console.log('Error:', err);
-                };
-
-                /* function addMsg(msg){
-                	var chat = ${"#message"}.val();
-                	chat = chat +"\n상대방 : " + msg;
-                	${"#message"}.val(chat);
-                } */
-
-                /* function register(){
-                	var msg = {
-                			type : "register",
-                			userid: "${param.id}"
-                	};
-                	ws.send(JSON.stringify(msg));
-                }
-                
-                function sendMsg(){
-                	var msg = {
-                			typd:"chat",
-                			target: $("#s_id").val(),
-                			message : ${"#message"}.val()
-                			
-                	};
-                	ws.send(JSON.stringify(msg));
-                } */
-
-            }
 
         </script>
 

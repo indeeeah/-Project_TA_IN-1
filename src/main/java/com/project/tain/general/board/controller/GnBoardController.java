@@ -17,11 +17,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.tain.general.board.model.domain.GnBoard;
 import com.project.tain.general.board.model.service.GnBoardService;
 import com.project.tain.post.model.domain.TimeLine;
+import com.project.tain.post.model.service.SearchListService;
+import com.project.tain.post.model.service.TimeLineService;
 
 @Controller
 public class GnBoardController {
+	
 	@Autowired
 	private GnBoardService gService;
+	
+	@Autowired
+	private TimeLineService tService;
 
 	@RequestMapping(value = "/gnMain", method = RequestMethod.GET)
 	public ModelAndView gnMain(HttpServletRequest request, @RequestParam(name = "m_id") String m_id, ModelAndView mv) {
@@ -65,6 +71,7 @@ public class GnBoardController {
 				mv.addObject("selectEachPostComments", gService.selectEachPostComments(b_id));
 				mv.addObject("selectEachPostPhotos", gService.selectEachPostPhotos(b_id));
 				System.out.println(gService.selectEachPostPhotos(b_id));
+				mv.addObject("hashtag", tService.showHashTag(b_id));
 				mv.setViewName("general/gnEachPage");
 			} else if (b_id.startsWith("BB")) {
 

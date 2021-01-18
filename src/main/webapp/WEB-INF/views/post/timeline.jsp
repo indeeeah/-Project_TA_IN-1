@@ -8,188 +8,697 @@
             <meta charset="UTF-8">
             <title>TA_IN 타임라인</title>
             <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
-            <link href="${pageContext.request.contextPath}/resources/css/timeLine.css" rel="stylesheet" type="text/css">
-            <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
-            <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
-            <style>
-                .like_icon {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
-                    background-size: 24px;
-                }
-                
-                .like_icon:hover {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
-                    background-size: 24px;
-                }
-                
-                .unlike_icon {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
-                    background-size: 24px;
-                    display: none;
-                }
-                
-                .share_icon {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/001-share-1.svg');
-                    background-size: 24px;
-                }
-                
-                .share_icon:hover {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/002-share.svg');
-                    background-size: 24px;
-                }
-                
-                .write_icon {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/002-speech-bubble-1.svg');
-                    background-size: 24px;
-                }
-                
-                .write_icon:hover {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/001-speech-bubble.svg');
-                    background-size: 24px;
-                }
-                
-                .save_icon {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/001-tag.svg');
-                    background-size: 24px;
-                }
-                
-                .save_icon:hover {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/006-price-tag.svg');
-                    background-size: 24px;
-                }
-                
-                .comment_lcon {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
-                    background-size: 12px;
-                }
-                
-                .comment_lcon:hover {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
-                }
-                
-                .comment_unlcon {
-                    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
-                    background-size: 12px;
-                    display: none;
-                }
-                
-                .timeline_photo {
-                    width: 660px;
-                    height: 660px;
-                    position: relative;
-                    overflow: hidden;
-                    z-index: -1;
-                }
-                
-                .timephoto {
-                    display: flex;
-                    position: absolute;
-                    top: 0px;
-                    left: 0px;
-                }
-                
-                .show_t_img {
-                    width: 660px;
-                    height: 660px;
-                }
-                
-                #right_small_con {
-                    width: 320px;
-                    float: right;
-                    margin-left: 20px;
-                    position: fixed;
-                }
-                
-                #report_back {
-                    position: fixed;
-                    width: 100%;
-                    height: 100%;
-                    background-color: black;
-                    opacity: 0.5;
-                    display: none;
-                    z-index: 5;
-                }
-                
-                #report_modal {
-                    position: fixed;
-                    width: 100%;
-                    height: 100%;
-                    display: none;
-                    z-index: 6;
-                }
-                
-                #report_choose,
-                #report_write,
-                #report_result,
-                #report_already,
-                #pre_report_choose,
-                #unfollowchk,
-                #askunfollow,
-                #cantunfollow,
-                #share_con,
-                #share_con_result {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 400px;
-                    background: #fff;
-                    z-index: 7;
-                    border-radius: 20px;
-                    text-align: center;
-                    font-size: 14px;
-                }
-                
-                .modal_in {
-                    width: 100%;
-                    height: 48px;
-                    line-height: 48px;
-                    cursor: pointer;
-                    border-bottom: 1px solid #8E8E8E;
-                    color: #262626;
-                }
-                
-                .cancel {
-                    border: none;
-                }
-                
-                #etc_write_con {
-                    height: 192px;
-                }
-                
-                #etx_write_space {
-                    margin-top: 5px;
-                    margin-left: 16px;
-                    width: 364px;
-                    height: 182px;
-                    padding: 0px;
-                    border: none;
-                    outline: none;
-                }
-                
-                .modal_title {
-                    height: 42px;
-                }
-                
-                #report {
-                    color: #ED4956;
-                }
-                
-                .modal_nocursor {
-                    cursor: default;
-                }
-                
-                .modal_result {
-                    height: 96px;
-                }
-                
-                .fa-bars_title {
-                    display: block;
-                    margin-right: 16px;
-                    float: right;
-                    line-height: 60px;
-                }
-            </style>
+            <%-- <link href="${pageContext.request.contextPath}/resources/css/timeLine.css" rel="stylesheet"
+                type="text/css"> --%>
+                <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+                <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
+                <style>
+                    body {
+                        width: 100%;
+                        height: 100%;
+                        color: #262626;
+                        background-color: #FAFAFA;
+                    }
+                    
+                    #content_con {
+                        display: flex;
+                        justify-content: center;
+                        width: 100%;
+                    }
+                    
+                    #timeline_big_con {
+                        width: 1000px;
+                    }
+                    
+                    #timeline_left {
+                        width: 660px;
+                        float: left;
+                    }
+                    /* 스토리 */
+                    
+                    #story_con {
+                        width: 100%;
+                        height: 118px;
+                        border: 1px solid #C7C7C7;
+                    }
+                    
+                    #blank_for_story {
+                        width: 10px;
+                        height: 100%;
+                        float: left;
+                    }
+                    
+                    #story_inner_con {
+                        width: 650px;
+                        height: 84px;
+                        float: left;
+                        margin-top: 16px;
+                        overflow: hidden;
+                    }
+                    
+                    .story_small_con {
+                        width: 66px;
+                        height: 84px;
+                        margin: 0px 7px 0px 7px;
+                        float: left;
+                        cursor: pointer;
+                    }
+                    
+                    .story_profile {
+                        width: 66px;
+                        height: 66px;
+                        border-radius: 50%;
+                        border: 1px solid #C7C7C7;
+                        box-sizing: border-box;
+                    }
+                    
+                    .story_id {
+                        text-align: center;
+                        width: 66px;
+                        height: 18px;
+                        width: 66px;
+                    }
+                    /* 타임라인 */
+                    
+                    #timeline_blank {
+                        width: 100%;
+                        height: 30px;
+                    }
+                    
+                    .timeline_contents {
+                        width: 100%;
+                        margin-bottom: 60px;
+                        border: 1px solid #C7C7C7;
+                    }
+                    
+                    .timeline_profile {
+                        width: 100%;
+                        height: 60px;
+                        border-bottom: 1px solid #C7C7C7;
+                    }
+                    
+                    .t_prof_photo {
+                        width: 28px;
+                        height: 28px;
+                        border-radius: 50%;
+                        border: 1px solid #C7C7C7;
+                        box-sizing: border-box;
+                        margin: 16px;
+                        float: left;
+                    }
+                    
+                    .t_prof_id {
+                        float: left;
+                        font-size: 14px;
+                        color: #262626;
+                        line-height: 60px;
+                    }
+                    
+                    #timeline_right {
+                        width: 340px;
+                        height: 100%;
+                        float: right;
+                    }
+                    
+                    .timeline_photo {
+                        width: 100%;
+                        height: 660px;
+                    }
+                    
+                    .timeline_comment_con {
+                        width: 100%;
+                        padding: 0px 16px;
+                    }
+                    
+                    .inner_comment_con {
+                        width: 628px;
+                    }
+                    
+                    .timeline_icon_con {
+                        width: 100%;
+                        height: 40px;
+                        margin-top: 4px;
+                    }
+                    
+                    .timeline_likes_con {
+                        width: 100%;
+                        height: 18px;
+                        margin-bottom: 8px;
+                    }
+                    
+                    .comment_con {
+                        width: 100%;
+                    }
+                    
+                    .timeline_time {
+                        width: 100%;
+                        height: 19px;
+                        margin-bottom: 4px;
+                    }
+                    
+                    .upload_comment {
+                        width: 100%;
+                        height: 56px;
+                        margin-top: 4px;
+                        border-top: 1px solid #C7C7C7;
+                    }
+                    
+                    .inner_upload {
+                        margin-top: 19px;
+                        padding: 0px 16px;
+                    }
+                    
+                    .write_space {
+                        width: 603px;
+                        height: 18px;
+                        outline: none;
+                        border: none;
+                        padding: 0px;
+                        float: left;
+                        background-color: transparent;
+                    }
+                    
+                    .comment_upload {
+                        font-size: 14px;
+                        width: 25px;
+                        height: 18px;
+                        outline: none;
+                        border: none;
+                        padding: 0px;
+                        background-color: transparent;
+                        cursor: pointer;
+                    }
+                    
+                    #my_profile_con {
+                        margin-top: 21.5px;
+                        margin-bottom: 21.5px;
+                        width: 100%;
+                        height: 56px;
+                    }
+                    
+                    #my_profile_photo {
+                        width: 56px;
+                        height: 56px;
+                        border-radius: 50%;
+                        border: 1px solid #C7C7C7;
+                        box-sizing: border-box;
+                        float: left;
+                    }
+                    
+                    #my_id {
+                        width: 242px;
+                        height: 18px;
+                        line-height: 56px;
+                        float: right;
+                    }
+                    
+                    #follow_recom_title {
+                        width: 100%;
+                        height: 19px;
+                        font-size: 14px;
+                        line-height: 19px;
+                        color: #8E8E8E;
+                    }
+                    
+                    #follow_recom_con {
+                        width: 100%;
+                        padding-top: 8px;
+                        padding-bottom: 8px;
+                    }
+                    
+                    .follow_recom_id {
+                        width: 100%;
+                        height: 32px;
+                        margin-top: 8px;
+                        margin-bottom: 8px;
+                    }
+                    
+                    .recom_profile {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 50%;
+                        border: 1px solid #C7C7C7;
+                        box-sizing: border-box;
+                        float: left;
+                    }
+                    
+                    .recom_middle {
+                        width: 231px;
+                        margin-left: 10px;
+                        height: 32px;
+                        float: left;
+                    }
+                    
+                    .followBtn {
+                        font-size: 12x;
+                        width: 37px;
+                        height: 32px;
+                        outline: none;
+                        border: none;
+                        padding: 0px;
+                        background-color: transparent;
+                        color: #0095F6;
+                    }
+                    
+                    .recom_follow {
+                        float: right;
+                    }
+                    
+                    .recom_id {
+                        width: 100%;
+                        height: 18px;
+                        font-size: 14px;
+                        color: #262626;
+                        line-height: 18px;
+                    }
+                    
+                    .recom_info {
+                        width: 100%;
+                        height: 14px;
+                        font-size: 12px;
+                        line-height: 14px;
+                        color: #8E8E8E;
+                    }
+                    
+                    #footer_info {
+                        margin-top: 20px;
+                        margin-bottom: 3px;
+                        width: 100%;
+                        height: 36px;
+                    }
+                    
+                    #footer_infoc {
+                        margin-top: 16px;
+                        width: 100%;
+                        height: 13px;
+                    }
+                    
+                    .footera {
+                        font-size: 11px;
+                        text-decoration: none;
+                        color: #C7C7C7;
+                    }
+                    
+                    #fix_logo {
+                        cursor: pointer;
+                    }
+                    
+                    .timeline_likes_con {
+                        font-size: 14px;
+                        color: #262626;
+                        line-height: 18px;
+                    }
+                    
+                    .com_detail {
+                        font-size: 14px;
+                        color: #262626;
+                        line-height: 18px;
+                        width: 100%;
+                        height: 18px;
+                        margin-bottom: 4px;
+                    }
+                    
+                    .comment_more {
+                        font-size: 14px;
+                        line-height: 18px;
+                        color: #8E8E8E;
+                        cursor: pointer;
+                    }
+                    
+                    .cm1 {
+                        display: none;
+                    }
+                    
+                    .post_id {
+                        float: left;
+                    }
+                    
+                    .post_content {
+                        float: left;
+                        margin-left: 5px;
+                        width: 515px;
+                        /* overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap; */
+                    }
+                    /* .post_content.overflow {
+					overflow: visible;
+					white-space: normal;
+					width: 570px;
+
+				}
+
+				.commentViewAll {
+					float: left;
+					width: 1.2em;
+					height: 100%;
+					cursor: pointer;
+				} */
+                    
+                    #my_id {
+                        font-size: 14px;
+                        color: #262626;
+                        line-height: 56px;
+                    }
+                    
+                    .story_id {
+                        font-size: 12px;
+                        color: #262626;
+                        line-height: 27px;
+                    }
+                    
+                    .follow_recom_title {
+                        font-size: 14px;
+                        line-height: 19px;
+                    }
+                    
+                    .timeline_time {
+                        font-size: 10px;
+                        line-height: 19px;
+                        color: #8E8E8E;
+                    }
+                    
+                    .icon {
+                        width: 24px;
+                        height: 24px;
+                        float: left;
+                        margin-top: 8px;
+                        margin-right: 16px;
+                        cursor: pointer;
+                    }
+                    
+                    .save_icon {
+                        margin-right: 0px;
+                        float: right;
+                    }
+                    
+                    #footer_infoc {
+                        font-size: 13px;
+                        color: #C7C7C7
+                    }
+                    
+                    .fa-bars {
+                        line-height: 18px;
+                        cursor: pointer;
+                        display: none;
+                        float: left;
+                        margin-left: 12px;
+                    }
+                    
+                    .com_detail:hover>.fa-bars {
+                        display: block;
+                    }
+                    
+                    .clcon {
+                        width: 12px;
+                        height: 12px;
+                        margin-top: 3px;
+                        float: right;
+                        cursor: pointer;
+                    }
+                    
+                    #follow_recom_con {
+                        height: 200px;
+                        overflow: hidden;
+                    }
+                    
+                    .moreCo {
+                        float: left;
+                        margin-left: 5px;
+                        font-size: 12px;
+                        margin-right: 11px;
+                        color: #8E8E8E;
+                        line-height: 18px;
+                        cursor: pointer;
+                    }
+                    
+                    .moreCoW {
+                        float: left;
+                        margin-right: 11px;
+                        margin-left: 5px;
+                        font-size: 12px;
+                        color: #8E8E8E;
+                        line-height: 18px;
+                        cursor: pointer;
+                    }
+                    
+                    .moreCoD {
+                        float: right;
+                        margin-right: 12px;
+                        font-size: 10px;
+                        color: #8E8E8E;
+                        line-height: 18px;
+                        width: 84px;
+                    }
+                    
+                    .replyCoWri {
+                        margin-left: 5px;
+                        width: 500px;
+                        outline: none;
+                        border: none;
+                        padding: 0px;
+                        float: left;
+                    }
+                    
+                    .rep_comment_upload {
+                        width: 28px;
+                        float: right;
+                        padding: 0px;
+                        border: none;
+                        outline: none;
+                        margin-right: 12px;
+                        cursor: pointer;
+                        background-color: transparent;
+                    }
+                    
+                    .replyCoMo {
+                        margin-left: 5px;
+                        width: 500px;
+                        outline: none;
+                        border: none;
+                        padding: 0px;
+                        float: left;
+                    }
+                    
+                    .rep_comment_modify {
+                        width: 28px;
+                        float: right;
+                        padding: 0px;
+                        border: none;
+                        outline: none;
+                        margin-right: 12px;
+                        cursor: pointer;
+                        background-color: transparent;
+                    }
+                    
+                    .reply_commentResult {
+                        width: 520px;
+                    }
+                    
+                    .showlCount {
+                        outline: none;
+                        border: none;
+                        font-size: 12px;
+                        line-height: 18px;
+                        background-color: transparent;
+                        padding: 0px;
+                    }
+                    
+                    .countLike_trigger {
+                        display: none;
+                    }
+                    
+                    .like_icon {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
+                        background-size: 24px;
+                    }
+                    
+                    .like_icon:hover {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
+                        background-size: 24px;
+                    }
+                    
+                    .unlike_icon {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
+                        background-size: 24px;
+                        display: none;
+                    }
+                    
+                    .share_icon {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/001-share-1.svg');
+                        background-size: 24px;
+                    }
+                    
+                    .share_icon:hover {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/002-share.svg');
+                        background-size: 24px;
+                    }
+                    
+                    .write_icon {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/002-speech-bubble-1.svg');
+                        background-size: 24px;
+                    }
+                    
+                    .write_icon:hover {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/001-speech-bubble.svg');
+                        background-size: 24px;
+                    }
+                    
+                    .save_icon {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/001-tag.svg');
+                        background-size: 24px;
+                    }
+                    
+                    .save_icon:hover {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/006-price-tag.svg');
+                        background-size: 24px;
+                    }
+                    
+                    .comment_lcon {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
+                        background-size: 12px;
+                    }
+                    
+                    .comment_lcon:hover {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
+                    }
+                    
+                    .comment_unlcon {
+                        background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
+                        background-size: 12px;
+                        display: none;
+                    }
+                    
+                    .timeline_photo {
+                        width: 660px;
+                        height: 660px;
+                        position: relative;
+                        overflow: hidden;
+                        z-index: -1;
+                    }
+                    
+                    .timephoto {
+                        display: flex;
+                        position: absolute;
+                        top: 0px;
+                        left: 0px;
+                    }
+                    
+                    .show_t_img {
+                        width: 660px;
+                        height: 660px;
+                    }
+                    
+                    #right_small_con {
+                        width: 320px;
+                        float: right;
+                        margin-left: 20px;
+                        position: fixed;
+                    }
+                    
+                    #report_back {
+                        position: fixed;
+                        width: 100%;
+                        height: 100%;
+                        background-color: black;
+                        opacity: 0.5;
+                        display: none;
+                        z-index: 5;
+                    }
+                    
+                    #report_modal {
+                        position: fixed;
+                        width: 100%;
+                        height: 100%;
+                        display: none;
+                        z-index: 6;
+                    }
+                    
+                    #report_choose,
+                    #report_write,
+                    #report_result,
+                    #report_already,
+                    #pre_report_choose,
+                    #unfollowchk,
+                    #askunfollow,
+                    #cantunfollow,
+                    #share_con,
+                    #share_con_result {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 400px;
+                        background: #fff;
+                        z-index: 7;
+                        border-radius: 20px;
+                        text-align: center;
+                        font-size: 14px;
+                    }
+                    
+                    .modal_in {
+                        width: 100%;
+                        height: 48px;
+                        line-height: 48px;
+                        cursor: pointer;
+                        border-bottom: 1px solid #8E8E8E;
+                        color: #262626;
+                    }
+                    
+                    .cancel {
+                        border: none;
+                    }
+                    
+                    #etc_write_con {
+                        height: 192px;
+                    }
+                    
+                    #etx_write_space {
+                        margin-top: 5px;
+                        margin-left: 16px;
+                        width: 364px;
+                        height: 182px;
+                        padding: 0px;
+                        border: none;
+                        outline: none;
+                    }
+                    
+                    .modal_title {
+                        height: 42px;
+                    }
+                    
+                    #report {
+                        color: #ED4956;
+                    }
+                    
+                    .modal_nocursor {
+                        cursor: default;
+                    }
+                    
+                    .modal_result {
+                        height: 96px;
+                    }
+                    
+                    .fa-bars_title {
+                        display: block;
+                        margin-right: 16px;
+                        float: right;
+                        line-height: 60px;
+                        margin-top: 22px;
+                    }
+                    
+                    .h_tag {
+                        text-decoration: none;
+                        color: rgb(0, 149, 246);
+                        font-size: 14px;
+                        line-height: 18px;
+                    }
+                    
+                    .translate {
+                        color: rgb(0, 149, 246);
+                        float: right;
+                    }
+                </style>
         </head>
 
         <body>
@@ -214,7 +723,8 @@
                 </div>
                 <div id="report_result" style="display: none;">
                     <div class="modal_in  modal_title modal_nocursor">신고 완료</div>
-                    <div class="modal_in modal_nocursor modal_result">${my_name }님의 신고가 정상적으로 접수되었습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.</div>
+                    <div class="modal_in modal_nocursor modal_result">${my_name }님의 신고가 정상적으로 접수되었습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.
+                    </div>
                     <div id="cancel_3" class="modal_in cancel">화면으로 돌아가기</div>
                 </div>
                 <div id="report_already" style="display: none;">
@@ -290,7 +800,7 @@
                                         <i class="fas fa-bars fa-bars_title" onclick="pre_report('${vo.t_id}','${vo.m_id }','${vo.t_type}');"></i>
                                     </div>
                                     <div class="timeline_photo timeline_photo${vo.t_id }">
-                                        <ul class="photo${vo.t_id } timephoto">
+                                        <ul class="photo${vo.t_id } timephoto" id="photo${vo.t_id }">
                                         </ul>
                                         <input type="hidden" class="hidden_showphoto" onclick="showphoto('${vo.t_id }','${vo.t_img }');">
                                     </div>
@@ -305,13 +815,15 @@
                                                 <div class="icon share_icon" onclick="shareurl('${vo.m_id }','${vo.t_id}')"></div>
                                                 <div class="icon save_icon"></div>
                                             </div>
-                                            <div class="timeline_likes_con">좋아요 <input type="text" class="lCount${vo.t_id} showlCount" value="" readonly>개</div>
+                                            <div class="timeline_likes_con">좋아요 <input type="button" class="lCount${vo.t_id} showlCount" value="" readonly>개</div>
                                             <div class="comment_con">
                                                 <div class="com_detail post_title">
                                                     <div class="post_id" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_id }</div>
-                                                    <div class="post_content">${vo.t_content }</div>
+                                                    <div class="post_content" id="post_content${vo.t_id}">${vo.t_content }
+                                                    </div>
+                                                    <div class="translate" onclick="translatec('${vo.t_content }', '${vo.t_id}');" style="cursor: pointer;">번역하기</div>
                                                 </div>
-                                                <ul class="hashtag${vo.t_id }">
+                                                <ul class="hashtag${vo.t_id }" id="hashtag${vo.t_id }">
                                                 </ul>
                                                 <input type="hidden" class="hidden_showhashtag" onclick="showhashtag('${vo.t_id }');">
                                                 <div class="com_detail comment_more" onclick="showAllCo('${vo.t_id }');">댓글 전체 보기</div>
@@ -321,9 +833,9 @@
                                                     </div>
                                                     <!-- <a class="commentViewAll"></a> -->
                                                 </div>
-                                                <ul class="cm2${vo.t_id }">
+                                                <ul class="cm2${vo.t_id }" id="cm2${vo.t_id }">
                                                 </ul>
-                                                <ul class="cm3${vo.t_id }">
+                                                <ul class="cm3${vo.t_id }" id="cm3${vo.t_id }">
                                                 </ul>
                                                 <input type="hidden" class="hidden_likechk" onclick="likechk('${vo.t_id }');"> <input type="hidden" class="hidden_commentchk" onclick="showAllCoHidden('${vo.t_id }');">
                                                 <input type="hidden" name="t_type" class="t_type${vo.t_id }" value="${vo.t_type }">
@@ -350,8 +862,10 @@
                     <div id="timeline_right">
                         <div id="right_small_con">
                             <div id="my_profile_con">
-                                <div id="my_profile_photo" onclick="goboard('${my_name }');" style="cursor:pointer;">${myProfile.m_img }</div>
-                                <div id="my_id" onclick="goboard('${my_name }');" style="cursor:pointer;">${my_name }</div>
+                                <div id="my_profile_photo" onclick="goboard('${my_name }');" style="cursor:pointer;">
+                                    ${myProfile.m_img }</div>
+                                <div id="my_id" onclick="goboard('${my_name }');" style="cursor:pointer;">${my_name }
+                                </div>
                                 <input type="hidden" name="m_id" class="m_id" value="${my_name }">
                             </div>
                             <div id="follow_recom_title">회원님을 위한 추천</div>
@@ -371,10 +885,10 @@
                                 </c:if>
                             </div>
                             <div id="footer_info">
-                            <a href="${pageContext.request.contextPath}/serviceCenter">고객센터</a>
-                            <a href="${pageContext.request.contextPath}/aboutUs">사이트 소개</a>
+                                <a class="footera" href="${pageContext.request.contextPath}/serviceCenter">고객센터&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+                                <a class="footera" href="${pageContext.request.contextPath}/aboutUs">사이트 소개</a>
+                                <div id="footer_infoc">© 2020 TA_IN</div>
                             </div>
-                            <div id="footer_infoc">© 2020 TA_IN</div>
                         </div>
                     </div>
                 </div>
@@ -456,16 +970,114 @@
                 $(location).attr('href', url);
             }
 
+            // 번역하기
+            function translatec(source, b_id) {
+                /* var hcount = $(".hashtag" + b_id).length;
+                console.log(hcount);
+                $(".hashtag" + b_id).trigger('click'); */
+                var a = document.getElementById("post_content" + b_id);
+                console.log(source);
+                $.ajax({
+                    url: "translate",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        source: source
+                    },
+                    success: function(resp) {
+                        if (resp.result == "ko") {
+                            $.ajax({
+                                url: "TranslateProcKo",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else if (resp.result == "en") {
+                            $.ajax({
+                                url: "TranslateProcEn",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else {
+                            alert("번역할 수 없습니다.");
+                        }
+                    },
+                    error: function(err1) {
+                        $(a).html("오류가 발생하였습니다.");
+                    }
+                });
+            }
+
+            /* function translateh(source, b_id) {
+                var a = document.getElementById("h_tag" + source + b_id);
+                console.log(source);
+                $.ajax({
+                    url: "translate",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        source: source
+                    },
+                    success: function(resp) {
+                        if (resp.result == "ko") {
+                            $.ajax({
+                                url: "TranslateProcKo",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html("#" + resp.result);
+                                }
+                            });
+                        } else if (resp.result == "en") {
+                            $.ajax({
+                                url: "TranslateProcEn",
+                                type: "post",
+                                dataType: "json",
+                                data: {
+                                    source: source
+                                },
+                                success: function(resp) {
+                                    $(a).html(resp.result);
+                                }
+                            });
+                        } else {
+                            alert("번역할 수 없습니다.");
+                        }
+                    },
+                    error: function(err1) {
+                        $(a).html("오류가 발생하였습니다.");
+                    }
+                });
+            } */
+
 
 
             // 게시물 이미지 보기 trigger
             function showphoto(t_id, t_img) {
                 t_img = t_img.split("|");
+                var htmls = "";
+                var a = document.getElementById("photo" + t_id);
                 for (i = 0; i < t_img.length; i++) {
                     if (t_img[i] != "" && t_img[i] != " ") {
-                        $(".photo" + t_id).append('<li class="show_t_img show_t_img' + t_id + '" >' + t_img[i] + '</li>');
+                        htmls += '<img class="show_t_img show_t_img' + t_id + '" src="${pageContext.request.contextPath}/resources/uploadFiles/' + t_img[i] + '"></li>';
                     }
                 }
+                $(a).html(htmls);
+
 
                 var photocount = $(".show_t_img" + t_id).length;
                 if (photocount > 1) {
@@ -510,6 +1122,8 @@
 
             // 해쉬태그 보기 trigger
             function showhashtag(t_id) {
+                var htmls = "";
+                var a = document.getElementById("hashtag" + t_id);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/showHashTag.do",
                     type: "post",
@@ -524,9 +1138,11 @@
                                 var hashtag1 = count.hashtag[i].h_tag;
 
                                 // 해쉬태그 append - hashtag
-                                $(".hashtag" + t_id).append('<a href="${pageContext.request.contextPath}/explore?hashtag=' + hashtag1 + '">#' + hashtag1 + '</a>');
+                                // <input type="button" class="hashtag' + t_id + '"onclick="translateh(\'' + hashtag1 + '\',\'' + t_id + '\')">
+                                htmls += '<a class="h_tag" id="h_tag' + hashtag1 + t_id + '" href="${pageContext.request.contextPath}/explore?hashtag=' + hashtag1 + '" >#' + hashtag1 + '</a>&nbsp;';
                             }
                         }
+                        $(a).html(htmls);
                     },
                     error: function(request, status, error) {
                         alert("code:" +
@@ -1107,6 +1723,8 @@
 
                 // 전체 댓글보기 - 일반 게시판
                 if (type == "G") {
+                    var htmls = "";
+                    var a = document.getElementById("cm3" + t_id);
                     $.ajax({
                         url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
                         method: "POST",
@@ -1130,22 +1748,22 @@
                                 $(".cm2" + t_id).remove();
 
                                 // 전체 댓글 append - cm3  // 댓글 좋아요 체크 trigger 사용
-                                $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
+                                htmls += '<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                     id + '</div><div class="commentResult post_content">' +
                                     b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + ' lbtn"></div>' +
                                     '<div class="comment_unlcon clcon unlikechk' + b_id + ' unlbtn"></div>' +
-                                    '<input type="hidden" value="' + b_id + '"></div></div>');
-                                $(".cm3" + t_id).append("<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
-                                    "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>");
+                                    '<input type="hidden" value="' + b_id + '"></div></div>';
+                                htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
+                                    "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>"
 
                                 // 답글 유무 분리 - 답글 유
                                 if (countr != 0) {
 
                                     // 댓글 변환 권한 - 권한 있음
                                     if (id == mem_id) {
-                                        $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                        htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                            '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                            '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>' +
                                             '<div class="moreCo' + b_id + ' moreCo moreCo_see">답글 보기(' + countr + ')개</div>' +
@@ -1158,14 +1776,14 @@
                                             id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
-                                            '<ul class="cm4' + b_id + '"></ul>'
-                                        );
+                                            '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
+
 
                                         // 댓글 변환 권한 - 권한 없음
                                     } else {
-                                        $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                        htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                            '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                            '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>' +
                                             '<div class="moreCo' + b_id + ' moreCo moreCo_see">답글 보기(' + countr + ')개</div>' +
@@ -1176,8 +1794,7 @@
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
-                                            '<ul class="cm4' + b_id + '"></ul>'
-                                        );
+                                            '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
                                     }
 
                                     // 답글 유무 분리 - 답글 무
@@ -1185,9 +1802,9 @@
 
                                     // 댓글 변환 권한 - 권한 있음
                                     if (id == mem_id) {
-                                        $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                        htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                            '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                            '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>' +
                                             '<div class="moreCoMo' + b_id + ' moreCo moreCoMo">댓글 수정</div>' +
@@ -1197,22 +1814,23 @@
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>');
+                                            id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
 
                                         // 댓글 변환 권한 - 권한 없음
                                     } else {
-                                        $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                        htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                            '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                            '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo"  style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>'
-                                        );
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
                                     }
 
                                 }
                             }
+
+                            $(a).html(htmls);
 
                             // 댓글 좋아요 체크 trigger 호출
                             $(".hidden_likechk").trigger('click');
@@ -1351,6 +1969,8 @@
                                 console.log(t_id);
                                 console.log(mother_id);
                                 console.log(b_type);
+                                var htmls = "";
+                                var a = document.getElementById("cm4" + t_id);
                                 $.ajax({
                                     url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
                                     method: "POST",
@@ -1368,21 +1988,21 @@
                                             var countr = count.hComment[i].count;
                                             var b_date = count.hComment[i].b_date;
 
-                                            $(".cm4" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                            htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                                 mother_id + '</div><div class="commentRId post_id" style="margin-left:5px;" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                                 id + '</div><div class="commentResult post_content reply_commentResult">' +
                                                 b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
-                                                '<input type="hidden" value="' + b_id + '"></div></div>');
-                                            $(".cm4" + t_id).append("<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
-                                                "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>");
+                                                '<input type="hidden" value="' + b_id + '"></div></div>';
+                                            htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
+                                                "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>";
 
                                             // 답글 변환 권한 - 권한 있음
                                             if (id == mem_id) {
-                                                $(".cm4" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                                htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                                     mother_id + '</div><div class="commentRId post_id" style="color:transparent;">' +
                                                     id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                                    '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                                    '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                                     '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                                     '<div class="moreCoMo' + b_id + ' moreCo moreCoMo" style="margin-left:10px;">댓글 수정</div>' +
                                                     '<div class="moreCoDe' + b_id + ' moreCo moreCoDe">댓글 삭제</div>' +
@@ -1390,20 +2010,20 @@
                                                     '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                                     '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                                     mother_id + '</div><div class="commentRId post_id" style="color:transparent;">' +
-                                                    id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '" style="margin-left:10px;"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>'
-                                                );
+                                                    id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '" style="margin-left:10px;"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
 
                                                 // 답글 변환 권한 - 권한 없음
                                             } else {
-                                                $(".cm4" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                                htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                                     mother_id + '</div><div class="commentRId post_id" style="color:transparent;">' +
                                                     id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                                    '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                                    '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                                     '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
-                                                    '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>'
-                                                );
+                                                    '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>';
                                             }
                                         }
+
+                                        $(a).html(htmls);
 
                                         // 답글 좋아요 체크 trigger 호출
                                         $(".hidden_likechk").trigger('click');
@@ -1643,6 +2263,8 @@
 
                     // 전체 댓글보기 - 비즈니스 게시판
                 } else if (type = "B") {
+                    var htmls = "";
+                    var a = document.getElementById("cm3" + t_id);
                     $.ajax({
                         url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
                         method: "POST",
@@ -1665,22 +2287,22 @@
                                 $(".cm2" + t_id).remove();
 
                                 // 전체 댓글 append - cm3  // 댓글 좋아요 체크 trigger 사용
-                                $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
+                                htmls += '<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                     id + '</div><div class="commentResult post_content">' +
                                     b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                     '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
-                                    '<input type="hidden" value="' + b_id + '"></div></div>');
-                                $(".cm3" + t_id).append("<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
-                                    "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>");
+                                    '<input type="hidden" value="' + b_id + '"></div></div>';
+                                htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
+                                    "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>";
 
                                 // 답글 유무 분리 - 답글 유
                                 if (countr != 0) {
 
                                     // 댓글 변환 권한 - 권한 있음
                                     if (id == mem_id) {
-                                        $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                        htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                            '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                            '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>' +
                                             '<div class="moreCo' + b_id + ' moreCo moreCo_see">답글 보기(' + countr + ')개</div>' +
@@ -1693,14 +2315,13 @@
                                             id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
-                                            '<ul class="cm4' + b_id + '"></ul>'
-                                        );
+                                            '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
 
                                         // 댓글 변환 권한 - 권한 없음
                                     } else {
-                                        $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                        htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                            '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                            '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>' +
                                             '<div class="moreCo' + b_id + ' moreCo moreCo_see">답글 보기(' + countr + ')개</div>' +
@@ -1711,8 +2332,7 @@
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
-                                            '<ul class="cm4' + b_id + '"></ul>'
-                                        );
+                                            '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
                                     }
 
                                     // 답글 유무 분리 - 답글 무
@@ -1720,9 +2340,9 @@
 
                                     // 댓글 변환 권한 - 권한 있음
                                     if (id == mem_id) {
-                                        $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                        htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                            '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                            '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>' +
                                             '<div class="moreCoMo' + b_id + ' moreCo moreCoMo">댓글 수정</div>' +
@@ -1732,22 +2352,23 @@
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>');
+                                            id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
 
                                         // 댓글 변환 권한 - 권한 없음
                                     } else {
-                                        $(".cm3" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                        htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                            '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                            '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo"  style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>'
-                                        );
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
                                     }
 
                                 }
                             }
+
+                            $(a).html(htmls);
 
                             // 댓글 좋아요 체크 trigger 호출
                             $(".hidden_likechk").trigger('click');
@@ -1886,6 +2507,8 @@
                                 console.log(t_id);
                                 console.log(mother_id);
                                 console.log(b_type);
+                                var htmls = "";
+                                var a = document.getElementById("cm4" + t_id);
                                 $.ajax({
                                     url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
                                     method: "POST",
@@ -1903,21 +2526,21 @@
                                             var countr = count.hComment[i].count;
                                             var b_date = count.hComment[i].b_date;
 
-                                            $(".cm4" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                            htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                                 mother_id + '</div><div class="commentRId post_id" style="margin-left:5px;" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                                 id + '</div><div class="commentResult post_content reply_commentResult">' +
                                                 b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
-                                                '<input type="hidden" value="' + b_id + '"></div></div>');
-                                            $(".cm4" + t_id).append("<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
-                                                "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>");
+                                                '<input type="hidden" value="' + b_id + '"></div></div>';
+                                            htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
+                                                "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>";
 
                                             // 답글 변환 권한 - 권한 있음
                                             if (id == mem_id) {
-                                                $(".cm4" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                                htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                                     mother_id + '</div><div class="commentRId post_id" style="color:transparent;">' +
                                                     id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                                    '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                                    '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                                     '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                                     '<div class="moreCoMo' + b_id + ' moreCo moreCoMo" style="margin-left:10px;">댓글 수정</div>' +
                                                     '<div class="moreCoDe' + b_id + ' moreCo moreCoDe">댓글 삭제</div>' +
@@ -1925,20 +2548,20 @@
                                                     '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                                     '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                                     mother_id + '</div><div class="commentRId post_id" style="color:transparent;">' +
-                                                    id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '" style="margin-left:10px;"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>'
-                                                );
+                                                    id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '" style="margin-left:10px;"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
 
                                                 // 답글 변환 권한 - 권한 없음
                                             } else {
-                                                $(".cm4" + t_id).append('<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
+                                                htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                                     mother_id + '</div><div class="commentRId post_id" style="color:transparent;">' +
                                                     id + '</div><input type="button" value="${vo.t_id}" class="countLike_trigger"onclick="countLike(\'' + b_id + '\');">' +
-                                                    '<div class="moreCo">좋아요 <input type="text" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
+                                                    '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                                     '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
-                                                    '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>'
-                                                );
+                                                    '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>';
                                             }
                                         }
+
+                                        $(a).html(htmls);
 
                                         // 답글 좋아요 체크 trigger 호출
                                         $(".hidden_likechk").trigger('click');

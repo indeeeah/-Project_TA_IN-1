@@ -472,7 +472,7 @@
                                 <h3 class="h3_title">내 TA_IN 계정을 삭제하려면?</h3>
                                 <ul>
                                     <li class="li_ct_no">먼저 <a href="${pageContext.request.contextPath}/member/loginPage">로그인</a>을 합니다.</li>
-                                    <li class="li_ct_no"><a href="#">계정 삭제 페이지</a>로 이동합니다.</li>
+                                    <li class="li_ct_no"><a href="${pageContext.request.contextPath}/out">계정 삭제 페이지</a>로 이동합니다.</li>
                                     <li class="li_ct_no">'계정을 삭제하시는 이유가 무엇인가요?' 옆의 드롭다운 메뉴에서 옵션을 선택하고 비밀번호를 다시 입력합니다.</li>
                                     <li class="li_ct_no">내 계정 삭제를 클릭합니다.</li>
                                     <li class="li_ct">계정 삭제를 신청한 후 3일 이내 로그인을 하면 계정은 삭제되지않고 복구됩니다.</li>

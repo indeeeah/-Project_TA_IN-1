@@ -31,19 +31,14 @@
                 #top_menu {
                     width: 100%;
                     height: 54px;
-                    background-color: cadetblue;
                 }
-                
-                .tab_menu {
-                    width: 250px;
-                    height: 100%;
+                /* .tab_menu {
                     border-right: 1px solid black;
                     float: left;
                     box-sizing: border-box;
                     cursor: pointer;
-                    line-height: 54px;
                     text-align: center;
-                }
+                } */
                 
                 .tab_menu:nth-of-type(4) {
                     border: none;
@@ -68,25 +63,79 @@
                     border: black 1px solid;
                     border-radius: 5px;
                 }
+                
+                .cate_mine {
+                    color: #C7C7C7;
+                    cursor: pointer;
+                }
+                
+                .cate_1 {
+                    height: 53px;
+                    line-height: 53px;
+                    font-size: 12px;
+                    float: left;
+                }
+                
+                .cate_con {
+                    float: left;
+                    margin-top: 20px;
+                    margin-right: 5px;
+                }
+                
+                .category {
+                    float: right;
+                }
             </style>
         </head>
 
         <body>
             <jsp:include page="../header.jsp"></jsp:include>
+            <input type="hidden" value="${my_name }" id="m_id">
+            <input type="radio" id="ctm1" name="x" checked style="display: none;">
+            <input type="radio" id="ctm2" name="x" style="display: none;">
+            <input type="radio" id="ctm3" name="x" style="display: none;">
+            <input type="radio" id="ctm4" name="x" style="display: none;">
+            <input type="radio" id="ctm5" name="x" style="display: none;">
             <div id="write_stroy_con">
                 <div id="write_big_con">
                     <div id="top_menu">
-                        <div class="tab_menu add_photo">사진 추가</div>
-                        <div class="tab_menu add_captured">사진 찍기</div>
-                        <div class="tab_menu add_edit">사진 수정</div>
-                        <div class="tab_menu my_story">내 스토리</div>
+                        <label for="ctm1">
+                            <div class="cate_1 cate_mine forctm1 add_photo tab_menu" style="margin-right: 60px;">
+                                <i class="far fa-image cate_con"></i>
+                                <div class="category">사진 추가</div>
+                            </div>
+                        </label>
+                        <label for="ctm2">
+                            <div class="cate_1 cate_mine forctm2 add_captured tab_menu" style="margin-right: 60px;">
+                                <i class="fas fa-camera cate_con"></i>
+                                <div class="category">사진 찍기</div>
+                            </div>
+                        </label>
+                        <label for="ctm3">
+                            <div class="cate_1 cate_mine forctm3 add_edit tab_menu" style="margin-right: 60px;">
+                                <i class="far fa-edit cate_con"></i>
+                                <div class="category">사진 수정</div>
+                            </div>
+                        </label>
+                        <label for="ctm4">
+                            <div class="cate_1 cate_mine forctm4 my_story tab_menu" style="margin-right: 60px;">
+                                <i class="far fa-smile cate_con"></i>
+                                <div class="category">내 스토리</div>
+                            </div>
+                        </label>
+                        <label for="ctm5">
+                            <div class="cate_1 cate_mine forctm5 highlight tab_menu">
+                                <i class="far fa-star cate_con"></i>
+                                <div class="category">하이라이트 관리</div>
+                            </div>
+                        </label>
                     </div>
                     <div class="upload photo_upload">
                         <div class="story_img_con">
                             <img class="image">
                         </div>
                         <form action="storyInsert.do" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="my_name" value="${my_name }">
+                            <input type="hidden" name="my_name" value="${my_name }">
                             <input type="file" name="upfile" class="upfile">
                             <input type="submit" value="스토리 올리기">
                             <input type="button" id="backto_main" value="돌아가기">
@@ -118,11 +167,17 @@
                         <c:if test="${not empty myStory }">
                             <c:forEach var="vo" items="${myStory }" varStatus="s">
                                 <div class="count_story">
-                                    <a href="${pageContext.request.contextPath}/resources/uploadFiles/${vo.s_img}" download>${vo.s_img }</a>
-                                    <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.s_img}">
-                                    <input type="button" value="delete" class="delete">
-                                    <input type="hidden" value="${vo.s_img}">
-                                    <input type="hidden" value="${vo.m_id}">
+                                    <form action="insertHighlight.do" method="post">
+                                        <a href="${pageContext.request.contextPath}/resources/uploadFiles/${vo.s_img}" download>${vo.s_img }</a>
+                                        <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.s_img}">
+                                        <input type="button" value="delete" class="delete">
+                                        <input type="hidden" value="${vo.s_img}">
+                                        <input type="text" name="m_id" value="${my_name}">
+                                        <input type="text" name="s_id" value="${vo.s_id}">
+                                        <input type="text" name="h_img" value="${vo.s_img}">
+                                        <input type="text" name="h_name" required>
+                                        <input type="submit" value="하이라이트에 추가하기">
+                                    </form>
                                 </div>
                             </c:forEach>
                         </c:if>
@@ -131,10 +186,88 @@
                             <input type="button" class="add_photo" value="사진 추가하러 가기">
                         </div>
                     </div>
+                    <div class="upload hl" style="display: none;">
+                        <c:if test="${empty selectHighlight }">
+                            <div id="recom_upload">
+                                하이라이트를 추가해 나의 일상을 공유해보세요! <br>
+                                <input type="button" class="my_story" value="하이라이트 추가하러 가기">
+                            </div>
+                        </c:if>
+                        <c:if test="${not empty selectHighlight }">
+                            <c:forEach var="vo" items="${selectHighlight }" varStatus="s">
+                                <div class="count_storyh count_story${vo.h_name}">
+                                    <input type="button" value="delete" class="deleteh" onclick="delhname('${vo.h_name}');">
+                                    <input type="hidden" value="${vo.s_img}">
+                                    <input type="hidden" value="${vo.s_id}">
+                                    <input type="hidden" value="${vo.m_id}">
+                                    <input type="text" value="${vo.h_name }">
+                                    <input class="fs" type="hidden" onclick="fs('${vo.h_name}','${vo.s_id}','${vo.h_img }');">
+                                    <div id="con${vo.h_name}"></div>
+                                </div>
+                            </c:forEach>
+                        </c:if>
+                        <div id="recom_upload3" style="display: none;">
+                            스토리를 올려 나의 일상을 공유해보세요! <br>
+                            <input type="button" class="my_story" value="하이라이트 추가하러 가기">
+                        </div>
+                    </div>
                 </div>
             </div>
         </body>
         <script>
+            $(function() {
+                $(".forctm1").css("color", "#262626");
+                $("#ctm1").change(function() {
+                    if ($("#ctm1").is(':checked')) {
+                        $(".forctm1").css("color", "#262626");
+                        $(".forctm2").css("color", "#C7C7C7");
+                        $(".forctm3").css("color", "#C7C7C7");
+                        $(".forctm4").css("color", "#C7C7C7");
+                        $(".forctm5").css("color", "#C7C7C7");
+                    }
+
+                });
+                $("#ctm2").change(function() {
+                    if ($("#ctm2").is(':checked')) {
+                        $(".forctm1").css("color", "#C7C7C7");
+                        $(".forctm2").css("color", "#262626");
+                        $(".forctm3").css("color", "#C7C7C7");
+                        $(".forctm4").css("color", "#C7C7C7");
+                        $(".forctm5").css("color", "#C7C7C7");
+                    }
+
+                });
+                $("#ctm3").change(function() {
+                    if ($("#ctm3").is(':checked')) {
+                        $(".forctm1").css("color", "#C7C7C7");
+                        $(".forctm2").css("color", "#C7C7C7");
+                        $(".forctm3").css("color", "#262626");
+                        $(".forctm4").css("color", "#C7C7C7");
+                        $(".forctm5").css("color", "#C7C7C7");
+                    }
+
+                });
+                $("#ctm4").change(function() {
+                    if ($("#ctm4").is(':checked')) {
+                        $(".forctm1").css("color", "#C7C7C7");
+                        $(".forctm2").css("color", "#C7C7C7");
+                        $(".forctm3").css("color", "#C7C7C7");
+                        $(".forctm4").css("color", "#262626");
+                        $(".forctm5").css("color", "#C7C7C7");
+                    }
+
+                });
+                $("#ctm5").change(function() {
+                    if ($("#ctm5").is(':checked')) {
+                        $(".forctm1").css("color", "#C7C7C7");
+                        $(".forctm2").css("color", "#C7C7C7");
+                        $(".forctm3").css("color", "#C7C7C7");
+                        $(".forctm4").css("color", "#C7C7C7");
+                        $(".forctm5").css("color", "#262626");
+                    }
+
+                });
+            });
             $("#backto_main").on('click', function() {
                 var memId = $(".m_id").val();
                 var url = "${pageContext.request.contextPath}/timeLine";
@@ -142,13 +275,20 @@
             });
 
             $(function() {
+                $(".fs").trigger('click');
                 $(".add_photo").on('click', function() {
                     $('.upfile').val('');
                     $('.image').attr('src', '');
                     $(".photo_upload").css("display", "block");
                     $(".capture_video").css("display", "none");
                     $(".edit").css("display", "none");
+                    $(".hl").css("display", "none");
                     $(".mine").css("display", "none");
+                    $(".forctm1").css("color", "#262626");
+                    $(".forctm2").css("color", "#C7C7C7");
+                    $(".forctm3").css("color", "#C7C7C7");
+                    $(".forctm4").css("color", "#C7C7C7");
+                    $(".forctm5").css("color", "#C7C7C7");
 
                 });
                 $(".add_captured").on('click', function() {
@@ -157,7 +297,13 @@
                     $(".photo_upload").css("display", "none");
                     $(".capture_video").css("display", "block");
                     $(".edit").css("display", "none");
+                    $(".hl").css("display", "none");
                     $(".mine").css("display", "none");
+                    $(".forctm1").css("color", "#C7C7C7");
+                    $(".forctm2").css("color", "#262626");
+                    $(".forctm3").css("color", "#C7C7C7");
+                    $(".forctm4").css("color", "#C7C7C7");
+                    $(".forctm5").css("color", "#C7C7C7");
 
                 });
                 $(".add_edit").on('click', function() {
@@ -166,7 +312,13 @@
                     $(".photo_upload").css("display", "none");
                     $(".capture_video").css("display", "none");
                     $(".edit").css("display", "block");
+                    $(".hl").css("display", "none");
                     $(".mine").css("display", "none");
+                    $(".forctm1").css("color", "#C7C7C7");
+                    $(".forctm2").css("color", "#C7C7C7");
+                    $(".forctm3").css("color", "#262626");
+                    $(".forctm4").css("color", "#C7C7C7");
+                    $(".forctm5").css("color", "#C7C7C7");
                 });
                 $(".my_story").on('click', function() {
                     $('.upfile').val('');
@@ -174,9 +326,39 @@
                     $(".photo_upload").css("display", "none");
                     $(".capture_video").css("display", "none");
                     $(".edit").css("display", "none");
+                    $(".hl").css("display", "none");
                     $(".mine").css("display", "block");
+                    $(".forctm1").css("color", "#C7C7C7");
+                    $(".forctm2").css("color", "#C7C7C7");
+                    $(".forctm3").css("color", "#C7C7C7");
+                    $(".forctm4").css("color", "#262626");
+                    $(".forctm5").css("color", "#C7C7C7");
+                });
+                $(".highlight").on('click', function() {
+                    $('.upfile').val('');
+                    $('.image').attr('src', '');
+                    $(".photo_upload").css("display", "none");
+                    $(".capture_video").css("display", "none");
+                    $(".edit").css("display", "none");
+                    $(".mine").css("display", "none");
+                    $(".hl").css("display", "block");
+                    $(".forctm1").css("color", "#C7C7C7");
+                    $(".forctm2").css("color", "#C7C7C7");
+                    $(".forctm3").css("color", "#C7C7C7");
+                    $(".forctm4").css("color", "#C7C7C7");
+                    $(".forctm5").css("color", "#262626");
                 });
             });
+
+            function fs(h_name, s_id, h_img) {
+                var s_id2 = s_id.split(",");
+                var h_img2 = h_img.split(",");
+                for (i = 0; i < h_img2.length; i++) {
+                    console.log(h_img[i]);
+                    $("#con" + h_name).append('<img class="for_delh' + s_id2[i] + '" src="${pageContext.request.contextPath}/resources/uploadFiles/' + h_img2[i] + '">');
+                    $("#con" + h_name).append('<input class="for_delh' + s_id2[i] + '" type="button" value="하이라이트 지우기" onclick="delh(\'' + s_id2[i] + '\');">');
+                }
+            }
 
             // 웹캠 연결
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -405,9 +587,78 @@
                             request.responseText +
                             "\n" + "error:" +
                             error);
+
                     }
                 });
             });
+
+            function delhname(h_name) {
+                var memId = $("#m_id").val();
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/deleteHname.do",
+                    method: "POST",
+                    data: {
+                        my_name: memId,
+                        h_name: h_name
+                    },
+                    async: false,
+                    success: function(data) {
+                        var count = $(".count_storyh").length;
+                        console.log("memId : " +
+                            memId +
+                            " h_name : " +
+                            h_name);
+                        $(".count_story" + h_name).css("display", "none");
+                        if (count == 0) {
+                            $("#recom_upload3").css("display", "block");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+
+                    }
+                });
+            }
+
+            function delh(s_id) {
+                var memId = $("#m_id").val();
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/deleteh.do",
+                    method: "POST",
+                    data: {
+                        my_name: memId,
+                        s_id: s_id
+                    },
+                    async: false,
+                    success: function(data) {
+                        var count = $(".count_storyh").length;
+                        console.log("memId : " +
+                            memId +
+                            " s_id : " +
+                            s_id);
+                        $(".for_delh" + s_id).css("display", "none");
+                        if (count == 0) {
+                            $("#recom_upload3").css("display", "block");
+                        }
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+
+                    }
+                });
+            }
         </script>
 
         </html>

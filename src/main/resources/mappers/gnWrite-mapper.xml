@@ -27,4 +27,11 @@
 		#{b_img1}, #{b_img2}, #{b_img3}, #{b_img4},
 		#{b_img5}, #{b_img6}, #{b_img7}, #{b_img8}, #{b_img9}, #{b_img10})
 	</insert>
+	<insert id="insertboardhashtag" parameterType="GnWrite"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into
+		hashtag values(
+		'BO'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(#{seq},3,'0'),
+		#{h_tag})
+	</insert>
 </mapper>

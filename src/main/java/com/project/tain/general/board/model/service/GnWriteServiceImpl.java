@@ -26,4 +26,9 @@ public class GnWriteServiceImpl implements GnWriteService {
 		return gwDao.insertboardimg(gw);
 	}
 
+	@Override
+	public int insertboardhashtag(GnWrite gw) {
+		return gwDao.insertboardhashtag(gw);
+	}
+
 }

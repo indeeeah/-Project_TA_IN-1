@@ -39,7 +39,8 @@ public class GnWriteController {
 	
 	@RequestMapping(value="/insertboard.do", method= RequestMethod.POST)
 	public ModelAndView insertboard(GnWrite gw, @RequestParam(name = "upfile") MultipartFile report,
-			MultipartHttpServletRequest request, ModelAndView mv) {
+			MultipartHttpServletRequest request, ModelAndView mv, @RequestParam(name="h_tag") String h_tag, @RequestParam(name="seq") int seq) {
+		
 		String[] bImgList = {gw.getB_img1(),gw.getB_img2(),gw.getB_img3(),gw.getB_img4(),gw.getB_img5(),gw.getB_img6(),gw.getB_img7(),gw.getB_img8(),gw.getB_img9(),gw.getB_img10()};
 		try {
 			if(request!=null && !request.equals("")) {
@@ -51,6 +52,7 @@ public class GnWriteController {
 				bImgList[i] = fileList.get(i).getOriginalFilename();
 				System.out.println(bImgList[i]);
 			}
+			System.out.println(h_tag);
 			gw.setB_img1(bImgList[0]);
 			gw.setB_img2(bImgList[1]);
 			gw.setB_img3(bImgList[2]);
@@ -61,8 +63,15 @@ public class GnWriteController {
 			gw.setB_img8(bImgList[7]);
 			gw.setB_img9(bImgList[8]);
 			gw.setB_img10(bImgList[9]);
+			System.out.println(seq);
 			gwService.insertboard(gw);
 			gwService.insertboardimg(gw);
+			String[] array = h_tag.split(",");
+			for(int i = 0; i<array.length;i++) {
+				gw.setH_tag(array[i]);
+				System.out.println(array[i]);
+				gwService.insertboardhashtag(gw);
+			}
 			mv.setViewName("redirect:/timeLine/");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,16 +80,17 @@ public class GnWriteController {
 	}
 	
 	public void uploadFiles(MultipartHttpServletRequest request) {
-		List<MultipartFile> fileList = request.getFiles("file");
-		System.out.println("fileSize : " + fileList.size());
+		List<MultipartFile> fileList = request.getFiles("upfile");
+		System.out.println(fileList);
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String path= root + "//uploadFiles";
-		File folder = new File(path);
+		String savePath = root + "//uploadFiles";
+		File folder = new File(savePath);
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
 		String filePath = null;
 		for(MultipartFile mf : fileList) {
+			
 //			 String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 //			 String safeFile = path + System.currentTimeMillis() + originFileName;
 	         System.out.println("originFileName : " + mf.getOriginalFilename());

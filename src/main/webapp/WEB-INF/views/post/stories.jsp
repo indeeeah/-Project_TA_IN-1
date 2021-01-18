@@ -123,7 +123,7 @@
 
                 <div id="story_big_con">
                     <div id="show_story">
-                        <input type="hidden" id="my_id" value="${myProfile.m_id }">
+                        <input type="hidden" id="my_id" value="${my_name }">
 
                         <input type="hidden" id="showst" value="${showAllStory.m_id}" onclick="split('${showAllStory.m_id}','${showAllStory.s_type}','${showAllAStory.m_id}','${showAllAStory.s_type}');">
                         <div id="story">

@@ -9,4 +9,6 @@ public interface GnWriteService {
 	int insertboard(GnWrite gw);
 
 	int insertboardimg(GnWrite gw);
+
+	int insertboardhashtag(GnWrite gw);
 }

@@ -60,4 +60,6 @@ public interface TimeLineService {
 	List<TimeLine> chkfollow(String m_id);
 
 	String showMemberType(String m_id);
+
+	int chkpwd(TimeLine tl);
 }
