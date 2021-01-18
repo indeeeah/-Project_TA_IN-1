@@ -82,4 +82,18 @@ public class BsMemberManageController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "bsmember2ManageUpdate.do", method = RequestMethod.GET)
+	public ModelAndView updateApproval(BsMemberManage bsm, ModelAndView mv) {
+		try {
+			mv.addObject("m_id", bsmmService.updateUsage(bsm).getM_id());
+			mv.addObject("m_id", bsmmService.updateApproval(bsm).getM_id());
+			mv.setViewName("redirect:bsmemberManageDetali.do");
+			System.out.println("성공");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+		return mv;
+	}
+
 }

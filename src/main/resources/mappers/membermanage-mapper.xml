@@ -52,11 +52,12 @@
 		ORDER BY
 		m_id DESC
 	</select>
-	
+
 	<!-- 비지니스 계정 신청자 조회 -->
 	<select id="selectBsApproval" parameterType="string"
 		resultType="arraylist">
-		select m.*, bm.* from member m join businessMember bm on m.m_id = bm.m_id
+		select m.*, bm.* from member m join businessMember bm on
+		m.m_id = bm.m_id
 		where bm.bm_approval = 'N'
 	</select>
 
@@ -68,17 +69,7 @@
 		m_status = #{m_status}
 		WHERE m_id = #{m_id}
 	</update>
-	
-	<!-- 요청 승인 -->
-	<update id="updateUsage" flushCache="true" statementType="PREPARED">
-		update Member set m_usage='B' WHERE
-		m_id = #{m_id}
-	</update>
-	<update id="updateApproval" flushCache="true" statementType="PREPARED">
-		update BusinessMember set bm_approval ='Y' WHERE
-		m_id = #{m_id}
-	</update>
-	
+
 	<!-- 회원 삭제 -->
 	<delete id="deleteMmanage" parameterType="string"
 		flushCache="true" statementType="PREPARED">

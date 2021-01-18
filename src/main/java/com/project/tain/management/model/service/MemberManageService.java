@@ -15,12 +15,7 @@ public interface MemberManageService {
 		List<MemberManage> searchList(String keyword);
 		
 		// 특정 페이지 단위 회원 조회
-		List<MemberManage> selectList(int startPage, int limit);
-		
-		// 요청 승인
-		int updateUsage(String m_id);
-
-		int updateApproval(String m_id);
+		List<MemberManage> selectList(int startPage, int limit);	
 		
 		// 회원 수정
 		MemberManage updateMmanage(MemberManage m);

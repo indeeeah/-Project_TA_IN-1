@@ -35,16 +35,7 @@ public class MemberManageDao {
 		RowBounds row = new RowBounds(startRow, limit);
 		return sqlSession.selectList("MemberManage.selectList", null, row);
 	}
-
-	// 요청 승인
-	public int updateUsage(String m_id) {
-		return sqlSession.update("MemberManage.updateUsage", m_id);
-	}
-
-	public int updateApproval(String m_id) {
-		return sqlSession.update("MemberManage.updateApproval", m_id);
-	}
-
+	
 	// 회원 수정
 	public int updateMmanage(MemberManage m) {
 		return sqlSession.update("MemberManage.updateMmanage", m);

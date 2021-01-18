@@ -41,10 +41,13 @@ public class BsMemberManageDao {
 	public int updateBsMmanage(BsMemberManage bsm) {
 		return sqlSession.update("BsMemberManage.updateBsMmanage", bsm);
 	}
-
-	// 회원 삭제
-	public int deleteBsMmanage(String m_id) {
-		return sqlSession.delete("BsMemberManage.deleteBsMmanage", m_id);
+	
+	// 요청 승인
+	public int updateApproval(BsMemberManage bsm) {
+		return sqlSession.update("BsMemberManage.updateApproval", bsm);
 	}
-
+	
+	public int updateUsage(BsMemberManage bsm) {
+		return sqlSession.update("BsMemberManage.updateUsage", bsm);
+	}
 }

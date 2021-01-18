@@ -20,7 +20,9 @@ public interface BsMemberManageService {
 
 	// 회원 수정
 	BsMemberManage updateBsMmanage(BsMemberManage bsm);
-
-	// 회원 삭제
-	void deleteBsMmanage(String m_id);
+	
+	// 요청 승인
+	BsMemberManage updateApproval(BsMemberManage bsm);
+	
+	BsMemberManage updateUsage(BsMemberManage bsm);
 }

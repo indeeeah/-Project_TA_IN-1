@@ -42,6 +42,18 @@
 		ORDER BY m_id DESC
 	</select>
 	
+	<!-- 요청 승인 -->
+	<update id="updateApproval" flushCache="true" parameterType="BsMemberManage"
+		statementType="PREPARED">
+		update BusinessMember set bm_approval='Y' WHERE
+		m_id =#{m_id}
+	</update>
+	<update id="updateUsage" flushCache="true" parameterType="BsMemberManage"
+		statementType="PREPARED">
+		update Member set m_usage='B' WHERE
+		m_id =#{m_id}
+	</update>
+	
 	<!-- 회원 수정 -->
 	<update id="updateBsMmanage" parameterType="BsMemberManage" flushCache="true"
 		statementType="PREPARED">

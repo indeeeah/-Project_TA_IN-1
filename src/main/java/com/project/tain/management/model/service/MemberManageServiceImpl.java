@@ -54,14 +54,4 @@ public class MemberManageServiceImpl implements MemberManageService {
 		mmDao.insertOutManage(m_id);
 	}
 
-	@Override
-	public int updateUsage(String m_id) {
-		return mmDao.updateUsage(m_id);
-	}
-
-	@Override
-	public int updateApproval(String m_id) {
-		return mmDao.updateApproval(m_id);
-	}
-
 }

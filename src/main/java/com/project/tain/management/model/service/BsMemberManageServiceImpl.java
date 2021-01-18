@@ -44,10 +44,28 @@ public class BsMemberManageServiceImpl implements BsMemberManageService{
 		}
 		return bsm;
 	}
+	
 
 	@Override
-	public void deleteBsMmanage(String m_id) {
-		bsmmDao.deleteBsMmanage(m_id);
+	public BsMemberManage updateApproval(BsMemberManage bsm) {
+		int result = bsmmDao.updateApproval(bsm);
+		if (result > 0) {
+			bsm = bsmmDao.selectOne(bsm.getM_id());
+		} else {
+			bsm = null;
+		}
+		return bsm;
+	}
+
+	@Override
+	public BsMemberManage updateUsage(BsMemberManage bsm) {
+		int result = bsmmDao.updateUsage(bsm);
+		if (result > 0) {
+			bsm = bsmmDao.selectOne(bsm.getM_id());
+		} else {
+			bsm = null;
+		}
+		return bsm;
 	}
 
 }

@@ -1,7 +1,11 @@
 package com.project.tain.management.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +20,26 @@ public class MemberManageController {
 	private MemberManageService mmService;
 
 	public static final int LIMIT = 10;
+	
+//	//테스트 로그인
+//	@RequestMapping(value = "/test.do")
+//	public String testForm(ModelAndView mv) {
+//		return "test";
+//	}
+//	
+//	@RequestMapping(value = "/testSession.do")
+//	public ModelAndView testSession(ModelAndView mv, @RequestParam(name="m_id") String m_id, @RequestParam(name="lan") String lan, Model model, HttpSession session, HttpServletRequest request) {
+//		session = request.getSession();
+//		String my_name = request.getParameter("m_id");
+//		String my_lan = request.getParameter("lan");
+//		System.out.println(my_name);
+//		System.out.println(my_lan);
+//		session.setAttribute("my_name", my_name);
+//		session.setAttribute("my_lan", my_lan);
+//		
+//		mv.setViewName("management/managementMain");
+//		return mv;
+//	}
 	
 	@RequestMapping(value = "membermanagelist.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView memberManageList(@RequestParam(name = "page", defaultValue = "1") int page,

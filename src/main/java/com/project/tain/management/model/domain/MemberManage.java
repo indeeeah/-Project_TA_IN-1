@@ -48,7 +48,6 @@ public class MemberManage implements java.io.Serializable {
 	private String approval_key;
 	private String approval_status;
 	
-	
 	public MemberManage() {
 		
 	}
