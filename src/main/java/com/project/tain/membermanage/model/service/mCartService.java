@@ -8,4 +8,5 @@ public interface mCartService {
 	public List<mCartVO> showCart(String m_id);
 	public mCartVO showOrder(String m_id, String bb_id);
 	public int deleteCart(String bb_id);
+	public String showOrderImg(String bb_id);
 }

@@ -53,4 +53,12 @@
 		from ShoppingBasket SB, BusinessBoard BB, BusinessBoardAdd BBA
 		where SB.bb_id = BB.bb_id and BB.bb_id = BBA.bb_id and SB.m_id = #{m_id} and SB.bb_id = #{bb_id}
 	</select>
+	
+	<!-- 주문한 상품 사진 보기 -->
+	<select id="showOrderImg" parameterType="String"
+		resultType="String">
+		select bb_img1
+		from BusinessBoard BB, BusinessBoardAdd BBA
+		where BB.bb_id = BBA.bb_id and BB.bb_id = #{bb_id}
+	</select>
 </mapper>

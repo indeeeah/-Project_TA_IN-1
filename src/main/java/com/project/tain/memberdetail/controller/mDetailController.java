@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.tain.membermanage.model.service.mFollowServiceImpl;
@@ -29,7 +30,7 @@ public class mDetailController {
 			mv.addObject("following", mFollowServiceImpl.showFollowing(m_id));
 			mv.addObject("countfollower", countfollower);
 			mv.addObject("countfollowing", countfollowing);
-			mv.setViewName("mDetail");
+			mv.setViewName("Gmember/mDetail");
 		} catch(Exception e) {
 			mv.addObject("errorMsg", e.getMessage());
 			mv.setViewName("errorPage");
@@ -48,5 +49,17 @@ public class mDetailController {
 			mv.setViewName("errorPage");
 		}
 		return mv;
+	}
+	
+	@RequestMapping(value = "/WebSocketTest.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView webSocketTest(ModelAndView mv, @RequestParam String ID){
+		mv.addObject("ID", ID);
+		mv.setViewName("WebSocketTest");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/IdSet.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String memberBusiness() {
+		return "IdSet";
 	}
 }

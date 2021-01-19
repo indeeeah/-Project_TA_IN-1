@@ -27,4 +27,9 @@ public class mCartServiceImpl implements mCartService {
 	public int deleteCart(String bb_id) {
 		return mCartDao.deleteCart(bb_id);
 	}
+
+	@Override
+	public String showOrderImg(String bb_id) {
+		return mCartDao.showOrderImg(bb_id);
+	}
 }

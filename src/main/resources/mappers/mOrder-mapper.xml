@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mOrderVO">
+	<resultMap type="mOrderVO" id="mOrderMap">
+	<id property="bb_id" column="bb_id"/>
+	<result property="m_id" column="m_id"/>
+	<result property="od_date" column="od_date"/>
+	<result property="od_price" column="od_price"/>
+	<result property="od_amount" column="od_amount"/>
+	<result property="od_options" column="od_options"/>
+	<result property="od_price" column="od_price"/>
+	<result property="od_name" column="od_name"/>
+	<result property="od_phone" column="od_phone"/>
+	<result property="od_addr1" column="od_addr1"/>
+	<result property="od_addr2" column="od_addr2"/>
+	<result property="od_addr3" column="od_addr3"/>
+	<result property="od_status" column="od_status"/>
+	</resultMap>
+	<!-- 주문하기 -->
+	<insert id="insertOrder" parameterType="mOrderVO">
+	insert into orderdetail values(
+	#{bb_id}, #{m_id}, sysdate, #{od_size}, #{od_amount}, #{od_options}, #{od_price},  
+	#{od_name}, #{od_phone}, #{od_addr1}, #{od_addr2}, #{od_addr3}, 'N'
+	)
+	</insert>
+	
+	<!-- 주문내역 조회(구매자) -->
+	<select id="showOrderList" parameterType="String" resultType="mOrderVO" resultMap="mOrderMap">
+	select * from orderdetail where m_id=#{m_id} ORDER BY od_date DESC
+	</select>
+</mapper>

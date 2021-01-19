@@ -91,13 +91,17 @@ th, td {
 				});
 				
 				$("#deletelist").click(function(){
-					var bb_id =[];
-					for(var i = 1; i < $("#cartlist tr").length; i++){
-						if($("tr").eq(i).find("input[type=checkbox]").is(":checked")){
-							bb_id.push($("tr").eq(i).find("input[id=bb_id]").val());
+					if(confirm("체크하신 상품들을 전부 삭제하시겠습니까?")==true){
+						var bb_id = "";
+						for(var i = 1; i < $("#cartlist tr").length; i++){
+							if($("#cartlist tr").eq(i).find("input[type=checkbox]").is(":checked")){
+								bb_id += $("#cartlist tr").eq(i).find("input[id=bb_id]").val()+"/";			
+							}
 						}
+								location.href="mDeleteCartList.do?bb_id="+bb_id;
+					}else{
+						return false;
 					}
-					location.href="mDeleteCart.do?bb_id="+bb_id;
 				});
 				
 				$("#checkall").click(function(){
@@ -131,7 +135,7 @@ th, td {
 			</ul>
 		</div>
 		<div id="contents" style="padding-top: 30px;">
-			<span style="padding-bottom: 50px;">장바구니</span>
+			<span style="margin-bottom: 50px; color:white; background:gray;">장바구니</span>
 			<table id="cartlist" style="font-size: 10pt; margin: 40px 0 60px 0;">
 				<tr>
 					<td align="center" width="3%"><input type="checkbox" checked id="checkall"></td>

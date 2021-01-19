@@ -28,4 +28,8 @@ public class mCartDAO {
 	public int deleteCart(String bb_id) {
 		return sqlSession.delete("mCartVO.deleteCart", bb_id);
 	}
+	
+	public String showOrderImg(String bb_id) {
+		return sqlSession.selectOne("mCartVO.showOrderImg", bb_id);
+	}
 }

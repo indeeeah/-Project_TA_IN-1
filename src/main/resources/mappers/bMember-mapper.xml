@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bMemberVO">
+	<resultMap type="bMemberVO" id="bMemberMap">
+		<!-- property에는 vo의 필드명, column에는 db table의 컬럼명 -->
+		<id property="m_id" column="m_id" />
+		<result property="bm_cate" column="bm_cate" />
+		<result property="bm_name" column="bm_name" />
+		<result property="bm_addr" column="bm_addr" />
+		<result property="bm_url" column="bm_url" />
+		<result property="bm_account" column="bm_account" />
+		<result property="bm_qr" column="bm_qr" />
+		<result property="bm_intro" column="bm_intro" />
+		<result property="bm_phone" column="bm_phone" />
+		<result property="bm_approval" column="bm_approval" />
+	</resultMap>
+	
+	<!-- 비즈니스계정 정보 조회 -->
+	<select id="showbMember" parameterType="String" resultType="bMemberVO" resultMap="bMemberMap">
+	select *
+	from businessmember where m_id = #{m_id}
+	</select>
+	
+	<!-- 비즈니스 정보 수정 -->
+	<update id="updatebMember" parameterType="bMemberVO">
+	update businessmember set
+	m_id = #{m_id},
+	bm_cate = #{bm_cate},
+	bm_name = #{bm_name},
+	bm_addr = #{bm_addr},
+	bm_url = #{bm_url},
+	bm_account = #{bm_account},
+	bm_intro = #{bm_intro},
+	bm_phone = #{bm_phone},
+	bm_approval = #{bm_approval}
+	where
+	m_id=#{m_id}
+	</update>
+	
+	<!-- 비즈니스계정 전환 -->
+	<insert id="insertbMember" parameterType="bMemberVO">
+	insert into businessmember
+	values(
+	#{m_id}, #{bm_cate}, #{bm_name}, #{bm_addr}, #{bm_url}, #{bm_account}, #{bm_intro}, #{bm_phone}, #{bm_approval}
+	)
+	</insert>
+	
+	<!-- 비즈니스계정 해제 -->
+	<delete id="deletebMember" parameterType="String">
+	delete from businessmember
+	where m_id = #{m_id}
+	</delete>
+	
+</mapper>
