@@ -364,4 +364,15 @@
 	<select id="chkpwd" parameterType="TimeLine" resultType="int">
 	select count(*) from member where m_id=#{m_id} and m_pw=#{m_pw}
 	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<insert id="outmember" parameterType="TimeLine"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into out (m_id, o_reason) values(#{m_id}, #{o_reason})
+		</insert>
+	<!-- 회원 전환 -->
+	<update id="switchmember" parameterType="string"
+	flushCache="true" statementType="PREPARED" timeout="20">
+	update member set m_activity=3 where m_id=#{m_id}
+	</update>
 </mapper>

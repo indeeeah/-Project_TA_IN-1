@@ -22,9 +22,9 @@
 		<beans:property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
 		<beans:property name="url"
-			value="jdbc:oracle:thin:@localhost:1521:xe" />
+			value="jdbc:oracle:thin:@112.221.156.36:1521:xe" />
 		<beans:property name="username" value="TA_IN" />
-		<beans:property name="password" value="1234"></beans:property>
+		<beans:property name="password" value="1234" />
 	</beans:bean>
 
 	<beans:bean id="sqlSessionFactory"

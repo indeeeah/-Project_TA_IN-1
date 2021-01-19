@@ -117,7 +117,7 @@
                         <div id="nonecon" style="display:none;">
                             <div id="chkps">
                                 <div id="pswd">비밀번호를 다시 입력하세요</div>
-                                <input type="text" id="pw" required>
+                                <input type="password" id="pw" required>
                                 <input type="button" id="pchk" value="비밀번호 체크" required>
                             </div>
                             <div id="ask">
