@@ -72,4 +72,12 @@
 		delete from businessboard where bb_id=#{bb_id}
 	</delete>
 	
+	<!-- 댓글 좋아요 체크 -->
+	<select id="checkBbr_like" parameterType="string" flushCache="true" statementType="PREPARED" resultType="int">
+		select * from bblike where m_id=#{m_id} and bb_id=#{bb_id}
+	</select>
+	<!-- 답글 좋아요 체크 -->
+	<select id="checkBbrr_like" parameterType="string" flushCache="true" statementType="PREPARED" resultType="int">
+		select * from bblike where m_id=#{m_id} and bb_id=#{bb_id}
+	</select>
 </mapper>

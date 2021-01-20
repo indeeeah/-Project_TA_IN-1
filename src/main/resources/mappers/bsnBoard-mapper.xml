@@ -37,12 +37,12 @@
 	
 	<!-- 게시물 목록 -->
 	<select id="bsnSelectListAll" parameterType="string" resultType="arraylist" resultMap="resultBsnBoard">
-		select bb.*, bba.*, nvl(cnt, 0) bblikecnt from 
+		select bb.*, bba.*, nvl(cnt, 0) bb_like from 
 			(select bb1.*, nvl(cnt, 0) bbrcnt from 
 				(select * from businessboard) bb1 full outer join 
 					(select count(*) cnt, bb_topid from businessboard where not(bb_topid is null) group by bb_topid) bb2 
 					on bb1.bb_id=bb2.bb_topid 
-				where bb_type='B' and m_id='aaaa') bb join 
+				where bb_type='B' and m_id=#{m_id}) bb join 
 				businessboardadd bba on bb.bb_id=bba.bb_id full outer join 
 					(SELECT count(*) cnt, bb_id FROM bblike group by bb_id) bl on bb.bb_id=bl.bb_id
     	where m_id=#{m_id} order by bb_date desc
@@ -128,6 +128,12 @@
 	<!-- 카테고리 목록 -->
 	<select id="categoryList" parameterType="string" resultType="arraylist" resultMap="resultBsnBoard">
 		select * from category where m_id=#{m_id}
+	</select>
+	
+	
+	<!-- 게시물 좋아요 체크 -->
+	<select id="checkBb_like" parameterType="BsnBoard" resultType="BsnBoard">
+		select * from bblike where m_id=#{m_id} and bb_id=#{bb_id}
 	</select>
 </mapper>
 

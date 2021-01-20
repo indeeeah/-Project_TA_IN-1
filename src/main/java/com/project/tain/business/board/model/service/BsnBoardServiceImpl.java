@@ -108,6 +108,11 @@ public class BsnBoardServiceImpl implements BsnBoardService{
 	public List<BsnBoard> selectCategory(String m_id) {
 		return bbDao.selectCategory(m_id);
 	}
-	
+	// 게시물 좋아요 체크
+	@Override
+	public BsnBoard checkBb_like(BsnBoard bb) {
+		// TODO Auto-generated method stub
+		return bbDao.checkBb_like(bb);
+	}
 
 }

@@ -50,7 +50,7 @@ public class GnBoardController {
 				mv.addObject("selectFollower", gService.selectFollower(m_id));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
-
+					
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

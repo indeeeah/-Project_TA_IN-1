@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -23,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.tain.business.board.model.domain.BsnBoard;
 import com.project.tain.business.board.model.service.BsnBoardService;
+import com.project.tain.general.board.model.service.GnBoardService;
+import com.project.tain.post.model.service.TimeLineService;
 import com.project.tain.util.Utils;
 
 @Controller
@@ -33,25 +36,62 @@ public class BsnBoardController {
 	@Autowired
 	private BsnBoardService bbService;
 	
+	@Autowired
+	private GnBoardService gService;
+	
+	@Autowired
+	private TimeLineService tService;
+	
 	public static final int LIMIT=9;
 	
 	// 게시물 목록
 	@RequestMapping(value="/bbList.do", method = RequestMethod.GET)
 	public ModelAndView bbListService(@RequestParam(name="page", defaultValue = "1") int page, 
-			ModelAndView mv) {
-		
-		String m_id= "aaaa";	// 로그인 대체
+			@RequestParam(name="m_id") String m_id, 
+			ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name=(String) session.getAttribute("my_name");
+		String result=gService.userType(my_name);
 		int currentPage=page;
 		try {
-			mv.addObject("listCount", bbService.listCount(m_id));	// 게시물카운트
-			mv.addObject("category", bbService.selectCategory(m_id));//카테고리 목록
-			mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
-			mv.addObject("list", bbService.selectListPage(m_id, currentPage, LIMIT));	// 게시물 텍스트정보
-			mv.setViewName("business/bsnMain");
-//			mv.setViewName("business/bsnMain_backup");	//추후 삭제
+			if(result.equals("G")) {
+				mv.addObject("id_img_fwr", gService.showp_one(m_id));
+				mv.addObject("fw", gService.showp_two(m_id));
+				mv.addObject("gboard", gService.showp_three(m_id));
+				mv.addObject("bboard", gService.showp_four(m_id));
+				mv.addObject("storychk", gService.storychk(m_id));
+				mv.addObject("showpost", gService.showpost(m_id));
+				mv.addObject("highlight", gService.highlight(m_id));
+				mv.addObject("followchk", gService.followchk(my_name, m_id));
+				mv.addObject("recomFow", gService.recomFow(my_name, m_id));
+				mv.addObject("selectFollow", gService.selectFollow(m_id));
+				mv.addObject("selectFollower", gService.selectFollower(m_id));
+				mv.setViewName("general/gnMain");
+			} else if (result.equals("B")) {
+				System.out.println("timeLineList"+tService.showTimeLineList(my_name));
+				mv.addObject("timeLineList", tService.showTimeLineList(my_name));
+				mv.addObject("id_img_fwr", gService.showp_one(m_id));
+				mv.addObject("fw", gService.showp_two(m_id));
+				mv.addObject("gboard", gService.showp_three(m_id));
+				mv.addObject("bboard", gService.showp_four(m_id));
+				mv.addObject("storychk", gService.storychk(m_id));
+				mv.addObject("showpost", gService.showpost(m_id));
+				mv.addObject("highlight", gService.highlight(m_id));
+				mv.addObject("followchk", gService.followchk(my_name, m_id));
+				mv.addObject("recomFow", gService.recomFow(my_name, m_id));
+				mv.addObject("selectFollow", gService.selectFollow(m_id));
+				mv.addObject("selectFollower", gService.selectFollower(m_id));
+				mv.addObject("listCount", bbService.listCount(m_id));	// 게시물카운트
+				mv.addObject("category", bbService.selectCategory(m_id));//카테고리 목록
+				mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
+				mv.addObject("list", bbService.selectListPage(m_id, currentPage, LIMIT));	// 게시물 텍스트정보
+				mv.setViewName("business/bsnMain");
+//				mv.setViewName("business/bsnMain_backup");	//추후 삭제
+			}
 		} catch(Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
+			e.printStackTrace();
 		}
 		return mv;
 	}
@@ -84,10 +124,10 @@ public class BsnBoardController {
 		HashMap<String, Object> result = new HashMap <String,Object>();	
 		
 		try {
+			System.out.println("bbDetail:"+bbService.selectOne(bb.getBb_id()));
 			result.put("bbDetail", bbService.selectOne(bb.getBb_id()));	// 게시물 상세
-			System.out.println(bbService.selectOne(bb.getBb_id()));
+			System.out.println("bbTags:"+bbService.selectOneTags(bb.getBb_id()));
 			result.put("bbTags", bbService.selectOneTags(bb.getBb_id()));	// 게시물 상세
-			System.out.println(bbService.selectOneTags(bb.getBb_id()));
 		} catch(Exception e) {
 			e.printStackTrace();
 			result.put("ack", -1);
@@ -282,5 +322,25 @@ public class BsnBoardController {
 			
 		}
 		return job.toJSONString();
+	}
+	
+	// 좋아요 체크
+	@ResponseBody
+	@RequestMapping(value="/bb_like_chk", method = RequestMethod.POST)
+	public HashMap<String, Object> bbLikeChk(BsnBoard bb, Model model, HttpServletRequest request,
+			@RequestParam(name="bb_id") String bb_id ) {
+		HashMap<String, Object> result = new HashMap <String,Object>();
+		HttpSession session = request.getSession();
+		String m_id=(String) session.getAttribute("my_name");
+		bb.setM_id(m_id);
+		System.out.println("좋아요 체크 게시물:"+bb.getBb_id());
+		System.out.println("좋아요 체크 아이디:"+bb.getM_id());
+		System.out.println("좋아요 체크:"+ bbService.checkBb_like(bb));
+		if(bbService.checkBb_like(bb)==null) {
+			result.put("bbLikeChk", "0");	
+		} else {
+			result.put("bbLikeChk", "1");	
+		}
+		return result;
 	}
 }

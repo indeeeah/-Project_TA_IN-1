@@ -38,12 +38,12 @@ public interface BsnBoardService {
 	// hashtag
 	int saveBsnTag(BsnBoard bb);
 	
-	
-	
-	
 	// 장바구니 담기
 	public int addToCart(BsnBoard bb);
 	
 	// 카테고리 목록
 	public List<BsnBoard> selectCategory(String m_id);
+	
+	// 게시물 좋아요 체크
+	public BsnBoard checkBb_like(BsnBoard bb);
 }

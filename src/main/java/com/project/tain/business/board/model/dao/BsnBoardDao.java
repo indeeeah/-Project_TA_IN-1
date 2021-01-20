@@ -116,4 +116,13 @@ public class BsnBoardDao {
 		return sqlSession.selectList("BsnBoard.categoryList", m_id);
 	}
 	
+	
+	// 게시물 좋아요 체크
+	public BsnBoard checkBb_like(BsnBoard bb) {
+		System.out.println("게시물 좋아요 체크 dao");
+		System.out.println("Bb_id"+bb.getBb_id());
+		System.out.println("M_id : "+bb.getM_id());
+		return sqlSession.selectOne("BsnBoard.checkBb_like", bb);
+	}
+	
 }
