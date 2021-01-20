@@ -135,6 +135,21 @@
 	<select id="checkBb_like" parameterType="BsnBoard" resultType="BsnBoard">
 		select * from bblike where m_id=#{m_id} and bb_id=#{bb_id}
 	</select>
+	
+	<!-- 계정 팔로우 체크 -->
+	<select id="checkFollow" parameterType="BsnBoard" resultType="BsnBoard">
+		select m_id1 m_id from follow where m_id1=#{my_name} and m_id2=#{m_id}
+	</select>
+	
+	<!-- 계정 팔로우 -->
+	<insert id="follow" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
+		insert into follow values(#{my_name}, #{m_id}, sysdate)
+	</insert>
+	
+	<!-- 계정 언팔로 -->
+	<delete id="unFollow" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
+		delete from follow where m_id1=#{my_name} and m_id2=#{m_id}
+	</delete>
 </mapper>
 
 

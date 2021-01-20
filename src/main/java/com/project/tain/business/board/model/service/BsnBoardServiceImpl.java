@@ -111,8 +111,26 @@ public class BsnBoardServiceImpl implements BsnBoardService{
 	// 게시물 좋아요 체크
 	@Override
 	public BsnBoard checkBb_like(BsnBoard bb) {
-		// TODO Auto-generated method stub
 		return bbDao.checkBb_like(bb);
 	}
+	
+	// 팔로우 체크
+	@Override
+	public BsnBoard checkFollow(BsnBoard bb) {
+		return bbDao.checkFollow(bb);
+	}
 
+	// 팔로우
+	@Override
+	public int follow(BsnBoard bb) {
+		return bbDao.follow(bb);
+	}
+
+	// 언팔로
+	@Override
+	public int unFollow(BsnBoard bb) {
+		return bbDao.unFollow(bb);
+	}
+	
+	
 }

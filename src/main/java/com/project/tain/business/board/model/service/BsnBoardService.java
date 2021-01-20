@@ -46,4 +46,13 @@ public interface BsnBoardService {
 	
 	// 게시물 좋아요 체크
 	public BsnBoard checkBb_like(BsnBoard bb);
+	
+	// 팔로우 체크
+	public BsnBoard checkFollow(BsnBoard bb);
+	
+	// 계정 팔로우
+	public int follow(BsnBoard bb);
+	
+	// 계정 언팔로
+	public int unFollow(BsnBoard bb);
 }

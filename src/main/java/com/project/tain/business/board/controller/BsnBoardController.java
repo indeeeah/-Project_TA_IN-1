@@ -51,7 +51,7 @@ public class BsnBoardController {
 			ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String my_name=(String) session.getAttribute("my_name");
-		String result=gService.userType(my_name);
+		String result=gService.userType(m_id);
 		int currentPage=page;
 		try {
 			if(result.equals("G")) {
@@ -100,9 +100,10 @@ public class BsnBoardController {
 	@ResponseBody
 	@RequestMapping(value="/bbListA", method = RequestMethod.POST)
 	public HashMap<String, Object> bbListAjax(Model model, HttpServletRequest request,
+			@RequestParam(name="m_id") String m_id, 
 			@RequestParam(name="page", defaultValue = "1") int page) {
 		HashMap<String, Object> result = new HashMap <String,Object>();
-		String m_id= "aaaa";	// 로그인 대체
+		System.out.println("스크롤 페이징 m_id:"+ m_id);
 		int currentPage=page;
 		int listCount=bbService.listCount(m_id);
 		int maxPage=(int)((double)listCount/LIMIT+0.9);
@@ -241,6 +242,8 @@ public class BsnBoardController {
 	@RequestMapping(value="/bbUpdate.do", method = RequestMethod.POST)
 	public ModelAndView boardUpdate(BsnBoard bb,
 			MultipartHttpServletRequest request, ModelAndView mv) {
+		HttpSession session = request.getSession();
+		String m_id=(String) session.getAttribute("my_name");
 		System.out.println("게시물 업데이트 컨트롤러 : "+ bb);
 		System.out.println("게시물 업데이트 컨트롤러 : "+ request);
 		try {
@@ -255,7 +258,8 @@ public class BsnBoardController {
 				System.out.println("업데이트 이프");
 //				mv.addObject("bbUpdate", bbService.updateBsnBoard(bb));
 				bbService.updateBsnBoard(bb);
-				System.out.println("업데이트 애드");
+				System.out.println("업데이트 애드 m_id"+m_id);
+				mv.addObject("m_id", m_id);
 				mv.setViewName("redirect:bbList.do");
 			}
 		} catch(Exception e) {
@@ -343,4 +347,61 @@ public class BsnBoardController {
 		}
 		return result;
 	}
+	
+	
+	// 팔로우 체크
+	@ResponseBody
+	@RequestMapping(value="/bb_follow_chk", method = RequestMethod.POST)
+	public HashMap<String, Object> bbfollowchk(BsnBoard bb, Model model, HttpServletRequest request,
+			@RequestParam(name="m_id") String m_id ) {
+		HashMap<String, Object> result = new HashMap <String,Object>();
+		HttpSession session = request.getSession();
+		String my_name=(String) session.getAttribute("my_name");
+		bb.setM_id(m_id);
+		bb.setMy_name(my_name);
+		System.out.println("팔로우 내 아이디:"+bb.getMy_name());
+		System.out.println("팔로우 체크 아이디:"+bb.getM_id());
+		System.out.println("팔로우 체크:"+ bbService.checkFollow(bb));
+		if(bbService.checkFollow(bb)==null) {
+			result.put("bbFollowChk", "0");	
+		} else {
+			result.put("bbFollowChk", "1");	
+		}
+		return result;
+	}
+	
+	// 계정 팔로우
+	@ResponseBody
+	@RequestMapping(value="/bbFollow", method = RequestMethod.POST)
+	public HashMap<String, Object> bbFollow(BsnBoard bb, Model model, HttpServletRequest request,
+			@RequestParam(name="m_id") String m_id, @RequestParam(name="my_name") String my_name ) {
+		HashMap<String, Object> result = new HashMap <String,Object>();
+		System.out.println("팔로우 내 아이디:"+my_name);
+		System.out.println("팔로우 아이디:"+m_id);
+		System.out.println("팔로우 :"+ bbService.follow(bb));
+		if(bbService.checkFollow(bb)==null) {
+			result.put("bbFollow", "0");	
+		} else {
+			result.put("bbFollow", "1");	
+		}
+		return result;
+	}
+	
+	// 계정 언팔로우
+	@ResponseBody
+	@RequestMapping(value="/bbUnFollow", method = RequestMethod.POST)
+	public HashMap<String, Object> bbUnFollow(BsnBoard bb, Model model, HttpServletRequest request,
+			@RequestParam(name="m_id") String m_id, @RequestParam(name="my_name") String my_name ) {
+		HashMap<String, Object> result = new HashMap <String,Object>();
+		System.out.println("언팔로우 내 아이디:"+my_name);
+		System.out.println("언팔로우  아이디:"+m_id);
+		System.out.println("언팔로우 :"+ bbService.unFollow(bb));
+		if(bbService.checkFollow(bb)==null) {
+			result.put("bbUnFollow", "0");	
+		} else {
+			result.put("bbUnFollow", "1");	
+		}
+		return result;
+	}
+	
 }

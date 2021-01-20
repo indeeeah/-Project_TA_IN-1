@@ -53,6 +53,9 @@ public class BsnBoard implements java.io.Serializable{
 	// 카테고리명
 	private String c_name;
 	
+	// 접속자 아이디
+	private String my_name;
+	
 //	비즈니스정보
 //	private String b_cate;
 //	private String bm_name;
@@ -233,12 +236,18 @@ public class BsnBoard implements java.io.Serializable{
 		this.bb_img10 = bb_img10;
 	}
 
+	public BsnBoard(String bb_id, String h_tag) {
+		super();
+		this.bb_id = bb_id;
+		this.h_tag = h_tag;
+	}
+	
 	// 전체
 	public BsnBoard(String bb_id, String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
 			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date,
 			int t_num, String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5, String bb_img6,
 			String bb_img7, String bb_img8, String bb_img9, String bb_img10, String m_img, String h_tag,
-			List<String> tags, int bb_like, int bbrcnt, String c_name) {
+			List<String> tags, int bb_like, int bbrcnt, String c_name, String my_name) {
 		super();
 		this.bb_id = bb_id;
 		this.m_id = m_id;
@@ -269,14 +278,9 @@ public class BsnBoard implements java.io.Serializable{
 		this.bb_like = bb_like;
 		this.bbrcnt = bbrcnt;
 		this.c_name = c_name;
+		this.my_name = my_name;
 	}
 
-	public BsnBoard(String bb_id, String h_tag) {
-		super();
-		this.bb_id = bb_id;
-		this.h_tag = h_tag;
-	}
-	
 	@Override
 	public String toString() {
 		return "BsnBoard [bb_id=" + bb_id + ", m_id=" + m_id + ", bb_name=" + bb_name + ", bb_info=" + bb_info
@@ -286,18 +290,7 @@ public class BsnBoard implements java.io.Serializable{
 				+ bb_img2 + ", bb_img3=" + bb_img3 + ", bb_img4=" + bb_img4 + ", bb_img5=" + bb_img5 + ", bb_img6="
 				+ bb_img6 + ", bb_img7=" + bb_img7 + ", bb_img8=" + bb_img8 + ", bb_img9=" + bb_img9 + ", bb_img10="
 				+ bb_img10 + ", m_img=" + m_img + ", h_tag=" + h_tag + ", tags=" + tags + ", bb_like=" + bb_like
-				+ ", bbrcnt=" + bbrcnt + ", getBb_id()=" + getBb_id() + ", getM_id()=" + getM_id() + ", getBb_name()="
-				+ getBb_name() + ", getBb_info()=" + getBb_info() + ", getBb_price()=" + getBb_price()
-				+ ", getBb_option1()=" + getBb_option1() + ", getBb_option2()=" + getBb_option2() + ", getBb_option3()="
-				+ getBb_option3() + ", getBb_option4()=" + getBb_option4() + ", getBb_type()=" + getBb_type()
-				+ ", getBb_topid()=" + getBb_topid() + ", getBb_date()=" + getBb_date() + ", getBb_img1()="
-				+ getBb_img1() + ", getBb_img2()=" + getBb_img2() + ", getBb_img3()=" + getBb_img3() + ", getBb_img4()="
-				+ getBb_img4() + ", getBb_img5()=" + getBb_img5() + ", getBb_img6()=" + getBb_img6() + ", getBb_img7()="
-				+ getBb_img7() + ", getBb_img8()=" + getBb_img8() + ", getBb_img9()=" + getBb_img9()
-				+ ", getBb_img10()=" + getBb_img10() + ", getT_num()=" + getT_num() + ", getM_img()=" + getM_img()
-				+ ", getH_tag()=" + getH_tag() + ", getTags()=" + getTags() + ", getBb_like()=" + getBb_like() + ", getC_name()=" + getC_name()
-				+ ", getBbrcnt()=" + getBbrcnt() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", bbrcnt=" + bbrcnt + ", c_name=" + c_name + ", my_name=" + my_name + "]";
 	}
 
 	public String getBb_id() {
@@ -578,6 +571,14 @@ public class BsnBoard implements java.io.Serializable{
 
 	public void setC_name(String c_name) {
 		this.c_name = c_name;
+	}
+
+	public String getMy_name() {
+		return my_name;
+	}
+
+	public void setMy_name(String my_name) {
+		this.my_name = my_name;
 	}
 
 	

@@ -38,7 +38,7 @@
 		insert into businessboard values(
 			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BSNBOARD_SEQ.NEXTVAL,3,'0'), #{m_id},
 			'O', #{bb_info}, 0, '', '', '', '',
-			'C', #{bb_topid}, sysdate, #{c_name}
+			'C', #{bb_topid}, sysdate, ''
 		)
 	</insert>
 	
@@ -63,7 +63,7 @@
 		insert into businessboard values(
 			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BSNBOARD_SEQ.NEXTVAL,3,'0'), #{m_id},
 			'O', #{bb_info}, 0, '', '', '', '',
-			'R', #{bb_topid}, sysdate, #{c_name}
+			'R', #{bb_topid}, sysdate, ''
 		)
 	</insert>
 	

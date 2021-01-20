@@ -120,9 +120,34 @@ public class BsnBoardDao {
 	// 게시물 좋아요 체크
 	public BsnBoard checkBb_like(BsnBoard bb) {
 		System.out.println("게시물 좋아요 체크 dao");
-		System.out.println("Bb_id"+bb.getBb_id());
+		System.out.println("Bb_id:"+bb.getBb_id());
 		System.out.println("M_id : "+bb.getM_id());
 		return sqlSession.selectOne("BsnBoard.checkBb_like", bb);
+	}
+	
+	// 팔로우 체크
+	public BsnBoard checkFollow(BsnBoard bb) {
+		System.out.println("팔로우 체크 dao");
+		System.out.println("My_name:"+bb.getMy_name());
+		System.out.println("M_id : "+bb.getM_id());
+		return sqlSession.selectOne("BsnBoard.checkFollow", bb);
+	}
+	
+	// 계정 팔로우
+	public int follow(BsnBoard bb) {
+		System.out.println("팔로우 dao");
+		System.out.println("My_name:"+bb.getMy_name());
+		System.out.println("M_id : "+bb.getM_id());
+		return sqlSession.insert("BsnBoard.follow", bb);
+	}
+	
+	
+	// 계정 언팔로
+	public int unFollow(BsnBoard bb) {
+		System.out.println("언팔로우 dao");
+		System.out.println("My_name:"+bb.getMy_name());
+		System.out.println("M_id : "+bb.getM_id());
+		return sqlSession.delete("BsnBoard.unFollow", bb);
 	}
 	
 }
