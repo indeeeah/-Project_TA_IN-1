@@ -1,6 +1,7 @@
 package com.project.tain.general.board.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,15 +24,19 @@ import com.project.tain.post.model.service.TimeLineService;
 
 @Controller
 public class GnBoardController {
-	
+
 	@Autowired
 	private GnBoardService gService;
-	
+
 	@Autowired
 	private TimeLineService tService;
 
+	public static final int LIMIT = 6;
+
 	@RequestMapping(value = "/gnMain", method = RequestMethod.GET)
-	public ModelAndView gnMain(HttpServletRequest request, @RequestParam(name = "m_id") String m_id, ModelAndView mv) {
+	public ModelAndView gnMain(@RequestParam(name = "page", defaultValue = "1") int page, HttpServletRequest request,
+			@RequestParam(name = "m_id") String m_id, ModelAndView mv) {
+		int currentPage = page;
 		try {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
@@ -42,15 +48,17 @@ public class GnBoardController {
 				mv.addObject("gboard", gService.showp_three(m_id));
 				mv.addObject("bboard", gService.showp_four(m_id));
 				mv.addObject("storychk", gService.storychk(m_id));
-				mv.addObject("showpost", gService.showpost(m_id));
+				//mv.addObject("showpost", gService.showpost(m_id));
+				mv.addObject("showpost", gService.showpostPage(m_id, currentPage, LIMIT));
 				mv.addObject("highlight", gService.highlight(m_id));
 				mv.addObject("followchk", gService.followchk(my_name, m_id));
 				mv.addObject("recomFow", gService.recomFow(my_name, m_id));
 				mv.addObject("selectFollow", gService.selectFollow(m_id));
 				mv.addObject("selectFollower", gService.selectFollower(m_id));
+				mv.addObject("showpostCount", gService.showpostCount(m_id));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
-					
+
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -58,6 +66,24 @@ public class GnBoardController {
 			e.printStackTrace();
 		}
 		return mv;
+	}
+
+	// 게시물 스크롤 페이징
+	@ResponseBody
+	@RequestMapping(value = "/gnMainScroll.do", method = RequestMethod.POST)
+	public HashMap<String, Object> gnMainScroll(Model model, HttpServletRequest request,
+			@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "m_id") String m_id) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		int currentPage = page;
+		int listCount = gService.showpostCount(m_id);
+		int maxPage = (int) ((double) listCount / LIMIT + 0.9);
+		List<GnBoard> logList = gService.showpostPage(m_id, currentPage, LIMIT);
+		result.put("count", gService.showpostCount(m_id)); // 게시물카운트
+		result.put("currentPage", currentPage); // 현재 페이지
+		result.put("maxPage", maxPage); // 최대 페이지
+		result.put("list", logList); // 게시물 텍스트정보
+		System.out.println("list:" + logList);
+		return result;
 	}
 
 	@RequestMapping(value = "/gnEachPage", method = RequestMethod.GET)
@@ -122,11 +148,11 @@ public class GnBoardController {
 			return job.toJSONString();
 		}
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "followchkf.do", method = RequestMethod.POST)
 	public GnBoard followchkf(String my_name, String m_id) {
-		
+
 		GnBoard result = gService.followchk(my_name, m_id);
 		try {
 			System.out.println(result);

@@ -44,28 +44,30 @@
 	<!-- 게시글 조회 -->
 	<select id="showpost" parameterType="string"
 		resultType="arrayList" resultMap="resultGnBoard">
-		select * from
-		(select m_id, board.b_id
-		b_id, b_img1 b_img, b_date b_date, b_type from board join
+		select m_id, board.b_id
+		b_id, b_img1
+		b_img, b_date b_date, b_type from board join
 		boardadd on
-		board.b_id = boardadd.b_id
-		union
-		select m_id, businessboard.bb_id b_id,
-		bb_img1 b_img, bb_date b_date, bb_type b_type from
-		businessboard join
-		businessboardadd
-		on businessboard.bb_id =
-		businessboardadd.bb_id)
-		where
-		m_id=#{m_id}
+		board.b_id =
+		boardadd.b_id where m_id=#{m_id}
 		order by b_date desc
+	</select>
+	<!-- 게시글 카운트 -->
+	<select id="showpostCount" parameterType="string"
+		resultType="int">
+		select count(*) from board join
+		boardadd on
+		board.b_id = boardadd.b_id where
+		m_id=#{m_id}
 	</select>
 	<!-- 스토리 하이라이트 -->
 	<select id="highlight" parameterType="string"
 		resultType="arrayList" resultMap="resultGnBoard">
-		select * from(select h_name, h_img, row_number() over (partition by h_name order by h_img) as num from highlight
+		select * from(select h_name, h_img,
+		row_number() over (partition by h_name order by h_img) as num from
+		highlight
 		where m_id=#{m_id}
-        group by h_name, h_img) where num = 1
+		group by h_name, h_img) where num = 1
 	</select>
 
 	<!-- 팔로우 체크 -->
@@ -160,8 +162,10 @@
 		time, count(blike.b_id) likes from board left outer join blike on
 		board.b_id = blike.b_id
 		join member on board.m_id = member.m_id
-		where board.b_id = #{b_id}
-		group by board.b_id, board.m_id, b_content, b_date, m_img
+		where
+		board.b_id = #{b_id}
+		group by board.b_id, board.m_id, b_content,
+		b_date, m_img
 	</select>
 	<select id="selectEachPostComments" parameterType="string"
 		resultType="arrayList" resultMap="resultGnBoard">
@@ -170,16 +174,20 @@
 		time, count(b.b_id) comments from board a left outer join board b on
 		a.b_id = b.b_topid
 		join member on a.m_id = member.m_id
-		where a.b_topid = #{b_id}
+		where a.b_topid =
+		#{b_id}
 		group by a.b_id, a.m_id, a.b_content, a.b_date, m_img
 	</select>
-	<select id="selectEachPostPhotos" parameterType="string" resultType="string">
-	select b_img1
+	<select id="selectEachPostPhotos" parameterType="string"
+		resultType="string">
+		select b_img1
 		||'#^@%'|| b_img2 ||'#^@%'||b_img3
-		||'#^@%'||b_img4 ||'#^@%'||b_img5
+		||'#^@%'||b_img4
+		||'#^@%'||b_img5
 		||'#^@%'||b_img6
 		||'#^@%'||b_img7 ||'#^@%'||b_img8
-		||'#^@%'||b_img9 ||'#^@%'||b_img10 as t_img from boardadd where b_id=#{b_id}
+		||'#^@%'||b_img9 ||'#^@%'||b_img10 as t_img from boardadd where
+		b_id=#{b_id}
 	</select>
-	
+
 </mapper>

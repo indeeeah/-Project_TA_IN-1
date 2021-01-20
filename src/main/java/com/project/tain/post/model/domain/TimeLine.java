@@ -37,6 +37,9 @@ public class TimeLine implements java.io.Serializable{
 	private int m_activity;
 	private String m_usage;
 	private String m_pw;
+	private String o_reason;
+	private String o_reasontx;
+	private String m_id2;
 	
 	public TimeLine() {
 		
@@ -338,6 +341,30 @@ public class TimeLine implements java.io.Serializable{
 
 	public void setM_pw(String m_pw) {
 		this.m_pw = m_pw;
+	}
+
+	public String getO_reason() {
+		return o_reason;
+	}
+
+	public void setO_reason(String o_reason) {
+		this.o_reason = o_reason;
+	}
+
+	public String getO_reasontx() {
+		return o_reasontx;
+	}
+
+	public void setO_reasontx(String o_reasontx) {
+		this.o_reasontx = o_reasontx;
+	}
+
+	public String getM_id2() {
+		return m_id2;
+	}
+
+	public void setM_id2(String m_id2) {
+		this.m_id2 = m_id2;
 	}
 	
 	

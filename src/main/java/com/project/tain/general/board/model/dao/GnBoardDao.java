@@ -3,6 +3,7 @@ package com.project.tain.general.board.model.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -91,6 +92,16 @@ public class GnBoardDao {
 
 	public String selectEachPostPhotos(String b_id) {
 		return sqlSession.selectOne("GnBoard.selectEachPostPhotos", b_id);
+	}
+
+	public int showpostCount(String m_id) {
+		return sqlSession.selectOne("GnBoard.showpostCount", m_id);
+	}
+
+	public List<GnBoard> showpostPage(String m_id, int startPage, int limit) {
+		int startRow = (startPage - 1) * limit;
+		RowBounds row = new RowBounds(startRow, limit);
+		return sqlSession.selectList("GnBoard.showpost", m_id, row);
 	}
 	
 }

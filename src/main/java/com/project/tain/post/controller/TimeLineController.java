@@ -1,6 +1,7 @@
 package com.project.tain.post.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,8 @@ public class TimeLineController {
 
 	@Autowired
 	private TimeLineService tService;
+	
+	public static final int LIMIT=3;
 
 	@RequestMapping(value = "/test.do")
 	public String testForm(ModelAndView mv) {
@@ -49,13 +52,14 @@ public class TimeLineController {
 		session.setAttribute("my_name", my_name);
 		session.setAttribute("my_lan", my_lan);
 		
-		mv.setViewName("redirect:/timeLine/");
+		mv.setViewName("redirect:/timeLine");
 		return mv;
 	}
 
 	// TimeLine Page
 	@RequestMapping(value = "/timeLine", method = RequestMethod.GET)
-	public ModelAndView timeLineList(HttpServletRequest request, ModelAndView mv) {
+	public ModelAndView timeLineList(@RequestParam(name="page", defaultValue = "1") int page,HttpServletRequest request, ModelAndView mv) {
+		int currentPage = page;
 		try {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
@@ -65,7 +69,9 @@ public class TimeLineController {
 			mv.addObject("myProfile", tService.showMyProf(my_name));
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("storyList", tService.showStoryList(my_name));
-			mv.addObject("timeLineList", tService.showTimeLineList(my_name));
+			//mv.addObject("timeLineList", tService.showTimeLineList(my_name));
+			mv.addObject("count", tService.timeLineListCount(my_name));
+			mv.addObject("timeLineList", tService.showTimeLineListPage(my_name, currentPage, LIMIT));
 			mv.addObject("recomFollow", tService.recomFollow(my_name));
 			mv.setViewName("post/timeline");
 		} catch (Exception e) {
@@ -75,6 +81,26 @@ public class TimeLineController {
 		}
 		return mv;
 	}
+	
+	// 게시물 스크롤 페이징
+		@ResponseBody
+		@RequestMapping(value="/timeLineScroll.do", method = RequestMethod.POST)
+		public HashMap<String, Object> timeLineScroll(Model model, HttpServletRequest request,
+				@RequestParam(name="page", defaultValue = "1") int page) {
+			HashMap<String, Object> result = new HashMap <String,Object>();
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			int currentPage=page;
+			int listCount=tService.timeLineListCount(my_name);
+			int maxPage=(int)((double)listCount/LIMIT+0.9);
+			List<TimeLine> logList = tService.showTimeLineListPage(my_name, currentPage, LIMIT);
+			result.put("count", tService.timeLineListCount(my_name));	// 게시물카운트
+			result.put("currentPage", currentPage);				// 현재 페이지
+			result.put("maxPage", maxPage);						// 최대 페이지
+			result.put("list", logList);	// 게시물 텍스트정보
+			System.out.println("list:"+ logList);
+			return result;
+		}
 	
 	// 고객센터
 	@RequestMapping(value = "/aboutUs", method = RequestMethod.GET)
@@ -112,6 +138,20 @@ public class TimeLineController {
 		}
 		return mv;
 	}
+	// 탈퇴
+	@RequestMapping(value = "/outmember", method = RequestMethod.POST)
+	public ModelAndView outmember(HttpServletRequest request, ModelAndView mv, TimeLine tl) {
+		try {
+			tService.outmember(tl);
+			tService.deletemember(tl);
+			mv.setViewName("redirect:/member/loginPage");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+			e.printStackTrace();
+		}
+		return mv;
+	}
 
 	// Insert Comment
 	@ResponseBody
@@ -120,6 +160,7 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertTimeLineComment(tl));
+			job.put("ack", tService.alertLikecowrite(tl));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -133,6 +174,7 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertTimeLineCommentB(tl));
+			job.put("ack", tService.alertLikecowrite(tl));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -177,6 +219,7 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.pressLike(tl));
+			job.put("ack", tService.alertLike(tl));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -190,6 +233,34 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.pressLikeB(tl));
+			job.put("ack", tService.alertLike(tl));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+	@ResponseBody
+	@RequestMapping(value = "pressLikeco.do", method = RequestMethod.POST)
+	public String pressLikeco(TimeLine tl) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", tService.pressLike(tl));
+			job.put("ack", tService.alertLikeco(tl));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			return job.toJSONString();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "pressLikeBco.do", method = RequestMethod.POST)
+	public String pressLikeBco(TimeLine tl) {
+		JSONObject job = new JSONObject();
+		try {
+			job.put("ack", tService.pressLikeB(tl));
+			job.put("ack", tService.alertLikeco(tl));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -229,6 +300,7 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertFollow(tl));
+			job.put("ack", tService.alertFollow(tl));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -268,6 +340,7 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertReplyComment(tl));
+			job.put("ack", tService.alertLikecowrite(tl));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -281,6 +354,7 @@ public class TimeLineController {
 		JSONObject job = new JSONObject();
 		try {
 			job.put("ack", tService.insertReplyCommentB(tl));
+			job.put("ack", tService.alertLikecowrite(tl));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

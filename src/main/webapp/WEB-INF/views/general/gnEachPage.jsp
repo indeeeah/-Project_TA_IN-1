@@ -18,15 +18,12 @@
                 }
                 
                 #post_modal {
-                    width: 100%;
-                    height: 100%;
+                    display: flex;
+                        justify-content: center;
+                        width: 100%;
                 }
                 
                 #post_con {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
                     width: 1000px;
                     height: 600px;
                     background: #fff;
@@ -35,6 +32,8 @@
                     background: #fff;
                     display: inline;
                     border: 1px solid #C7C7C7;
+                    margin-top:50px;
+                    margin-bottom:50px;
                 }
                 
                 #for_stay_left {
@@ -507,21 +506,21 @@
                     <div class="goreportmember_modal modal_in">게시물 신고</div>
                     <div class="follow_modal modal_in">팔로우</div>
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
-                    <div class="savepost_modal modal_in">게시물 저장하기</div>
+                    <!-- <div class="savepost_modal modal_in">게시물 저장하기</div>-->
                     <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="modal_more_con_not_me" style="display:none;">
                     <div class="goreportmember_modal modal_in">게시물 신고</div>
                     <div class="unfollow_modal modal_in">팔로우 취소</div>
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
-                    <div class="savepost_modal modal_in">게시물 저장하기</div>
+                    <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
                     <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="modal_more_con_me" style="display:none;">
                     <div class="modifypost_modal modal_in">게시물 수정</div>
                     <div class="deletepost_modal modal_in" onclick="deletepost();">게시물 삭제</div>
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
-                    <div class="savepost_modal modal_in">게시물 저장하기</div>
+                    <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
                     <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="modal_delete" style="display:none;">
@@ -586,6 +585,7 @@
                     <div class="modal_in notcancelAll">화면으로 돌아가기</div>
                 </div>
             </div>
+            <jsp:include page="../header.jsp"></jsp:include>
             <div id="post_modal">
                 <input type="hidden" id="for_fuc"> <input type="hidden" id="for_modal_con"> <input type="hidden" id="for_modal_fchk">
                 <div id="post_con">
@@ -655,7 +655,7 @@
                                                 </div>
                                             </div>
                                             <i class="fas fa-bars fa-bars_reply_title" style="cursor:pointer;" onclick="moreForComment('${vo.m_id}','${vo.b_id}','${vo.b_content}');"></i>
-                                            <div class="icon_com like_icon comment_lcon likechk${vo.b_id}" onclick="pressLike_co('${vo.b_id}');"></div>
+                                            <div class="icon_com like_icon comment_lcon likechk${vo.b_id}" onclick="pressLike_co('${vo.b_id}', '${vo.m_id}');"></div>
                                             <div class="icon_com unlike_icon comment_unlcon unlikechk${vo.b_id}" onclick="pressUnLike_co('${vo.b_id}');"></div>
                                         </div>
                                         <input type="hidden" id="for_reco${vo.b_id}" class="for_reco" onclick="show_re_more('${vo.b_id}','${vo.comments }');" value="${vo.comments }">
@@ -664,33 +664,32 @@
                                     <div class="re_con re_con${vo.b_id}" id="re_con${vo.b_id}"></div>
                                     <div class="com_detail replyCo replyCo${vo.b_id}" style="display:none;">
                                         <div class="commentRId post_id" style="color:transparent;">${vo.m_id}</div>
-                                        <input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button>
+                                        <input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="${vo.m_id}">
                                     </div>
                                 </c:forEach>
                             </c:if>
                         </div>
                         <div id="post_right_bottom">
                             <div id="post_icon_box">
-                                <div class="icon like_icon likechk" onclick="pressLike('${selectEachPost.b_id }');">
+                                <div class="icon like_icon likechk" onclick="pressLike('${selectEachPost.b_id }','${selectEachPost.m_id }');">
                                 </div>
                                 <div class="icon unlike_icon unlikechk" onclick="pressUnLike('${selectEachPost.b_id }');"></div>
                                 <div class="icon write_icon"></div>
                                 <div class="icon share_icon" onclick="shareurl();"></div>
-                                <div class="icon save_icon"></div>
+                                <!-- <div class="icon save_icon"></div> -->
                             </div>
                             <div id="post_like"><input type='button' id='lCount' value='${selectEachPost.likes }'>명이 좋아합니다
                             </div>
                             <div id="post_date">${selectEachPost.time }</div>
                             <div id="reply_box">
                                 <input type="text" id="commentbox" placeholder="댓글 달기..">
-                                <div id="sendbtn" class="comment_upload">게시</div>
+                                <div id="sendbtn" class="comment_upload">게시</div><input type="hidden" value="${selectEachPost.m_id }">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <jsp:include page="../header.jsp"></jsp:include>
-
+<jsp:include page="../footer.jsp"></jsp:include>
         </body>
         <script>
             var memId = $(".m_id").val();
@@ -1364,15 +1363,16 @@
             }
 
             // 답글 좋아요
-            function pressLike_co(b_id) {
+            function pressLike_co(b_id, m_id2) {
                 var lcount = document.getElementById("lcount" + b_id).value;
                 lcount++;
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/pressLike.do",
+                    url: "${pageContext.request.contextPath}/pressLikeco.do",
                     method: "POST",
                     data: {
                         m_id: memId,
-                        t_id: b_id
+                        t_id: b_id,
+                        m_id2:m_id2
                     },
                     async: false,
                     success: function(data) {
@@ -1462,7 +1462,7 @@
                                 '</div>' +
                                 '</div>' +
                                 '<i class="fas fa-bars fa-bars_reply_title" style="cursor:pointer;" onclick="moreForComment(\'' + id + '\',\'' + b_id + '\',\'' + b_content + '\');"></i>' +
-                                '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\');"></div>' +
+                                '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\',\'' + id + '\');"></div>' +
                                 '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
                                 '</div>' +
                                 '</div>';
@@ -1492,6 +1492,7 @@
 
                 $(".rep_comment_upload").on('click', function() {
                     var r_comment = $(this).prev().val();
+                    var m_id2 = $(this).next().val();
                     if (r_comment == "" || r_comment == null) {
                         console.log("reply comment won't be uploaded");
                         $(".replyCo").css("display", "none");
@@ -1503,7 +1504,8 @@
                             data: {
                                 m_id: memId,
                                 t_comment: r_comment,
-                                t_id: b_id
+                                t_id: b_id,
+                                m_id2:m_id2
                             },
                             success: function(data) {
                                 console.log("memId : " +
@@ -1532,7 +1534,7 @@
 
 
             // 게시물 좋아요
-            function pressLike(b_id) {
+            function pressLike(b_id, m_id2) {
                 var lcount = $("#lCount").val();
                 lcount++;
 
@@ -1541,7 +1543,8 @@
                     method: "POST",
                     data: {
                         m_id: memId,
-                        t_id: b_id
+                        t_id: b_id,
+                        m_id2:m_id2
                     },
                     success: function(data) {
                         console.log("memId : " +
@@ -1626,7 +1629,8 @@
                     method: "POST",
                     data: {
                         m_id: memId,
-                        r_mid: id
+                        r_mid: id,
+                        m_id2:id
                     },
                     success: function(data) {
                         $("#for_modal_fchk").val("1");
@@ -1711,6 +1715,7 @@
             //모달 초기화 수정 필요
             $(".comment_upload").on('click', function() {
                 var comment = $(this).prev().val();
+                var m_id2=$(this).next().val();
                 if (comment == "" || comment == null) {
                     console.log("comment won't be uploaded");
                     return false;
@@ -1722,7 +1727,8 @@
                         data: {
                             m_id: memId,
                             t_comment: comment,
-                            t_id: this_b_id
+                            t_id: this_b_id,
+                            m_id2:m_id2
                         },
                         success: function(data) {
                             console.log("memId : " +

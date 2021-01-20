@@ -40,4 +40,8 @@ public interface GnBoardService {
 	List<GnBoard> selectEachPostComments(String b_id);
 
 	String selectEachPostPhotos(String b_id);
+
+	int showpostCount(String m_id);
+
+	List<GnBoard> showpostPage(String m_id, int startPage, int limit);
 }

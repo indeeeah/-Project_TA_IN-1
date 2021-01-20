@@ -19,4 +19,14 @@ public class SearchListImpl implements SearchListService {
 		return sDao.showHashTag(hashtag);
 	}
 
+	@Override
+	public int showHashTagCount(String hashtag) {
+		return sDao.showHashTagCount(hashtag);
+	}
+
+	@Override
+	public List<SearchList> showHashTagPage(String hashtag, int startPage, int limit) {
+		return sDao.showHashTagPage(hashtag, startPage, limit);
+	}
+
 }

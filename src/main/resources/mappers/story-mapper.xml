@@ -32,6 +32,7 @@
 		delete from story
 		where m_id= #{m_id}
 		and s_img = #{s_img}
+		and s_id=#{s_id}
 	</delete>
 
 	<!-- 스토리 조회 -->

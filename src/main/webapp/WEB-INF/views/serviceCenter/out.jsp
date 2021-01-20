@@ -99,10 +99,11 @@
                     <div id="out_title">계정 삭제</div>
                     <div id="ask_again">TA_IN은 회원님이 원하는 소셜 미디어가 되려고 노력하고 있습니다.</div>
                     <hr>
-                    <form id="reason">
+                    <form id="reason" action="outmember" method="post">
+                    <input type="hidden" name="m_id" value="${my_name }">
                         <div id="rs">
                             <div id="out_sub">${my_name }을(를) 삭제하려는 이유가 무엇인가요?</div>
-                            <select name="o_reason" id="o_reason">
+                            <select name="o_reasontx" id="o_reason">
                             <option value="">---</option>
                             <option value="2차 계정을 만들었습니다">2차 계정을 만들었습니다</option>
                             <option value="광고가 너무 많음">광고가 너무 많음</option>
@@ -135,6 +136,7 @@
                     </form>
                 </div>
             </div>
+            <jsp:include page="../footer.jsp"></jsp:include>
         </body>
         <script>
         var memId = $("#m_id").val();
@@ -148,14 +150,14 @@
                 });
                 var today = new Date();
                 console.log(today);
-                today.setDate(today.getDate() + 3);
+                //today.setDate(today.getDate() + 3);
 
                 var a = document.getElementById("chkdate");
                 var b = document.getElementById("chkdatee");
                 var htmls = "";
                 var htmls2 = "";
-                htmls += '<div id="dates" style="color:#262626;">계속하면 회원님의 프로필과 계정 상세 정보가 ' + today + '에 삭제됩니다. 지금부터 그때까지 회원님은 TA_IN에 표시되지 않습니다. 생각이 바뀌면 삭제 날짜 전에 다시 로그인하여 계정을 유지할 수 있습니다.</div>';
-                htmls2 += '<div id="dates2" style="color:#262626;">회원님의 프로필과 계정 상세 정보는 ' + today + '까지 숨겨지며 해당 날짜에 삭제됩니다.</div>';
+                htmls += '<div id="dates" style="color:#262626;">계속하면 회원님의 프로필과 계정 상세 정보가 TA_IN에서 삭제됩니다. 탈퇴를 진행하시면 회원님의 모든 게시글과 댓글은 복구할 수 없습니다.</div>';
+                htmls2 += '<div id="dates2" style="color:#262626;">삭제를 클릭하시면 회원님의 프로필과 계정 상세 정보는 ' + today + '에 삭제되며 모든 게시글과 댓글은 복구할 수 없습니다.</div>';
                 $(a).html(htmls);
                 $(b).html(htmls2);
                 

@@ -106,4 +106,14 @@ public class GnBoardServiceImpl implements GnBoardService {
 		return gDao.selectEachPostPhotos(b_id);
 	}
 
+	@Override
+	public int showpostCount(String m_id) {
+		return gDao.showpostCount(m_id);
+	}
+
+	@Override
+	public List<GnBoard> showpostPage(String m_id, int startPage, int limit) {
+		return gDao.showpostPage(m_id, startPage, limit);
+	}
+
 }

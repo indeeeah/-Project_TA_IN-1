@@ -110,12 +110,34 @@
                 .highlight_photo {
                     height: 87px;
                     width: 87px;
-                    background-color: green;
                     border-radius: 50%;
                     margin-top: 10px;
                     cursor: pointer;
                     border: 1px solid #C7C7C7;
                     box-sizing: border-box;
+                }
+                
+                .highlight_photo_h {
+                    height: 87px;
+                    width: 87px;
+                    border-radius: 50%;
+                    margin-top: 10px;
+                    cursor: pointer;
+                    border: 1px solid #C7C7C7;
+                    box-sizing: border-box;
+                    background-color: #fee2f8;
+                    background-image: linear-gradient(315deg, #fee2f8 0%, #dcf8ef 74%);
+                }
+                
+                .h_icon {
+                    height: 87px;
+                    width: 87px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    background-image: url('${pageContext.request.contextPath}/resources/images/button.svg');
+                    background-size: 45px;
+                    background-repeat: no-repeat;
+                    background-position: center;
                 }
                 
                 .highlight_title {
@@ -241,13 +263,6 @@
                     float: left;
                     font-size: 16px;
                     line-height: 18px;
-                }
-                
-                footer {
-                    width: 100%;
-                    height: 78px;
-                    margin-bottom: 52px;
-                    text-align: center;
                 }
                 
                 #post_back {
@@ -762,6 +777,8 @@
                     color: #C7C7C7;
                     cursor: pointer;
                 }
+                
+                .h_icon {}
             </style>
         </head>
 
@@ -879,7 +896,7 @@
                     <div class="follow_modal modal_in">팔로우</div>
                     <div class="gothispost_modal modal_in">게시물로 이동</div>
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
-                    <div class="savepost_modal modal_in">게시물 저장하기</div>
+                    <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
                     <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="modal_more_con_not_me" style="display:none;">
@@ -887,7 +904,7 @@
                     <div class="unfollow_modal modal_in">팔로우 취소</div>
                     <div class="gothispost_modal modal_in">게시물로 이동</div>
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
-                    <div class="savepost_modal modal_in">게시물 저장하기</div>
+                    <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
                     <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="modal_more_con_me" style="display:none;">
@@ -895,7 +912,7 @@
                     <div class="deletepost_modal modal_in" onclick="deletepost();">게시물 삭제</div>
                     <div class="gothispost_modal modal_in">게시물로 이동</div>
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
-                    <div class="savepost_modal modal_in">게시물 저장하기</div>
+                    <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
                     <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="modal_delete" style="display:none;">
@@ -1000,11 +1017,11 @@
                         </div>
                         <div id="post_right_bottom">
                             <div id="post_icon_box">
-                                <div class="icon like_icon likechk" onclick="pressLike();"></div>
+                                <div class="icon like_icon likechk" onclick="pressLike('${id_img_fwr.m_id }');"></div>
                                 <div class="icon unlike_icon unlikechk" onclick="pressUnLike();"></div>
                                 <div class="icon write_icon"></div>
                                 <div class="icon share_icon" onclick="shareurl();"></div>
-                                <div class="icon save_icon"></div>
+                                <!-- <div class="icon save_icon"></div> -->
                             </div>
                             <div id="post_like"></div>
                             <div id="post_date"></div>
@@ -1061,11 +1078,26 @@
                         </div>
                     </div>
                     <div id="highlight_con">
+                        <c:if test="${empty highlight }">
+                            <div class="highlight_small_con">
+                                <div class="highlight_photo_h">
+                                    <div class="h_icon"></div>
+                                </div>
+                                <div class="highlight_title">하이라이트<br>추가</div>
+                            </div>
+                        </c:if>
                         <c:if test="${not empty highlight }">
+                            <div class="highlight_small_con">
+                                <div class="highlight_photo_h">
+                                    <div class="h_icon"></div>
+                                </div>
+                                <div class="highlight_title">하이라이트<br>추가</div>
+                            </div>
                             <c:forEach var="vo" items="${highlight }" varStatus="s">
                                 <div class="highlight_small_con">
                                     <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
-                                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }</div>
+                                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }
+                                    </div>
                                 </div>
                             </c:forEach>
                         </c:if>
@@ -1074,6 +1106,11 @@
                         <div id="rec_title">
                             <div id="title1">추천계정</div>
                             <c:if test="${not empty recomFow }">
+                                <div class="highlight_small_con">
+                                    <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
+                                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }
+                                    </div>
+                                </div>
                                 <c:forEach var="vo" items="${recomFow }" varStatus="s">
                                     <div class="each_rec_con each_rec_con${vo.r_mid }">
                                         <div class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_img }</div>
@@ -1089,26 +1126,26 @@
                     <input type="radio" id="ctm1" name="x" checked style="display: none;">
                     <input type="radio" id="ctm2" name="x" style="display: none;">
                     <div id="cate">
-                        <c:if test="${id_img_fwr.m_id ne my_name}">
+                        <%-- <c:if test="${id_img_fwr.m_id ne my_name}"> --%>
                             <div class="cate_1">
                                 <i class="fas fa-border-all cate_con"></i>
                                 <div class="category">게시물</div>
                             </div>
-                        </c:if>
-                        <c:if test="${id_img_fwr.m_id eq my_name}">
-                            <label for="ctm1">
-                                <div class="cate_1 cate_mine forctm1" style="margin-right: 60px;">
-                                    <i class="fas fa-border-all cate_con"></i>
-                                    <div class="category">게시물</div>
-                                </div>
-                            </label>
-                            <label for="ctm2">
-                                <div class="cate_1 cate_mine forctm2">
-                                    <i class="fas fa-tags cate_con"></i>
-                                    <div class="category">저장됨</div>
-                                </div>
-                            </label>
-                        </c:if>
+                            <%-- </c:if> --%>
+                                <%-- <c:if test="${id_img_fwr.m_id eq my_name}">
+                                    <label for="ctm1">
+                                        <div class="cate_1 cate_mine forctm1" style="margin-right: 60px;">
+                                            <i class="fas fa-border-all cate_con"></i>
+                                            <div class="category">게시물</div>
+                                        </div>
+                                    </label>
+                                    <label for="ctm2">
+                                        <div class="cate_1 cate_mine forctm2">
+                                            <i class="fas fa-tags cate_con"></i>
+                                            <div class="category">저장됨</div>
+                                        </div>
+                                    </label>
+                                    </c:if> --%>
                     </div>
                     <div id="photo_con">
                         <c:if test="${not empty showpost }">
@@ -1122,13 +1159,8 @@
                         저장된 콘텐츠!!
                     </div>
                 </div>
-            <footer> 
-            <c:if test="${not empty my_name }">
-            	<div class="" onclick="logout('${my_name }');">로그아웃</div>
-            	<br>
-            </c:if>
-            dddd             
-            </footer>
+            </div>
+            <jsp:include page="../footer.jsp"></jsp:include>
         </body>
         <script>
             var memId = $(".m_id").val();
@@ -1140,18 +1172,7 @@
                     $("#recom_follow").css("display", "none");
                 }
 
-                // flex 화면 맞추기
-                var postcount = $(".each_photo").length;
-                var forflex = postcount % 3;
-                if (forflex == 1) {
-                    $("#photo_con").append('<div class="each_photo nocursor"></div>');
-                    $("#photo_con").append('<div class="each_photo nocursor"></div>');
-                } else if (forflex == 2) {
-                    $("#photo_con").append('<div class="each_photo nocursor"></div>');
-                }
-
                 $(".fochkWithMe").trigger('click');
-
                 $(".forctm1").css("color", "#262626");
                 $(".forctm2").css("color", "#C7C7C7");
                 $("#ctm1").change(function() {
@@ -1161,7 +1182,6 @@
                         $("#photo_con").css("display", "flex");
                         $("#photo_save_con").css("display", "none");
                     }
-
                 });
                 $("#ctm2").change(function() {
                     if ($("#ctm2").is(':checked')) {
@@ -1170,10 +1190,88 @@
                         $("#photo_con").css("display", "none");
                         $("#photo_save_con").css("display", "block");
                     }
-
                 });
 
             });
+
+            /* 스크롤 페이징 */
+            var page = 1; // page선언
+
+            $(function() { // 첫 화면 로드시 page 증가.
+                console.log("페이지로드:" + page);
+                getList(page); // 리스트 추가 조회
+                page++;
+            });
+
+            $(window).scroll(function() { //스크롤이 최하단으로 내려가면 리스트 조회 후 page 증가.
+                console.log("스크롤:" + page);
+                if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
+                    getList(page); // 리스트 추가 조회
+                    page++;
+                }
+            });
+
+            function getList(page) { // 리스트 추가 조회
+                $.ajax({
+                    url: 'gnMainScroll.do',
+                    method: 'post',
+                    data: {
+                        "page": page,
+                        m_id: memId
+                    },
+                    dataType: 'json',
+                    success: function(resp) {
+                        console.log("resp:" + resp.list);
+                        console.log("data:" + resp.list.length);
+                        var data = resp.list.length;
+                        var htmls = "";
+                        if (page == 1) { //페이지 1일 경우 id가 page인 html을 비운다.
+                            $("#page").html("");
+                        }
+                        console.log(resp.currentPage + ":" + resp.maxPage);
+                        if (resp.currentPage <= resp.maxPage) {
+                            if (data > 0) {
+                                for (var i = 0; i < data; i++) {
+                                    htmls += '<div class="for_showpost">' +
+                                        '<img class="each_photo" src="${pageContext.request.contextPath}/resources/uploadFiles/' + resp.list[i].b_img + '">' +
+                                        '</div><input type="hidden" value="' + resp.list[i].b_id + '">';
+                                }
+
+                            } else {}
+                        }
+                        if (page == 1) { //페이지가 1이 아닐경우 데이터를 붙힌다.
+                            $("#photo_con").append("");
+                        } else {
+                            $("#photo_con").append(htmls);
+
+                            // flex 화면 맞추기
+                            var postcount = $(".each_photo").length;
+                            var forflex = postcount % 3;
+                            if (forflex == 1) {
+                                $("#photo_con").append('<div class="each_photo nocursor"></div>');
+                                $("#photo_con").append('<div class="each_photo nocursor"></div>');
+                            } else if (forflex == 2) {
+                                $("#photo_con").append('<div class="each_photo nocursor"></div>');
+                            }
+
+                            $(".for_showpost").on('click', function() {
+                                var t_id = $(this).next().val();
+                                console.log(t_id);
+                                showpost(t_id);
+                            });
+
+
+                        }
+                    },
+                    error: function(e) {
+                        alert("데이터 실패.");
+                        if (e.status == 300) {
+                            alert("데이터를 가져오는데 실패하였습니다.");
+                        };
+                    }
+                });
+            }
+
 
             // 팔로워 조회
             $(".seefollower").on('click', function() {
@@ -1186,7 +1284,6 @@
                 $("#follow_modal").css("display", "block");
                 $("#see_follow").css("display", "block");
             });
-
             // 팔로우 체크
             function fochkWithMe(fid) {
                 if (fid != memId) {
@@ -1206,7 +1303,6 @@
                             } else {
                                 $(".people_follow" + fid).css("display", "none");
                                 $(".people_alfollow" + fid).css("display", "block");
-
                             }
                         },
                         error: function(request,
@@ -1222,14 +1318,11 @@
                     });
                 }
             }
-
-
             //해당 계정 페이지 이동
             function goEachAcount(id) {
                 var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
                 $(location).attr('href', url);
             }
-
             // 게시물 페이지 이동
             $(".gothispost_modal").on('click', function() {
                 var postid = $(".post_id").val();
@@ -1237,42 +1330,22 @@
                 var url = "${pageContext.request.contextPath}/gnEachPage?b_id=" + b_id;
                 $(location).attr('href', url);
             });
-
             // 하이라이트 페이지 이동
             function highlight(h_name) {
                 var postid = $(".post_id").val();
-
                 var url = "${pageContext.request.contextPath}/eachHighlight?m_id=" + postid + "&h_name=" + h_name;
                 $(location).attr('href', url);
             }
             
-        	// 로그아웃
-            function logout(id) {
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/member/logout.do",
-                    method: "POST",
-                    data: {
-                        m_id: id
-                    },
-                    success: function(data) {
-                        console.log("success");                   
-                        alert(data);
-                        var url = "${pageContext.request.contextPath}/member/loginPage";
-                        $(location).attr('href', url);
-                    },
-                    error: function(request, status, error) {
-                    	console.log("error");  
-                        alert("code:" +
-                            request.status +
-                            "\n" +
-                            "message:" +
-                            request.responseText +
-                            "\n" + "error:" +
-                            error);
-                    }
-                });
-            }
-            
+            // 스토리 작성 페이지 이동
+            $(".highlight_photo_h").on('click', function(){
+            	var url = "${pageContext.request.contextPath}/writeStory";
+                $(location).attr('href', url);
+            });
+
+
+
+
             // 멤버 신고
             function memberReport(id) {
                 $.ajax({
@@ -1308,7 +1381,6 @@
                                             $("#report_result").css("display", "block");
                                             $(".send_report").off('click');
                                             $(".toreport").off('click');
-
                                         },
                                         error: function(request, status, error) {
                                             alert("code:" +
@@ -1320,7 +1392,6 @@
                                                 error);
                                         }
                                     });
-
                                 });
                                 $(".etc_mem").on('click', function() {
                                     $("#report_choose").css("display", "none");
@@ -1357,7 +1428,6 @@
                                         });
                                     });
                                 });
-
                             });
                         } else {
                             $("#report_already").css("display", "block");
@@ -1374,7 +1444,6 @@
                     }
                 });
             }
-
             // 게시물 모달의 모달
             function toModalMore(m_id) {
                 var b_id = $("#for_modal_con").val();
@@ -1383,7 +1452,6 @@
                 console.log(fchk);
                 if (m_id == memId) {
                     $("#modal_more_con_me").css("display", "block");
-
                     // 게시글 삭제
                     $(".deletepost_modal").on('click', function() {
                         $("#report_modal").css("display", "block");
@@ -1418,7 +1486,6 @@
                             });
                         });
                     });
-
                     // 게시글 수정
                     $(".modifypost_modal").on('click', function() {
                         var b_content = $("#for_modal_content").val();
@@ -1459,29 +1526,23 @@
                 } else {
                     if (fchk == 0) {
                         $("#modal_more_con_not_me_not_follow").css("display", "block");
-
                         // 모달 팔로우
                         $(".follow_modal").on('click', function() {
                             followinmodal(m_id);
                         });
                     } else {
                         $("#modal_more_con_not_me").css("display", "block");
-
                         // 모달 언팔로우
                         $(".unfollow_modal").on('click', function() {
                             pre_unfollow(m_id);
                         });
                     }
-
                     // 모달 신고
                     $(".goreportmember_modal").on('click', function() {
                         var b_id = $("#for_modal_con").val();
                         reportpost(b_id);
                     });
                 }
-
-
-
                 // 게시글 신고
                 function reportpost(b_id) {
                     $("#modal_more_con_not_me_not_follow").css("display", "none");
@@ -1514,7 +1575,6 @@
                                             $("#report_result").css("display", "block");
                                             $(".send_report").off('click');
                                             $(".toreport").off('click');
-
                                         },
                                         error: function(request, status, error) {
                                             alert("code:" +
@@ -1526,7 +1586,6 @@
                                                 error);
                                         }
                                     });
-
                                 });
                                 $("#etc").on('click', function() {
                                     $("#report_choose").css("display", "none");
@@ -1563,7 +1622,6 @@
                                         });
                                     });
                                 });
-
                             } else {
                                 $("#report_already").css("display", "block");
                             }
@@ -1579,7 +1637,6 @@
                         }
                     });
                 }
-
                 // url 공유
                 $(".sharepost_modal").on('click', function() {
                     var b_id = $("#for_fuc").val();
@@ -1601,7 +1658,6 @@
                     });
                 });
             }
-
             // 모달의 댓글의 모달
             function moreForComment(id, b_id, b_content) {
                 $("#report_modal").css("display", "block");
@@ -1638,7 +1694,6 @@
                                                 $("#report_result").css("display", "block");
                                                 $(".send_report").off('click');
                                                 $(".toreport").off('click');
-
                                             },
                                             error: function(request, status, error) {
                                                 alert("code:" +
@@ -1650,7 +1705,6 @@
                                                     error);
                                             }
                                         });
-
                                     });
                                     $("#etc").on('click', function() {
                                         $("#report_choose").css("display", "none");
@@ -1704,7 +1758,6 @@
                     });
                 } else if (id == memId) {
                     $("#more_about_my_co").css("display", "block");
-
                     // 댓글 수정
                     $("#modify_co").on('click', function() {
                         $("#more_about_my_co").css("display", "none");
@@ -1741,7 +1794,6 @@
                             });
                         });
                     });
-
                     // 댓글 삭제
                     $("#delete_co").on('click', function() {
                         $("#more_about_my_co").css("display", "none");
@@ -1775,10 +1827,8 @@
                             });
                         });
                     });
-
                 }
             }
-
             // 스토리로 이동
             function goStory(m_id) {
                 var storychk = $("#storychk").val();
@@ -1787,7 +1837,6 @@
                     $(location).attr('href', url);
                 } else {}
             }
-
             // 게시글 상세페이지
             function showpost(t_id) {
                 $("#post_back").css("display", "block");
@@ -1797,7 +1846,6 @@
                 $(".slide_btn_next").css("display", "none");
                 $(".likechk").css("display", "block");
                 $(".unlikechk").css("display", "none");
-
                 $.ajax({
                     url: "${pageContext.request.contextPath}/hiddenShowLike.do",
                     method: "POST",
@@ -1823,7 +1871,6 @@
                             error);
                     }
                 });
-
                 $.ajax({
                     url: "${pageContext.request.contextPath}/showeachpost.do",
                     method: "POST",
@@ -1850,7 +1897,6 @@
                             }
                         }
                         $(a).html(htmls);
-
                         var photoCount = $(".photo_all").length;
                         if (photoCount > 1) {
                             $(".slide_btn_prev").css("display", "block");
@@ -1864,7 +1910,6 @@
                         }
                         document.getElementById("post_like").innerHTML = "<input type='button' id='lCount' value='" + likecount + "'>" + "명이 좋아합니다";
                         document.getElementById("post_date").innerHTML = b_date;
-
                         // 게시물 슬라이드
                         var slideWrapper = document.querySelector('#slide_photo_con');
                         var slides = document.querySelectorAll('.photo_all');
@@ -1910,8 +1955,6 @@
                             error);
                     }
                 });
-
-
                 $.ajax({
                     url: "${pageContext.request.contextPath}/showHashTag.do",
                     method: "POST",
@@ -1926,9 +1969,7 @@
                         if (count.hashtag == undefined) {} else {
                             for (var i = 0; i < count.hashtag.length; i++) {
                                 var hashtag1 = count.hashtag[i].h_tag;
-
                                 // 해쉬태그 append - hashtag
-
                                 htmls += '<a href="${pageContext.request.contextPath}/explore?hashtag=' + hashtag1 + '">#' + hashtag1 + '</a>&nbsp;';
                             }
                         }
@@ -1944,7 +1985,6 @@
                             error);
                     }
                 });
-
                 $.ajax({
                     url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
                     method: "POST",
@@ -1981,27 +2021,21 @@
                                     '</div>' +
                                     '</div>' +
                                     '<i class="fas fa-bars fa-bars_reply_title" style="cursor:pointer;" onclick="moreForComment(\'' + id + '\',\'' + b_id + '\',\'' + b_content + '\');"></i>' +
-                                    '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\');"></div>' +
+                                    '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\',\'' + id + '\');"></div>' +
                                     '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
                                     '</div>' +
                                     '<div class="show_re_re show_re_re' + b_id + '" onclick ="show_re_re(\'' + b_id + '\');">답글 보기 (' + countr + ')개</div>' +
                                     '</div><div class="re_con re_con' + b_id + '" id="re_con' + b_id + '"></div>' +
                                     '<div class="com_detail replyCo replyCo' + b_id + '" id="replyCo' + b_id + '" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                    id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button></div>';
+                                    id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="'+id + '"></div>';
                                 if (countr == 0) {
                                     $(".show_re_re" + b_id).css("display", "none");
                                 }
-
-
-
                             }
-
                         }
                         $(a).html(htmls);
                         $(".chkCoLike").trigger('click');
                         $(".countLike_trigger").trigger('click');
-
-
                     },
                     error: function(request, status, error) {
                         alert("code:" +
@@ -2014,7 +2048,6 @@
                     }
                 });
             }
-
             // 번역하기
             function translatec(source) {
                 /* var hcount = $(".hashtag" + b_id).length;
@@ -2111,7 +2144,6 @@
                     }
                 });
             }
-
             // 좋아요 체크
             function chkCoLike(b_id) {
                 $.ajax({
@@ -2140,16 +2172,15 @@
                     }
                 });
             }
-
-
             // 답글 좋아요
-            function pressLike_co(b_id) {
+            function pressLike_co(b_id, m_id2) {
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/pressLike.do",
+                    url: "${pageContext.request.contextPath}/pressLikeco.do",
                     method: "POST",
                     data: {
                         m_id: memId,
-                        t_id: b_id
+                        t_id: b_id,
+                        m_id2:m_id2
                     },
                     async: false,
                     success: function(data) {
@@ -2171,7 +2202,6 @@
                     }
                 });
             }
-
             // 답글 좋아요 취소
             function pressUnLike_co(b_id) {
                 $.ajax({
@@ -2200,8 +2230,6 @@
                     }
                 });
             }
-
-
             // 답글 보기
             function show_re_re(t_id) {
                 $.ajax({
@@ -2215,14 +2243,12 @@
                         var count = hComment;
                         var htmls = "";
                         var a = document.getElementById("re_con" + t_id);
-
                         for (var i = 0; i < count.hComment.length; i++) {
                             var id = count.hComment[i].m_id;
                             var b_content = count.hComment[i].b_content;
                             var b_id = count.hComment[i].b_id;
                             var b_date = count.hComment[i].b_date;
                             var m_img = count.hComment[i].m_img;
-
                             htmls += '<div class="each_reply_con each_reply_con' + b_id + '">' +
                                 '<input type="hidden" class="chkCoLike" onclick="chkCoLike(\'' + b_id + '\');">' +
                                 '<input type="hidden" class="countLike_trigger" onclick="countLike(\'' + b_id + '\');">' +
@@ -2236,17 +2262,14 @@
                                 '</div>' +
                                 '</div>' +
                                 '<i class="fas fa-bars fa-bars_reply_title" style="cursor:pointer;" onclick="moreForComment(\'' + id + '\',\'' + b_id + '\',\'' + b_content + '\');"></i>' +
-                                '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\');"></div>' +
+                                '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\',\'' + id + '\');"></div>' +
                                 '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
                                 '</div>' +
                                 '</div>';
                         }
-
                         $(a).html(htmls);
-
                         $(".chkCoLike").trigger('click');
                         $(".countLike_trigger").trigger('click');
-
                     },
                     error: function(request, status, error) {
                         alert("code:" +
@@ -2259,13 +2282,13 @@
                     }
                 });
             }
-
             // 답글 달기 
             function writeMoreCo(b_id) {
                 $(".replyCo" + b_id).css("display", "block");
-
                 $(".rep_comment_upload").on('click', function() {
                     var r_comment = $(this).prev().val();
+                    var m_id2 = $(this).next().val();
+                    console.log(m_id2);
                     if (r_comment == "" || r_comment == null) {
                         console.log("reply comment won't be uploaded");
                         $(".replyCo").css("display", "none");
@@ -2277,7 +2300,8 @@
                             data: {
                                 m_id: memId,
                                 t_comment: r_comment,
-                                t_id: b_id
+                                t_id: b_id,
+                                m_id2:m_id2
                             },
                             success: function(data) {
                                 console.log("memId : " +
@@ -2303,20 +2327,18 @@
                     }
                 });
             }
-
-
             // 게시물 좋아요
-            function pressLike() {
+            function pressLike(m_id2) {
                 var lcount = $("#lCount").val();
                 var b_id = $("#for_fuc").val();
                 lcount++;
-
                 $.ajax({
                     url: "${pageContext.request.contextPath}/pressLike.do",
                     method: "POST",
                     data: {
                         m_id: memId,
-                        t_id: b_id
+                        t_id: b_id,
+                        m_id2:m_id2
                     },
                     success: function(data) {
                         console.log("memId : " +
@@ -2337,9 +2359,7 @@
                             error);
                     }
                 });
-
             }
-
             // 게시물 좋아요 취소
             function pressUnLike() {
                 var lcount = $("#lCount").val();
@@ -2372,7 +2392,6 @@
                     }
                 });
             }
-
             // url 공유
             function shareurl() {
                 var b_id = $("#for_fuc").val();
@@ -2396,8 +2415,6 @@
                     $("#share_con_result").css("display", "block");
                 });
             }
-
-
             // 게시글 좋아요 카운트 trigger - countLike_trigger
             function countLike(b_id) {
                 $.ajax({
@@ -2422,7 +2439,6 @@
                     }
                 });
             }
-
             // 메인 팔로우
             function main_followBtn(id) {
                 $.ajax({
@@ -2430,7 +2446,8 @@
                     method: "POST",
                     data: {
                         m_id: memId,
-                        r_mid: id
+                        r_mid: id,
+                        m_id2:id
                     },
                     success: function(data) {
                         $("#for_modal_fchk").val("1");
@@ -2453,10 +2470,8 @@
                     }
                 });
             }
-
             // 메인 언팔로우
             function main_pre_unfollow(id) {
-
                 $.ajax({
                     url: "${pageContext.request.contextPath}/unfollow.do",
                     method: "POST",
@@ -2482,8 +2497,6 @@
                     }
                 });
             }
-
-
             // 추천 계정 팔로우
             function followBtn(id) {
                 console.log(recCount);
@@ -2492,7 +2505,8 @@
                     method: "POST",
                     data: {
                         m_id: memId,
-                        r_mid: id
+                        r_mid: id,
+                        m_id2:id
                     },
                     success: function(data) {
                         $("#for_modal_fchk").val("1");
@@ -2525,8 +2539,6 @@
                     }
                 });
             }
-
-
             // 모달 팔로우
             function followinmodal(id) {
                 $.ajax({
@@ -2534,7 +2546,8 @@
                     method: "POST",
                     data: {
                         m_id: memId,
-                        r_mid: id
+                        r_mid: id,
+                        m_id2:id
                     },
                     success: function(data) {
                         $("#for_modal_fchk").val("1");
@@ -2552,13 +2565,11 @@
                     }
                 });
             }
-
             // 언팔로우
             function pre_unfollow(id) {
                 $("#modal_more_con_not_me").css("display", "none");
                 $("#askunfollow").css("display", "block");
                 $("#yes_unfollow").on('click', function() {
-
                     $.ajax({
                         url: "${pageContext.request.contextPath}/unfollow.do",
                         method: "POST",
@@ -2586,7 +2597,6 @@
                     });
                 });
             }
-
             // 모달 닫기
             //모달 초기화 수정 필요
             $(".cancel").on('click', function() {
@@ -2602,9 +2612,7 @@
                 //$("#unfollowchk").css("display", "none");
                 //var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
                 //$(location).attr('href', url);
-
             });
-
             // 모달 안닫히는 cencel
             $(".notcancelAll").on('click', function() {
                 $("#report_modal").css("display", "none");
@@ -2632,7 +2640,6 @@
                 $("#modal_delete_co").css("display", "none");
                 $("#modal_delete_co_result").css("display", "none");
             });
-
             // 계정 추천
             $("#rf").change(function() {
                 if ($("#rf").is(":checked")) {
@@ -2641,9 +2648,6 @@
                     $("#hidden_follow_rec").css("display", "none");
                 }
             });
-
-
-
             // 댓글 작성
             //모달 초기화 수정 필요
             $(".comment_upload").on('click', function() {
@@ -2661,7 +2665,8 @@
                         data: {
                             m_id: memId,
                             t_comment: comment,
-                            t_id: b_id
+                            t_id: b_id,
+                            m_id2:post_id
                         },
                         success: function(data) {
                             console.log("memId : " +
@@ -2691,11 +2696,9 @@
                     });
                 }
             });
-
             //$('#post_modal').on('shown.bs.modal', function (e) {
             //	   $('#post_modal').owlCarousel('refresh');
             //	 });
-
             //$('#post_modal').on('hidden.bs.modal', function () {
             //	$(this).removeData();
             //	$("#post_right_middle").removeData();

@@ -40,6 +40,7 @@
                         width: 100%;
                         height: 118px;
                         border: 1px solid #C7C7C7;
+                        background-color: white;
                     }
                     
                     #blank_for_story {
@@ -72,6 +73,27 @@
                         box-sizing: border-box;
                     }
                     
+                    .story_profile_a {
+                        width: 66px;
+                        height: 66px;
+                        border-radius: 50%;
+                        border: 1px solid #C7C7C7;
+                        box-sizing: border-box;
+                        background-color: #fee2f8;
+                        background-image: linear-gradient(315deg, #fee2f8 0%, #dcf8ef 74%);
+                    }
+                    
+                    #sa_icon {
+                        height: 64px;
+                        width: 64px;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        background-image: url('${pageContext.request.contextPath}/resources/images/signal.svg');
+                        background-size: 40px;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                    
                     .story_id {
                         text-align: center;
                         width: 66px;
@@ -94,6 +116,7 @@
                     .timeline_profile {
                         width: 100%;
                         height: 60px;
+                        background-color: white;
                         border-bottom: 1px solid #C7C7C7;
                     }
                     
@@ -587,6 +610,7 @@
                     .show_t_img {
                         width: 660px;
                         height: 660px;
+                        z-index: 2;
                     }
                     
                     #right_small_con {
@@ -775,11 +799,13 @@
                                     <div class="story_profile"></div>
                                     <div class="story_id">내 스토리</div>
                                 </div>
-                                <div class="story_small_con show_all_story">
-                                    <div class="story_profile"></div>
-                                    <div class="story_id">스토리 전체 보기</div>
-                                </div>
                                 <c:if test="${not empty storyList }">
+                                    <div class="story_small_con show_all_story">
+                                        <div class="story_profile_a">
+                                            <div id="sa_icon"></div>
+                                        </div>
+                                        <div class="story_id">스토리 전체 보기</div>
+                                    </div>
                                     <c:forEach var="vo" items="${storyList }" varStatus="s">
                                         <div class="story_small_con eachstory" onclick="eachstory('${vo.m_id }');">
                                             <div class="story_profile">${vo.m_img }</div>
@@ -790,74 +816,76 @@
                             </div>
                         </div>
                         <div id="timeline_blank"></div>
-                        <c:if test="${not empty timeLineList }">
-                            <c:forEach var="vo" items="${timeLineList }" varStatus="s">
-                                <div class="timeline_contents">
-                                    <div class="timeline_profile">
-                                        <div class="t_prof_photo" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_img }</div>
-                                        <div class="t_prof_id" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_id }
-                                        </div>
-                                        <i class="fas fa-bars fa-bars_title" onclick="pre_report('${vo.t_id}','${vo.m_id }','${vo.t_type}');"></i>
-                                    </div>
-                                    <div class="timeline_photo timeline_photo${vo.t_id }">
-                                        <ul class="photo${vo.t_id } timephoto" id="photo${vo.t_id }">
-                                        </ul>
-                                        <input type="hidden" class="hidden_showphoto" onclick="showphoto('${vo.t_id }','${vo.t_img }');">
-                                    </div>
-                                    <button type="button" class="slidebtn slidebtn${vo.t_id } slide_btn_prev slide_btn_prev${vo.t_id }" style="display:none;">Prev</button>
-                                    <button type="button" class="slidebtn slidebtn${vo.t_id } slide_btn_next slide_btn_next${vo.t_id }" style="display:none;">Next</button>
-                                    <div class="timeline_comment_con">
-                                        <div class="inner_comment_con">
-                                            <div class="timeline_icon_con">
-                                                <div class="icon like_icon likechk${vo.t_id }" onclick="pressLike('${vo.t_id}');"></div>
-                                                <div class="icon unlike_icon unlikechk${vo.t_id }" onclick="pressUnlike('${vo.t_id}');"></div>
-                                                <div class="icon write_icon"></div>
-                                                <div class="icon share_icon" onclick="shareurl('${vo.m_id }','${vo.t_id}')"></div>
-                                                <div class="icon save_icon"></div>
+                        <div id="page_con">
+                            <c:if test="${not empty timeLineList }">
+                                <c:forEach var="vo" items="${timeLineList }" varStatus="s">
+                                    <div class="timeline_contents" id="timeline_contents">
+                                        <div class="timeline_profile">
+                                            <div class="t_prof_photo" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_img }</div>
+                                            <div class="t_prof_id" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_id }
                                             </div>
-                                            <div class="timeline_likes_con">좋아요 <input type="button" class="lCount${vo.t_id} showlCount" value="" readonly>개</div>
-                                            <div class="comment_con">
-                                                <div class="com_detail post_title">
-                                                    <div class="post_id" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_id }</div>
-                                                    <div class="post_content" id="post_content${vo.t_id}">${vo.t_content }
-                                                    </div>
-                                                    <div class="translate" onclick="translatec('${vo.t_content }', '${vo.t_id}');" style="cursor: pointer;">번역하기</div>
+                                            <i class="fas fa-bars fa-bars_title" onclick="pre_report('${vo.t_id}','${vo.m_id }','${vo.t_type}');"></i>
+                                        </div>
+                                        <div class="timeline_photo timeline_photo${vo.t_id }">
+                                            <ul class="photo${vo.t_id } timephoto" id="photo${vo.t_id }">
+                                            </ul>
+                                            <input type="hidden" class="hidden_showphoto" onclick="showphoto('${vo.t_id }','${vo.t_img }');">
+                                        </div>
+                                        <button type="button" class="slidebtn slidebtn${vo.t_id } slide_btn_prev slide_btn_prev${vo.t_id }" style="display:none;">Prev</button>
+                                        <button type="button" class="slidebtn slidebtn${vo.t_id } slide_btn_next slide_btn_next${vo.t_id }" style="display:none;">Next</button>
+                                        <div class="timeline_comment_con">
+                                            <div class="inner_comment_con">
+                                                <div class="timeline_icon_con">
+                                                    <div class="icon like_icon likechk${vo.t_id }" onclick="pressLike('${vo.t_id}','${vo.m_id }');"></div>
+                                                    <div class="icon unlike_icon unlikechk${vo.t_id }" onclick="pressUnlike('${vo.t_id}');"></div>
+                                                    <div class="icon write_icon"></div>
+                                                    <div class="icon share_icon" onclick="shareurl('${vo.m_id }','${vo.t_id}')"></div>
+                                                    <!-- <div class="icon save_icon"></div> -->
                                                 </div>
-                                                <ul class="hashtag${vo.t_id }" id="hashtag${vo.t_id }">
-                                                </ul>
-                                                <input type="hidden" class="hidden_showhashtag" onclick="showhashtag('${vo.t_id }');">
-                                                <div class="com_detail comment_more" onclick="showAllCo('${vo.t_id }');">댓글 전체 보기</div>
-                                                <div class="com_detail cm1 cm1${vo.t_id }">
-                                                    <div class="commentRId post_id commentRIdf"></div>
-                                                    <div class="commentResult post_content commentResultf">
+                                                <div class="timeline_likes_con">좋아요 <input type="button" class="lCount${vo.t_id} showlCount" value="" readonly>개</div>
+                                                <div class="comment_con">
+                                                    <div class="com_detail post_title">
+                                                        <div class="post_id" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_id }</div>
+                                                        <div class="post_content" id="post_content${vo.t_id}">${vo.t_content }
+                                                        </div>
+                                                        <div class="translate" onclick="translatec('${vo.t_content }', '${vo.t_id}');" style="cursor: pointer;">번역하기</div>
                                                     </div>
-                                                    <!-- <a class="commentViewAll"></a> -->
-                                                </div>
-                                                <ul class="cm2${vo.t_id }" id="cm2${vo.t_id }">
-                                                </ul>
-                                                <ul class="cm3${vo.t_id }" id="cm3${vo.t_id }">
-                                                </ul>
-                                                <input type="hidden" class="hidden_likechk" onclick="likechk('${vo.t_id }');"> <input type="hidden" class="hidden_commentchk" onclick="showAllCoHidden('${vo.t_id }');">
-                                                <input type="hidden" name="t_type" class="t_type${vo.t_id }" value="${vo.t_type }">
+                                                    <ul class="hashtag${vo.t_id }" id="hashtag${vo.t_id }">
+                                                    </ul>
+                                                    <input type="hidden" class="hidden_showhashtag" onclick="showhashtag('${vo.t_id }');">
+                                                    <div class="com_detail comment_more" onclick="showAllCo('${vo.t_id }');">댓글 전체 보기</div>
+                                                    <div class="com_detail cm1 cm1${vo.t_id }">
+                                                        <div class="commentRId post_id commentRIdf"></div>
+                                                        <div class="commentResult post_content commentResultf">
+                                                        </div>
+                                                        <!-- <a class="commentViewAll"></a> -->
+                                                    </div>
+                                                    <ul class="cm2${vo.t_id }" id="cm2${vo.t_id }">
+                                                    </ul>
+                                                    <ul class="cm3${vo.t_id }" id="cm3${vo.t_id }">
+                                                    </ul>
+                                                    <input type="hidden" class="hidden_likechk" onclick="likechk('${vo.t_id }');"> <input type="hidden" class="hidden_commentchk" onclick="showAllCoHidden('${vo.t_id }');">
+                                                    <input type="hidden" name="t_type" class="t_type${vo.t_id }" value="${vo.t_type }">
 
-                                                <!-- ---------------------------------게시물 좋아요 수 카운트 trigger---------------------------------- -->
-                                                <input type="hidden" value="${vo.t_id}" class="countLike_trigger" onclick="countLike('${vo.t_id}');">
-                                                <!-- -------------------------------------------------------------------------------------------- -->
+                                                    <!-- ---------------------------------게시물 좋아요 수 카운트 trigger---------------------------------- -->
+                                                    <input type="hidden" value="${vo.t_id}" class="countLike_trigger" onclick="countLike('${vo.t_id}');">
+                                                    <!-- -------------------------------------------------------------------------------------------- -->
+                                                </div>
+                                                <div class="timeline_time">${vo.t_time }</div>
                                             </div>
-                                            <div class="timeline_time">${vo.t_time }</div>
+                                        </div>
+                                        <div class="upload_comment">
+                                            <div class="inner_comment_con inner_upload">
+                                                <input type="text" class="write_space" placeholder="댓글 달기..." name="t_comment">
+                                                <button class="comment_upload">게시</button>
+                                                <input type="hidden" name="t_id" value="${vo.t_id }"> <input type="hidden" name="t_type" value="${vo.t_type }" class="t_type${vo.t_id }">
+                                                <input type="hidden" value="${vo.m_id }">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="upload_comment">
-                                        <div class="inner_comment_con inner_upload">
-                                            <input type="text" class="write_space" placeholder="댓글 달기..." name="t_comment">
-                                            <button class="comment_upload">게시</button>
-                                            <input type="hidden" name="t_id" value="${vo.t_id }"> <input type="hidden" name="t_type" value="${vo.t_type }" class="t_type${vo.t_id }">
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </c:forEach>
-                        </c:if>
+                                </c:forEach>
+                            </c:if>
+                        </div>
                     </div>
                     <div id="timeline_right">
                         <div id="right_small_con">
@@ -886,7 +914,9 @@
                             </div>
                             <div id="footer_info">
                                 <a class="footera" href="${pageContext.request.contextPath}/serviceCenter">고객센터&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                                <a class="footera" href="${pageContext.request.contextPath}/aboutUs">사이트 소개</a>
+                                <a class="footera" href="${pageContext.request.contextPath}/aboutUs">사이트
+                                    소개&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+                                <a class="footera" href="#" onclick="logout('${my_name }');">로그아웃</a>
                                 <div id="footer_infoc">© 2020 TA_IN</div>
                             </div>
                         </div>
@@ -926,7 +956,8 @@
                         method: "POST",
                         data: {
                             m_id: memId,
-                            r_mid: r_mid
+                            r_mid: r_mid,
+                            m_id2:r_mid
                         },
                         success: function(data) {
                             console.log("memId : " +
@@ -946,6 +977,226 @@
                     });
                 });
 
+
+                /* 스크롤 페이징 */
+                var page = 1; // page선언
+
+                $(function() { // 첫 화면 로드시 page 증가.
+                    console.log("페이지로드:" + page);
+                    getList(page); // 리스트 추가 조회
+                    page++;
+                });
+
+                $(window).scroll(function() { //스크롤이 최하단으로 내려가면 리스트 조회 후 page 증가.
+                    console.log("스크롤:" + page);
+                    if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
+                        getList(page); // 리스트 추가 조회
+                        page++;
+                    }
+                });
+
+                function getList(page) { // 리스트 추가 조회
+                    $.ajax({
+                        url: 'timeLineScroll.do',
+                        method: 'post',
+                        data: {
+                            "page": page
+                        },
+                        dataType: 'json',
+                        success: function(resp) {
+                            console.log("resp:" + resp.list);
+                            console.log("data:" + resp.list.length);
+                            var data = resp.list.length;
+                            var htmls = "";
+                            if (page == 1) { //페이지 1일 경우 id가 page인 html을 비운다.
+                                $("#page").html("");
+                            }
+                            console.log(resp.currentPage + ":" + resp.maxPage);
+                            if (resp.currentPage <= resp.maxPage) {
+                                if (data > 0) {
+                                    for (var i = 0; i < data; i++) {
+                                        htmls += '<div class="timeline_contents" id="timeline_contents">' +
+                                            '<div class="timeline_profile">' +
+                                            '<div class="t_prof_photo" onclick="goboard(\'' + resp.list[i].m_id + '\');" style="cursor:pointer;">' + resp.list[i].m_img + '</div>' +
+                                            '<div class="t_prof_id" onclick="goboard(\'' + resp.list[i].m_id + '\');" style="cursor:pointer;">' + resp.list[i].m_id + '' +
+                                            '</div>' +
+                                            '<i class="fas fa-bars fa-bars_title" onclick="pre_report(\'' + resp.list[i].t_id + '\',\'' + resp.list[i].m_id + '\',\'' + resp.list[i].t_type + '\');"></i>' +
+                                            '</div>' +
+                                            '<div class="timeline_photo timeline_photo' + resp.list[i].t_id + '">' +
+                                            '<ul class="photo' + resp.list[i].t_id + ' timephoto" id="photo' + resp.list[i].t_id + '">' +
+                                            '</ul>' +
+                                            '<input type="hidden" class="hidden_showphoto" onclick="showphoto(\'' + resp.list[i].t_id + '\',\'' + resp.list[i].t_img + '\');">' +
+                                            '</div>' +
+                                            '<button type="button" class="slidebtn slidebtn' + resp.list[i].t_id + ' slide_btn_prev slide_btn_prev' + resp.list[i].t_id + '" style="display:none;">Prev</button>' +
+                                            '<button type="button" class="slidebtn slidebtn' + resp.list[i].t_id + ' slide_btn_next slide_btn_next' + resp.list[i].t_id + '" style="display:none;">Next</button>' +
+                                            '<div class="timeline_comment_con">' +
+                                            '<div class="inner_comment_con">' +
+                                            '<div class="timeline_icon_con">' +
+                                            '<div class="icon like_icon likechk' + resp.list[i].t_id + '" onclick="pressLike(\'' + resp.list[i].t_id + '\',\'' + resp.list[i].m_id + '\');"></div>' +
+                                            '<div class="icon unlike_icon unlikechk' + resp.list[i].t_id + '" onclick="pressUnlike(\'' + resp.list[i].t_id + '\');"></div>' +
+                                            '<div class="icon write_icon"></div>' +
+                                            '<div class="icon share_icon" onclick="shareurl(\'' + resp.list[i].m_id + '\',\'' + resp.list[i].t_id + '\')"></div>' +
+                                            //'<div class="icon save_icon"></div>' +
+                                            '</div>' +
+                                            '<div class="timeline_likes_con">좋아요 <input type="button" class="lCount' + resp.list[i].t_id + ' showlCount" value="" readonly>개</div>' +
+                                            '<div class="comment_con">' +
+                                            '<div class="com_detail post_title">' +
+                                            '<div class="post_id" onclick="goboard(\'' + resp.list[i].m_id + '\');" style="cursor:pointer;">' + resp.list[i].m_id + '</div>' +
+                                            '<div class="post_content" id="post_content' + resp.list[i].t_id + '">' + resp.list[i].t_content + '' +
+                                            '</div>' +
+                                            '<div class="translate" onclick="translatec(\'' + resp.list[i].t_content + '\',\'' + resp.list[i].t_id + '\');" style="cursor: pointer;">번역하기</div>' +
+                                            '</div>' +
+                                            '<ul class="hashtag' + resp.list[i].t_id + '" id="hashtag' + resp.list[i].t_id + '">' +
+                                            '</ul>' +
+                                            '<input type="hidden" class="hidden_showhashtag" onclick="showhashtag(\'' + resp.list[i].t_id + '\');">' +
+                                            '<div class="com_detail comment_more" onclick="showAllCo(\'' + resp.list[i].t_id + '\');">댓글 전체 보기</div>' +
+                                            '<div class="com_detail cm1 cm1' + resp.list[i].t_id + '">' +
+                                            '<div class="commentRId post_id commentRIdf"></div>' +
+                                            '<div class="commentResult post_content commentResultf">' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<ul class="cm2' + resp.list[i].t_id + '" id="cm2' + resp.list[i].t_id + '">' +
+                                            '</ul>' +
+                                            '<ul class="cm3' + resp.list[i].t_id + '" id="cm3' + resp.list[i].t_id + '">' +
+                                            '</ul>' +
+                                            '<input type="hidden" class="hidden_likechk" onclick="likechk(\'' + resp.list[i].t_id + '\');"> <input type="hidden" class="hidden_commentchk" onclick="showAllCoHidden(\'' + resp.list[i].t_id + '\');">' +
+                                            '<input type="hidden" name="t_type" class="t_type' + resp.list[i].t_id + '" value="' + resp.list[i].t_type + '">' +
+                                            '<input type="hidden" value="' + resp.list[i].t_id + '" class="countLike_trigger" onclick="countLike(\'' + resp.list[i].t_id + '\');">' +
+                                            '</div>' +
+                                            '<div class="timeline_time">' + resp.list[i].t_time + '</div>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<div class="upload_comment">' +
+                                            '<div class="inner_comment_con inner_upload">' +
+                                            '<input type="text" class="write_space" placeholder="댓글 달기..." name="t_comment">' +
+                                            '<button class="comment_upload">게시</button>' +
+                                            '<input type="hidden" name="t_id" value="' + resp.list[i].t_id + '"> <input type="hidden" name="t_type" value="' + resp.list[i].t_type + '" class="t_type' + resp.list[i].t_id + '">' +
+                                            '<input type="hidden" value="' + resp.list[i].m_id + '">' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>';
+                                    }
+                                } else {}
+                            }
+                            if (page == 1) { //페이지가 1이 아닐경우 데이터를 붙힌다.
+                                $("#page_con").append("");
+                            } else {
+                                $("#page_con").append(htmls);
+                                // 페이지 로딩 시 처음 두개 댓글 나타내기 trigger 호출
+                                $(".hidden_commentchk").trigger('click');
+
+                                // 게시물 좋아요 체크 trigger 호출
+                                $(".hidden_likechk").trigger('click');
+
+                                // 게시물 좋아요 수 카운트 trigger 호출
+                                $(".countLike_trigger").trigger('click');
+
+                                // 게시물 이미지 보기 trigger 호출
+                                $(".hidden_showphoto").trigger('click');
+
+                                // 해쉬태그 보기 trigger 호출
+                                $(".hidden_showhashtag").trigger('click');
+
+                                // 댓글 등록 (일반 & 비즈니스 게시판 분리)
+                                // 처음 등록된 댓글에는 좋아요 & 변환 불가
+                                $(".comment_upload").on('click', function() {
+                                    var postid = $(this).next().val();
+                                    var comment = $(this).prev().val();
+                                    var type = $(this).next().next().val();
+                                    var m_id2 = $(this).next().next().next().val();
+                                    console.log(postid);
+                                    console.log(comment);
+                                    console.log(memId);
+                                    console.log(type);
+                                    console.log(m_id2);
+                                    if (comment == "" || comment == null) {
+                                        console.log("comment won't be uploaded");
+                                        return false;
+                                    } else {
+
+                                        // 댓글 append - cm1
+                                        $(this).parent().parent().prev().find(".comment_more").css("display", "block");
+                                        $(this).parent().parent().prev().find(".cm1").css("display", "block");
+                                        $(this).parent().parent().prev().find(".commentRIdf").text(memId);
+                                        $(this).parent().parent().prev().find(".commentResultf").text(comment);
+
+                                        // 댓글 등록 - 일반 게시판
+                                        if (type == "G") {
+                                            console.log("board comment upload!");
+                                            $.ajax({
+                                                url: "${pageContext.request.contextPath}/coInsert.do",
+                                                method: "POST",
+                                                data: {
+                                                    m_id: memId,
+                                                    t_comment: comment,
+                                                    t_id: postid,
+                                                    m_id2: m_id2
+                                                },
+                                                success: function(data) {
+                                                    console.log("memId : " +
+                                                        memId +
+                                                        " comment : " +
+                                                        comment +
+                                                        " postid : " +
+                                                        postid);
+                                                    $(".write_space").val('');
+                                                },
+                                                error: function(request, status, error) {
+                                                    alert("code:" +
+                                                        request.status +
+                                                        "\n" +
+                                                        "message:" +
+                                                        request.responseText +
+                                                        "\n" + "error:" +
+                                                        error);
+                                                }
+                                            });
+
+                                            // 댓글 등록 - 비즈니스 게시판
+                                        } else if (type == "B") {
+                                            console.log("businessboard comment upload!");
+                                            $.ajax({
+                                                url: "${pageContext.request.contextPath}/coInsertB.do",
+                                                method: "POST",
+                                                data: {
+                                                    m_id: memId,
+                                                    t_comment: comment,
+                                                    t_id: postid
+                                                },
+                                                success: function(data) {
+                                                    console.log("memId : " +
+                                                        memId +
+                                                        " comment : " +
+                                                        comment +
+                                                        " postid : " +
+                                                        postid);
+                                                    $(".write_space").val('');
+                                                },
+                                                error: function(request, status, error) {
+                                                    alert("code:" +
+                                                        request.status +
+                                                        "\n" +
+                                                        "message:" +
+                                                        request.responseText +
+                                                        "\n" + "error:" +
+                                                        error);
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        error: function(e) {
+                            alert("데이터 실패.");
+                            if (e.status == 300) {
+                                alert("데이터를 가져오는데 실패하였습니다.");
+                            };
+                        }
+                    });
+                }
+
+
             });
 
             // 스토리 업로드 페이지로 이동
@@ -964,10 +1215,37 @@
                 $(location).attr('href', url);
             }
 
-            // 계정 상세페이지 이동          타입 추가 필요
+            // 계정 상세페이지 이동 
             function goboard(id) {
                 var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
                 $(location).attr('href', url);
+            }
+
+            // 로그아웃
+            function logout(id) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/member/logout.do",
+                    method: "POST",
+                    data: {
+                        m_id: id
+                    },
+                    success: function(data) {
+                        console.log("success");
+                        alert(data);
+                        var url = "${pageContext.request.contextPath}/member/loginPage";
+                        $(location).attr('href', url);
+                    },
+                    error: function(request, status, error) {
+                        console.log("error");
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
             }
 
             // 번역하기
@@ -1162,10 +1440,12 @@
                 var postid = $(this).next().val();
                 var comment = $(this).prev().val();
                 var type = $(this).next().next().val();
+                var m_id2 = $(this).next().next().next().val();
                 console.log(postid);
                 console.log(comment);
                 console.log(memId);
                 console.log(type);
+                console.log(m_id2);
                 if (comment == "" || comment == null) {
                     console.log("comment won't be uploaded");
                     return false;
@@ -1186,7 +1466,8 @@
                             data: {
                                 m_id: memId,
                                 t_comment: comment,
-                                t_id: postid
+                                t_id: postid,
+                                m_id2: m_id2
                             },
                             success: function(data) {
                                 console.log("memId : " +
@@ -1297,7 +1578,7 @@
             }
 
             // 게시물 좋아요 (일반 & 비즈니스 게시판 분리)
-            function pressLike(t_id) {
+            function pressLike(t_id, m_id2) {
                 var type = $(".t_type" + t_id).val();
                 var lcount = $(".lCount" + t_id).val();
                 console.log(t_id);
@@ -1312,7 +1593,8 @@
                         method: "POST",
                         data: {
                             m_id: memId,
-                            t_id: t_id
+                            t_id: t_id,
+                            m_id2: m_id2
                         },
                         success: function(data) {
                             console.log("memId : " +
@@ -1344,7 +1626,8 @@
                         method: "POST",
                         data: {
                             m_id: memId,
-                            t_id: t_id
+                            t_id: t_id,
+                            m_id2: m_id2
                         },
                         success: function(data) {
                             console.log("memId : " +
@@ -1752,7 +2035,7 @@
                                     id + '</div><div class="commentResult post_content">' +
                                     b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + ' lbtn"></div>' +
                                     '<div class="comment_unlcon clcon unlikechk' + b_id + ' unlbtn"></div>' +
-                                    '<input type="hidden" value="' + b_id + '"></div></div>';
+                                    '<input type="hidden" value="' + b_id + '"><input type="hidden" value="' + id + '"></div></div>';
                                 htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
                                     "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>"
 
@@ -1773,7 +2056,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
@@ -1793,7 +2076,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
                                     }
 
@@ -1812,7 +2095,7 @@
                                             '<input type="hidden" value="' + b_id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
 
@@ -1824,7 +2107,7 @@
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo"  style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>';
                                     }
 
                                 }
@@ -1919,6 +2202,7 @@
                                     var b_id = $(this).next().val();
                                     var r_comment = $(this).prev().val();
                                     var r_type = $(this).next().next().val();
+                                    var m_id2 = $(this).next().next().next().val();
                                     console.log(memId);
                                     console.log(b_id);
                                     console.log(r_comment);
@@ -1934,7 +2218,8 @@
                                             data: {
                                                 m_id: memId,
                                                 t_comment: r_comment,
-                                                t_id: b_id
+                                                t_id: b_id,
+                                                m_id2:m_id2
                                             },
                                             success: function(data) {
                                                 console.log("memId : " +
@@ -1993,7 +2278,7 @@
                                                 id + '</div><div class="commentResult post_content reply_commentResult">' +
                                                 b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
-                                                '<input type="hidden" value="' + b_id + '"></div></div>';
+                                                '<input type="hidden" value="' + b_id + '"><input type="hidden" value="' + id + '"></div></div>';
                                             htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
                                                 "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>";
 
@@ -2034,14 +2319,17 @@
                                         // 답글 좋아요 - 일반 게시판
                                         $(".comment_lcon").on('click', function() {
                                             var b_id = $(this).next().next().val();
+                                            var m_id2 = $(this).next().next().next().val();
+                                            console.log("m_id2" + m_id2);
                                             console.log(memId);
                                             console.log(b_id);
                                             $.ajax({
-                                                url: "${pageContext.request.contextPath}/pressLike.do",
+                                                url: "${pageContext.request.contextPath}/pressLikeco.do",
                                                 method: "POST",
                                                 data: {
                                                     m_id: memId,
-                                                    t_id: b_id
+                                                    t_id: b_id,
+                                                    m_id2: m_id2
                                                 },
                                                 async: false,
                                                 success: function(data) {
@@ -2190,14 +2478,17 @@
                             // 댓글 좋아요 - 일반 게시판
                             $(".comment_lcon").on('click', function() {
                                 var b_id = $(this).next().next().val();
+                                var m_id2 = $(this).next().next().next().val();
+                                console.log("m_id2" + m_id2);
                                 console.log(memId);
                                 console.log(b_id);
                                 $.ajax({
-                                    url: "${pageContext.request.contextPath}/pressLike.do",
+                                    url: "${pageContext.request.contextPath}/pressLikeco.do",
                                     method: "POST",
                                     data: {
                                         m_id: memId,
-                                        t_id: b_id
+                                        t_id: b_id,
+                                        m_id2: m_id2
                                     },
                                     async: false,
                                     success: function(data) {
@@ -2291,7 +2582,7 @@
                                     id + '</div><div class="commentResult post_content">' +
                                     b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                     '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
-                                    '<input type="hidden" value="' + b_id + '"></div></div>';
+                                    '<input type="hidden" value="' + b_id + '"><input type="hidden" value="' + id + '"></div></div>';
                                 htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
                                     "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>";
 
@@ -2312,7 +2603,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
@@ -2331,7 +2622,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
                                     }
 
@@ -2350,7 +2641,7 @@
                                             '<input type="hidden" value="' + b_id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
 
@@ -2362,7 +2653,7 @@
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo"  style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>';
                                     }
 
                                 }
@@ -2457,6 +2748,7 @@
                                     var b_id = $(this).next().val();
                                     var r_comment = $(this).prev().val();
                                     var r_type = $(this).next().next().val();
+                                    var m_id2 = $(this).next().next().next().val();
                                     console.log(memId);
                                     console.log(b_id);
                                     console.log(r_comment);
@@ -2472,7 +2764,8 @@
                                             data: {
                                                 m_id: memId,
                                                 t_comment: r_comment,
-                                                t_id: b_id
+                                                t_id: b_id,
+                                                m_id2:m_id2
                                             },
                                             success: function(data) {
                                                 console.log("memId : " +
@@ -2531,7 +2824,7 @@
                                                 id + '</div><div class="commentResult post_content reply_commentResult">' +
                                                 b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
-                                                '<input type="hidden" value="' + b_id + '"></div></div>';
+                                                '<input type="hidden" value="' + b_id + '"><input type="hidden" value="' + id + '"></div></div>';
                                             htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
                                                 "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>";
 
@@ -2572,14 +2865,17 @@
                                         // 답글 좋아요 - 비즈니스 게시판
                                         $(".comment_lcon").on('click', function() {
                                             var b_id = $(this).next().next().val();
+                                            var m_id2 = $(this).next().next().next().val();
+                                            console.log("m_id2" + m_id2);
                                             console.log(memId);
                                             console.log(b_id);
                                             $.ajax({
-                                                url: "${pageContext.request.contextPath}/pressLikeB.do",
+                                                url: "${pageContext.request.contextPath}/pressLikeBco.do",
                                                 method: "POST",
                                                 data: {
                                                     m_id: memId,
-                                                    t_id: b_id
+                                                    t_id: b_id,
+                                                    m_id2: m_id2
                                                 },
                                                 async: false,
                                                 success: function(data) {
@@ -2728,14 +3024,17 @@
                             // 댓글 좋아요 - 비즈니스 게시판
                             $(".comment_lcon").on('click', function() {
                                 var b_id = $(this).next().next().val();
+                                var m_id2 = $(this).next().next().next().val();
+                                console.log("m_id2" + m_id2);
                                 console.log(memId);
                                 console.log(b_id);
                                 $.ajax({
-                                    url: "${pageContext.request.contextPath}/pressLikeB.do",
+                                    url: "${pageContext.request.contextPath}/pressLikeBco.do",
                                     method: "POST",
                                     data: {
                                         m_id: memId,
-                                        t_id: b_id
+                                        t_id: b_id,
+                                        m_id2: m_id2
                                     },
                                     async: false,
                                     success: function(data) {
@@ -2807,7 +3106,8 @@
             // 댓글 좋아요 표시 외 수정 불가
             function showAllCoHidden(t_id) {
                 var type = $(".t_type" + t_id).val();
-
+                var htmls = "";
+                var a = document.getElementById("cm2" + t_id);
                 // 두개 댓글 나타내기
                 $.ajax({
                     url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
@@ -2827,14 +3127,16 @@
                             var b_date = count.hComment[i].b_date;
 
                             // 댓글 append - cm2 // 댓글 좋아요 체크 trigger 사용
-                            $(".cm2" + t_id).append('<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
+                            htmls += '<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                 id + '</div><div class="commentResult post_content">' +
                                 b_content + '</div><a class="commentViewAll"></a><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
-                                '<input type="hidden" value="' + b_id + '"></div></div>');
-                            $(".cm2" + t_id).append("<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
-                                "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>");
+                                '<input type="hidden" value="' + b_id + '"><input type="hidden" value="' + id + '"></div></div>';
+                            htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
+                                "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>";
                         }
+
+                        $(a).html(htmls);
 
                         // 댓글 좋아요 체크 trigger 호출
                         $(".hidden_likechk").trigger('click');
@@ -2846,14 +3148,17 @@
                     // 댓글 좋아요 - 일반 게시판
                     $(".comment_lcon").on('click', function() {
                         var b_id = $(this).next().next().val();
+                        var m_id2 = $(this).next().next().next().val();
+                        console.log("m_id2" + m_id2);
                         console.log(memId);
                         console.log(b_id);
                         $.ajax({
-                            url: "${pageContext.request.contextPath}/pressLike.do",
+                            url: "${pageContext.request.contextPath}/pressLikeco.do",
                             method: "POST",
                             data: {
                                 m_id: memId,
-                                t_id: b_id
+                                t_id: b_id,
+                                m_id2: m_id2
                             },
                             success: function(data) {
                                 console.log("memId : " +
@@ -2914,14 +3219,17 @@
                     // 댓글 좋아요 - 비즈니스 게시판
                     $(".comment_lcon").on('click', function() {
                         var b_id = $(this).next().next().val();
+                        var m_id2 = $(this).next().next().next().val();
+                        console.log("m_id2" + m_id2);
                         console.log(memId);
                         console.log(b_id);
                         $.ajax({
-                            url: "${pageContext.request.contextPath}/pressLikeB.do",
+                            url: "${pageContext.request.contextPath}/pressLikeBco.do",
                             method: "POST",
                             data: {
                                 m_id: memId,
-                                t_id: b_id
+                                t_id: b_id,
+                                m_id2: m_id2
                             },
                             success: function(data) {
                                 console.log("memId : " +

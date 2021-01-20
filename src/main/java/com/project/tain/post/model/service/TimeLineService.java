@@ -12,6 +12,8 @@ public interface TimeLineService {
 
 	List<TimeLine> showTimeLineList(String m_id);
 
+	List<TimeLine> showTimeLineListPage(String m_id, int startPage, int limit);
+
 	int insertTimeLineComment(TimeLine tl);
 
 	int insertTimeLineCommentB(TimeLine tl);
@@ -57,9 +59,25 @@ public interface TimeLineService {
 	List<TimeLine> autocomplete(String word);
 
 	List<TimeLine> showHashTag(String t_id);
+
 	List<TimeLine> chkfollow(String m_id);
 
 	String showMemberType(String m_id);
 
 	int chkpwd(TimeLine tl);
+
+	int outmember(TimeLine tl);
+
+	int deletemember(TimeLine tl);
+
+	int timeLineListCount(String my_name);
+
+	int alertLike(TimeLine tl);
+
+	int alertLikeco(TimeLine tl);
+
+	int alertLikecowrite(TimeLine tl);
+
+	int alertFollow(TimeLine tl);
+
 }

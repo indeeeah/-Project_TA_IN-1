@@ -124,54 +124,6 @@
         <script type="text/javascript">
             var memId = $(".m_id").val();
             
-            // 웹소켓
-            $(document).ready(
-         function() {
-            var socket = null;
-            function connect() {
-               var ws = new WebSocket(
-                     "ws://localhost:8090/tain/replyEcho?ID=${ID}");
-               socket = ws;
-
-               ws.onopen = function() {
-                  console.log('Info: connection opened.');
-               };
-
-               ws.onmessage = function(event) {
-                  console.log("ReceiveMessage : ", event.data + '\n');
-               };
-
-               ws.onclose = function(event) {
-                  console.log('Info: connection closed.');
-                  //setTimeout(function(){connect();}, 1000);   // retry connection!!
-               };
-               ws.onerror = function(err) {
-                  console.log('Err:', err);
-               };
-
-            }
-
-            connect();
-
-            $('#btnSend').on('click', function(evt) {
-               evt.preventDefault();
-               if (socket.readyState !== 1)
-                  return;
-               var id = $('input#id').val();
-               var msg = $('input#msg').val();
-               var toid = $('input#user').val();
-               socket.send(id+","+toid+","+msg);
-               $("#receivemsg").append("메시지를 보냈습니다. 내용 : "+msg+"<br>");
-               $(".alarm").css("display", "inline-block");
-               $("#chkbox").css("display", "none");
-            });
-            
-            $(".alarm").click(function(){
-               $(".alarm").css("display", "none");
-            })
-         });
-
-            
             $(function() {
                 $("#search").autocomplete({
                     source: function(request, response) {

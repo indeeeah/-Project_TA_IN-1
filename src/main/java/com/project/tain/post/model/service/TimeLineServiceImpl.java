@@ -158,4 +158,44 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int chkpwd(TimeLine tl) {
 		return tDao.chkpwd(tl);
 	}
+
+	@Override
+	public int outmember(TimeLine tl) {
+		return tDao.outmember(tl);
+	}
+
+	@Override
+	public int deletemember(TimeLine tl) {
+		return tDao.deletemember(tl);
+	}
+
+	@Override
+	public List<TimeLine> showTimeLineListPage(String m_id, int startPage, int limit) {
+		return tDao.showTimeLineListPage(m_id, startPage, limit);
+	}
+
+	@Override
+	public int timeLineListCount(String my_name) {
+		return tDao.timeLineListCount(my_name);
+	}
+
+	@Override
+	public int alertLike(TimeLine tl) {
+		return tDao.alertLike(tl);
+	}
+
+	@Override
+	public int alertLikeco(TimeLine tl) {
+		return tDao.alertLikeco(tl);
+	}
+
+	@Override
+	public int alertLikecowrite(TimeLine tl) {
+		return tDao.alertLikecowrite(tl);
+	}
+
+	@Override
+	public int alertFollow(TimeLine tl) {
+		return tDao.alertFollow(tl);
+	}
 }

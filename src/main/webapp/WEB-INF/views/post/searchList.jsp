@@ -19,6 +19,35 @@
 	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <script src="https://kit.fontawesome.com/2409d81413.js"
 	crossorigin="anonymous"></script>
+	
+	<style>
+	body {
+	width: 100%;
+	height: 100%;
+}
+
+#searchList_con {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+#list_big_con {
+	width: 1058px;
+}
+
+.eachPost {
+	width: 314px;
+	height: 314px;
+	margin-left: 29px;
+	margin-bottom: 29px;
+	float: left;
+}
+
+.eachPost {
+	cursor: pointer;
+}
+	</style>
 </head>
 
 <body>
@@ -32,5 +61,31 @@
 			</c:if>
 		</div>
 	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
+<script>
+
+
+                // flex 화면 맞추기
+                var postcount = $(".eachPost").length;
+                var forflex = postcount % 3;
+                if (forflex == 1) {
+                    $("#list_big_con").append('<div class="eachPost nocursor"></div>');
+                    $("#list_big_con").append('<div class="eachPost nocursor"></div>');
+                } else if (forflex == 2) {
+                    $("#list_big_con").append('<div class="eachPost nocursor"></div>');
+                }
+
+                $(".for_showpost").on('click', function() {
+                    var t_id = $(this).next().val();
+                    console.log(t_id);
+                    showpost(t_id);
+                });
+                
+                $(".eachPost").on('click', function(){
+                	var id = $(this).next().val();
+                	eachstory(id);
+                });
+
+</script>
 </html>

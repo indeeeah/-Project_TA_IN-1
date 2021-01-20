@@ -72,7 +72,7 @@ public class GnWriteController {
 				System.out.println(array[i]);
 				gwService.insertboardhashtag(gw);
 			}
-			mv.setViewName("redirect:/timeLine/");
+			mv.setViewName("redirect:/timeLine");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

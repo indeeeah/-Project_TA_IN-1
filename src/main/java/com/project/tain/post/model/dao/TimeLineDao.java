@@ -2,6 +2,7 @@ package com.project.tain.post.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -95,41 +96,79 @@ public class TimeLineDao {
 		System.out.println(tl);
 		return sqlSession.insert("TimeLine.updateCommentB", tl);
 	}
-	
+
 	public int countLike(TimeLine tl) {
 		return sqlSession.selectOne("TimeLine.countLike", tl);
 	}
-	
+
 	public int insertReport(TimeLine tl) {
 		return sqlSession.insert("TimeLine.insertReport", tl);
 	}
+
 	public int insertReportB(TimeLine tl) {
 		return sqlSession.insert("TimeLine.insertReportB", tl);
 	}
+
 	public int reportchk(TimeLine tl) {
 		return sqlSession.selectOne("TimeLine.reportchk", tl);
 	}
+
 	public int unfollow(TimeLine tl) {
 		return sqlSession.delete("TimeLine.unfollow", tl);
 	}
-	
-	public List<TimeLine> autocomplete(String word){
+
+	public List<TimeLine> autocomplete(String word) {
 		return sqlSession.selectList("TimeLine.autocomplete", word);
 	}
-	
+
 	public List<TimeLine> showHashTag(String t_id) {
 		return sqlSession.selectList("TimeLine.showHashTag", t_id);
 	}
+
 	public List<TimeLine> chkfollow(String m_id) {
 		return sqlSession.selectList("TimeLine.chkfollow", m_id);
 	}
-	
+
 	public String showMemberType(String m_id) {
 		return sqlSession.selectOne("TimeLine.showMemberType", m_id);
 	}
 
 	public int chkpwd(TimeLine tl) {
 		return sqlSession.selectOne("TimeLine.chkpwd", tl);
+	}
+
+	public int outmember(TimeLine tl) {
+		return sqlSession.delete("TimeLine.outmember", tl);
+	}
+
+	public int deletemember(TimeLine tl) {
+		return sqlSession.delete("TimeLine.deletemember", tl);
+	}
+
+	public List<TimeLine> showTimeLineListPage(String m_id, int startPage, int limit) {
+		int startRow = (startPage - 1) * limit;
+		RowBounds row = new RowBounds(startRow, limit);
+		return sqlSession.selectList("TimeLine.showTimeLineList", m_id, row);
+	}
+
+	public int timeLineListCount(String my_name) {
+		return sqlSession.selectOne("TimeLine.timeLineListCount", my_name);
+	}
+
+	public int alertLike(TimeLine tl) {
+		return sqlSession.insert("TimeLine.alertLike", tl);
+	}
+
+	public int alertLikeco(TimeLine tl) {
+		return sqlSession.insert("TimeLine.alertLikeco", tl);
+	}
+
+	public int alertLikecowrite(TimeLine tl) {
+		return sqlSession.insert("TimeLine.alertLikecowrite", tl);
+	}
+
+	public int alertFollow(TimeLine tl) {
+		return sqlSession.insert("TimeLine.alertFollow", tl);
 	}
 
 }
