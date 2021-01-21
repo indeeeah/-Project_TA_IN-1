@@ -128,6 +128,7 @@
 	<div id="bbWrite" class="bbWrite">
 	
 	<form name="renewForm" action="bbUpdate.do" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="m_id" value="${m_id }">
 		<input type="hidden" name="bb_type" value="B">
 		<input type="hidden" name="bb_id" value="${bbRenew.bb_id }">
 		<div id="bbWriteText" class="bbWriteText">
@@ -202,7 +203,6 @@
 		</div>
 		<div id="bbWriteEdit" class="bbWriteEdit">
 			<div id="bbWriteEditBox" class="bbWriteEditBox">
-				(임시)아이디:<input type="text" name="m_id" value="${bbRenew.m_id}">
 			</div>
 		</div>
 		<input type="submit" id="renew" value="수정하기">&nbsp;&nbsp;

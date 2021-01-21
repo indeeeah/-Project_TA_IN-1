@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>비즈니스 메인</title>
+<link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
 <script src="http://code.jquery.com/jquery-3.4.0.js"></script> 
 <style>
 a{
@@ -405,7 +406,6 @@ input {
 	height:70%;
     overflow-x: hidden;
     min-height: 250px;
-    border-bottom:1px solid rgb(210,210,210);
     margin-bottom: 15px;
 }
 #mdContent {

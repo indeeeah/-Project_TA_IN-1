@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project.tain.business.board.model.domain.BsnBoard;
+import com.project.tain.member.model.vo.BusinessMemberVO;
 
 @Repository("bbDao")
 public class BsnBoardDao {
@@ -149,5 +150,27 @@ public class BsnBoardDao {
 		System.out.println("M_id : "+bb.getM_id());
 		return sqlSession.delete("BsnBoard.unFollow", bb);
 	}
+	
+	// 비즈니스 계정 정보
+	public BusinessMemberVO bsnInfo(String m_id) {
+		System.out.println("비즈니스 계정 정보 dao");
+		System.out.println("M_id : "+m_id);
+		return sqlSession.selectOne("BsnBoard.bsnInfo", m_id);
+	}
+	
+	// 팔로우 수
+	public int bsnInfoFollow(String m_id) {
+		System.out.println("팔로우 수 dao");
+		System.out.println("M_id : "+m_id);
+		return sqlSession.selectOne("BsnBoard.bsnInfoFollow", m_id);
+	}
+	
+	// 팔로워 수
+	public int bsnInfoFollower(String m_id) {
+		System.out.println("팔로워 수 dao");
+		System.out.println("M_id : "+m_id);
+		return sqlSession.selectOne("BsnBoard.bsnInfoFollower", m_id);
+	}
+	
 	
 }
