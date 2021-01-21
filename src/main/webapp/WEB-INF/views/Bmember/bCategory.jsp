@@ -33,7 +33,7 @@ a {
 	width: 100%;
 	height: 100%;
 	margin: 0;
-	z-index: 1;
+	z-index: 8;
 }
 
 #ADaddModal {
@@ -45,7 +45,7 @@ a {
 	top: 50%;
 	transform: translate(-50%, -50%);
 	background: white;
-	z-index: 1;
+	z-index: 8;
 }
 
 .deleteCate{
@@ -56,6 +56,7 @@ a {
 	background:black;
 	color:white;
 }
+td{vertical-align:middle !important;}
 </style>
 <script>
 	$(document).ready(function() {
@@ -108,6 +109,7 @@ a {
 				value="취소" onclick="location.href='bCategory.do'">
 		</form>
 	</div>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
 		<div id="menu">
 			<ul id="menulist">

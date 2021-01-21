@@ -19,6 +19,7 @@ a {
 td {
 	text-align: left;
 }
+td{vertical-align:middle !important;}
 </style>
 <link href="${pageContext.request.contextPath}/resources/css/reset.css"
 	rel="stylesheet" type="text/css">
@@ -87,6 +88,7 @@ td {
 	});
 </script>
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
 		<div id="menu">
 			<ul id="menulist">

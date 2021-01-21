@@ -26,6 +26,7 @@ th, td {
 	border-top: 1px solid #D5D5D5;
 	border-bottom: 1px solid #D5D5D5;
 	border-left: 1px solid #D5D5D5;
+	vertical-align:middle !important;
 }
 
 hr {

@@ -37,6 +37,7 @@ a {
 	});
 </script>
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
 		<div id="menu">
 			<ul id="menulist">

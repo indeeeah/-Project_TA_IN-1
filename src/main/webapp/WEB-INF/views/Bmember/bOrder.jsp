@@ -38,7 +38,7 @@ a {
 	width: 100%;
 	height: 100%;
 	margin: 0;
-	z-index: 1;
+	z-index: 7;
 }
 
 #ADaddModal {
@@ -50,8 +50,9 @@ a {
 	top: 50%;
 	transform: translate(-50%, -50%);
 	background: white;
-	z-index: 1;
+	z-index: 7;
 }
+td{vertical-align:middle !important;}
 </style>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
@@ -101,6 +102,7 @@ a {
 				value="취소" onclick="location.href='bOrder.do'">
 		</form>
 	</div>
+	<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
 		<div id="menu">
 			<ul id="menulist">

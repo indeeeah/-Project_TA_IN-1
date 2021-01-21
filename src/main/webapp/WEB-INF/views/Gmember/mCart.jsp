@@ -26,6 +26,7 @@ th, td {
 	border-top: 1px solid #D5D5D5;
 	border-bottom: 1px solid #D5D5D5;
 	border-left: 1px solid #D5D5D5;
+	vertical-align:middle !important;
 }
 </style>
 </head>
@@ -130,6 +131,7 @@ th, td {
 			});
 </script>
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
 		<div id="menu">
 			<ul id="menulist">
@@ -169,7 +171,7 @@ th, td {
 						<tr>
 							<td align="center"><input type="checkbox" checked name="chk"><input type="text" id="bb_id"
 									style="display: none;" value="${cl.bb_id}"></td>
-							<td style="border-style: none; border-bottom: 1px solid #D5D5D5;"><a
+							<td style="vertical-align:bottom;border-style: none; border-bottom: 1px solid #D5D5D5;"><a
 								href=""><img src="${cl.bb_img1 }"
 									style="width: 110px; height: 110px; padding: 0 0 0 0;"></a></td>
 							<td style="border-style: none; border-bottom: 1px solid #D5D5D5;">${cl.bb_name}</td>

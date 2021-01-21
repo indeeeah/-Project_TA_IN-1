@@ -14,6 +14,7 @@
 a {
 	display:block;
 }
+td{vertical-align:middle !important;}
 </style>
 <link href="${pageContext.request.contextPath}/resources/css/reset.css"
 	rel="stylesheet" type="text/css">

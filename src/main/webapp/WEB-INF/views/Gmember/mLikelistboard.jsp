@@ -20,9 +20,11 @@ a {
 	border: 1px solid #D5D5D5;
 	height: 35px;
 }
+td{vertical-align:middle !important;}
 </style>
 </head>
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
 		<div id="menu">
 			<ul id="menulist">

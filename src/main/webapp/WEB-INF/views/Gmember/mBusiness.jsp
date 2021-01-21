@@ -25,6 +25,7 @@ a {
 }
 td {
 	text-align: left;
+	vertical-align:middle !important;
 }
 
 button:focus {
@@ -107,6 +108,7 @@ button:focus {
 	}
 </script>
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
 		<div id="menu">
 			<ul id="menulist">

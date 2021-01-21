@@ -30,7 +30,7 @@ a {
 	width: 100%;
 	height: 100%;
 	margin: 0;
-	z-index:1;
+	z-index:7;
 }
 
 
@@ -43,7 +43,7 @@ a {
 	top: 50%;
 	transform: translate(-50%, -50%);
 	background: white;
-	z-index:1;
+	z-index:7;
 }
 
 .deleteAD{
@@ -53,6 +53,7 @@ a {
 .deleteAD:hover{
 	opacity:1;
 }
+td{vertical-align:middle !important;}
 </style>
 <script>
 	$(document).ready(function() {
@@ -118,6 +119,7 @@ a {
 				value="취소" onclick="location.href='bAD.do'">
 		</form>
 	</div>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
 		<div id="menu">
 			<ul id="menulist">

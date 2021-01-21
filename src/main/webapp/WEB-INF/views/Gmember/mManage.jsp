@@ -19,7 +19,7 @@ td {
 a {
 	display: block;
 }
-
+td{vertical-align:middle !important;}
 #imgmanageModal {
 	width: 400px;
 	height: 222px;
@@ -216,6 +216,7 @@ button:focus {
 </script>
 
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="parentModal"></div>
 	<div id="mManage">
 		<div id="imgmanageModal"

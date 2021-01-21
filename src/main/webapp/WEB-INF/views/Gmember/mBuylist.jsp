@@ -15,9 +15,11 @@
 a {
 	display: block;
 }
+td{vertical-align:middle !important;}
 </style>
 </head>
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
 		<div id="menu">
 			<ul id="menulist">
