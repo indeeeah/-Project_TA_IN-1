@@ -22,6 +22,9 @@
 		<result property="m_joindate" column="m_joindate" />
 		<result property="approval_key" column="approval_key" />
 		<result property="approval_status" column="approval_status" />
+		<result property="o_reason" column="o_reason" />
+		<result property="o_reasontx" column="o_reasontx" />
+		<result property="o_date" column="o_date" />
 	</resultMap>
 
 	<!-- 전체 회원 수 조회 -->
@@ -73,11 +76,31 @@
 	<!-- 회원 삭제 -->
 	<delete id="deleteMmanage" parameterType="string"
 		flushCache="true" statementType="PREPARED">
-		update Member set m_status='4' WHERE
-		m_id = #{m_id}
+		delete from Member WHERE m_id = #{m_id}
 	</delete>
 	<insert id="insertOutManage" flushCache="true"
 		statementType="PREPARED">
-		insert into Out (m_id, o_reason) values(#{m_id}, 'F')
+		insert into Out (m_id, o_reason, o_reasontx) values(#{m_id}, 'F', '부적절한 회원입니다.')
 	</insert>
+	
+	<!-- 탈퇴된 회원 수 조회 -->
+	<select id="outlistCount" resultType="int">
+		select count(*) from out
+	</select>
+	
+	<!-- 탈퇴된 회원 검색 -->
+	<select id="outsearchList" parameterType="string"
+		resultType="arraylist" resultMap="resultMmanage">
+		SELECT * FROM out
+		WHERE m_id LIKE
+		'%'|| #{keyword} ||'%'
+		ORDER BY
+		m_id DESC
+	</select>
+	
+	<!-- 탈퇴된 회원조회 -->
+	<select id="outSelect" parameterType="string"
+		resultMap="resultMmanage">
+		select * from out order by o_date desc
+	</select>
 </mapper>
