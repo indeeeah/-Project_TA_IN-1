@@ -46,7 +46,15 @@
 		where m_id1=#{m_id}
 		and s_type='G'
 		and s_date > SYSDATE - 1
-		group by m_id, s_type)
+		group by m_id, s_type
+        union
+        select max(s_date) as s_date, m_id, s_type
+		from story 
+		where m_id=#{m_id}
+		and s_type='G'
+		and s_date > SYSDATE - 1
+		group by m_id, s_type
+        )
 		group by s_type
 	</select>
 	<select id="showAllAStory" resultType="Story">
@@ -62,15 +70,19 @@
 	</select>
 	<select id="storyResult" parameterType="Story"
 		resultType="arrayList" resultMap="resultStory">
-		select s_img from story where
-		m_id=#{id}
+		select s_img, m_img from story 
+        join member on story.m_id=member.m_id
+        where
+		story.m_id=#{id}
 		and s_type=#{s_type}
 		and s_date > SYSDATE - 1
 	</select>
 	<select id="eachStory" parameterType="string"
 		resultType="arrayList" resultMap="resultStory">
-		select m_id, s_img from story where
-		m_id=#{id} and s_date > SYSDATE - 1
+		select story.m_id, s_img, m_img from story 
+        join member on story.m_id = member.m_id
+        where
+		story.m_id=#{id} and s_date > SYSDATE - 1
 	</select>
 
 	<!-- 하이라이트 추가 -->
@@ -82,10 +94,12 @@
 	<select id="selectHighlight" parameterType="string"
 		resultType="arrayList" resultMap="resultStory">
 		select h_name, listagg(s_id, ',')
-		within group (order by s_id) as s_id, listagg(h_img, ',')within group
+		within group (order by s_id) as s_id, m_img, listagg(h_img, ',')within group
 		(order
-		by s_id) as h_img from highlight where m_id=#{my_name} group by
-		h_name
+		by s_id) as h_img from highlight
+        join member on highlight.m_id=member.m_id
+        where highlight.m_id=#{my_name} group by
+		h_name, m_img
 	</select>
 	<delete id="deleteHname" parameterType="Story" flushCache="true"
 		statementType="PREPARED" timeout="20">
@@ -99,7 +113,9 @@
 	</delete>
 	<select id="selectEachHighlight" parameterType="Story"
 		resultType="arrayList" resultMap="resultStory">
-		select h_name, s_id, m_id, h_img from highlight where h_name=#{h_name} and
-		m_id=#{m_id}
+		select h_name, s_id, highlight.m_id, h_img, m_img from highlight 
+        join member on highlight.m_id=member.m_id
+        where h_name=#{h_name} and
+		highlight.m_id=#{m_id}
 	</select>
 </mapper>

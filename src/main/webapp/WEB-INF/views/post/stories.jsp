@@ -183,6 +183,22 @@
                     cursor: pointer;
                 }
                 
+                .hprophoto {
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    float:left;
+                    cursor:pointer;
+                }
+                
+                .sproid {
+                    line-height: 25px;
+                    height: 25px;
+                    margin-left: 12px;
+                    float:left;
+                    cursor:pointer;
+                }
+                
             </style>
         </head>
 
@@ -287,12 +303,15 @@
                         var count = story;
                         for (var i = 0; i < count.story.length; i++) {
                             var s_img = count.story[i].s_img;
+                            var m_img = count.story[i].m_img;
                             $(".scon" + id + s_type).append('<div class="story_each_con story_each_con' + id + '"><div class="forflex"><div class="stcon">' +
-                                '<div class="upload_id"><div style="float:left;" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' + id +
-                                '</div><div style="float:right;display:inline;"><label for="slide_btn_prev"><i class="fas fa-chevron-left"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;' +
+                                '<div class="upload_id">'+
+                                '<img onclick="goboard(\'' + id + '\');" class="hprophoto" src="${pageContext.request.contextPath}/resources/uploadFiles/'+m_img+'" class="sprofile">'+
+                                '<span onclick="goboard(\'' + id + '\');" class="sproid">' + id + '</span>'+
+                                '<div style="float:right;display:inline;"><label for="slide_btn_prev"><i class="fas fa-chevron-left"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;' +
                                 '<div style="display:inline;" class="more_s' + id + '">' +
                                 '<label for="slide_btn_prev_s"><i class="fas fa-arrow-circle-left"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;' +
-                                '<label for="slide_btn_next_s"><i class="fas fa-chevron-circle-right"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;</div>' +
+                                '<label for="slide_btn_next_s"><i class="fas fa-arrow-circle-right"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;</div>' +
                                 '<label for="slide_btn_next"><i class="fas fa-chevron-right"></i></label></div>' +
                                 '</div>' +
                                 '<div class="story_img_con">' +

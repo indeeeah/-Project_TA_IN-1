@@ -219,6 +219,22 @@
                     height: 55px;
                     line-height: 55px;
                 }
+                
+                .hprophoto {
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    float:left;
+                    cursor:pointer;
+                }
+                
+                .sproid {
+                    line-height: 25px;
+                    height: 25px;
+                    margin-left: 12px;
+                    float:left;
+                    cursor:pointer;
+                }
             </style>
         </head>
 
@@ -265,7 +281,10 @@
                         </label>
                     </div>
                     <div class="upload photo_upload">
-                        <div class="upload_id">${my_name }</div>
+                        <div class="upload_id">
+                            <img class="hprophoto" src="${pageContext.request.contextPath}/resources/uploadFiles/${myProfile.m_img }" class="sprofile">
+                            <span class="sproid">${myProfile.m_id }</span>
+                        </div>
                         <div class="story_img_con">
                             <img class="image">
                         </div>
@@ -281,7 +300,10 @@
                         </form>
                     </div>
                     <div class="upload capture_video" style="display: none;">
-                        <div class="upload_id">${my_name }</div>
+                        <div class="upload_id">
+                            <img class="hprophoto" src="${pageContext.request.contextPath}/resources/uploadFiles/${myProfile.m_img }" class="sprofile">
+                            <span class="sproid">${myProfile.m_id }</span>
+                        </div>
                         <div class="story_img_con">
                             <img class="image">
                         </div>
@@ -295,7 +317,10 @@
                         </div>
                     </div>
                     <div class="upload edit" style="display: none;">
-                        <div class="upload_id">${my_name }</div>
+                        <div class="upload_id">
+<img class="hprophoto" src="${pageContext.request.contextPath}/resources/uploadFiles/${myProfile.m_img }" class="sprofile">
+                                                        <span class="sproid">${myProfile.m_id }</span>
+</div>
                         <div class="story_img_con">
                             <img class="image">
                         </div>
@@ -318,7 +343,10 @@
                         </div>
                     </div>
                     <div class="upload mine" style="display: none;">
-                        <div class="upload_id">${my_name }</div>
+                        <div class="upload_id">
+                            <img class="hprophoto" src="${pageContext.request.contextPath}/resources/uploadFiles/${myProfile.m_img }" class="sprofile">
+                            <span class="sproid">${myProfile.m_id }</span>
+                        </div>
                         <div class="story_img_con">
                             <img class="image">
                         </div>
@@ -358,7 +386,10 @@
                         </div>
                     </div>
                     <div class="upload hl" style="display: none;">
-                        <div class="upload_id">${my_name }</div>
+                        <div class="upload_id">
+                            <img class="hprophoto" src="${pageContext.request.contextPath}/resources/uploadFiles/${myProfile.m_img }" class="sprofile">
+                            <span class="sproid">${myProfile.m_id }</span>
+                        </div>
                         <div class="story_img_con">
                             <img class="image">
                         </div>

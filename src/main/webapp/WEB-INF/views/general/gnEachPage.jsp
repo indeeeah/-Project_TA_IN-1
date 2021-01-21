@@ -19,8 +19,8 @@
                 
                 #post_modal {
                     display: flex;
-                        justify-content: center;
-                        width: 100%;
+                    justify-content: center;
+                    width: 100%;
                 }
                 
                 #post_con {
@@ -32,8 +32,8 @@
                     background: #fff;
                     display: inline;
                     border: 1px solid #C7C7C7;
-                    margin-top:50px;
-                    margin-bottom:50px;
+                    margin-top: 50px;
+                    margin-bottom: 50px;
                 }
                 
                 #for_stay_left {
@@ -77,6 +77,7 @@
                     height: 40px;
                     background-color: white;
                     padding: 16px;
+                    border-bottom: 1px solid #C7C7C7;
                 }
                 
                 #post_profile_photo {
@@ -240,6 +241,15 @@
                 .reply_con {
                     width: 313px;
                 }
+                /* .reply_right {
+                    margin-left: 14px;
+                    min-height: 47px;
+                    width: 313px;
+                    float: right;
+                    text-align: left;
+                    font-size: 14px;
+                    line-height: 17px;
+                } */
                 
                 .reply_date {
                     height: 14px;
@@ -250,13 +260,17 @@
                     margin-right: 12px;
                     float: left;
                     cursor: pointer;
+                    color: #8E8E8E;
+                    font-size: 11px;
                 }
                 
                 .show_re_re {
-                    padding: 16px 0px 0px 58px;
+                    padding: 16px 0px 0px 54px;
                     height: 18px;
                     width: 303px;
                     text-align: left;
+                    font-size: 11px;
+                    color: #8E8E8E;
                 }
                 
                 #post_right_bottom {
@@ -313,16 +327,6 @@
                 #sendbtn {
                     float: right;
                     cursor: pointer;
-                }
-                
-                .cancel {
-                    position: absolute;
-                    right: 0px;
-                }
-                
-                .notcancelAll {
-                    position: absolute;
-                    right: 0px;
                 }
                 
                 #report_back,
@@ -435,6 +439,57 @@
                     border: none;
                     background-color: transparent;
                     padding: 0px;
+                    font-size: 11px;
+                    color: #8E8E8E;
+                }
+                
+                #lCount {
+                    border: none;
+                    background-color: transparent;
+                    padding: 0px;
+                }
+                
+                a {
+                    text-decoration: none;
+                    color: rgb(0, 149, 246);
+                }
+                
+                .notcancelAll {
+                    border: none;
+                }
+                
+                .translate {
+                    color: rgb(0, 149, 246);
+                    font-size: 11px;
+                    cursor: pointer;
+                }
+                
+                .translatemain {
+                    float: right;
+                    margin-right: 13px;
+                }
+                
+                .write_space {
+                    width: 225px;
+                    padding: 0px;
+                    border: none;
+                    outline: none;
+                }
+                
+                .rep_comment_upload {
+                    outline: none;
+                    border: none;
+                }
+                
+                .replyCo {
+                    border-top: 1px dashed #C7C7C7;
+                    border-bottom: 1px solid #C7C7C7;
+                    padding-bottom: 14px;
+                }
+                
+                .translatemain {
+                    float: right;
+                    margin-right: 13px;
                 }
             </style>
         </head>
@@ -587,18 +642,18 @@
             </div>
             <jsp:include page="../header.jsp"></jsp:include>
             <div id="post_modal">
-                <input type="hidden" id="for_fuc"> <input type="hidden" id="for_modal_con"> <input type="hidden" id="for_modal_fchk">
+                <input type="hidden" id="for_fuc" value="${selectEachPost.b_id }"> <input type="hidden" id="for_modal_con"> <input type="hidden" id="for_modal_fchk">
                 <div id="post_con">
                     <div id="for_stay_left">
-                        <button type="button" class="slide_btn_prev" class="buttons" style="display:none;">Prev</button>
+                        <button type="button" class="slide_btn_prev" id="slide_btn_prev" class="buttons" style="display:none;">Prev</button>
                         <div id="slide_photo_con">
                             <div id="photo"></div>
                         </div>
-                        <button type="button" class="slide_btn_next" class="buttons" style="display:none;">Next</button>
+                        <button type="button" class="slide_btn_next" id="slide_btn_next" class="buttons" style="display:none;">Next</button>
                     </div>
                     <div id="post_right">
                         <div id="post_right_top">
-                            <div id="post_profile_photo" style="cursor: pointer;" onclick="goEachAcount('${selectEachPost.m_id }');">${selectEachPost.m_img }</div>
+                            <img src="${pageContext.request.contextPath}/resources/uploadFiles/${selectEachPost.m_img }" id="post_profile_photo" style="cursor: pointer;" onclick="goEachAcount('${selectEachPost.m_id }');">
                             <div id="post_profile_id" style="cursor: pointer;" onclick="goEachAcount('${selectEachPost.m_id }');">${selectEachPost.m_id }</div>
                             <c:if test="${selectEachPost.m_id eq my_name}">
                                 <i class="fas fa-bars fa-bars_post" onclick="toModalMore('${selectEachPost.m_id }');" style="cursor: pointer;"></i>
@@ -613,23 +668,22 @@
                         <input type="hidden" value="${selectEachPost.m_id }" id="for_m_id">
                         <div id="post_right_middle">
                             <div class="each_reply_con">
-                                <div class="reply_profile_photo" style="cursor: pointer;" onclick="goEachAcount('${selectEachPost.m_id }');">${selectEachPost.m_img }</div>
+                                <img src="${pageContext.request.contextPath}/resources/uploadFiles/${selectEachPost.m_img }" class="reply_profile_photo" style="cursor: pointer;" onclick="goEachAcount('${selectEachPost.m_id }');">
                                 <div class="reply_right re_main_con" id="re_main_con">
-                                    <div style="cursor: pointer;" onclick="goEachAcount('${selectEachPost.m_id }');">
-                                        ${selectEachPost.m_id }</div>&nbsp;
-                                    <div id='newcon'>${selectEachPost.b_content }
-                                    </div>
-                                    <div class="translate" onclick="translatec('${selectEachPost.b_content }');">번역하기
+                                    <span style="cursor: pointer;" onclick="goEachAcount('${selectEachPost.m_id }');">
+                                        ${selectEachPost.m_id }</span>&nbsp;
+                                    <span id='newcon'>${selectEachPost.b_content }
+                                    </span>
+                                    <div class="translate translatemain" onclick="translatec('${selectEachPost.b_content }');">번역하기
                                     </div>
                                 </div>
-                                <div class="reply_right" id="hashtag_con">
-                                    <c:if test="${not empty hashtag }">
+                                <c:if test="${not empty hashtag }">
+                                    <div class="reply_right" id="hashtag_con">
                                         <c:forEach var="vo" items="${hashtag }" varStatus="s">
-                                            <a href="${pageContext.request.contextPath}/explore?hashtag=${vo.h_tag }">#${vo.h_tag
-												}</a>
+                                            <a href="${pageContext.request.contextPath}/explore?hashtag=${vo.h_tag }">#${vo.h_tag}</a>
                                         </c:forEach>
-                                    </c:if>
-                                </div>
+                                    </div>
+                                </c:if>
                             </div>
                             <c:if test="${not empty selectEachPostComments }">
                                 <c:forEach var="vo" items="${selectEachPostComments }" varStatus="s">
@@ -637,21 +691,22 @@
                                         <input type="hidden" class="chkCoLike" onclick="chkCoLike('${vo.b_id}');">
                                         <input type="hidden" class="countLike_trigger" onclick="countLike('${vo.b_id}');">
                                         <div class="reply_com_con">
-                                            <div class="reply_profile_photo" style="cursor: pointer;" onclick="goEachAcount('${vo.m_id}');">${vo.m_img }</div>
+                                            <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="reply_profile_photo" style="cursor: pointer;" onclick="goEachAcount('${vo.m_id}');">
                                             <div class="reply_right_com">
                                                 <div class="reply_con" style="position:inline;">
-                                                    <div style="cursor: pointer;" onclick="goEachAcount('${vo.m_id}');" style="float:left;">
-                                                        ${vo.m_id}</div>&nbsp;
-                                                    <div id='newcon${vo.b_id}' style="float:left;">${vo.b_content }
-                                                    </div>
-                                                    <div class="translate" onclick="translater('${vo.b_content }','${vo.b_id}');">번역하기
-                                                    </div>
+                                                    <span style="cursor: pointer;" onclick="goEachAcount('${vo.m_id}');">
+                                                        ${vo.m_id}</span>&nbsp;
+                                                    <span id='newcon${vo.b_id}'>${vo.b_content }
+                                                    </span>
+
                                                 </div>
                                                 <div class="reply_date">
                                                     <div class="rebot">${vo.time }</div>
                                                     <div class="rebot">좋아요<input type="button" class="lcount" id="lcount${vo.b_id}" value="">개</div>
                                                     <div class="rebot moreCoW" onclick="writeMoreCo('${vo.b_id}');">
                                                         답글 달기</div>
+                                                    <div class="translate" onclick="translater('${vo.b_content }','${vo.b_id}');">번역하기
+                                                    </div>
                                                 </div>
                                             </div>
                                             <i class="fas fa-bars fa-bars_reply_title" style="cursor:pointer;" onclick="moreForComment('${vo.m_id}','${vo.b_id}','${vo.b_content}');"></i>
@@ -676,6 +731,11 @@
                                 <div class="icon unlike_icon unlikechk" onclick="pressUnLike('${selectEachPost.b_id }');"></div>
                                 <div class="icon write_icon"></div>
                                 <div class="icon share_icon" onclick="shareurl();"></div>
+                                <div style="float:right;display:none;" class="more_s">
+                                    <label for="slide_btn_prev"><i
+                                            class="fas fa-chevron-left"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="slide_btn_next"><i class="fas fa-chevron-right"></i></label>
+                                </div>
                                 <!-- <div class="icon save_icon"></div> -->
                             </div>
                             <div id="post_like"><input type='button' id='lCount' value='${selectEachPost.likes }'>명이 좋아합니다
@@ -689,9 +749,10 @@
                     </div>
                 </div>
             </div>
-<jsp:include page="../footer.jsp"></jsp:include>
+            <jsp:include page="../footer.jsp"></jsp:include>
         </body>
         <script>
+        
             var memId = $(".m_id").val();
             var this_b_id = $("#for_b_id").val();
             var fchk = $("#for_modal_fchk").val();
@@ -703,13 +764,16 @@
                     $("#photo").append('<div><img class="photo_all" src="${pageContext.request.contextPath}/resources/uploadFiles/' + b_img[i] + '"></div>');
                 }
             }
+            var photoCount = $(".photo_all").length;
+            if (photoCount > 1) {
+                $(".more_s").css("display", "inline");
+            } else {
+                $(".more_s").css("display", "none");
+
+            }
 
             console.log("하하" + $(".photo_all").length);
             var photoCount = $(".photo_all").length;
-            if (photoCount > 1) {
-                $(".slide_btn_prev").css("display", "block");
-                $(".slide_btn_next").css("display", "block");
-            }
 
             // 게시물 슬라이드
             var slideWrapper = document.querySelector('#slide_photo_con');
@@ -785,11 +849,11 @@
                         console.log(hLike.follow);
                         $("#for_modal_fchk").val(hLike.follow);
                         /* if (hLike.follow == 0) {
-                        	$(".people_follow" + fid).css("display", "block");
-                        	$(".people_alfollow" + fid).css("display", "none");
+                            $(".people_follow" + fid).css("display", "block");
+                            $(".people_alfollow" + fid).css("display", "none");
                         } else {
-                        	$(".people_follow" + fid).css("display", "none");
-                        	$(".people_alfollow" + fid).css("display", "block");
+                            $(".people_follow" + fid).css("display", "none");
+                            $(".people_alfollow" + fid).css("display", "block");
 
                         } */
                         if (hLike.follow == 0) {
@@ -1372,7 +1436,7 @@
                     data: {
                         m_id: memId,
                         t_id: b_id,
-                        m_id2:m_id2
+                        m_id2: m_id2
                     },
                     async: false,
                     success: function(data) {
@@ -1431,6 +1495,7 @@
 
             // 답글 보기
             function show_re_re(t_id) {
+                $(".re_con" + t_id).css("display", "block");
                 $.ajax({
                     url: "${pageContext.request.contextPath}/hiddenShowAllCo.do",
                     method: "POST",
@@ -1453,12 +1518,13 @@
                                 '<input type="hidden" class="chkCoLike" onclick="chkCoLike(\'' + b_id + '\');">' +
                                 '<input type="hidden" class="countLike_trigger" onclick="countLike(\'' + b_id + '\');">' +
                                 '<div class="reply_com_con">' +
-                                '<div class="reply_profile_photo">' + m_img + '</div>' +
+                                '<img src="${pageContext.request.contextPath}/resources/uploadFiles/' + m_img + '" class="reply_profile_photo">' +
                                 '<div class="reply_right_com">' +
-                                '<div class="reply_con">' + '<div style="cursor: pointer;" onclick="goEachAcount(\'' + id + '\');">' + id + "</div>&nbsp;<div id='newcon" + b_id + "'>" + b_content + '</div><div class="translate" onclick="translater(\'' + b_content + '\',\'' + b_id + '\');">번역하기</div></div>' +
+                                '<div class="reply_con">' + '<span style="cursor: pointer;" onclick="goEachAcount(\'' + id + '\');">' + id + "</span>&nbsp;<span id='newcon" + b_id + "'>" + b_content + '</span></div>' +
                                 '<div class="reply_date">' +
                                 '<div class=" rebot">' + b_date + '</div>' +
                                 '<div class="rebot">좋아요 ' + '<input type="button" class="lcount lcount' + b_id + '" id="lcount' + b_id + '" value="">' + '개</div>' +
+                                '<div class="translate" onclick="translater(\'' + b_content + '\',\'' + b_id + '\');">번역하기</div>' +
                                 '</div>' +
                                 '</div>' +
                                 '<i class="fas fa-bars fa-bars_reply_title" style="cursor:pointer;" onclick="moreForComment(\'' + id + '\',\'' + b_id + '\',\'' + b_content + '\');"></i>' +
@@ -1488,8 +1554,9 @@
 
             // 답글 달기 
             function writeMoreCo(b_id) {
+                var or_id = $("#for_fuc").val();
                 $(".replyCo" + b_id).css("display", "block");
-
+                $(".re_con" + b_id).css("display", "none");
                 $(".rep_comment_upload").on('click', function() {
                     var r_comment = $(this).prev().val();
                     var m_id2 = $(this).next().val();
@@ -1505,7 +1572,7 @@
                                 m_id: memId,
                                 t_comment: r_comment,
                                 t_id: b_id,
-                                m_id2:m_id2
+                                m_id2: m_id2
                             },
                             success: function(data) {
                                 console.log("memId : " +
@@ -1517,6 +1584,8 @@
                                 $(".write_space").val('');
                                 $(".replyCo").css("display", "none");
                                 $('.show_re_re').off('click');
+                                var url = "${pageContext.request.contextPath}/gnEachPage?b_id=" + or_id;
+                                $(location).attr('href', url);
                             },
                             error: function(request, status, error) {
                                 alert("code:" +
@@ -1544,7 +1613,7 @@
                     data: {
                         m_id: memId,
                         t_id: b_id,
-                        m_id2:m_id2
+                        m_id2: m_id2
                     },
                     success: function(data) {
                         console.log("memId : " +
@@ -1569,9 +1638,9 @@
             }
 
             // 게시물 좋아요 취소
-            function pressUnLike() {
+            function pressUnLike(b_id) {
                 var lcount = $("#lCount").val();
-                var b_id = $("#for_fuc").val();
+                console.log(b_id);
                 lcount--;
                 $.ajax({
                     url: "${pageContext.request.contextPath}/pressUnLike.do",
@@ -1630,7 +1699,7 @@
                     data: {
                         m_id: memId,
                         r_mid: id,
-                        m_id2:id
+                        m_id2: id
                     },
                     success: function(data) {
                         $("#for_modal_fchk").val("1");
@@ -1715,7 +1784,7 @@
             //모달 초기화 수정 필요
             $(".comment_upload").on('click', function() {
                 var comment = $(this).prev().val();
-                var m_id2=$(this).next().val();
+                var m_id2 = $(this).next().val();
                 if (comment == "" || comment == null) {
                     console.log("comment won't be uploaded");
                     return false;
@@ -1728,7 +1797,7 @@
                             m_id: memId,
                             t_comment: comment,
                             t_id: this_b_id,
-                            m_id2:m_id2
+                            m_id2: m_id2
                         },
                         success: function(data) {
                             console.log("memId : " +

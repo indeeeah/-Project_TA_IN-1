@@ -80,6 +80,8 @@ public class GnBoardController {
 				mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
 				mv.addObject("list", bbService.selectListPage(m_id, currentPage, LIMIT));	// 게시물 텍스트정보
 				mv.setViewName("business/bsnMain");
+			} else if (result.equals("M")) {
+				mv.setViewName("management/managementMain");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -119,6 +121,7 @@ public class GnBoardController {
 				mv.addObject("selectEachPostPhotos", gService.selectEachPostPhotos(b_id));
 				System.out.println(gService.selectEachPostPhotos(b_id));
 				mv.addObject("hashtag", tService.showHashTag(b_id));
+				System.out.println(tService.showHashTag(b_id));
 				mv.setViewName("general/gnEachPage");
 			} else if (b_id.startsWith("BB")) {
 

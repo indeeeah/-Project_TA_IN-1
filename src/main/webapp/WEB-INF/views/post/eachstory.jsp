@@ -175,6 +175,22 @@
                 label {
                     cursor: pointer;
                 }
+                
+                .hprophoto {
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    float:left;
+                    cursor:pointer;
+                }
+                
+                .sproid {
+                    line-height: 25px;
+                    height: 25px;
+                    margin-left: 12px;
+                    float:left;
+                    cursor:pointer;
+                }
             </style>
         </head>
 
@@ -191,7 +207,8 @@
                                         <div class="forflex">
                                             <div class="stcon">
                                                 <div class="upload_id">
-                                                    <div style="float:left;" onclick="goboard('${vo.m_id}');" style="cursor:pointer;">${vo.m_id }</div>
+                                                    <img onclick="goboard('${vo.m_id}');" class="hprophoto" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="sprofile">
+                                                        <span onclick="goboard('${vo.m_id}');" class="sproid">${vo.m_id }</span>
                                                     <div style="float:right;display:inline;" class="more_s">
                                                         <label for="slide_btn_prev"><i class="fas fa-chevron-left"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <label for="slide_btn_next"><i class="fas fa-chevron-right"></i></label>

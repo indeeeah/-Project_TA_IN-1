@@ -51,7 +51,7 @@
                     
                     #story_inner_con {
                         width: 650px;
-                        height: 84px;
+                        height: 92px;
                         float: left;
                         margin-top: 16px;
                         overflow: hidden;
@@ -813,7 +813,7 @@
                             <div id="blank_for_story"></div>
                             <div id="story_inner_con">
                                 <div class="story_small_con my_story_add">
-                                    <div class="story_profile"></div>
+                                    <img class="story_profile" src="${pageContext.request.contextPath}/resources/uploadFiles/${myProfile.m_img }">
                                     <div class="story_id">내 스토리</div>
                                 </div>
                                 <c:if test="${not empty storyList }">
@@ -825,7 +825,7 @@
                                     </div>
                                     <c:forEach var="vo" items="${storyList }" varStatus="s">
                                         <div class="story_small_con eachstory" onclick="eachstory('${vo.m_id }');">
-                                            <div class="story_profile">${vo.m_img }</div>
+                                            <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="story_profile">
                                             <div class="story_id">${vo.m_id }</div>
                                         </div>
                                     </c:forEach>
@@ -845,7 +845,7 @@
                                 <c:forEach var="vo" items="${timeLineList }" varStatus="s">
                                     <div class="timeline_contents" id="timeline_contents">
                                         <div class="timeline_profile">
-                                            <div class="t_prof_photo" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_img }</div>
+                                            <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="t_prof_photo" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">
                                             <div class="t_prof_id" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_id }
                                             </div>
                                             <i class="fas fa-bars fa-bars_title" onclick="pre_report('${vo.t_id}','${vo.m_id }','${vo.t_type}');"></i>
@@ -855,8 +855,8 @@
                                             </ul>
                                             <input type="hidden" class="hidden_showphoto" onclick="showphoto('${vo.t_id }','${vo.t_img }');">
                                         </div>
-                                        <button type="button" class="slidebtn slidebtn${vo.t_id } slide_btn_prev slide_btn_prev${vo.t_id }" style="display:none;">Prev</button>
-                                        <button type="button" class="slidebtn slidebtn${vo.t_id } slide_btn_next slide_btn_next${vo.t_id }" style="display:none;">Next</button>
+                                        <button type="button" class="slidebtn slidebtn${vo.t_id } slide_btn_prev slide_btn_prev${vo.t_id }" id="slide_btn_prev${vo.t_id }" style="display:none;">Prev</button>
+                                        <button type="button" class="slidebtn slidebtn${vo.t_id } slide_btn_next slide_btn_next${vo.t_id }" id="slide_btn_next${vo.t_id }" style="display:none;">Next</button>
                                         <div class="timeline_comment_con">
                                             <div class="inner_comment_con">
                                                 <div class="timeline_icon_con">
@@ -864,6 +864,10 @@
                                                     <div class="icon unlike_icon unlikechk${vo.t_id }" onclick="pressUnlike('${vo.t_id}');"></div>
                                                     <div class="icon write_icon"></div>
                                                     <div class="icon share_icon" onclick="shareurl('${vo.m_id }','${vo.t_id}')"></div>
+                                                    <div style="float:right;display:none;" class="more_s${vo.t_id} more_s">
+                                                        <label for="slide_btn_prev${vo.t_id }"><i class="fas fa-chevron-left"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <label for="slide_btn_next${vo.t_id }"><i class="fas fa-chevron-right"></i></label>
+                                                    </div>
                                                     <!-- <div class="icon save_icon"></div> -->
                                                 </div>
                                                 <div class="timeline_likes_con">좋아요 <input type="button" class="lCount${vo.t_id} showlCount" value="" readonly>개</div>
@@ -915,18 +919,19 @@
                     <div id="timeline_right">
                         <div id="right_small_con">
                             <div id="my_profile_con">
-                                <div id="my_profile_photo" onclick="goboard('${my_name }');" style="cursor:pointer;">
-                                    ${myProfile.m_img }</div>
-                                <div id="my_id" onclick="goboard('${my_name }');" style="cursor:pointer;">${my_name }
-                                </div>
-                                <input type="hidden" name="m_id" class="m_id" value="${my_name }">
+                                <img id="my_profile_photo" src="${pageContext.request.contextPath}/resources/uploadFiles/${myProfile.m_img }" onclick="goboard('${my_name }');" style="cursor:pointer;">
+                                <%--                                 <div id="my_profile_photo" onclick="goboard('${my_name }');" style="cursor:pointer;">
+                                    ${myProfile.m_img }</div> --%>
+                                    <div id="my_id" onclick="goboard('${my_name }');" style="cursor:pointer;">${my_name }
+                                    </div>
+                                    <input type="hidden" name="m_id" class="m_id" value="${my_name }">
                             </div>
                             <c:if test="${not empty recomFollow }">
                                 <div id="follow_recom_title">회원님을 위한 추천</div>
                                 <div id="follow_recom_con">
                                     <c:forEach var="vo" items="${recomFollow }" varStatus="s">
                                         <div class="follow_recom_id">
-                                            <div class="recom_profile" onclick="goboard('${vo.r_mid }');" style="cursor:pointer;">${vo.m_img }</div>
+                                            <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="recom_profile" onclick="goboard('${vo.r_mid }');" style="cursor:pointer;">
                                             <div class="recom_middle">
                                                 <div class="recom_id" onclick="goboard('${vo.r_mid }');" style="cursor:pointer;">${vo.r_mid }</div>
                                                 <div class="recom_info">${vo.count }명이 팔로우합니다</div>
@@ -1042,7 +1047,7 @@
                                     for (var i = 0; i < data; i++) {
                                         htmls += '<div class="timeline_contents" id="timeline_contents">' +
                                             '<div class="timeline_profile">' +
-                                            '<div class="t_prof_photo" onclick="goboard(\'' + resp.list[i].m_id + '\');" style="cursor:pointer;">' + resp.list[i].m_img + '</div>' +
+                                            '<img src="${pageContext.request.contextPath}/resources/uploadFiles/' + resp.list[i].m_img + '" class="t_prof_photo" onclick="goboard(\'' + resp.list[i].m_id + '\');" style="cursor:pointer;">' +
                                             '<div class="t_prof_id" onclick="goboard(\'' + resp.list[i].m_id + '\');" style="cursor:pointer;">' + resp.list[i].m_id + '' +
                                             '</div>' +
                                             '<i class="fas fa-bars fa-bars_title" onclick="pre_report(\'' + resp.list[i].t_id + '\',\'' + resp.list[i].m_id + '\',\'' + resp.list[i].t_type + '\');"></i>' +
@@ -1052,8 +1057,8 @@
                                             '</ul>' +
                                             '<input type="hidden" class="hidden_showphoto" onclick="showphoto(\'' + resp.list[i].t_id + '\',\'' + resp.list[i].t_img + '\');">' +
                                             '</div>' +
-                                            '<button type="button" class="slidebtn slidebtn' + resp.list[i].t_id + ' slide_btn_prev slide_btn_prev' + resp.list[i].t_id + '" style="display:none;">Prev</button>' +
-                                            '<button type="button" class="slidebtn slidebtn' + resp.list[i].t_id + ' slide_btn_next slide_btn_next' + resp.list[i].t_id + '" style="display:none;">Next</button>' +
+                                            '<button type="button" class="slidebtn slidebtn' + resp.list[i].t_id + ' slide_btn_prev slide_btn_prev' + resp.list[i].t_id + '" id="slide_btn_prev' + resp.list[i].t_id + '" style="display:none;">Prev</button>' +
+                                            '<button type="button" class="slidebtn slidebtn' + resp.list[i].t_id + ' slide_btn_next slide_btn_next' + resp.list[i].t_id + '" id="slide_btn_next' + resp.list[i].t_id + '" style="display:none;">Next</button>' +
                                             '<div class="timeline_comment_con">' +
                                             '<div class="inner_comment_con">' +
                                             '<div class="timeline_icon_con">' +
@@ -1061,6 +1066,10 @@
                                             '<div class="icon unlike_icon unlikechk' + resp.list[i].t_id + '" onclick="pressUnlike(\'' + resp.list[i].t_id + '\');"></div>' +
                                             '<div class="icon write_icon"></div>' +
                                             '<div class="icon share_icon" onclick="shareurl(\'' + resp.list[i].m_id + '\',\'' + resp.list[i].t_id + '\')"></div>' +
+                                            '<div style="float:right;display:none;" class="more_s' + resp.list[i].t_id + ' more_s">' +
+                                            '<label for="slide_btn_prev' + resp.list[i].t_id + '"><i class="fas fa-chevron-left"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;' +
+                                            '<label for="slide_btn_next' + resp.list[i].t_id + '"><i class="fas fa-chevron-right"></i></label>' +
+                                            '</div>' +
                                             //'<div class="icon save_icon"></div>' +
                                             '</div>' +
                                             '<div class="timeline_likes_con">좋아요 <input type="button" class="lCount' + resp.list[i].t_id + ' showlCount" value="" readonly>개</div>' +
@@ -1384,8 +1393,13 @@
 
                 var photocount = $(".show_t_img" + t_id).length;
                 if (photocount > 1) {
-                    $(".slidebtn" + t_id).css("display", "block");
+                    $(".more_s" + t_id).css("display", "inline");
+                } else{
+                    $(".more_s" + t_id).css("display", "none");
+                	
                 }
+                
+                
 
                 // 게시물 슬라이드
                 var slideWrapper = document.querySelector('.timeline_photo' + t_id);
@@ -1502,6 +1516,7 @@
                                     " postid : " +
                                     postid);
                                 $(".write_space").val('');
+                                //showAllCo(postid);
                             },
                             error: function(request, status, error) {
                                 alert("code:" +
@@ -1533,6 +1548,7 @@
                                     " postid : " +
                                     postid);
                                 $(".write_space").val('');
+                                //showAllCo(postid);
                             },
                             error: function(request, status, error) {
                                 alert("code:" +
@@ -2262,6 +2278,7 @@
                                                 $('.rep_comment_upload').off('click');
                                                 $(".moreCo" + b_id).css("display", "block");
                                                 $(".moreCo" + b_id).trigger('click');
+                                                showAllCo(t_id);
                                             },
                                             error: function(request, status, error) {
                                                 alert("code:" +
@@ -2811,6 +2828,7 @@
                                                 $('.rep_comment_upload').off('click');
                                                 $(".moreCo" + b_id).css("display", "block");
                                                 $(".moreCo" + b_id).trigger('click');
+                                                showAllCo(t_id);
                                             },
                                             error: function(request, status, error) {
                                                 alert("code:" +

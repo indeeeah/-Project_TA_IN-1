@@ -215,12 +215,8 @@
                             },
                             success: function(data) {
                                 console.log(data);
-                                if (data == 'G') {
                                     var url = "${pageContext.request.contextPath}/gnMain?m_id=" + hashtag;
                                     $(location).attr('href', url);
-                                } else if (data == 'B'){
-                                	
-                                }
                             },
                             error: function(request, status, error) {
                                 alert("code:" +
