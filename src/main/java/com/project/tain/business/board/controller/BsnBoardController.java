@@ -230,8 +230,9 @@ public class BsnBoardController {
 	
 	// 게시물 수정 페이지
 	@RequestMapping(value="/bbRenew.do", method = RequestMethod.GET)
-	public ModelAndView boardDetail(@RequestParam(name="bb_id") String bb_id, ModelAndView mv) {
-		String m_id = "aaaa";
+	public ModelAndView boardDetail(@RequestParam(name="bb_id") String bb_id, ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String m_id=(String) session.getAttribute("my_name");
 		try {
 			mv.addObject("bbRenew", bbService.selectOne(bb_id));
 			mv.addObject("bbTags", bbService.selectOneTags(bb_id));
