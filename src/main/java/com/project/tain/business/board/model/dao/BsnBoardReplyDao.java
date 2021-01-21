@@ -20,9 +20,10 @@ public class BsnBoardReplyDao {
 	}
 	
 	// 댓글 목록(전체)
-	public List<BsnBoardReply> bbrList(String bb_id){
-		System.out.println("댓글목록다오 bb_id:" + bb_id);
-		return sqlSession.selectList("BsnBoardReply.bbrList", bb_id);
+	public List<BsnBoardReply> bbrList(BsnBoardReply bbr){
+		System.out.println("댓글목록다오 bb_id:" + bbr.getBb_id());
+		System.out.println("댓글목록다오 m_id:" + bbr.getM_id());
+		return sqlSession.selectList("BsnBoardReply.bbrList", bbr);
 	}
 	
 	// 댓글 등록
@@ -43,9 +44,9 @@ public class BsnBoardReplyDao {
 	}
 	
 	// 답글 목록(전체)
-	public List<BsnBoardReply> bbrrList(String bb_id){
-		System.out.println("답글목록다오 bb_id:" + bb_id);
-		return sqlSession.selectList("BsnBoardReply.bbrrList", bb_id);
+	public List<BsnBoardReply> bbrrList(BsnBoardReply bbr){
+		System.out.println("답글목록다오 bb_id:" + bbr);
+		return sqlSession.selectList("BsnBoardReply.bbrrList", bbr);
 	}
 	
 	// 답글 등록

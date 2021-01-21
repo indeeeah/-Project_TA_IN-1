@@ -20,6 +20,7 @@
 		<result property="rb_reason" column="rb_reason"/>
 		<result property="rb_date" column="rb_date"/>
 		<result property="bbrlike" column="bbrlike"/>
+		<result property="like_chk" column="like_chk"/>
 	</resultMap>
 	
 	<!-- 댓글 좋아요 수 -->
@@ -28,9 +29,11 @@
 	</select>
 	
 	<!-- 댓글 목록 -->
-	<select id="bbrList" parameterType="string" resultType="arraylist" resultMap="resultBsnBoardReply">
-		select bbr.*, nvl(cnt, 0) bbrlike from (select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='C'and bb_topid=#{bb_id}) bbr 
-    		left outer join (select count(*) cnt, bb_id from bblike group by bb_id) bl on bbr.bb_id=bl.bb_id order by bb_date desc
+	<select id="bbrList" parameterType="BsnBoardReply" resultType="arraylist" resultMap="resultBsnBoardReply">
+		select bbr.*, nvl(cnt, 0) bbrlike, like_chk from (select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='C'and bb_topid=#{bb_id}) bbr 
+    		left outer join (select count(*) cnt, bb_id from bblike group by bb_id) bl on bbr.bb_id=bl.bb_id 
+            left outer join (select bb_id, m_id like_chk  from bblike where m_id=#{m_id}) chk on bbr.bb_id=chk.bb_id 
+            order by bb_date desc
 	</select>		
 	
 	<!-- 댓글 등록 -->
@@ -54,8 +57,10 @@
 	
 	<!-- 대댓글 목록 -->
 	<select id="bbrrList" parameterType="string" resultType="arraylist" resultMap="resultBsnBoardReply">
-		select bbr.*, nvl(cnt, 0) bbrlike from (select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='R'and bb_topid=#{bb_id}) bbr 
-    		left outer join (select count(*) cnt, bb_id from bblike group by bb_id) bl on bbr.bb_id=bl.bb_id order by bb_date desc
+		select bbr.*, nvl(cnt, 0) bbrlike, like_chk from (select bb.*, m_img from businessboard bb join member m on bb.m_id=m.m_id where bb_type='R'and bb_topid=#{bb_id}) bbr 
+    		left outer join (select count(*) cnt, bb_id from bblike group by bb_id) bl on bbr.bb_id=bl.bb_id 
+            left outer join (select bb_id, m_id like_chk  from bblike where m_id=#{m_id}) chk on bbr.bb_id=chk.bb_id 
+            order by bb_date desc
 	</select>
 	
 	<!-- 대댓글 등록 -->

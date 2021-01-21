@@ -14,7 +14,11 @@
 a{
 	text-decoration:none;
 }
-body {font-family: Arial, Helvetica, sans-serif;}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #262626;
+	background-color: #FAFAFA;
+}
 button{
 	padding:1px;
 	outline: none;
@@ -25,7 +29,7 @@ button{
     cursor:pointer;
 }
 input {
-    border: 1px solid rgb(200, 200, 200);
+    border: 1px solid #C7C7C7;
     border-radius:5px;
 }
 .content{
@@ -294,7 +298,7 @@ input {
   text-align: center;
 }
 .myBtn {
-	border:1px solid rgb(230,230,230) !important;
+	border:1px solid #C7C7C7 !important;
 }
 .selectBb:hover .middle{
 	opacity:1;
@@ -334,7 +338,7 @@ input {
   	background-color: #fefefe;
   	margin: auto;
   	padding: 10px;
-  	border: 1px solid #888;
+  	border: 1px solid #C7C7C7;
   	width: 90%;
   	max-width:930px;
   	display: flex;
@@ -384,7 +388,7 @@ input {
     position:relative;
 }
 #mdInfoText{
-	border-bottom:1px solid rgb(210,210,210);
+	border-bottom:1px solid #C7C7C7;
 }
 #bbUpdate {
     position: absolute;
@@ -457,7 +461,7 @@ input {
     clear: both;
 }
 .bbrrLine{
-	border-bottom: 1px solid rgba(var(--f52,142,142,142),1);
+	border-bottom: 1px solid #C7C7C7;
     display: inline-block;
     height: 0;
     margin-right: 16px;
@@ -500,11 +504,11 @@ input {
 #mdMore {
     position: absolute;
     bottom: 35px;
-    border-bottom: 1px solid rgb(210,210,210);
+    border-bottom: 1px solid #C7C7C7;
     width: 100%;
     padding-bottom: 7px;
     background-color: white;
-    border-top: 1px solid rgb(210,210,210);
+    border-top: 1px solid #C7C7C7;
 }
 #mdWrite{
 	margin-top:10px;
@@ -535,7 +539,7 @@ input {
 	background-color: #fefefe;
 	margin: auto;
   	padding: 10px;
-  	border: 1px solid #888;
+  	border: 1px solid #C7C7C7;
   	width: 90%;
   	max-width:930px;
   	display: flex;
@@ -637,7 +641,7 @@ input {
 	  	background-color: #fefefe;
 	  	margin: auto;
 	  	padding: 10px;
-	  	border: 1px solid #888;
+	  	border: 1px solid #C7C7C7;
 	  	width: 400px;
 	  	height:96px;
 	  	max-width:400px;
@@ -650,7 +654,7 @@ input {
 	}
 	#shopping{
 		height:48px;
-		border-top: 1px solid rgb(133,133,133);
+		border-top: 1px solid #C7C7C7;
     	line-height: 48px;
 	}
 	
@@ -674,7 +678,7 @@ input {
 	  	background-color: #fefefe;
 	  	margin: auto;
 	  	padding: 10px;
-	  	border: 1px solid #888;
+	  	border: 1px solid #C7C7C7;
 	  	width: 400px;
 	  	height:290px;
 	  	max-width:400px;
@@ -699,27 +703,27 @@ input {
 	}
 	#goBbPage{
 		height:48px;
-		border-top: 1px solid rgb(133,133,133);
+		border-top: 1px solid #C7C7C7;
     	line-height: 48px;
 	}
 	#shareBb{
 		height:48px;
-		border-top: 1px solid rgb(133,133,133);
+		border-top: 1px solid #C7C7C7;
     	line-height: 48px;
 	}
 	#linkBb{
 		height:48px;
-		border-top: 1px solid rgb(133,133,133);
+		border-top: 1px solid #C7C7C7;
     	line-height: 48px;
 	}
 	#saveBb{
 		height:48px;
-		border-top: 1px solid rgb(133,133,133);
+		border-top: 1px solid #C7C7C7;
     	line-height: 48px;
 	}
 	.cancel{
 		height:48px;
-		border-top: 1px solid rgb(133,133,133);
+		border-top: 1px solid #C7C7C7;
     	line-height: 48px;
 	}
 	
@@ -743,7 +747,7 @@ input {
 	  	background-color: #fefefe;
 	  	margin: auto;
 	  	padding: 10px;
-	  	border: 1px solid #888;
+	  	border: 1px solid #C7C7C7;
 	  	width: 400px;
 	  	height:96px;
 	  	max-width:400px;
@@ -1087,7 +1091,11 @@ ${listCount } : ${my_name } : ${id_img_fwr.m_id }
 	
 <script>
 var m_id = document.getElementById("m_id").value;
+var my_name = $("#my_name").val();
 var memId = $(".m_id").val();
+console.log("게시물아이디:"+m_id);
+console.log("나의아이디:"+my_name);
+console.log("게시물아이디:"+memId);
 /* 이미지 슬라이드 */ 
 var slideIndex = 1;
 function plusSlides(n) {
@@ -1122,7 +1130,8 @@ function mdOpen(e){
     	type:"post",
     	async:false,
     	data:{
-    		bb_id:a
+    		bb_id:a,
+    		m_id:m_id
     	},
     	dataType:"json",
     	success:function(resp){
@@ -1258,7 +1267,7 @@ function mdOpen(e){
     	
     });
     
-    // 좋아요 체크
+    // 게시물 좋아요 체크
     $.ajax({
     	url:"bb_like_chk",
     	type:"post",
@@ -1305,22 +1314,26 @@ function mdOpen(e){
     });
     
 	/* 댓글 조회 */
-	var m_id = "aaaa";
+	var my_name=$("#my_name").val();
     $.ajax({
     	url:"bbrList",
     	type:"POST",
     	async:false,
-    	data:{ bb_id : a },
+    	data:{ bb_id : a,
+    		m_id:my_name
+    		},
     	dataType:"json",
     	success:function(resp){
-    		var htmls="";
     		console.log("내 아이디:"+$("#my_name").val());
     		if(resp.data!=null){
 	    		for(i=0; i<resp.data.length; i++){
+	    			var htmls="";
 	    			var r_m_id = resp.data[i].m_id;
 	    			var r_bb_info = resp.data[i].bb_info;
 	    			var r_bbrlike = resp.data[i].bbrlike;
 	    			var r_bb_id = resp.data[i].bb_id;
+	    			var r_like_chk = resp.data[i].like_chk;
+	    			console.log("댓글 조회 좋아요 체크 :"+r_like_chk);
 	    			htmls += "<div class='mrd' >"+
 	    						"<div class='mrdUp' >"+
 									"<div class='bbrImg'>"+
@@ -1335,7 +1348,7 @@ function mdOpen(e){
 										"</div>"+
 										"<div class='mrrdOpt' >"+
 											"<div class='bbrLike'>"+
-												"<span class='bbrL' >좋아요:<input type='button' class='lCount"+r_bbrlike+" showlCount' value='"+r_bbrlike+"' readonly></span>"+
+												"<span class='bbrL' >좋아요:<input type='button' class='lCount"+r_bb_id+" showlCount' value='"+r_bbrlike+"' readonly></span>"+
 												
 											"</div>"+
 											"<div class='bbrrbtn' >"+
@@ -1348,6 +1361,7 @@ function mdOpen(e){
 					htmls +=				"<button type='button'  id='mdBbBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
 											"<div class='icon_reply like_icon_reply likechk"+r_bb_id+"' onclick='pressLike(\""+r_bb_id+"\");' width='10px' height='10px'></div>"+
 							                "<div class='icon_reply unlike_icon_reply unlikechk"+r_bb_id+"' onclick='pressUnlike(\""+r_bb_id+"\");'></div>"+
+							                "<div></div>"+
 											"<div id='bbrrInBox' class='bbrrInBox' >"+
 												"<input type='text' class='replyCoWri write_space' placeholder='답글 작성...'/>"+
 												"<button id='bbrrup"+r_bb_id+"' onclick='bbrrInsert(this)'>게시</button>"+
@@ -1364,9 +1378,16 @@ function mdOpen(e){
 									"</div>"+
 								"</div>"+
 							"</div>";
+    			$(".mdReply").append(htmls);
+	    			if(r_like_chk==null){
+	    				$(".likechk" + r_bb_id).css("display", "block");
+			    		$(".unlikechk" + r_bb_id).css("display", "none");
+	    			} else{
+	    				$(".likechk" + r_bb_id).css("display", "none");
+		                $(".unlikechk" + r_bb_id).css("display", "block");
+	    			}
 	    		}   
-    			$(".mdReply").html(htmls);
-    			
+    			// 좋아요 체크
     			$('.close').on('click', function() {
     				/* $('#modal').hide(); */
     				var a = $(this).val();
@@ -1428,7 +1449,9 @@ function bbrrListShow(bb_id){
 		url:"bbrrList",
 		method:"POST",
 		async: false,
-		data:{ bb_id:bb_id},
+		data:{ bb_id:bb_id,
+			m_id:my_name
+		},
 		dataType:"json",
 		success:function(resp){
 			var htmls="";
@@ -1438,6 +1461,8 @@ function bbrrListShow(bb_id){
 	    			var rr_bb_info = resp.data[i].bb_info;
 	    			var rr_bbrlike = resp.data[i].bbrlike;
 	    			var rr_bb_id = resp.data[i].bb_id;
+	    			var rr_like_chk = resp.data[i].like_chk;
+	    			console.log("답글 조회 좋아요 체크 :"+rr_like_chk);
 	    			htmls +="<div class='mrrd' >"+
 								"<div class='bbrrImg'>"+
 									"<img src='#' width='50px' height='50px'/>"+
@@ -1453,18 +1478,29 @@ function bbrrListShow(bb_id){
 									"</div>"+
 									"<div class='bbrrOpt' >"+
 										"<div id='bbrrLike' class='bbrrLike'>"+
-											"<span class='bbrrL' >좋아요:<input type='button' class='lCount"+rr_bbrlike+" showlCount' value='"+rr_bbrlike+"' readonly></span>"+
+											"<span class='bbrrL' >좋아요:<input type='button' class='lCount"+rr_bb_id+" showlCount' value='"+rr_bbrlike+"' readonly></span>"+
 											
 										"</div>";
 					if(rr_m_id==$("#my_name").val()){
 						htmls += 		"<button type='button' id='"+ rr_bb_id +"' class='bbrDelete "+ rr_bb_id +"' onclick=\"bbrDelete('"+ rr_bb_id +"')\">삭제</button>";
 					}
 					htmls +=			"<button id='mdBbrBtn' class='mdBbrBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
+										"<div class='icon_reply like_icon_reply likechk"+rr_bb_id+"' onclick='pressLike(\""+rr_bb_id+"\");' width='10px' height='10px'></div>"+
+						                "<div class='icon_reply unlike_icon_reply unlikechk"+rr_bb_id+"' onclick='pressUnlike(\""+rr_bb_id+"\");'></div>"+
+						                "<div></div>"+
 									"</div>"+
 								"</div>"+
 							"</div>";
+					$(a2).next().next().append(htmls);
+					if(rr_like_chk==null){
+	    				$(".likechk" + rr_bb_id).css("display", "block");
+			    		$(".unlikechk" + rr_bb_id).css("display", "none");
+	    			} else{
+	    				$(".likechk" + rr_bb_id).css("display", "none");
+		                $(".unlikechk" + rr_bb_id).css("display", "block");
+	    			}
+							
 	    		}   
-    			$(a2).next().next().html(htmls);
     		} else {
     			$(a2).next().next().html("답글이 없습니다.");
     		}
@@ -1493,8 +1529,8 @@ function bbrrListHide(bb_id){
 function bbrrWrite(e){
 	$(".bbrrInBox").css("display", "none");
 	console.log($(e).attr("class"));
-    $(e).parent().next().next().css("display", "block");
-    $(e).parent().next().next().next().css("display", "block");
+    $(e).parent().next().next().next().next().next().css("display", "block");
+    $(e).parent().next().next().next().next().next().next().css("display", "block");
 };
 
 
@@ -1519,7 +1555,8 @@ function bbrrInsert(e){
             async:false,
             data: {
                 bb_info: bb_info,
-                bb_topid: bb_topid
+                bb_topid: bb_topid,
+                m_id:my_name
             },
             dataType:"json",
             success: function(resp) {
@@ -1549,7 +1586,7 @@ function bbrrInsert(e){
 										"</div>"+
 										"<div class='bbrrOpt' >"+
 											"<div id='bbrrLike' class='bbrrLike'>"+
-												"<span class='bbrrL' >좋아요:<input type='button' class='lCount"+rr_bbrlike+" showlCount' value='"+rr_bbrlike+"' readonly></span>"+
+												"<span class='bbrrL' >좋아요:<input type='button' class='lCount"+rr_bb_id+" showlCount' value='"+rr_bbrlike+"' readonly></span>"+
 											"</div>";
 						if(rr_m_id==$("#my_name").val()){
 							htmls += 		"<button type='button' id='"+ rr_bb_id +"' class='bbrDelete "+ rr_bb_id +"' onclick=\"bbrDelete('"+ rr_bb_id +"')\">삭제</button>";
@@ -1590,12 +1627,10 @@ $('.close').on('click', function() {
 $(window).on('click', function() {
 	var modal = document.getElementById('modal');
 	console.log(modal);
-	var a = $(this)
-	var insertBox = document.getElementById(a);
-	console.log(insertBox);
 	if (event.target == modal) {
 		$('body').css("overflow", "scroll");
 		modal.style.display = "none";
+		$(".mdReply").empty();
 	}
 	/* if(event.target != insertBox){
 		insertBox.style.display = "none";
@@ -1751,6 +1786,7 @@ $("#chkAll").click(function(){
 		$("input[name=cateChk]").prop("checked", true);
 });
 
+// 카테고리 체크
 function cateChk(e){
 	console.log("cateChk:"+$(e).attr('for'));
 	var a = $(e).attr('for');
@@ -1781,8 +1817,6 @@ function write_icon(){
 	$("#bb_info").focus();			
 }
 
-
-
 // 팔로우 인서트
 function follow(m_id) {
 	var my_name=document.getElementById("my_name").value;
@@ -1800,7 +1834,6 @@ function follow(m_id) {
 	    	console.log("follow성공 : " +resp.bbFollow);
 	    	$("#follow").hide();
 			$("#unFollow").show();
-	        /* $("#mdInfoText").load(location.href+"#mdInfoText"); */
 	    },
 	    error: function(request, status, error) {
 	        alert("code:" +
@@ -1833,7 +1866,6 @@ function unFollow(m_id) {
 	    	console.log("unFollow성공 :m_id : " +resp.bbUnFollow);
 	    	$("#follow").show();
 			$("#unFollow").hide();
-	    	/* $("#mdInfoText").load(location.href+"#mdInfoText"); */
 	    },
 	    error: function(request, status, error) {
 	        alert("code:" +
@@ -1850,16 +1882,18 @@ function unFollow(m_id) {
 // 게시물 좋아요
 function pressLike(t_id) {
     var lcount = $(".lCount" + t_id).val();
-    console.log(t_id);
-    console.log("lCount:"+lcount);
+    console.log("게시물 좋아요:"+t_id);
+    console.log("게시물 좋아요 lCount:"+lcount);
     lcount++;
-    console.log("lCount:"+lcount);
+    console.log("게시물 좋아요 lCount:"+lcount);
+    console.log("게시물 좋아요 m_id:"+m_id);
 
 	$.ajax({
 	    url: "${pageContext.request.contextPath}/pressLikeB.do",
 	    method: "POST",
 	    data: {
-	        m_id: m_id,
+	        m_id: my_name,
+	        m_id2: m_id,
 	        t_id: t_id
 	    },
 	    success: function(data) {
@@ -1870,9 +1904,7 @@ function pressLike(t_id) {
 	        $(".likechk" + t_id).css("display", "none");
 	        $(".unlikechk" + t_id).css("display", "block");
 	        $(".lCount" + t_id).val(lcount);
-	
-	        // 게시물 좋아요 수 카운트 trigger 호출
-	        //$(".countLike_trigger").trigger('click');
+	        /* $(".lCount" + t_id).load(location.href+".lCount" + t_id); */
 	    },
 	    error: function(request, status, error) {
 	        alert("code:" +
@@ -1887,7 +1919,7 @@ function pressLike(t_id) {
     
 }
 
-// 게시물 좋아요 취소 (일반 & 비즈니스 게시판 분리)
+// 게시물 좋아요 취소
 function pressUnlike(t_id) {
     var lcount = $(".lCount" + t_id).val();
     console.log("좋아요 취소 lcount1:"+lcount);
@@ -1899,7 +1931,8 @@ function pressUnlike(t_id) {
             url: "${pageContext.request.contextPath}/pressUnLikeB.do",
             method: "POST",
             data: {
-                m_id: m_id,
+                m_id: my_name,
+                m_id2: m_id,
                 t_id: t_id
             },
             success: function(data) {
@@ -1910,7 +1943,7 @@ function pressUnlike(t_id) {
                 $(".likechk" + t_id).css("display", "block");
                 $(".unlikechk" + t_id).css("display", "none");
                	$(".lCount" + t_id).val(lcount);
-                /* $(".countLike_trigger").trigger('click'); */
+               	/* $(".lCount" + t_id).load(location.href+".lCount" + t_id); */
             },
             error: function(request, status, error) {
                 alert("code:" +
@@ -2207,21 +2240,7 @@ $("#etc").on('click', function() {
 <script type="text/javascript">
 
 $(function(){
-	// 페이지 로딩 시 처음 두개 댓글 나타내기 trigger 호출
-    $(".hidden_commentchk").trigger('click');
-
-    // 게시물 좋아요 체크 trigger 호출
-    $(".hidden_likechk").trigger('click');
-
-    // 게시물 좋아요 수 카운트 trigger 호출
-    $(".countLike_trigger").trigger('click');
-
-    // 게시물 이미지 보기 trigger 호출
-    $(".hidden_showphoto").trigger('click');
-
-    // 해쉬태그 보기 trigger 호출
-    $(".hidden_showhashtag").trigger('click');
-	
+	var my_name=$("#my_name").val();
 	/* 댓글등록 */
 	$(".bbrInsert").on('click', function(){
 		var a = $("#bb_topid").val();
@@ -2239,59 +2258,75 @@ $(function(){
 				data:{
 					bb_topid : a,
 					bb_info : c2,
+					m_id:my_name
 				},
 				dataType:"json",
 				success: function(resp){
 					console.log(resp.data.length);
-					var htmls="";
+					$(".mdReply").empty();
 		    		if(resp.data!=null){
 			    		for(i=0; i<resp.data.length; i++){
+							var htmls="";
 			    			var r_m_id = resp.data[i].m_id;
 			    			var r_bb_info = resp.data[i].bb_info;
 			    			var r_bbrlike = resp.data[i].bbrlike;
 			    			var r_bb_id = resp.data[i].bb_id;
+			    			var r_like_chk = resp.data[i].like_chk;
 			    			htmls += "<div class='mrd' >"+
 			    						"<div class='mrdUp' >"+
-										"<div class='bbrImg'>"+
-											"<img src='#' width='50px' height='50px'/>"+
-										"</div>"+
-										"<div class='mrrdRight' >"+
-											"<div class='mrrdCont' >"+
-												"<a href='#' class='bbrId'>"+
-													"<span>" + r_m_id + "</span>"+
-												"</a>"+
-												"<span>"+r_bb_info+"</span>"+
+											"<div class='bbrImg'>"+
+												"<img src='#' width='50px' height='50px'/>"+
 											"</div>"+
-											"<div class='mrrdOpt' >"+
-												"<div class='bbrLike'>"+
-													"<span class='bbrL' >좋아요:<input type='button' class='lCount"+r_bbrlike+" showlCount' value='"+r_bbrlike+"' readonly></span>"+
+											"<div class='mrrdRight' >"+
+												"<div class='mrrdCont' >"+
+													"<a href='${pageContext.request.contextPath}/bbList.do?m_id="+ r_m_id+ "' class='bbrId'>"+
+														"<span>" + r_m_id + "</span>"+
+													"</a>"+
+													"<span>"+r_bb_info+"</span>"+
 												"</div>"+
-												"<div class='bbrrbtn' >"+
-													"<button type='button'  class='bbrrbtn "+ r_bb_id+ "' onclick='bbrrWrite(this)' \">답글달기</button>"+
-												"</div>";
+												"<div class='mrrdOpt' >"+
+													"<div class='bbrLike'>"+
+														"<span class='bbrL' >좋아요:<input type='button' class='lCount"+r_bb_id+" showlCount' value='"+r_bbrlike+"' readonly></span>"+
+														
+													"</div>"+
+													"<div class='bbrrbtn' >"+
+														"<button type='button'  class='bbrrbtn "+ r_bb_id+ "' onclick='bbrrWrite(this)' \">답글달기</button>"+
+													"</div>";
+													
 							if(r_m_id==$("#my_name").val()){
-								htmls += 			"<button type='button' id='"+r_bb_id+"' class='bbrDelete "+ r_bb_id +"' onclick=\"bbrDelete('"+r_bb_id+"')\">삭제</button>";
+								htmls += 				"<button type='button' id='"+r_bb_id+"' class='bbrDelete "+ r_bb_id +"' onclick=\"bbrDelete('"+r_bb_id+"')\">삭제</button>";
 							}
-							htmls += 			"<button type='button' id='mdBbBtn' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
-												"<div id='bbrrInBox' class='bbrrInBox' >"+
-													"<input type='text' class='replyCoWri write_space' placeholder='답글 작성...'/>"+
-													"<button id='bbrrup"+r_bb_id+"' onclick='bbrrInsert(this)'>게시</button>"+
-													"<input type='hidden' value='" + r_bb_id + "'/>"+
+							htmls +=				"<button type='button'  id='mdBbBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
+													"<div class='icon_reply like_icon_reply likechk"+r_bb_id+"' onclick='pressLike(\""+r_bb_id+"\");' width='10px' height='10px'></div>"+
+									                "<div class='icon_reply unlike_icon_reply unlikechk"+r_bb_id+"' onclick='pressUnlike(\""+r_bb_id+"\");'></div>"+
+									                "<div></div>"+
+													"<div id='bbrrInBox' class='bbrrInBox' >"+
+														"<input type='text' class='replyCoWri write_space' placeholder='답글 작성...'/>"+
+														"<button id='bbrrup"+r_bb_id+"' onclick='bbrrInsert(this)'>게시</button>"+
+														"<input type='hidden' value='" + r_bb_id + "'/>"+
+													"</div>"+
 												"</div>"+
 											"</div>"+
 										"</div>"+
-									"</div>"+
-									"<div class='mrdDown' >"+
-										"<div class='bbrrLine' ></div>"+
-										"<a class='bbrrShow' id='bbrrshow"+r_bb_id+"' onclick=\"bbrrListShow('"+ r_bb_id +"')\">답글보기</a>"+
-										"<a class='bbrrHide' id='bbrrhide"+r_bb_id+"' onclick=\"bbrrListHide('"+ r_bb_id +"')\" style='display:none;'>답글숨기기</a>"+
-										"<div id='bbrr' class='bbrr'>"+
+										"<div class='mrdDown' >"+
+											"<div class='bbrrLine' ></div>"+
+											"<a class='bbrrShow' id='bbrrshow"+r_bb_id+"' onclick=\"bbrrListShow('"+ r_bb_id +"')\">답글보기</a>"+
+											"<a class='bbrrHide' id='bbrrhide"+r_bb_id+"' onclick=\"bbrrListHide('"+ r_bb_id +"')\" style='display:none;'>답글숨기기</a>"+
+											"<div id='bbrr' class='bbrr'>"+
+											"</div>"+
 										"</div>"+
-									"</div>"+
-								"</div>";
+									"</div>";
+		    			$(".mdReply").append(htmls);
+			    			if(r_like_chk==null){
+			    				$(".likechk" + r_bb_id).css("display", "block");
+					    		$(".unlikechk" + r_bb_id).css("display", "none");
+			    			} else{
+			    				$(".likechk" + r_bb_id).css("display", "none");
+				                $(".unlikechk" + r_bb_id).css("display", "block");
+			    			}
 			    		}   
-			    		$(".mdReply").html(htmls);
 			    		$("#bb_info").val("");
+			    		
 		    		} else {
 		    			$(".mdReply").html("<div class='mrd'>댓글이 없습니다.</div>");
 		    		}
@@ -2301,7 +2336,6 @@ $(function(){
 				}
 			});
 		}
-		
 	});
 	
 	

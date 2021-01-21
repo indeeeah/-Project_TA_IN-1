@@ -35,6 +35,9 @@ public class BsnBoardReply implements java.io.Serializable{
 	private String rb_reason;
 	private Date rb_date;
 	
+	// 좋아요 여부
+	private String like_chk;
+	
 	// 기본 생성자
 	public BsnBoardReply() {}
 	
@@ -84,7 +87,7 @@ public class BsnBoardReply implements java.io.Serializable{
 	// 전체
 	public BsnBoardReply(String bb_id, String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
 			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date,
-			int t_num, Date l_date, String m_img, String rb_reason, Date rb_date, int bbrlike) {
+			int t_num, Date l_date, int bbrlike, String m_img, String rb_reason, Date rb_date, String like_chk) {
 		super();
 		this.bb_id = bb_id;
 		this.m_id = m_id;
@@ -99,17 +102,22 @@ public class BsnBoardReply implements java.io.Serializable{
 		this.bb_topid = bb_topid;
 		this.bb_date = bb_date;
 		this.t_num = t_num;
-		this.m_img = m_img;
+		this.l_date = l_date;
 		this.bbrlike = bbrlike;
+		this.m_img = m_img;
+		this.rb_reason = rb_reason;
+		this.rb_date = rb_date;
+		this.like_chk = like_chk;
 	}
+
 	@Override
 	public String toString() {
 		return "BsnBoardReply [bb_id=" + bb_id + ", m_id=" + m_id + ", bb_name=" + bb_name + ", bb_info=" + bb_info
 				+ ", bb_price=" + bb_price + ", bb_option1=" + bb_option1 + ", bb_option2=" + bb_option2
 				+ ", bb_option3=" + bb_option3 + ", bb_option4=" + bb_option4 + ", bb_type=" + bb_type + ", bb_topid="
-				+ bb_topid + ", bb_date=" + bb_date + ", t_num=" + t_num + ", l_date=" + l_date + ", m_img=" + m_img
-				+ ", rb_reason=" + rb_reason + ", rb_date=" + rb_date + ", bbrlike=" + bbrlike + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+				+ bb_topid + ", bb_date=" + bb_date + ", t_num=" + t_num + ", l_date=" + l_date + ", bbrlike=" + bbrlike
+				+ ", m_img=" + m_img + ", rb_reason=" + rb_reason + ", rb_date=" + rb_date + ", like_chk=" + like_chk
+				+ "]";
 	}
 
 	public String getBb_id() {
@@ -258,6 +266,14 @@ public class BsnBoardReply implements java.io.Serializable{
 
 	public void setBbrlike(int bbrlike) {
 		this.bbrlike = bbrlike;
+	}
+
+	public String getLike_chk() {
+		return like_chk;
+	}
+
+	public void setLike_chk(String like_chk) {
+		this.like_chk = like_chk;
 	}
 	
 }

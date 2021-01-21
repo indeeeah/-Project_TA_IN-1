@@ -10,7 +10,23 @@ public class BusinessMemberVO {
 	private String bm_intro;
 	private String bm_phone;
 	private String bm_approval;
+	
+	private String m_img;
 		
+	public BusinessMemberVO(String m_id, int bm_cate, String bm_name, String bm_addr, String bm_url, String bm_account,
+			String bm_intro, String bm_phone, String bm_approval, String m_img) {
+		super();
+		this.m_id = m_id;
+		this.bm_cate = bm_cate;
+		this.bm_name = bm_name;
+		this.bm_addr = bm_addr;
+		this.bm_url = bm_url;
+		this.bm_account = bm_account;
+		this.bm_intro = bm_intro;
+		this.bm_phone = bm_phone;
+		this.bm_approval = bm_approval;
+		this.m_img = m_img;
+	}
 	public BusinessMemberVO() {}
 	@Override
 	public String toString() {
@@ -84,6 +100,12 @@ public class BusinessMemberVO {
 	}
 	public void setBm_approval(String bm_approval) {
 		this.bm_approval = bm_approval;
+	}
+	public String getM_img() {
+		return m_img;
+	}
+	public void setM_img(String m_img) {
+		this.m_img = m_img;
 	}
 	
 }

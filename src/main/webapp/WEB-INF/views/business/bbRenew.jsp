@@ -208,6 +208,7 @@
 		<input type="submit" id="renew" value="수정하기">&nbsp;&nbsp;
 		<c:url var="bbList" value="bbList.do">
 			<c:param name="page" value="1"/>
+			<c:param name="m_id" value="${m_id }"/>
 		</c:url>
 		<a href=${bbList }>목록으로</a>
 	</form>

@@ -10,7 +10,7 @@ public interface BsnBoardReplyService {
 	int bbrLike() ;
 	
 	// 댓글 목록
-	List<BsnBoardReply> bbrList(String bb_id);
+	List<BsnBoardReply> bbrList(BsnBoardReply bbr);
 	
 	// 댓글 등록
 	int insertBbr(BsnBoardReply bbr);
@@ -23,7 +23,7 @@ public interface BsnBoardReplyService {
 	int bbrrLike() ;
 	
 	// 답글 목록
-	List<BsnBoardReply> bbrrList(String bb_id);
+	List<BsnBoardReply> bbrrList(BsnBoardReply bbr);
 	
 	// 답글 등록
 	int insertBbrr(BsnBoardReply bbr);

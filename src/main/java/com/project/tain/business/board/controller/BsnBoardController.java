@@ -235,6 +235,7 @@ public class BsnBoardController {
 		HttpSession session = request.getSession();
 		String m_id=(String) session.getAttribute("my_name");
 		try {
+			mv.addObject("m_id", m_id);
 			mv.addObject("bbRenew", bbService.selectOne(bb_id));
 			mv.addObject("bbTags", bbService.selectOneTags(bb_id));
 			mv.addObject("category", bbService.selectCategory(m_id));
@@ -318,10 +319,11 @@ public class BsnBoardController {
 	// 장바구니 담기
 	@ResponseBody
 	@RequestMapping(value="/cartInsert", method = RequestMethod.POST)
-	public String cartInsert(BsnBoard bb) {
+	public String cartInsert(BsnBoard bb, HttpServletRequest request) {
 		System.out.println("카트담기 컨트롤러");
 		JSONObject job = new JSONObject();
-		String m_id= "aaaa";
+		HttpSession session = request.getSession();
+		String m_id=(String) session.getAttribute("my_name");
 		bb.setM_id(m_id);
 		System.out.println("카트담기 아이디"+bb.getM_id());
 		System.out.println("카트담기 글번호"+bb.getBb_id());

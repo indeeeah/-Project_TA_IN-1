@@ -20,8 +20,8 @@ public class BsnBoardReplyServiceImpl implements BsnBoardReplyService{
 	}
 
 	@Override
-	public List<BsnBoardReply> bbrList(String bb_id) {
-		return bbrDao.bbrList(bb_id);
+	public List<BsnBoardReply> bbrList(BsnBoardReply bbr) {
+		return bbrDao.bbrList(bbr);
 	}
 
 	@Override
@@ -40,8 +40,8 @@ public class BsnBoardReplyServiceImpl implements BsnBoardReplyService{
 	}
 
 	@Override
-	public List<BsnBoardReply> bbrrList(String bb_id) {
-		return bbrDao.bbrrList(bb_id);
+	public List<BsnBoardReply> bbrrList(BsnBoardReply bbr) {
+		return bbrDao.bbrrList(bbr);
 	}
 
 	@Override
