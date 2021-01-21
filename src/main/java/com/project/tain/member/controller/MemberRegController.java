@@ -105,8 +105,10 @@ public class MemberRegController {
 						if(voReturn.getM_status() == 2) {
 							System.out.println("voReturn.getM_status()! "+ voReturn.getM_status());
 							return "2";
-						}
-						else  { // 보통의 로그인 경우 return 1
+						} else if(voReturn.getM_id().equals("admin")) {
+							System.out.println("voReturn.getM_id()! "+ voReturn.getM_id());
+							return "3";
+						} else  { // 보통의 로그인 경우 return 1
 							return "1";
 						}
 					}

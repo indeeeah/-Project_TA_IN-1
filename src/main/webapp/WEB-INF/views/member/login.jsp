@@ -215,8 +215,11 @@ svg {
 							console.log("success: 임시비밀번호로 로그인 경우");
 							var url = "${pageContext.request.contextPath}/mChangepw.do";
 						    $(location).attr('href', url);
-						}
-						else if (data == '-1') {
+						} else if (data == "3") {   // 관리자 로그인 경우
+							console.log("success: 관리자아이디로 로그인");
+							var url = "${pageContext.request.contextPath}/membermanagelist.do";
+						    $(location).attr('href', url);
+						} else if (data == '-1') {
 							alert('등록된 아이디가 없습니다.');
 							//if(confirm('회원가입으로 이동하시겠습니까?')==1){};
 						} else if (data == '-2') {

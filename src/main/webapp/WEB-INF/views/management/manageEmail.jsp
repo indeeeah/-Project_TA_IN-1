@@ -10,123 +10,15 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/resources/css/header.css"
 	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/resources/css/management.css"
+	rel="stylesheet" type="text/css">
 <script src="https://kit.fontawesome.com/2409d81413.js"
 	crossorigin="anonymous"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <style type="text/css">
-* {
-	margin: 0;
-}
-
-#mManage {
-	width: 1000px;
-	margin: 0 auto;
-	padding: 0;
-}
-
-#menu {
-	float: left;
-	width: 20%;
-}
-
-#menulist {
-	list-style: none;
-	padding-left: 0;
-}
-
-#menulist>li {
-	text-align: left;
-	padding: 20px 0px 20px 0px;
-}
-
-#menulist>li>a {
-	color: black;
-	text-decoration: none;
-}
-
-#menulist>li:hover {
-	background-color: #F6F6F6;
-	border-left: 2px solid #df871b;
-}
-
-#contentmanage {
-	display: inline-block;
-	float: right;
-	width: 78%;
-	height: 100%;
-	text-align: center;
-}
-
-.tit {
-	font-size: 25px;
-}
-
-#table_top {
-	line-height: 45px;
-	vertical-align: middle;
-	border-bottom: 1px solid gray;
-}
-
-#table_top td {
-	padding: 0 20px;
-	vertical-align: middle;
-}
-
-.table_body {
-	line-height: 45px;
-	text-align: center;
-	border-bottom: 1px solid gray;
-	vertical-align: middle;
-}
-
-.table_body_td td {
-	line-height: 30px;
-	text-align: center;
-	vertical-align: middle;
-	border-bottom: 1px solid gray;
-}
-
-.table_bottom {
-	line-height: 50px;
-	text-align: center;
-}
-
-a {
-	text-decoration: none;
-	color: #000;
-}
-
-a:hover {
-	cursor: pointer;
-}
-
-a.btn-action {
-	text-align: center;
-	padding: 3px 10px;
-	border: 1px solid #1a1b1d;
-	border-radius: 3px;
-	box-shadow: 2px 2px 3px #022d72;
-	background-color: #1a1b1d;
-	color: #fff;
-}
-
 .mail_manage {
 	line-height: 30px;
-}
-
-.form-control {
-	
-}
-
-.btn-warning {
-	text-align: center;
-	padding: 3px 10px;
-	border: 1px solid #1a1b1d;
-	border-radius: 3px;
-	box-shadow: 2px 2px 3px #022d72;
-	background-color: #1a1b1d;
-	color: #fff;
 }
 </style>
 </head>

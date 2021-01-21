@@ -35,10 +35,15 @@ public class MemberManageController {
 		mv.setViewName("management/managementMain");
 		return mv;
 	}
-	
-	@RequestMapping(value = "membermanagelist.do", method = {RequestMethod.GET, RequestMethod.POST})
+
+	@RequestMapping(value = "membermanagelist.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberManageList(@RequestParam(name = "page", defaultValue = "1") int page,
-			@RequestParam(name = "keyword", required = false) String keyword, ModelAndView mv) {
+			@RequestParam(name = "keyword", required = false) String keyword, ModelAndView mv,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		System.out.println(my_name);
+		session.setAttribute("my_name", my_name);
 		try {
 			int currentPage = page;
 			// 한 페이지당 출력할 목록 갯수
