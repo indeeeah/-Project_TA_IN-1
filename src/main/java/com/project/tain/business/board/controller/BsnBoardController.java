@@ -81,6 +81,9 @@ public class BsnBoardController {
 				mv.addObject("recomFow", gService.recomFow(my_name, m_id));
 				mv.addObject("selectFollow", gService.selectFollow(m_id));
 				mv.addObject("selectFollower", gService.selectFollower(m_id));
+				mv.addObject("bsnInfo", bbService.bsnInfo(m_id));
+				mv.addObject("bsnInfoFollow", bbService.bsnInfoFollow(m_id));
+				mv.addObject("bsnInfoFollower", bbService.bsnInfoFollower(m_id));
 				mv.addObject("listCount", bbService.listCount(m_id));	// 게시물카운트
 				mv.addObject("category", bbService.selectCategory(m_id));//카테고리 목록
 				mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
@@ -140,9 +143,11 @@ public class BsnBoardController {
 	
 	// 게시물 작성 페이지
 	@RequestMapping(value="/bbWriteForm.do", method = RequestMethod.GET)
-	public ModelAndView bbInsertForm(ModelAndView mv) {
-		String m_id = "aaaa";
+	public ModelAndView bbInsertForm(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String m_id=(String) session.getAttribute("my_name");
 		try {
+			mv.addObject("m_id", m_id);
 			mv.addObject("category", bbService.selectCategory(m_id));
 			System.out.println("category: "+bbService.selectCategory(m_id));
 			mv.setViewName("business/bbWriteForm");
@@ -159,7 +164,8 @@ public class BsnBoardController {
 	public ModelAndView boardInsert(BsnBoard bb, @RequestParam("tags") String tags,
 			MultipartHttpServletRequest request, ModelAndView mv) {
 		System.out.println("게시물 등록 컨트롤러" + bb);
-		System.out.println("게시물 등록 컨트롤러" + request);
+		System.out.println("게시물 등록 컨트롤러" + bb.getM_id());
+		String m_id = bb.getM_id();
 		try {
 			if(request!=null && !request.equals("")) {
 				uploadFiles(bb, request);
@@ -174,6 +180,7 @@ public class BsnBoardController {
 				System.out.println("H_tag : "+bb.getH_tag());
 				bbService.saveBsnTag(bb);
 			}
+			mv.addObject("m_id", m_id);
 			mv.setViewName("redirect:bbList.do");
 		} catch(Exception e) {
 			e.printStackTrace();

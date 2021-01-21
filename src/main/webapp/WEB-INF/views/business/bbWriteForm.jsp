@@ -122,8 +122,8 @@
 <body>
 <div id="content">
 	<div id="bbWrite" class="bbWrite">
-	
 	<form action="bbInsert.do" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="m_id" value="${m_id }">
 		<input type="hidden" name="bb_type" value="B">
 		<div id="bbWriteText" class="bbWriteText">
 			<div id="bbWriteFile" class="bbWriteFile">
@@ -183,7 +183,6 @@
 		</div>
 		<div id="bbWriteEdit" class="bbWriteEdit">
 			<div id="bbWriteEditBox" class="bbWriteEditBox">
-				(임시)아이디:<input type="text" name="m_id">
 			</div>
 		</div>
 		<input type="submit" value="등록하기">&nbsp;&nbsp;

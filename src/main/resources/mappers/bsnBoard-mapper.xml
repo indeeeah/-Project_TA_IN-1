@@ -35,6 +35,21 @@
 		select count(*) from businessboard where m_id=#{m_id} and bb_type='B'
 	</select>
 	
+	<!-- 비즈니스 계정 정보 -->
+	<select id="bsnInfo" parameterType="BusinessMemberVO" resultType="BusinessMemberVO">
+		select * from Businessmember where m_id=#{m_id}
+	</select>
+	
+	<!-- 팔로우(수) -->
+	<select id="bsnInfoFollow" parameterType="string" resultType="int">
+		select count(*) from follow where m_id1=#{m_id}
+	</select>
+	
+	<!-- 팔로워(수) -->
+	<select id="bsnInfoFollower" parameterType="string" resultType="int">
+		select count(*) from follow where m_id2=#{m_id}
+	</select>
+	
 	<!-- 게시물 목록 -->
 	<select id="bsnSelectListAll" parameterType="string" resultType="arraylist" resultMap="resultBsnBoard">
 		select bb.*, bba.*, nvl(cnt, 0) bb_like from 
