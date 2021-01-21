@@ -55,9 +55,16 @@ body {
 	stroke: #3291b6;
 	animation-delay: -5s;
 }
-
+.text-copy:nth-child(5) {
+	stroke: #3291b6;
+	animation-delay: -6s;
+}
+.text-copy:nth-child(5) {
+	stroke: #3291b6;
+	animation-delay: -7s;
+}
 @keyframes stroke-offset { 100% {
-	stroke-dashoffset: -30%;
+	stroke-dashoffset: 100%;
 }
 
 }
@@ -163,7 +170,7 @@ svg {
 				<div class="lofin_msg">
 					<p>Login</p>
 				</div>
-				<form id="frm_login">
+				<form id="frm_login" method="post">
 					<div class="form_group">
 						<input type="text" name="m_id" class="form_control"
 							placeholder="아이디">
@@ -174,7 +181,7 @@ svg {
 					</div>
 					<div class="row">
 						<div class="login">
-							<button type="submit" class="btn btn-primary"
+							<button type="button" class="btn btn-primary"
 								onclick="login('${my_name }');">LOGIN</button>
 						</div>
 					</div>
@@ -202,8 +209,14 @@ svg {
 						console.log("data: " + data);
 						if (data == "1") {
 							console.log("success");
-							href.location = "${pageContext.request.contextPath}/timeLine";
-						} else if (data == '-1') {
+							var url = "${pageContext.request.contextPath}/timeLine";
+					        $(location).attr('href', url);
+						} else if (data == "2") {   // 임시비밀번호로 로그인 경우
+							console.log("success: 임시비밀번호로 로그인 경우");
+							var url = "${pageContext.request.contextPath}/mChangepw.do";
+						    $(location).attr('href', url);
+						}
+						else if (data == '-1') {
 							alert('등록된 아이디가 없습니다.');
 							//if(confirm('회원가입으로 이동하시겠습니까?')==1){};
 						} else if (data == '-2') {

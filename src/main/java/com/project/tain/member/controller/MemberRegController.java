@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,19 +61,21 @@ public class MemberRegController {
 	}
 
 	// 로그인 폼 이동
-	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/loginPage")
 	public String loginPage(HttpSession session) throws Exception {
-		if (session.getAttribute("my_name") != null) // 로그인 되어 있음.
+		if (session.getAttribute("my_name") != null) { // 로그인 되어 있음.
+			System.out.println("loginPage > go > timeLine");
 			return "redirect:/timeLine";
-		else
+		} else {
+			System.out.println("loginPage > go > timeLine");
 			return "/member/login";
+		}
 	}
 
 	// 로그인
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(@ModelAttribute MemberRegVO vo, RedirectAttributes redirectAttributes, HttpSession session,
-			HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
+	public String login(@ModelAttribute MemberRegVO vo, HttpSession session) {
 		try {
 			System.out.println("vo.getM_id(): " + vo.getM_id());
 			if (service.check_id(vo.getM_id()) == 0) { // 등록된 아이디가 없으면
@@ -96,7 +99,16 @@ public class MemberRegController {
 						System.out.println("로그인 성공!!! 세션 등록 my_name에 " + vo.getM_id() + " 등록함.");
 						// session.setAttribute("myInfo", vo);
 						session.setAttribute("my_name", vo.getM_id());
-						return "1";
+						System.out.println("voReturn.getM_status()! "+ voReturn.getM_status());
+						
+						// 임시 비밀번로로 들어온 경우 return 2
+						if(voReturn.getM_status() == 2) {
+							System.out.println("voReturn.getM_status()! "+ voReturn.getM_status());
+							return "2";
+						}
+						else  { // 보통의 로그인 경우 return 1
+							return "1";
+						}
 					}
 				}
 			}
@@ -159,8 +171,7 @@ public class MemberRegController {
 	// 비즈니스 회원 가입
 	@RequestMapping(value = "/businessjoin.do", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, Object> businessjoin(@ModelAttribute BusinessMemberVO vo,
-			RedirectAttributes redirectAttributes, HttpServletResponse response) throws Exception {
+	public HashMap<String, Object> businessjoin(@ModelAttribute BusinessMemberVO vo) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		int result = 0;
 		try {
@@ -234,40 +245,39 @@ public class MemberRegController {
 	public String memberFindId() throws Exception {
 		return "/member/findmember";
 	}
-
+	// 아이디 찾기 폼
+	@RequestMapping("/findId")
+	public ModelAndView findId(@RequestParam("m_id") String m_id, ModelAndView mv) throws Exception {
+		mv.addObject("m_id", m_id);
+		mv.setViewName("/member/find_Id");
+		return mv;
+	}
+	
 	// 아이디 찾기
 	@RequestMapping(value = "/find_Id.do", method = RequestMethod.POST)
-	public ModelAndView find_id(@RequestParam("m_email") String m_email, @RequestParam("m_name") String m_name,
+	@ResponseBody
+	public HashMap<String, Object> find_id(@RequestParam("m_email") String m_email, @RequestParam("m_name") String m_name,
 			RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response,
 			ModelAndView mv) {
+		HashMap<String, Object> voMap = new HashMap<String, Object>();
 		try {
-			HashMap<String, Object> voMap = new HashMap<String, Object>();
 			voMap.put("m_email", m_email);
 			voMap.put("m_name", m_name);
 			String m_id = service.find_id(voMap);
 			if (m_id == null) {
-				System.out.println("<script>");
-				System.out.println("alert('가입된 이메일이 없습니다.');");
-				System.out.println("history.go(-1);");
-				System.out.println("</script>");
-				mv.addObject("errorMsg", "가입된 이메일이 없습니다. 다시 확인하고 시도해 주세요.");
-				redirectAttributes.addFlashAttribute("errorMsg", "가입된 이메일이 없습니다. 다시 확인하고 시도해 주세요.");
-				String referer = request.getHeader("Referer");
-				mv.setViewName("redirect:" + referer);
-				return mv;
+				System.out.println("가입된 이메일이 없습니다.");
+				voMap.put("m_id", "");
+				voMap.put("code", -1);
 			} else {
-				mv.addObject("m_id", m_id);
-				mv.setViewName("/member/find_Id");
-				return mv;
+				voMap.put("m_id", m_id);
+				voMap.put("code", 1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.addObject("errorMsg", "예기치 못한 오류가 발생했습니다. 다시 찾기를 시도해 주세요.");
-			redirectAttributes.addFlashAttribute("errorMsg", "예기치 못한 오류가 발생했습니다. 다시 찾기를 시도해 주세요.");
-			String referer = request.getHeader("Referer");
-			mv.setViewName("redirect:" + referer);
-			return mv;
+			voMap.put("m_id", "");
+			voMap.put("code", 0);
 		}
+		return voMap;
 	}
 
 	// 비밀번호 찾기 폼
@@ -278,57 +288,39 @@ public class MemberRegController {
 
 	// 비밀번호 찾기
 	@RequestMapping(value = "/find_pw.do", method = RequestMethod.POST)
-	public ModelAndView find_pw(@ModelAttribute MemberRegVO vo, RedirectAttributes redirectAttributes,
-			HttpServletRequest request, HttpServletResponse response, ModelAndView mv) throws Exception {
+	@ResponseBody
+	public String find_pw(@ModelAttribute MemberRegVO vo) throws Exception {
 		try {
 			// 아이디가 없으면
 			if (service.check_id(vo.getM_id()) == 0) {
-				System.out.println("아이디가 없습니다.");
-				mv.addObject("errorMsg", "아이디가 없습니다. 다시 확인하고 시도해 주세요.");
-				redirectAttributes.addFlashAttribute("errorMsg", "아이디가 없습니다. 다시 확인하고 시도해 주세요.");
-				String referer = request.getHeader("Referer");
-				mv.setViewName("redirect:" + referer);
-				return mv;
+				System.out.println("아이디가 없습니다. 다시 확인하고 시도해 주세요.");
+				return "-1";
 			}
 			// 가입에 사용한 이메일이 아니면
 			else if (!vo.getM_email().equals(service.login(vo).getM_email())) {
-				System.out.println("잘못된 이메일 입니다.");
-				mv.addObject("errorMsg", "잘못된 이메일 입니다. 다시 확인하고 시도해 주세요.");
-				redirectAttributes.addFlashAttribute("errorMsg", "잘못된 이메일 입니다. 다시 확인하고 시도해 주세요.");
-				String referer = request.getHeader("Referer");
-				mv.setViewName("redirect:" + referer);
-				return mv;
+				System.out.println("잘못된 이메일 입니다. 다시 확인하고 시도해 주세요.");
+				return "-2";
 			} else {
 				// 임시 비밀번호 생성
 				String m_pw = create_key();
 				vo.setM_pw(m_pw);
-
+				vo.setM_status(2);
 				// 비밀번호 변경
 				int updateResult = service.update_pw(vo);
 
 				if (updateResult == 0) {
-					mv.addObject("errorMsg", "새로운 패스워드 업데이트 실패했습니다.");
-					redirectAttributes.addFlashAttribute("errorMsg", "새로운 패스워드 업데이트 실패했습니다.");
-					String referer = request.getHeader("Referer");
-					mv.setViewName("redirect:" + referer);
-					return mv;
+					System.out.println("새로운 패스워드 업데이트 실패했습니다.");
+					return "-3";
 				} else {
 					// 비밀번호 변경 메일 발송
 					send_mail(vo, "find_pw");
-
 					System.out.println("이메일로 임시 비밀번호를 발송하였습니다.");
-					mv.addObject("alertMsg", "이메일로 임시 비밀번호를 발송하였습니다.");
-					mv.setViewName("/member/login");
-					return mv;
+					return "1";
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.addObject("errorMsg", "예기치 못한 오류가 발생했습니다. 다시 찾기를 시도해 주세요.");
-			redirectAttributes.addFlashAttribute("errorMsg", "예기치 못한 오류가 발생했습니다. 다시 찾기를 시도해 주세요.");
-			String referer = request.getHeader("Referer");
-			mv.setViewName("redirect:" + referer);
-			return mv;
+			return "0";
 		}
 
 	}

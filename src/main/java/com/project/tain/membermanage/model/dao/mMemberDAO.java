@@ -35,9 +35,10 @@ public class mMemberDAO {
 	}
 	
 	public int changepw(String m_id, String m_pw) {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("m_id", m_id);
 		map.put("m_pw", m_pw);
+		map.put("m_status", 1);
 		return sqlSession.update("mMemberVO.changepw", map);
 	}
 }

@@ -6,7 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+
 <style type="text/css">
 * {
 	margin: 0;

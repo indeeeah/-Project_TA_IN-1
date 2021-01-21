@@ -27,32 +27,27 @@ h1 {
 		rgba(0, 0, 0, 0.1), 0px 18px 23px rgba(0, 0, 0, 0.1);
 }
 
-@
--webkit-keyframes scroll { 100%{
+@-webkit-keyframes scroll { 100%{
 	background-position: 0px -3000px;
 }
 
 }
-@
--moz-keyframes scroll { 100%{
+@-moz-keyframes scroll { 100%{
 	background-position: 0px -3000px;
 }
 
 }
-@
--o-keyframes scroll { 100%{
+@-o-keyframes scroll { 100%{
 	background-position: 0px -3000px;
 }
 
 }
-@
--ms-keyframes scroll { 100%{
+@-ms-keyframes scroll { 100%{
 	background-position: 0px -3000px;
 }
 
 }
-@
-keyframes scroll { 100%{
+@keyframes scroll { 100%{
 	background-position: 0px -3000px;
 }
 

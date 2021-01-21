@@ -58,7 +58,7 @@ p label {
 							id="email" name="m_email" required>
 					</p>
 					<p class="w3-center">
-						<button type="submit" id=findBtn
+						<button type="button" id="findBtn" onclick="findId()"
 							class="w3-button w3-block w3-black w3-ripple w3-margin-top w3-round">아이디 찾기</button>
 						
 					</p>
@@ -67,21 +67,22 @@ p label {
 		</div>
 	</div>
 </body>
-<!--  <script>
-	function findId(id) {
+ <script>
+	function findId() {
 		var queryString = $("form[id=frm_findId]").serialize();
 		$.ajax({
-					url : "${pageContext.request.contextPath}/member//find_Id.do",
+					url : "${pageContext.request.contextPath}/member/find_Id.do",
 					method : "POST",
 					data : queryString,
 					success : function(data) {
-						console.log("data: " + data);
-						if (data == "1") {
+						console.log("data.m_id: " + data.m_id);
+						console.log("data.code: " + data.code);
+						if (data.code == 1) {
 							console.log("success");
-							href.location = "${pageContext.request.contextPath}/find_Id";
-						} else if (data == '-1') {
+					        var url = "${pageContext.request.contextPath}/member/findId" + "?m_id=" + data.m_id;
+					        $(location).attr('href', url);
+						} else if (data.code == -1) {
 							alert('가입된 이메일이 없습니다.');
-
 						} else {
 							alert("예기치 못한 오류가 발생했습니다. 다시 찾기를 시도해 주세요.");
 						}
@@ -95,5 +96,5 @@ p label {
 				});
 	}
 </script>
--->
+
 </html>

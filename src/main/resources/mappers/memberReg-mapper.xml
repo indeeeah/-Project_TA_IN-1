@@ -82,8 +82,10 @@
 
 	<!-- 비밀번호 변경 -->
 	<update id="update_pw" parameterType="MemberRegVO">
-		update member set m_pw =
-		#{m_pw} where m_id = #{m_id}
+		update member set 
+		m_pw = #{m_pw}, 
+		m_status = #{m_status} 
+		where m_id = #{m_id}
 	</update>
 
 	<!-- 비즈니스 회원 가입 -->
