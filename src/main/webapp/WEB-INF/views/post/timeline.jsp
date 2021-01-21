@@ -116,8 +116,8 @@
                     .timeline_profile {
                         width: 100%;
                         height: 60px;
-                        background-color: white;
                         border-bottom: 1px solid #C7C7C7;
+                        background-color: white;
                     }
                     
                     .t_prof_photo {
@@ -441,7 +441,7 @@
                     }
                     
                     #follow_recom_con {
-                        height: 200px;
+                        max-height: 200px;
                         overflow: hidden;
                     }
                     
@@ -515,7 +515,7 @@
                     }
                     
                     .reply_commentResult {
-                        width: 520px;
+                        width: 463.5px;
                     }
                     
                     .showlCount {
@@ -722,6 +722,23 @@
                         color: rgb(0, 149, 246);
                         float: right;
                     }
+                    
+                    #for_newbie {
+                        width: 100%;
+                        height: 300px;
+                        border: 1px solid #C7C7C7;
+                        background-color: white;
+                        text-align: center;
+                    }
+                    
+                    #newb_title {
+                        font-size: 14px;
+                        line-height: 25px;
+                        margin-top: 125px;
+                        color: white;
+                        background-color: #91d370;
+                        background-image: linear-gradient(319deg, #91d370 0%, #bca0ff 37%, #f2cd54 100%);
+                    }
                 </style>
         </head>
 
@@ -765,8 +782,8 @@
                     <div id="cancel_6" class="modal_in cancel" onclick="location.href='timeLineList.do'">화면으로 돌아가기</div>
                 </div>
                 <div id="cantunfollow" style="display: none;">
-                    <div class="modal_in modal_nocursor">나 자신은 팔로우 취소할 수 없어요!</div>
-                    <div id="cancel_8" class="modal_in cancel" onclick="location.href='timeLineList.do'">화면으로 돌아가기</div>
+                    <div id="pre_go" class="modal_in">게시물로 이동하기</div>
+                    <div id="cancel_5" class="modal_in cancel">취소</div>
                 </div>
                 <div id="pre_report_choose" style="display: none;">
                     <div id="pre_report_re" class="modal_in toreport" onclick="report('b_id', 'id', 'type');">게시물 신고하기
@@ -817,6 +834,13 @@
                         </div>
                         <div id="timeline_blank"></div>
                         <div id="page_con">
+                            <c:if test="${empty timeLineList }">
+                                <div id="for_newbie">
+                                    <div id="newb_title">
+                                        환영합니다 ${my_name }님<br>검색을 통해 팔로우할 사람을 찾고 게시물에 해시태그를 넣어 다른 사람들과 소통해보세요!
+                                    </div>
+                                </div>
+                            </c:if>
                             <c:if test="${not empty timeLineList }">
                                 <c:forEach var="vo" items="${timeLineList }" varStatus="s">
                                     <div class="timeline_contents" id="timeline_contents">
@@ -846,14 +870,15 @@
                                                 <div class="comment_con">
                                                     <div class="com_detail post_title">
                                                         <div class="post_id" onclick="goboard('${vo.m_id }');" style="cursor:pointer;">${vo.m_id }</div>
-                                                        <div class="post_content" id="post_content${vo.t_id}">${vo.t_content }
+                                                        <div class="post_content" id="post_content${vo.t_id}">
+                                                            ${vo.t_content }
                                                         </div>
                                                         <div class="translate" onclick="translatec('${vo.t_content }', '${vo.t_id}');" style="cursor: pointer;">번역하기</div>
                                                     </div>
                                                     <ul class="hashtag${vo.t_id }" id="hashtag${vo.t_id }">
                                                     </ul>
                                                     <input type="hidden" class="hidden_showhashtag" onclick="showhashtag('${vo.t_id }');">
-                                                    <div class="com_detail comment_more" onclick="showAllCo('${vo.t_id }');">댓글 전체 보기</div>
+                                                    <div class="com_detail comment_more comment_more${vo.t_id }" onclick="showAllCo('${vo.t_id }');" style="display: none;">댓글 전체 보기</div>
                                                     <div class="com_detail cm1 cm1${vo.t_id }">
                                                         <div class="commentRId post_id commentRIdf"></div>
                                                         <div class="commentResult post_content commentResultf">
@@ -896,9 +921,9 @@
                                 </div>
                                 <input type="hidden" name="m_id" class="m_id" value="${my_name }">
                             </div>
-                            <div id="follow_recom_title">회원님을 위한 추천</div>
-                            <div id="follow_recom_con">
-                                <c:if test="${not empty recomFollow }">
+                            <c:if test="${not empty recomFollow }">
+                                <div id="follow_recom_title">회원님을 위한 추천</div>
+                                <div id="follow_recom_con">
                                     <c:forEach var="vo" items="${recomFollow }" varStatus="s">
                                         <div class="follow_recom_id">
                                             <div class="recom_profile" onclick="goboard('${vo.r_mid }');" style="cursor:pointer;">${vo.m_img }</div>
@@ -910,8 +935,8 @@
                                             <input type="hidden" value="${vo.r_mid }">
                                         </div>
                                     </c:forEach>
-                                </c:if>
-                            </div>
+                                </div>
+                            </c:if>
                             <div id="footer_info">
                                 <a class="footera" href="${pageContext.request.contextPath}/serviceCenter">고객센터&nbsp;&nbsp;|&nbsp;&nbsp;</a>
                                 <a class="footera" href="${pageContext.request.contextPath}/aboutUs">사이트
@@ -957,7 +982,7 @@
                         data: {
                             m_id: memId,
                             r_mid: r_mid,
-                            m_id2:r_mid
+                            m_id2: r_mid
                         },
                         success: function(data) {
                             console.log("memId : " +
@@ -1049,7 +1074,7 @@
                                             '<ul class="hashtag' + resp.list[i].t_id + '" id="hashtag' + resp.list[i].t_id + '">' +
                                             '</ul>' +
                                             '<input type="hidden" class="hidden_showhashtag" onclick="showhashtag(\'' + resp.list[i].t_id + '\');">' +
-                                            '<div class="com_detail comment_more" onclick="showAllCo(\'' + resp.list[i].t_id + '\');">댓글 전체 보기</div>' +
+                                            '<div class="com_detail comment_more comment_more' + resp.list[i].t_id + '" onclick="showAllCo(\'' + resp.list[i].t_id + '\');" style="display:none;">댓글 전체 보기</div>' +
                                             '<div class="com_detail cm1 cm1' + resp.list[i].t_id + '">' +
                                             '<div class="commentRId post_id commentRIdf"></div>' +
                                             '<div class="commentResult post_content commentResultf">' +
@@ -1740,21 +1765,24 @@
             function pre_report(b_id, id, type) {
                 $("#report_modal").css("display", "block");
                 $("#report_back").css("display", "block");
-                $("#pre_report_choose").css("display", "block");
-                $(".toreport").on('click', function() {
-                    $("#pre_report_choose").css("display", "none");
-                    report(b_id, id, type);
-                });
-                $("#pre_go").on('click', function() {
-                    var url = "${pageContext.request.contextPath}/gnEachPage?&b_id=" + b_id;
-                    $(location).attr('href', url);
-                });
-                $("#pre_unfollow").on('click', function() {
-                    $("#pre_report_choose").css("display", "none");
-                    if (memId == id) {
-                        $("#cantunfollow").css("display", "block");
-                        $("#askunfollow").css("display", "none");
-                    } else {
+                if (memId == id) {
+                    $("#cantunfollow").css("display", "block");
+                    $("#pre_go").on('click', function() {
+                        var url = "${pageContext.request.contextPath}/gnEachPage?&b_id=" + b_id;
+                        $(location).attr('href', url);
+                    });
+                } else {
+                    $("#pre_report_choose").css("display", "block");
+                    $(".toreport").on('click', function() {
+                        $("#pre_report_choose").css("display", "none");
+                        report(b_id, id, type);
+                    });
+                    $("#pre_go").on('click', function() {
+                        var url = "${pageContext.request.contextPath}/gnEachPage?&b_id=" + b_id;
+                        $(location).attr('href', url);
+                    });
+                    $("#pre_unfollow").on('click', function() {
+                        $("#pre_report_choose").css("display", "none");
                         $("#askunfollow").css("display", "block");
                         $("#yes_unfollow").on('click', function() {
                             $.ajax({
@@ -1780,8 +1808,8 @@
                                 }
                             });
                         });
-                    }
-                });
+                    });
+                }
             }
 
             // 댓글 신고 (일반 & 비즈니스 게시판 분리)
@@ -2056,7 +2084,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
@@ -2076,7 +2104,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
                                     }
 
@@ -2090,12 +2118,13 @@
                                             '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>' +
+                                            '<div class="moreCo' + b_id + ' moreCo moreCo_see" style="display:none;">답글 보기(' + countr + ')개</div>' +
                                             '<div class="moreCoMo' + b_id + ' moreCo moreCoMo">댓글 수정</div>' +
                                             '<div class="moreCoDe' + b_id + ' moreCo moreCoDe">댓글 삭제</div>' +
                                             '<input type="hidden" value="' + b_id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
 
@@ -2107,7 +2136,7 @@
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo"  style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>';
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>';
                                     }
 
                                 }
@@ -2219,7 +2248,7 @@
                                                 m_id: memId,
                                                 t_comment: r_comment,
                                                 t_id: b_id,
-                                                m_id2:m_id2
+                                                m_id2: m_id2
                                             },
                                             success: function(data) {
                                                 console.log("memId : " +
@@ -2231,6 +2260,8 @@
                                                 $(".write_space").val('');
                                                 $(".replyCo").css("display", "none");
                                                 $('.rep_comment_upload').off('click');
+                                                $(".moreCo" + b_id).css("display", "block");
+                                                $(".moreCo" + b_id).trigger('click');
                                             },
                                             error: function(request, status, error) {
                                                 alert("code:" +
@@ -2603,7 +2634,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
@@ -2622,7 +2653,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
                                     }
 
@@ -2636,12 +2667,13 @@
                                             '<div class="moreCo">좋아요 <input type="button" class="lCount' + b_id + ' showlCount" value="" readonly>개</div>' +
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div>' +
+                                            '<div class="moreCo' + b_id + ' moreCo moreCo_see" style="display:none;">답글 보기(' + countr + ')개</div>' +
                                             '<div class="moreCoMo' + b_id + ' moreCo moreCoMo">댓글 수정</div>' +
                                             '<div class="moreCoDe' + b_id + ' moreCo moreCoDe">댓글 삭제</div>' +
                                             '<input type="hidden" value="' + b_id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
 
@@ -2653,7 +2685,7 @@
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo"  style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="'+id+'"></div>';
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>';
                                     }
 
                                 }
@@ -2765,7 +2797,7 @@
                                                 m_id: memId,
                                                 t_comment: r_comment,
                                                 t_id: b_id,
-                                                m_id2:m_id2
+                                                m_id2: m_id2
                                             },
                                             success: function(data) {
                                                 console.log("memId : " +
@@ -2777,6 +2809,8 @@
                                                 $(".write_space").val('');
                                                 $(".replyCo").css("display", "none");
                                                 $('.rep_comment_upload').off('click');
+                                                $(".moreCo" + b_id).css("display", "block");
+                                                $(".moreCo" + b_id).trigger('click');
                                             },
                                             error: function(request, status, error) {
                                                 alert("code:" +
@@ -3127,7 +3161,7 @@
                             var b_date = count.hComment[i].b_date;
 
                             // 댓글 append - cm2 // 댓글 좋아요 체크 trigger 사용
-                            htmls += '<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
+                            htmls += '<div class="com_detail two' + t_id + '"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                 id + '</div><div class="commentResult post_content">' +
                                 b_content + '</div><a class="commentViewAll"></a><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
@@ -3137,7 +3171,12 @@
                         }
 
                         $(a).html(htmls);
+                        var twoCount = $(".two" + t_id).length;
+                        console.log(t_id + "two:" + twoCount);
 
+                        if (twoCount > 0) {
+                            $(".comment_more" + t_id).css("display", "block");
+                        }
                         // 댓글 좋아요 체크 trigger 호출
                         $(".hidden_likechk").trigger('click');
                     }

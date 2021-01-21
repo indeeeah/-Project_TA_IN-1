@@ -24,6 +24,8 @@
 	body {
 	width: 100%;
 	height: 100%;
+	color: #262626;
+                        background-color: #FAFAFA;
 }
 
 #searchList_con {

@@ -272,7 +272,7 @@
                         <form class="form_up" action="storyInsert.do" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="my_name" value="${my_name }">
                             <label for="upfile"><i class="far fa-image" class="image_icon"></i></label>
-                            <input type="file" id="upfile" name="upfile" class="upfile" style="display:none;">
+                            <input type="file" id="upfile" name="upfile" class="upfile" style="display:none;" required>
                             <input type="hidden" name="m_id" class="m_id" value="${myProfile.m_id }">
                             <div>
                                 <input type="button" id="backto_main" class="btn backto_main" value="돌아가기">

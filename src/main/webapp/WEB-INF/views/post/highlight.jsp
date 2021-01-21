@@ -8,117 +8,229 @@
         <meta charset="UTF-8">
         <title>TA_IN 하이라이트</title>
         <style>
-            body {
-                width: 100%;
-                height: 100%;
-            }
-            
-            #story_con {
-                display: flex;
-                justify-content: center;
-                width: 100%;
-                height: 783px;
-            }
-            
-            #story_big_con {
-                width: 1000px;
-                max-height: 98%;
-                margin-top: 1%;
-                margin-bottom: 1%;
-            }
-            
-            #show_story {
-                max-width: 1000px;
-                height: 100%;
-                position: relative;
-                overflow: hidden;
-            }
-            
-            #story {
-                display: flex;
-                position: absolute;
-                top: 0px;
-                left: 0px;
-            }
-            
-            .story_photo_con {
-                width: 1000px;
-                height: 800px;
-            }
-            
-            .photo {
-                width: 1000px;
-                height: 700px;
-            }
-            
-            .story_id {
-                height: 32px;
-                width: 100%;
-                line-height: 32px;
-                font-size: 14px;
-            }
-            
-            #send_big_con {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                z-index: 4;
-                height: 64px;
-            }
-            
-            #send_con {
-                background-color: white;
-                display: flex;
-                justify-content: center;
-                width: 100%;
-            }
-            
-            .message {
-                height: 44px;
-                margin-top: 10px;
-                width: 80%;
-                outline: none;
-                box-sizing: border-box;
-            }
-            
-            .send {
-                height: 44px;
-                margin-top: 10px;
-                outline: none;
-                box-sizing: border-box;
-            }
+           body {
+                    width: 100%;
+                    height: 100%;
+                    color: #262626;
+                    background-color: #FAFAFA;
+                }
+                
+                #story_con {
+                    display: flex;
+                    justify-content: center;
+                    width: 100%;
+                    height: 900px;
+                }
+                
+                #story_big_con {
+                    width: 1000px;
+                    max-height: 98%;
+                    margin-top: 1%;
+                    margin-bottom: 1%;
+                }
+                
+                #show_story {
+                    max-width: 1000px;
+                    height: 100%;
+                    position: relative;
+                    overflow: hidden;
+                }
+                
+                #story {
+                    display: flex;
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                }
+                
+                .story_photo_con {
+                    width: 1000px;
+                    height: 900px;
+                }
+                
+                .photo {
+                    width: 450px;
+                    margin-left: 25px;
+                }
+                
+                .story_id {
+                    height: 32px;
+                    width: 100%;
+                    line-height: 32px;
+                    font-size: 14px;
+                }
+                
+                #send_big_con {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    z-index: 4;
+                    height: 64px;
+                }
+                
+                #send_con {
+                    background-color: white;
+                    display: flex;
+                    justify-content: center;
+                    width: 100%;
+                }
+                
+                .message {
+                    height: 44px;
+                    margin-top: 10px;
+                    width: 80%;
+                    outline: none;
+                    box-sizing: border-box;
+                }
+                
+                .send {
+                    height: 44px;
+                    margin-top: 10px;
+                    outline: none;
+                    box-sizing: border-box;
+                }
+                
+                .hashtag_con {
+                    margin-top: 20px;
+                    border-top: 1px Dashed #C7C7C7;
+                }
+                
+                .h_tag {
+                    width: 500px;
+                    padding: 0px;
+                    border: none;
+                    height: 40px;
+                    padding: 10px 0px 10px 0px;
+                    outline: none;
+                }
+                
+                .btn {
+                    height: 30px;
+                    border: none;
+                    margin-top: 15px;
+                    margin-bottom: 10px;
+                    background-color: transparent;
+                    cursor: pointer;
+                    color: rgb(56, 151, 240);
+                    outline: none;
+                    font-size: 13px;
+                }
+                
+                .form_up {
+                    padding: 0px 20px 0px 20px;
+                }
+                
+                label {
+                    cursor: pointer;
+                }
+                
+                .iicon {
+                    height: 100%;
+                    width: 20px;
+                }
+                
+                .upload {
+                    width: 540px;
+                    border: 1px solid #C7C7C7;
+                    background-color: white;
+                    margin-left: 229px;
+                }
+                
+                .upload_id {
+                    width: 505px;
+                    height: 25px;
+                    padding: 10px 15px 10px 20px;
+                    font-size: 13px;
+                    line-height: 25px;
+                    border-bottom: 1px solid #C7C7C7;
+                }
+                
+                .story_img_con {
+                    display: flex;
+                    justify-content: center;
+                    width: 80%;
+                    margin-left: 10%;
+                    margin-top: 30px;
+                }
+                
+                .image {
+                    width: 100%;
+                }
+                
+                .forflex {
+                    width: 1000px;
+                    display: flex;
+                    justify-content: center;
+                }
+                
+                .stcon {
+                    width: 540px;
+                    border: 1px solid #C7C7C7;
+                    background-color: white;
+                }
+                
+                label {
+                    cursor: pointer;
+                }
+
         </style>
     </head>
 
     <body>
         <jsp:include page="../header.jsp"></jsp:include>
         <div id="story_con">
-            <button type="button" class="slide_btn_prev" class="buttons">Prev</button>
-            <div id="story_big_con">
-                <div id="show_story">
-                    <div id="story">
+                <button type="button" class="slide_btn_prev" id="slide_btn_prev" class="buttons" style="display:none;">Prev</button>
+                <div id="story_big_con">
+                    <div id="show_story">
+                        <div id="story">
                         <c:if test="${not empty selectEachHighlight}">
                             <c:forEach var="vo" items="${selectEachHighlight}" varStatus="s">
                                 <div class="story_photo_con">
-                                    <div class="photo" style="background-image: url('${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img}'); background-repeat: no-repeat; background-position: center;">
-                                    </div>
-                                    <div id="send_big_con">
-                                        <div id="send_con">
-                                            <input type="text" id="message${vo.h_img}" class="message${vo.h_img} message" name="messagea" placeholder="${vo.m_id}님에게 메세지 보내기 ...">
+                                        <div class="forflex">
+                                            <div class="stcon">
+                                                <div class="upload_id">
+                                                    <div style="float:left;" onclick="goboard('${vo.m_id}');" style="cursor:pointer;">${vo.m_id }</div>
+                                                    <div style="float:right;display:inline;" class="more_s">
+                                                        <label for="slide_btn_prev"><i class="fas fa-chevron-left"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <label for="slide_btn_next"><i class="fas fa-chevron-right"></i></label>
+                                                    </div>
+                                                </div>
+                                                <div class="story_img_con">
+                                                    <img class="image">
+                                                </div>
+                                                <div class="form_up">
+                                                    <img class="photo photo${vo.m_id}" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img}">
+                                                        <div id="send_con" class="hashtag_con">
+                                                            <input type="text" id="message${vo.s_img}" class="message${vo.s_img} h_tag" name="messagea" placeholder="${vo.m_id}님에게 메세지 보내기 ...">
+                                                            <input type="button" onclick="sendMessage('${vo.m_id}','${my_id }','${vo.s_img}');" value="보내기" class="send btn">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </c:forEach>
-                        </c:if>
+                                </c:forEach>
+                            </c:if>
+                        </div>
                     </div>
                 </div>
+                <button type="button" class="slide_btn_next" id="slide_btn_next" class="buttons" style="display:none;">Next</button>
             </div>
-            <button type="button" class="slide_btn_next" class="buttons">Next</button>
-        </div>
 
     </body>
     <script>
+    // 계정 상세페이지 이동 
+    function goboard(id) {
+        var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
+        $(location).attr('href', url);
+    }
         $(function() {
+        	var count = $(".story_photo_con").length;
+        	console.log(count);
+        	if(count==1){
+        		$(".more_s").css("display", "none");
+        	} else{
+        		
+        	}
             // 게시물 슬라이드
             var slideWrapper = document.querySelector('#show_story');
             var slides = document.querySelectorAll('.story_photo_con');
