@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>비즈니스 메인</title>
-<link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
 <script src="http://code.jquery.com/jquery-3.4.0.js"></script> 
 <style>
 a{
@@ -406,6 +405,7 @@ input {
 	height:70%;
     overflow-x: hidden;
     min-height: 250px;
+    border-bottom:1px solid rgb(210,210,210);
     margin-bottom: 15px;
 }
 #mdContent {
@@ -874,8 +874,7 @@ ${listCount } : ${my_name } : ${id_img_fwr.m_id }
 	            <div id="profile_left_top_con">
 	                <div id="profile_name" for="${id_img_fwr.m_id }">${id_img_fwr.m_id }</div>
 	                <c:if test="${id_img_fwr.m_id eq my_name}">
-	                    <div id="setting" class="profile_btn">프로필 편집</div>
-	                    <i class="fas fa-cog setting_icon"></i>
+	                    <div id="setting" class="profile_btn"><a href="${pageContext.request.contextPath}/mManage.do">계정 관리</a></div>
 	                </c:if>
 	                <c:if test="${id_img_fwr.m_id ne my_name}">
 	                    <div id="send_message" class="profile_btn">메시지 보내기</div>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.tain.business.board.model.service.BsnBoardService;
 import com.project.tain.general.board.model.domain.GnBoard;
 import com.project.tain.general.board.model.service.GnBoardService;
 import com.project.tain.post.model.domain.TimeLine;
@@ -31,6 +32,9 @@ public class GnBoardController {
 	@Autowired
 	private TimeLineService tService;
 
+	@Autowired
+	private BsnBoardService bbService;
+	
 	public static final int LIMIT = 6;
 
 	@RequestMapping(value = "/gnMain", method = RequestMethod.GET)
@@ -58,7 +62,24 @@ public class GnBoardController {
 				mv.addObject("showpostCount", gService.showpostCount(m_id));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
-
+				System.out.println("timeLineList"+tService.showTimeLineList(my_name));
+				mv.addObject("timeLineList", tService.showTimeLineList(my_name));
+				mv.addObject("id_img_fwr", gService.showp_one(m_id));
+				mv.addObject("fw", gService.showp_two(m_id));
+				mv.addObject("gboard", gService.showp_three(m_id));
+				mv.addObject("bboard", gService.showp_four(m_id));
+				mv.addObject("storychk", gService.storychk(m_id));
+				mv.addObject("showpost", gService.showpost(m_id));
+				mv.addObject("highlight", gService.highlight(m_id));
+				mv.addObject("followchk", gService.followchk(my_name, m_id));
+				mv.addObject("recomFow", gService.recomFow(my_name, m_id));
+				mv.addObject("selectFollow", gService.selectFollow(m_id));
+				mv.addObject("selectFollower", gService.selectFollower(m_id));
+				mv.addObject("listCount", bbService.listCount(m_id));	// 게시물카운트
+				mv.addObject("category", bbService.selectCategory(m_id));//카테고리 목록
+				mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
+				mv.addObject("list", bbService.selectListPage(m_id, currentPage, LIMIT));	// 게시물 텍스트정보
+				mv.setViewName("business/bsnMain");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

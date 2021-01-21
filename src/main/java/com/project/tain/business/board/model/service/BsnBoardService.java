@@ -3,7 +3,6 @@ package com.project.tain.business.board.model.service;
 import java.util.List;
 
 import com.project.tain.business.board.model.domain.BsnBoard;
-import com.project.tain.member.model.vo.BusinessMemberVO;
 
 public interface BsnBoardService {
 	// 게시물 수
@@ -56,13 +55,4 @@ public interface BsnBoardService {
 	
 	// 계정 언팔로
 	public int unFollow(BsnBoard bb);
-	
-	// 비즈니스 계정 정보
-	public BusinessMemberVO bsnInfo(String m_id);
-	
-	// 팔로우 수
-	public int bsnInfoFollow(String m_id);
-	
-	// 팔로워 수
-	public int bsnInfoFollower(String m_id);
 }

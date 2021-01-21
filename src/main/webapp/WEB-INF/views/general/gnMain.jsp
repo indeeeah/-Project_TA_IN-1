@@ -1044,7 +1044,7 @@
                             <div id="profile_left_top_con">
                                 <div id="profile_name">${id_img_fwr.m_id }</div>
                                 <c:if test="${id_img_fwr.m_id eq my_name}">
-                                    <div id="setting" class="profile_btn">프로필 편집</div>
+                                    <div id="setting" class="profile_btn"><a href="${pageContext.request.contextPath}/mManage.do">계정 관리</a></div>
                                     <i class="fas fa-cog setting_icon"></i>
                                 </c:if>
                                 <c:if test="${id_img_fwr.m_id ne my_name}">

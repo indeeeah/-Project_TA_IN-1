@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.project.tain.business.board.model.dao.BsnBoardDao;
 import com.project.tain.business.board.model.domain.BsnBoard;
-import com.project.tain.member.model.vo.BusinessMemberVO;
 
 @Service("bbService")
 public class BsnBoardServiceImpl implements BsnBoardService{
@@ -133,22 +132,5 @@ public class BsnBoardServiceImpl implements BsnBoardService{
 		return bbDao.unFollow(bb);
 	}
 	
-	// 비즈니스 계정 정보
-	@Override
-	public BusinessMemberVO bsnInfo(String m_id) {
-		return bbDao.bsnInfo(m_id);
-	}
-
-	// 팔로우 수
-	@Override
-	public int bsnInfoFollow(String m_id) {
-		return bbDao.bsnInfoFollow(m_id);
-	}
-
-	// 팔로워 수
-	@Override
-	public int bsnInfoFollower(String m_id) {
-		return bbDao.bsnInfoFollower(m_id);
-	}
 	
 }
