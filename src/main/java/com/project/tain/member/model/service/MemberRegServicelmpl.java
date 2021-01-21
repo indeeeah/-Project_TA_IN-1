@@ -1,5 +1,7 @@
 package com.project.tain.member.model.service;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +35,7 @@ public class MemberRegServicelmpl implements MemberRegService {
 		} else if (dao.check_email(vo.getM_email()) == 1) {
 			return -2;	// 일반회원 중 같은 이메일을 사용하는 회원이 있음.
 		} else {
-			return dao.join(vo);   // 0: 회원가입실패, 1:회원가입성공
+			return dao.join(vo);   // 0: 회원가입실패, 1:g회원가입성공
 		}
 	}
 
@@ -46,6 +48,7 @@ public class MemberRegServicelmpl implements MemberRegService {
 
 	// 비즈니스 회원 가입
 	@Override
+	@Transactional
 	public int businessJoin(BusinessMemberVO vo) throws Exception {
 		if (dao.check_id(vo.getM_id()) == 0) {
 			return -1;   // 일반회원 아님
@@ -53,13 +56,15 @@ public class MemberRegServicelmpl implements MemberRegService {
 			return -2;   // 일반회원 메일인증 되지 않은 상태
 		} else {
 			String result = dao.check_businessId(vo);
+			System.out.println("result:"+ result);
 			if (result == null) {
-				return -3;   // 비즈니스 회원임.
+				return dao.businessJoin(vo);   
 			} else if(result.equals("N")) {
-				return -4;   // 비즈니스 회원이나 관리자 승인이 되지 않은 상태
-			} else {
-				return dao.businessJoin(vo);   // 0: 회원가입실패, 1: 회원가입성공
+				return -4;  
+			} else if(result.equals("Y")) {
+				return -3;   
 			}
+			return 0;
 		}		
 	}
 	
@@ -82,8 +87,8 @@ public class MemberRegServicelmpl implements MemberRegService {
 
 	// 아이디 찾기
 	@Override
-	public String find_id(String m_email) throws Exception {
-		return dao.find_id(m_email);
+	public String find_id(HashMap<String, Object> voMap) throws Exception {
+		return dao.find_id(voMap);
 	}
 
 	// 비밀번호 찾기
