@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bCateVO">
+	<resultMap type="bCateVO" id="bCateMap">
+		<id property="c_name" column="c_name" />
+		<result property="m_id" column="m_id" />
+	</resultMap>
+	
+	
+	
+	<select id="showbCate" parameterType="String" resultType="bCateVO" resultMap="bCateMap">
+	select * from Category where m_id = #{m_id}
+	</select>
+	
+	
+	<insert id="insertbCate" parameterType="bCateVO">
+	insert into Category
+	values(#{c_name}, #{m_id})
+	</insert>
+	
+	
+	<delete id="deletebCate" parameterType="bCateVO">
+	delete from Category
+	where c_name = #{c_name} and m_id = #{m_id}
+	</delete>
+	
+	<update id="updatebusinessboard" parameterType="bCateVO">
+	update businessboard
+	set c_name = null
+	where c_name = #{c_name} and m_id = #{m_id}
+	</update>
+</mapper>

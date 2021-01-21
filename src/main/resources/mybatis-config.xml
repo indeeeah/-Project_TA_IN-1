@@ -6,38 +6,26 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.project.tain.post.model.domain.TimeLine" alias="TimeLine"/>
-		<typeAlias type="com.project.tain.post.model.domain.SearchList" alias="SearchList"/>
-		<typeAlias type="com.project.tain.post.model.domain.Story" alias="Story"/>
-		<typeAlias type="com.project.tain.management.model.domain.MemberManage" alias="MemberManage"/>
-		<typeAlias type="com.project.tain.member.model.vo.MemberRegVO" alias="MemberRegVO" />
-		<typeAlias type="com.project.tain.member.model.vo.BusinessMemberVO" alias="BusinessMemberVO" />
-		<typeAlias type="com.project.tain.business.board.model.domain.BsnBoard" alias="BsnBoard"/>
-		<typeAlias type="com.project.tain.business.board.model.domain.BsnBoardAdd" alias="BsnBoardAdd"/>
-		<typeAlias type="com.project.tain.business.board.model.domain.BsnBoardReply" alias="BsnBoardReply"/>
-		<typeAlias type="com.project.tain.management.model.domain.BsMemberManage" alias="BsMemberManage"/>
-		<typeAlias type="com.project.tain.management.model.domain.BoardAllManage" alias="BoardAllManage"/>
-		<typeAlias type="com.project.tain.general.board.model.domain.GnBoard" alias="GnBoard"/>
-		<typeAlias type="com.project.tain.general.board.model.domain.GnWrite" alias="GnWrite"/>
-		<typeAlias type="com.project.tain.management.model.domain.ReportAllManage" alias="ReportAllManage"/>
-		
-		
+		<typeAlias type="com.project.tain.membermanage.model.vo.mMemberVO" alias="mMemberVO"/>
+		<typeAlias type="com.project.tain.membermanage.model.vo.mCartVO" alias="mCartVO"/>
+		<typeAlias type="com.project.tain.membermanage.model.vo.mCartVO" alias="mFollowVO"/>
+		<typeAlias type="com.project.tain.membermanage.model.vo.mLikeVO" alias="mLikeVO"/>
+		<typeAlias type="com.project.tain.membermanage.model.vo.mOrderVO" alias="mOrderVO"/>
+		<typeAlias type="com.project.tain.businessmembermanage.model.vo.bMemberVO" alias="bMemberVO"/>
+		<typeAlias type="com.project.tain.businessmembermanage.model.vo.bAdVO" alias="bAdVO"/>
+		<typeAlias type="com.project.tain.businessmembermanage.model.vo.bCateVO" alias="bCateVO"/>
+		<typeAlias type="com.project.tain.businessmembermanage.model.vo.bOrderVO" alias="bOrderVO"/>
 	</typeAliases>
 
 	<mappers>
-		<mapper resource="mappers/timeline-mapper.xml"/>
-		<mapper resource="mappers/searchList-mapper.xml" />
-		<mapper resource="mappers/story-mapper.xml" />
-		<mapper resource="mappers/membermanage-mapper.xml"/>
-		<mapper resource="mappers/bsmemberManage-mapper.xml"/>
-		<mapper resource="mappers/memberReg-mapper.xml" />
-		<mapper resource="mappers/bsnBoard-mapper.xml"/>
-		<mapper resource="mappers/bsnBoardReply-mapper.xml"/>
-		<mapper resource="mappers/boardAllManage-mapper.xml"/>
-		<mapper resource="mappers/gnBoard-mapper.xml"/>
-		<mapper resource="mappers/gnWrite-mapper.xml"/>
-		<mapper resource="mappers/reportAllManage-mapper.xml"/>
-		
-
+		<mapper resource="mappers/mManage-mapper.xml" />
+		<mapper resource="mappers/mCart-mapper.xml" />
+		<mapper resource="mappers/mFollow-mapper.xml" />
+		<mapper resource="mappers/mLike-mapper.xml" />
+		<mapper resource="mappers/mOrder-mapper.xml" />
+		<mapper resource="mappers/bOrder-mapper.xml" />
+		<mapper resource="mappers/bMember-mapper.xml" />
+		<mapper resource="mappers/bAd-mapper.xml" />
+		<mapper resource="mappers/bCate-mapper.xml" />
 	</mappers>
 </configuration>

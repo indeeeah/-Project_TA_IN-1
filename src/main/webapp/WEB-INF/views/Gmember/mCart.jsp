@@ -76,6 +76,10 @@ th, td {
 				});
 				
 				$("#orderlist").click(function(){
+					if(${cartlist.size() eq 0}){
+						alert("장바구니가 비어있습니다.");
+						return false;
+					}
 					var bb_id =[];
 					var od_amount =[];
 					var presult =[];
@@ -91,6 +95,10 @@ th, td {
 				});
 				
 				$("#deletelist").click(function(){
+					if(${cartlist.size() eq 0}){
+						alert("장바구니가 비어있습니다.");
+						return false;
+					}
 					if(confirm("체크하신 상품들을 전부 삭제하시겠습니까?")==true){
 						var bb_id = "";
 						for(var i = 1; i < $("#cartlist tr").length; i++){
@@ -136,6 +144,7 @@ th, td {
 		</div>
 		<div id="contents" style="padding-top: 30px;">
 			<span style="margin-bottom: 50px; color:white; background:gray;">장바구니</span>
+			<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
 			<table id="cartlist" style="font-size: 10pt; margin: 40px 0 60px 0;">
 				<tr>
 					<td align="center" width="3%"><input type="checkbox" checked id="checkall"></td>

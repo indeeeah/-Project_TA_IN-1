@@ -57,7 +57,7 @@
 	<!-- 주문한 상품 사진 보기 -->
 	<select id="showOrderImg" parameterType="String"
 		resultType="String">
-		select bb_img1
+		select BBA.bb_img1
 		from BusinessBoard BB, BusinessBoardAdd BBA
 		where BB.bb_id = BBA.bb_id and BB.bb_id = #{bb_id}
 	</select>

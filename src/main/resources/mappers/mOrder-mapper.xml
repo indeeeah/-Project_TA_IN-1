@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mOrderVO">
 	<resultMap type="mOrderVO" id="mOrderMap">
-	<id property="bb_id" column="bb_id"/>
+	<id property="od_id" column="od_id"/>
+	<result property="bb_id" column="bb_id"/>
 	<result property="m_id" column="m_id"/>
 	<result property="od_date" column="od_date"/>
 	<result property="od_price" column="od_price"/>
@@ -18,7 +19,8 @@
 	</resultMap>
 	<!-- 주문하기 -->
 	<insert id="insertOrder" parameterType="mOrderVO">
-	insert into orderdetail values(
+	insert into orderdetail values
+	('OD'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(O_SEQ.NEXTVAL,3,'0'),
 	#{bb_id}, #{m_id}, sysdate, #{od_size}, #{od_amount}, #{od_options}, #{od_price},  
 	#{od_name}, #{od_phone}, #{od_addr1}, #{od_addr2}, #{od_addr3}, 'N'
 	)
@@ -26,6 +28,6 @@
 	
 	<!-- 주문내역 조회(구매자) -->
 	<select id="showOrderList" parameterType="String" resultType="mOrderVO" resultMap="mOrderMap">
-	select * from orderdetail where m_id=#{m_id} ORDER BY od_date DESC
+	select * from orderdetail where m_id=#{m_id} ORDER BY od_id ASC
 	</select>
 </mapper>

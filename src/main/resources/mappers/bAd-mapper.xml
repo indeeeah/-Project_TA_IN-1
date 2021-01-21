@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bAdVO">
+	<resultMap type="bAdVO" id="bAdMap">
+		<id property="s_id" column="s_id" />
+		<result property="m_id" column="m_id" />
+		<result property="s_img" column="s_img" />
+		<result property="s_date" column="s_date" />
+		<result property="s_link" column="s_link" />
+		<result property="s_type" column="s_type" />
+	</resultMap>
+	
+	<!-- 등록된 광고 조회 -->
+	<select id="showbAd" parameterType="String" resultType="bAdVO" resultMap="bAdMap">
+	select *
+	from Story
+	where m_id=#{m_id} and s_type='A'
+	</select>
+	
+	<!-- 광고 추가 -->
+	<insert id="insertbAd" parameterType="bAdVO" flushCache="true">
+	insert into Story
+	values
+	('ST'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(S_SEQ.NEXTVAL,3,'0'),
+	#{m_id},
+	#{s_img},
+	sysdate,
+	#{s_link},
+	'A')
+	</insert>
+	
+	<!-- 광고 삭제 -->
+	<delete id="deletebAd" parameterType="String">
+	delete from Story
+	where s_id = #{s_id}
+	</delete>
+</mapper>

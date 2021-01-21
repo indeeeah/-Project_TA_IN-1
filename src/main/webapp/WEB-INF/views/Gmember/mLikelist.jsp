@@ -38,6 +38,7 @@ a {
 		</div>
 		<div id="contents" style="padding-top: 30px;">
 			<span style="color:white; background:gray;">좋아요 누른 목록</span>
+			<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
 			<div id="submenu" style="padding-top: 30px;">
 				<input type="button" id="all" class="submenu" value="전체"
 					style="background: white; text-align: center; width: 120px; border: 2px solid black;"

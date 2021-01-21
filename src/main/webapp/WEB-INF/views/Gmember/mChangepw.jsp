@@ -101,6 +101,7 @@ td {
 		</div>
 		<div id="contents" style="padding-top: 30px;">
 			<span style="color:white; background:gray;">비밀번호 변경</span>
+			<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
 			<form id="changepw" method="post" action="changepw.do"
 				style="padding-bottom: 75px; padding-top: 20px;">
 				<table id="profiletable"

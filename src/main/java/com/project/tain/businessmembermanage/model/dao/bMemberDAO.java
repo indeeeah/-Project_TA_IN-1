@@ -20,7 +20,7 @@ public class bMemberDAO {
 	}
 	
 	public int insertbMember(bMemberVO bvo) {
-		return sqlSession.update("bMemberVO.insertbMember", bvo);
+		return sqlSession.insert("bMemberVO.insertbMember", bvo);
 	}
 
 	public int deletebMember(String m_id) {

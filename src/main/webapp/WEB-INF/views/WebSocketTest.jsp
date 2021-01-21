@@ -21,14 +21,17 @@
 							"ws://localhost:8090/tain/replyEcho?ID=${ID}");
 					socket = ws;
 
+					//접속 처리
 					ws.onopen = function() {
 						console.log('Info: connection opened.');
 					};
 
+					//메시지 처리
 					ws.onmessage = function(event) {
 						console.log("ReceiveMessage : ", event.data + '\n');
 					};
-
+					
+					//접속 끊겼을때
 					ws.onclose = function(event) {
 						console.log('Info: connection closed.');
 						//setTimeout(function(){connect();}, 1000);   // retry connection!!

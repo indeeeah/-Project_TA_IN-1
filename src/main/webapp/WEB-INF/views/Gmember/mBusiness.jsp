@@ -121,13 +121,15 @@ button:focus {
 		</div>
 		<c:if test="${bMember eq null}">
 		<div id="ask" style="display: inline-block;width: 74.9%;text-align: center;margin:0 auto;border-left:1px solid #D5D5D5;">
-			<br><br><br><br>
-			<h4>비즈니스 계정으로 전환하시면 상품을 판매하고 홍보할 수 있습니다.<br><br>비즈니스 계정으로 전환 하시겠습니까?</h4>
+			<br><br><span style="color:white; background:gray;">비즈니스 계정 전환</span>
+			<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;"><br><br><br><br><br>
+			<h4>비즈니스 계정으로 전환하시면 상품을 판매하고 홍보할 수 있습니다.<br><br>비즈니스 계정으로 전환 하시겠습니까?</h4><br><br>
 			<br><br><input type="button" id="bmc" style="background: #0095f6; border-style: none; padding: 5px 5px 5px 5px; color: white;"
-			value="확인"><br><br><br><br><br><br><br>
+			value="확인"><br><br><br><br><br>
 		</div>
 			<div id="contents" style="padding-top: 30px; display:none;">
 				<span style="color: white; background: gray;">비즈니스계정 전환 신청</span>
+				<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
 				<form id="editProfile" action="insertbMember.do" method="post"
 					style="padding-bottom: 30px; padding-top: 30px;">
 					<table id="profiletable" style="margin: 0 auto;">
@@ -139,7 +141,7 @@ button:focus {
 								<td width="5%">*</td>
 								<td width="30%">회원 ID</td>
 								<td><input type="text" id="m_id" name="m_id" required
-									readonly value="Master" style="border-style: none;"></td>
+									readonly value="${my_name}" style="border-style: none;"></td>
 							</tr>
 							<tr>
 								<td colspan="3">&nbsp;</td>
@@ -240,6 +242,7 @@ button:focus {
 		<c:if test="${bMember ne null and bMember.bm_approval eq 'Y'}">
 			<div id="contents" style="padding-top: 30px;">
 				<span style="color: white; background: gray;">비즈니스 계정 관리</span>
+				<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
 				<div id="submenu" style="padding-top: 30px;">
 					<input type="button" id="all" class="submenu" value="비즈니스 정보 "
 						style="background: white; text-align: center; width: 120px; border: 2px solid black;"
@@ -277,12 +280,12 @@ button:focus {
 								<td width="5%">*</td>
 								<td width="30%">계정분류</td>
 								<td><select id="bm_cate" name="bm_cate" style="width:177px;" required>
-								<option value="${bMember.bm_cate }">선택해주세요.</option>
-								<option value="1">패션</option>
-								<option value="2">전자제품</option>
-								<option value="3">잡화</option>
-								<option value="4">화장품</option>
-								<option value="5">기타</option>
+								<option>선택해주세요.</option>
+								<option value="1"<c:if test="${bMember.bm_cate eq 1 }">selected</c:if>>패션</option>
+								<option value="2"<c:if test="${bMember.bm_cate eq 2 }">selected</c:if>>전자제품</option>
+								<option value="3"<c:if test="${bMember.bm_cate eq 3 }">selected</c:if>>잡화</option>
+								<option value="4"<c:if test="${bMember.bm_cate eq 4 }">selected</c:if>>화장품</option>
+								<option value="5"<c:if test="${bMember.bm_cate eq 5 }">selected</c:if>>기타</option>
 								</select></td>
 							</tr>
 							<tr>
@@ -370,6 +373,7 @@ button:focus {
 		<c:if test="${bMember ne null and bMember.bm_approval eq 'N'}">
 		<div id="contents" style="padding-top: 30px;">
 				<span style="color: white; background: gray;">비즈니스 전환 승인 대기중입니다.</span>
+				<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
 				<br>
 				<br>
 				<br>

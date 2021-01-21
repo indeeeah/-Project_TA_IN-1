@@ -3,17 +3,20 @@ package com.project.tain.membermanage.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.tain.businessmembermanage.model.service.bAdServiceImpl;
+import com.project.tain.businessmembermanage.model.service.bCateServiceImpl;
 import com.project.tain.businessmembermanage.model.service.bMemberServiceImpl;
+import com.project.tain.businessmembermanage.model.service.bOrderServiceImpl;
+import com.project.tain.businessmembermanage.model.vo.bAdVO;
+import com.project.tain.businessmembermanage.model.vo.bCateVO;
 import com.project.tain.businessmembermanage.model.vo.bMemberVO;
 import com.project.tain.membermanage.model.service.mCartServiceImpl;
 import com.project.tain.membermanage.model.service.mLikeServiceImpl;
@@ -43,13 +51,31 @@ public class mMangeController {
 	private mOrderServiceImpl mOrderServiceImpl;
 	@Autowired
 	private bMemberServiceImpl bMemberServiceImpl;
+	@Autowired
+	private bAdServiceImpl bAdServiceImpl;
+	@Autowired
+	private bCateServiceImpl bCateServiceImpl;
+	@Autowired
+	private bOrderServiceImpl bOrderServiceImpl;
 
+	@RequestMapping(value = "/IdSet.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String memberBusiness(HttpServletRequest request) {
+		return "IdSet";
+	}
+	
+	@RequestMapping(value = "/MemberIdSet.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView memberID(HttpServletRequest request, @RequestParam(name="m_id") String m_id, ModelAndView mv, HttpSession session) {
+		session.setAttribute("my_name", m_id);
+		mv.setViewName("redirect:/mManage.do");
+		return mv;
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/mManage.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView memberManage(ModelAndView mv) {
-		String m_id = "Master";
+	public ModelAndView memberManage(ModelAndView mv, HttpServletRequest request, HttpSession session) {
+		String my_name = (String) session.getAttribute("my_name");
 		try {
-			mv.addObject("profile", mMemberServiceImpl.showProfile(m_id));
+			mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 			mv.setViewName("Gmember/mManage");
 		} catch (Exception e) {
 			mv.addObject("errorMsg", e.getMessage());
@@ -78,30 +104,33 @@ public class mMangeController {
 			HttpServletRequest request, HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		String m_id = "Master";
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
 		try {
 			if (report != null || !report.getOriginalFilename().equals("")) {
 				removeFile(mvo.getM_img(), request);
 				saveFile(report, request);
 			}
 			PrintWriter pw = response.getWriter();
-			mMemberServiceImpl.updateProfileImg(m_id, report.getOriginalFilename());
+			mMemberServiceImpl.updateProfileImg(my_name, report.getOriginalFilename());
 			pw.println("<script>alert('프로필 사진이 수정되었습니다.'); location.href='/tain/mManage.do'; </script>");
 			pw.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
 
 	@RequestMapping(value = "/deleteProfileImg.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public void deleteProfileImg(mMemberVO mvo, HttpServletRequest request, HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		String m_id = "Master";
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
 		try {
 			removeFile(mvo.getM_img(), request);
 			PrintWriter pw = response.getWriter();
-			mMemberServiceImpl.updateProfileImg(m_id, "");
+			mMemberServiceImpl.updateProfileImg(my_name, "");
 			pw.println("<script>alert('프로필 사진이 삭제되었습니다.'); location.href='/tain/mManage.do'; </script>");
 			pw.flush();
 		} catch (IOException e) {
@@ -155,10 +184,11 @@ public class mMangeController {
 	}
 
 	@RequestMapping(value = "/mChangepw.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView memberChangepw(ModelAndView mv) {
-		String m_id = "Master";
+	public ModelAndView memberChangepw(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
 		try {
-			mv.addObject("profile", mMemberServiceImpl.showProfile(m_id));
+			mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 			mv.setViewName("Gmember/mChangepw");
 		} catch (Exception e) {
 			mv.addObject("errorMsg", e.getMessage());
@@ -172,10 +202,11 @@ public class mMangeController {
 			HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		String m_id = "Master";
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
 		try {
 			PrintWriter pw = response.getWriter();
-			mMemberServiceImpl.changepw(m_id, newpw);
+			mMemberServiceImpl.changepw(my_name, newpw);
 			pw.println("<script>alert('비밀번호가 변경되었습니다.'); location.href='/tain/mManage.do'; </script>");
 			pw.flush();
 		} catch (IOException e) {
@@ -187,15 +218,16 @@ public class mMangeController {
 	public ModelAndView showCart(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		String m_id = "Master";
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
 		try {
 			int price = 0;
-			for (int i = 0; i < mCartServiceImpl.showCart(m_id).size(); i++) {
-				price += mCartServiceImpl.showCart(m_id).get(i).getBb_price();
+			for (int i = 0; i < mCartServiceImpl.showCart(my_name).size(); i++) {
+				price += mCartServiceImpl.showCart(my_name).get(i).getBb_price();
 			}
 			mv.addObject("productprice", price);
 			mv.addObject("allprice", price + 3000);
-			mv.addObject("cartlist", mCartServiceImpl.showCart(m_id));
+			mv.addObject("cartlist", mCartServiceImpl.showCart(my_name));
 			mv.setViewName("Gmember/mCart");
 		} catch (Exception e) {
 			mv.addObject("errorMsg", e.getMessage());
@@ -229,7 +261,7 @@ public class mMangeController {
 			mCartServiceImpl.deleteCart(bid);
 		}
 		PrintWriter pw = response.getWriter();
-		pw.println("<script>alert('모두 삭제 되었습니다.'); location.href='/tain/mCart.do'; </script>");
+		pw.println("<script>alert('삭제 되었습니다.'); location.href='/tain/mCart.do'; </script>");
 		pw.flush();
 	}
 
@@ -237,7 +269,8 @@ public class mMangeController {
 	public ModelAndView memberBuy(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		String m_id = "Master";
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
 
 		String[] p = request.getParameterValues("bb_id");
 		String[] bb_id = p[0].split(",");
@@ -249,10 +282,10 @@ public class mMangeController {
 		try {
 			List<mCartVO> list = new ArrayList<>();
 			for (int i = 0; i < bb_id.length; i++) {
-				list.add(mCartServiceImpl.showOrder(m_id, bb_id[i]));
+				list.add(mCartServiceImpl.showOrder(my_name, bb_id[i]));
 			}
 			mv.addObject("realval", realval);
-			mv.addObject("profile", mMemberServiceImpl.showProfile(m_id));
+			mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 			mv.addObject("presult", presult);
 			mv.addObject("amount", od_amount);
 			mv.addObject("orderlist", list);
@@ -269,11 +302,12 @@ public class mMangeController {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		String[] arr = request.getParameter("param").split("/");
-		String m_id = "Master";
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
 		for(int i = 0; i < arr.length; i++) {
 			String[] insert = arr[i].split(",");
 			ovo.setBb_id(insert[0]);
-			ovo.setM_id(m_id);
+			ovo.setM_id(my_name);
 			ovo.setOd_size(insert[1]);
 			ovo.setOd_amount(Integer.parseInt(insert[2]));
 			ovo.setOd_options(insert[3]);
@@ -284,6 +318,7 @@ public class mMangeController {
 			ovo.setOd_addr2(insert[8]);
 			ovo.setOd_addr3(insert[9]);
 			mOrderServiceImpl.insertOrder(ovo);
+			mCartServiceImpl.deleteCart(insert[0]);
 		}
 		PrintWriter pw = response.getWriter();
 		pw.println("<script>alert('주문이 완료되었습니다. 구매목록에서 확인하실 수 있습니다.'); location.href='/tain/mBuylist.do'; </script>");
@@ -291,66 +326,71 @@ public class mMangeController {
 	}
 
 	@RequestMapping(value = "/mBuylist.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView memberOrderList(ModelAndView mv){
-		String m_id = "Master";
+	public ModelAndView memberOrderList(ModelAndView mv, HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
 		Map<String, String> map = new HashMap<String, String>();
-		for(int i = 0; i < mOrderServiceImpl.showOrderList(m_id).size(); i++) {
-			map.put("bb_img", mCartServiceImpl.showOrderImg(mOrderServiceImpl.showOrderList(m_id).get(i).getBb_id()));
+		for(int i = 0; i < mOrderServiceImpl.showOrderList(my_name).size(); i++) {
+			map.put("bb_img", mCartServiceImpl.showOrderImg(mOrderServiceImpl.showOrderList(my_name).get(i).getBb_id()));
 		}
-		
 		mv.addObject("orderimg", map);
-		mv.addObject("orderlist", mOrderServiceImpl.showOrderList(m_id));
+		mv.addObject("orderlist", mOrderServiceImpl.showOrderList(my_name));
 		mv.setViewName("Gmember/mBuylist");
 		return mv;
 	}
 
 	@RequestMapping(value = "/mLikelist.do", method = RequestMethod.GET)
-	public ModelAndView memberLikelist(ModelAndView mv) {
-		String m_id = "Master";
-		mv.addObject("likelist", mLikeServiceImpl.showLike(m_id));
+	public ModelAndView memberLikelist(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		mv.addObject("likelist", mLikeServiceImpl.showLike(my_name));
 		mv.setViewName("Gmember/mLikelist");
 		return mv;
 	}
 
 	@RequestMapping(value = "/mLikelistboard.do", method = RequestMethod.GET)
-	public ModelAndView memberLikelistboard(ModelAndView mv) {
-		String m_id = "Master";
-		mv.addObject("likelist", mLikeServiceImpl.showLike(m_id));
+	public ModelAndView memberLikelistboard(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		mv.addObject("likelist", mLikeServiceImpl.showLike(my_name));
 		mv.setViewName("Gmember/mLikelistboard");
 		return mv;
 	}
 
 	@RequestMapping(value = "/mLikelistbboard.do", method = RequestMethod.GET)
-	public ModelAndView memberLikelistbboard(ModelAndView mv) {
-		String m_id = "Master";
-		mv.addObject("likelist", mLikeServiceImpl.showLike(m_id));
+	public ModelAndView memberLikelistbboard(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		mv.addObject("likelist", mLikeServiceImpl.showLike(my_name));
 		mv.setViewName("Gmember/mLikelistbboard");
 		return mv;
 	}
 
 	@RequestMapping(value = "/mBusiness.do", method = RequestMethod.GET)
-	public ModelAndView mBusiness(ModelAndView mv) {
-		String m_id ="Master";
-		if(bMemberServiceImpl.showbMember(m_id) != null) {
-			mv.addObject("bMemAddr", bMemberServiceImpl.showbMember(m_id).getBm_addr().split("/"));
+	public ModelAndView mBusiness(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		if(bMemberServiceImpl.showbMember(my_name) != null) {
+			mv.addObject("bMemAddr", bMemberServiceImpl.showbMember(my_name).getBm_addr().split("/"));
 		}
-		mv.addObject("bMember", bMemberServiceImpl.showbMember(m_id));
+		mv.addObject("my_name", my_name);
+		mv.addObject("bMember", bMemberServiceImpl.showbMember(my_name));
 		mv.setViewName("Gmember/mBusiness");
 		return mv;
 	}
 	
 	@RequestMapping(value = "/insertbMember.do", method = RequestMethod.POST)
-	public void insertbMember(bMemberVO bvo, HttpServletResponse response) throws IOException {
+	public void insertbMember(bMemberVO bvo, HttpServletResponse response, HttpServletRequest request) throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter pw = response.getWriter();
-		pw.println("<script>alert('비즈니스 전환 신청되었습니다. 관리자 승인이 되어야 전환 됩니다.'); location.href='/tain/mManage.do'; </script>");
-		pw.flush();
-		bMemberServiceImpl.insertbMember(bvo);
+			PrintWriter pw = response.getWriter();
+			bMemberServiceImpl.insertbMember(bvo);
+			pw.println("<script>alert('비즈니스 전환 신청되었습니다. 관리자 승인이 되어야 전환 됩니다.'); location.href='/tain/mBusiness.do'; </script>");
+			pw.flush();
 	}
 	
 	@RequestMapping(value = "/updatebMember.do", method = RequestMethod.POST)
-	public void updatebMember(bMemberVO bvo, HttpServletResponse response) throws IOException {
+	public void updatebMember(bMemberVO bvo, HttpServletResponse response, HttpServletRequest request) throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter pw = response.getWriter();
@@ -360,36 +400,147 @@ public class mMangeController {
 	}
 	
 	@RequestMapping(value = "/bOut.do", method = RequestMethod.GET)
-	public ModelAndView bOut(ModelAndView mv) {
+	public ModelAndView bOut(ModelAndView mv, HttpServletRequest request) {
 		mv.setViewName("Bmember/bOut");
 		return mv;
 	}
 	
 	@RequestMapping(value = "/bDelete.do", method = RequestMethod.GET)
-	public void bDelete(HttpServletResponse response) throws IOException {
-		String m_id = "Master";
-		bMemberServiceImpl.deletebMember(m_id);
+	public void bDelete(HttpServletResponse response, HttpServletRequest request) throws IOException {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		bMemberServiceImpl.deletebMember(my_name);
 		response.sendRedirect("mBusiness.do");
 	}
 	
+	
+	@RequestMapping(value = "/bAD.do", method = RequestMethod.GET)
+	public ModelAndView bAD(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		mv.addObject("ADList", bAdServiceImpl.showbAd(my_name));
+		mv.setViewName("Bmember/bAD");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/insertbAd.do", method = RequestMethod.POST)
+	public void insertbAd(bAdVO bvo, @RequestParam(name = "upfile") MultipartFile report,
+			HttpServletRequest request, HttpServletResponse response) {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		bvo.setM_id(my_name);
+		bvo.setS_img(report.getOriginalFilename());
+		try {
+			PrintWriter pw = response.getWriter();
+			bAdServiceImpl.insertbAd(bvo);
+			saveFile(report, request);
+			pw.println("<script>alert('광고 컨텐츠가 추가되었습니다.'); location.href='/tain/bAD.do'; </script>");
+			pw.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value = "/deletebAd.do", method = RequestMethod.GET)
+	public void deletebAd(bAdVO bvo, @RequestParam(name = "s_id") String s_id, HttpServletResponse response, HttpServletRequest request) throws IOException {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter pw = response.getWriter();
+		pw.println("<script>alert('광고 컨텐츠가 삭제되었습니다.'); location.href='/tain/bAD.do'; </script>");
+		pw.flush();
+		bAdServiceImpl.deletebAd(s_id);
+	}
+
 	@RequestMapping(value = "/bCategory.do", method = RequestMethod.GET)
-	public ModelAndView bCategory(ModelAndView mv) {
-		
+	public ModelAndView bCategory(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		List<String> list = new ArrayList<>();
+		for(int i = 0; i < bCateServiceImpl.showbCate(my_name).size(); i++) {
+			String r,g,b;
+			Random generator = new Random();
+			r = Integer.toString(generator.nextInt(256));
+			g = Integer.toString(generator.nextInt(256));
+			b = Integer.toString(generator.nextInt(256));
+			String color = r+","+g+","+b;
+			list.add(color);
+		}
+		mv.addObject("color", list);
+		mv.addObject("CateList", bCateServiceImpl.showbCate(my_name));
 		mv.setViewName("Bmember/bCategory");
 		return mv;
 	}
 	
-	@RequestMapping(value = "/bAD.do", method = RequestMethod.GET)
-	public ModelAndView bAD(ModelAndView mv) {
-		
-		mv.setViewName("Bmember/bAD");
-		return mv;
+	@RequestMapping(value = "/insertbCate.do", method = RequestMethod.POST)
+	public void insertbCate(bCateVO bvo, HttpServletRequest request, HttpServletResponse response) {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		bvo.setM_id(my_name);
+		try {
+			PrintWriter pw = response.getWriter();
+			bCateServiceImpl.insertbCate(bvo);
+			pw.println("<script>alert('카테고리가 추가되었습니다.'); location.href='/tain/bCategory.do'; </script>");
+			pw.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-
+	
+	@RequestMapping(value = "/deletebCate.do", method = RequestMethod.GET)
+	public void deletebCate(bCateVO bvo, @RequestParam(name = "c_name") String c_name, HttpServletResponse response, HttpServletRequest request) throws IOException {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		bvo.setC_name(c_name);
+		bvo.setM_id(my_name);
+		bCateServiceImpl.deletebCate(bvo);
+		PrintWriter pw = response.getWriter();
+		pw.println("<script>alert('해당 카테고리가 삭제되었습니다.'); location.href='/tain/bCategory.do'; </script>");
+		pw.flush();
+	}
+	
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/bOrder.do", method = RequestMethod.GET)
-	public ModelAndView bOrder(ModelAndView mv) {
-		
+	public ModelAndView bOrder(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		Date date = new Date(System.currentTimeMillis());
+		Date enddate = new Date(date.getYear(), date.getMonth(), date.getDate());
+		Date startdate = new Date(date.getYear(), date.getMonth()-3, date.getDate());
+		mv.addObject("startdate", startdate);
+		mv.addObject("enddate", enddate);
+		mv.addObject("bOrderList", bOrderServiceImpl.manageOrderList(my_name, startdate, enddate));
 		mv.setViewName("Bmember/bOrder");
 		return mv;
+	}
+	
+	@RequestMapping(value = "/bOrderDateSearch.do", method = RequestMethod.GET)
+	public ModelAndView bOrderdate(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		Date enddate = Date.valueOf(request.getParameter("enddate"));
+		Date startdate = Date.valueOf(request.getParameter("startdate"));
+		mv.addObject("startdate", startdate);
+		mv.addObject("enddate", enddate);
+		mv.addObject("bOrderList", bOrderServiceImpl.manageOrderList(my_name, startdate, enddate));
+		mv.setViewName("Bmember/bOrder");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/bOrderStatus.do", method = RequestMethod.GET)
+	public void bOrderStatus( HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		String od_status = request.getParameter("od_status");
+		String od_id = request.getParameter("od_id");
+		bOrderServiceImpl.updateOrderStatus(od_status, od_id);
+		PrintWriter pw = response.getWriter();
+		pw.println("<script>alert('배송정보가 변경되었습니다.'); location.href='/tain/bOrder.do'; </script>");
+		pw.flush();
 	}
 }

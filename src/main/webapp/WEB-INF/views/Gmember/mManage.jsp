@@ -225,7 +225,7 @@ button:focus {
 				<hr style="color: #D5D5D5;">
 				<label for="upfile" id="imgupload"
 					style="display: inline-block; width: 100%; padding: 10px 0 10px 0; border-style: none; background: white; color: #0095f6; font-size: 12pt; font-weight: bold; cursor: pointer">사진
-					업로드</label> <input id="upfile" type="file" name="upfile"
+					업로드</label> <input id="upfile" type="file" name="upfile" accept="image/gif, image/jpeg, image/png"
 					onchange="updatepimg()" style="display: none;">
 				<hr style="color: #D5D5D5;">
 				<input type="button" id="imgdelete"
@@ -250,6 +250,7 @@ button:focus {
 		</div>
 		<div id="contents" style="padding-top: 30px;">
 			<span style="color:white; background:gray;">회원정보 수정</span>
+			<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
 			<form id="editProfile" name="myForm" method="post"
 				style="padding-bottom: 30px; padding-top: 30px;">
 				<table id="profiletable" style="margin: 0 auto;">

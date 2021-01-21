@@ -58,8 +58,4 @@ public class mDetailController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/IdSet.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public String memberBusiness() {
-		return "IdSet";
-	}
 }

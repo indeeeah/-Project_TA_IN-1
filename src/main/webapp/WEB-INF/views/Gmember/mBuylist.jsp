@@ -32,14 +32,35 @@ a {
 		</div>
 		<div id="contents" style="padding-top: 30px;">
 			<span style="color:white; background:gray;">구매목록 조회</span>
+			<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
+			<c:if test="${orderimg.size() == 0}">
+					<tr>
+						<td colspan="7" style="text-align: center; border-style: none;"><br>
+							<br> <br> <br> <br>구매목록이 비어있습니다.<br> <br>
+							<br> <br> <br> <br> <br> <br> <br>
+							<br> <br></td>
+					</tr>
+				</c:if>
 			<div style="padding-top: 30px;">
+			<div style="clear:both;height:40px;"></div>
 				<c:if test="${orderimg.size() != 0}">
 					<c:forEach var="ol" items="${orderlist}" varStatus="status">
-					<img src="${orderimg }" width="150px" height="150px" style="float:left;">${ol }<br><br><br><br><br>
-			</c:forEach>
+						<div style="float:left;width:40%;">
+							<img src="${orderimg }" width="150px" height="150px" >
+						</div>
+						<div style="display:inline-block;width:60%;text-align:left;">
+						<span style="font-size:10pt;">주문일자 : ${ol.od_date }, 상품번호 : ${ol.bb_id }<br><br>받으실 분 : ${ol.od_name }, 주소 : ${ol.od_addr1 } ${ol.od_addr2 } ${ol.od_addr3 }<br><br>수량 : ${ol.od_amount }, 사이즈 : ${ol.od_size }, 옵션 : ${ol.od_options }
+						<br><br>결제가격 : <b style="font-weight:bold;"><fmt:formatNumber value="${ol.od_price }" pattern="#,###" />원</b>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배송상태 : <c:if test="${ol.od_status eq 'N' }"><span style="padding:4px;background:#CC3D3D; color:white;">배송준비중</span></c:if>
+						<c:if test="${ol.od_status eq 'Y' }"><span style="padding:4px;background:#F29661; color:white;">&nbsp;&nbsp;&nbsp;배송중&nbsp;&nbsp;&nbsp;</span></c:if>
+						<c:if test="${ol.od_status eq 'F' }"><span style="padding:4px;background:#6B9900; color:white;">&nbsp;&nbsp;배송완료&nbsp;&nbsp;</span></c:if><br><br></span>
+						</div>
+						<div style="clear:both;height:40px;"></div>
+						<hr style="width:80%; border:1px solid #EAEAEA;">
+						<div style="clear:both;height:40px;"></div>
+					</c:forEach>
 				</c:if>
 			</div>
-
 		</div>
 		<div style="clear: both;"></div>
 	</div>

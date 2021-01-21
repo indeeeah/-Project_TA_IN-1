@@ -50,6 +50,7 @@ a {
 		</div>
 		<div id="contents" style="padding-top: 30px;">
 			<span style="color:white; background:gray;">비즈니스 계정 해제</span>
+			<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
 			<div id="submenu" style="padding-top: 30px;">
 					<input type="button" id="all" class="submenu" value="비즈니스 정보"
 					style="background: white; text-align: center; width: 120px;"

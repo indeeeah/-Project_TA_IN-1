@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bOrderVO">
+	<resultMap type="bOrderVO" id="bOrderMap">
+	<id property="seller" column="seller"/>
+	<result property="bb_name" column="bb_name"/>
+	<result property="od_id" column="od_id"/>
+	<result property="bb_id" column="bb_id"/>
+	<result property="m_id" column="m_id"/>
+	<result property="od_date" column="od_date"/>
+	<result property="od_size" column="od_size"/>
+	<result property="od_amount" column="od_amount"/>
+	<result property="od_options" column="od_options"/>
+	<result property="od_price" column="od_price"/>
+	<result property="od_name" column="od_name"/>
+	<result property="od_phone" column="od_phone"/>
+	<result property="od_addr1" column="od_addr1"/>
+	<result property="od_addr2" column="od_addr2"/>
+	<result property="od_addr3" column="od_addr3"/>
+	<result property="od_status" column="od_status"/>
+	</resultMap>
+		
+	<!-- 주문 관리(비즈니스) -->
+	<select id="manageOrderList" parameterType="HashMap" resultType="arraylist" resultMap="bOrderMap">
+	select bb.m_id as seller, bb.bb_name as bb_name, od.*
+	from orderdetail od, businessboard bb
+	where od.bb_id = bb.bb_id and bb.m_id=#{m_id} and od.od_date between #{startdate} and #{enddate} + (INTERVAL '1' DAY) - (INTERVAL '1' SECOND)
+	order by od.od_id asc
+	</select>
+	
+	<!-- 주문상태 변경 -->
+	<update id="updateOrderStatus" parameterType="hashmap">
+	update orderdetail set
+	od_status = #{od_status}
+	where od_id=#{od_id}
+	</update>
+</mapper>
