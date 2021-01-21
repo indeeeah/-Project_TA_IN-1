@@ -18,7 +18,7 @@ public class MemberManageDao {
 	public int listCount() {
 		return sqlSession.selectOne("MemberManage.listCount");
 	}
-
+	
 	// 상세 조회
 	public MemberManage selectOne(String m_id) {
 		return sqlSession.selectOne("MemberManage.selectOne", m_id);
@@ -43,11 +43,28 @@ public class MemberManageDao {
 
 	// 회원 삭제
 	public int deleteMmanage(String m_id) {
-		return sqlSession.update("MemberManage.deleteMmanage", m_id);
+		return sqlSession.delete("MemberManage.deleteMmanage", m_id);
 	}
 
 	public int insertOutManage(String m_id) {
 		return sqlSession.insert("MemberManage.insertOutManage", m_id);
 	}
+	
+	// 탈퇴된 회원 수
+	public int outlistCount() {
+		return sqlSession.selectOne("MemberManage.outlistCount");
+	}
 
+	// 탈퇴된 회원 검색
+	public List<MemberManage> outsearchList(String keyword) {
+		return sqlSession.selectList("MemberManage.outsearchList", keyword);
+	}
+	
+	//탈퇴되 회원조회
+	public List<MemberManage> outSelect(int startPage, int limit) {
+		int startRow = (startPage - 1) * limit;
+		RowBounds row = new RowBounds(startRow, limit);
+		return sqlSession.selectList("MemberManage.outSelect", null, row);
+	}
+	
 }

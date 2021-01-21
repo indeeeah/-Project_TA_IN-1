@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,19 +26,15 @@ public class MemberManageController {
 //		return "test";
 //	}
 //	
-//	@RequestMapping(value = "/testSession.do")
-//	public ModelAndView testSession(ModelAndView mv, @RequestParam(name="m_id") String m_id, @RequestParam(name="lan") String lan, Model model, HttpSession session, HttpServletRequest request) {
-//		session = request.getSession();
-//		String my_name = request.getParameter("m_id");
-//		String my_lan = request.getParameter("lan");
-//		System.out.println(my_name);
-//		System.out.println(my_lan);
-//		session.setAttribute("my_name", my_name);
-//		session.setAttribute("my_lan", my_lan);
-//		
-//		mv.setViewName("management/managementMain");
-//		return mv;
-//	}
+	@RequestMapping(value = "/managementMain.do")
+	public ModelAndView testSession(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		System.out.println(my_name);
+		session.setAttribute("my_name", my_name);
+		mv.setViewName("management/managementMain");
+		return mv;
+	}
 	
 	@RequestMapping(value = "membermanagelist.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView memberManageList(@RequestParam(name = "page", defaultValue = "1") int page,
@@ -108,8 +103,8 @@ public class MemberManageController {
 	@RequestMapping(value = "memberManageDelete.do", method = RequestMethod.GET)
 	public ModelAndView memberDelete(@RequestParam(name = "m_id") String m_id, ModelAndView mv) {
 		try {
-			mmService.deleteMmanage(m_id);
 			mmService.insertOutManage(m_id);
+			mmService.deleteMmanage(m_id);
 			mv.setViewName("redirect:membermanagelist.do");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -117,4 +112,28 @@ public class MemberManageController {
 		}
 		return mv;
 	}
+	
+	@RequestMapping(value = "memberOutlist.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView outSelectList(@RequestParam(name = "page", defaultValue = "1") int page,
+			@RequestParam(name = "keyword", required = false) String keyword, ModelAndView mv) {
+		try {
+			int currentPage = page;
+			// 한 페이지당 출력할 목록 갯수
+			int listCount = mmService.outtotalCount();
+			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
+			if (keyword != null && !keyword.equals("")) 
+				mv.addObject("list", mmService.outsearchList(keyword));
+			else 
+				mv.addObject("list", mmService.outSelect(currentPage, LIMIT));
+				mv.addObject("currentPage", currentPage);
+				mv.addObject("maxPage", maxPage);
+				mv.addObject("listCount", listCount);
+				mv.setViewName("management/memberOutlist");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+		return mv;
+	}
+
 }

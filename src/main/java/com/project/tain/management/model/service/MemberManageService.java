@@ -24,4 +24,13 @@ public interface MemberManageService {
 		void deleteMmanage(String m_id);
 		
 		void insertOutManage(String m_id);
+		
+		// 탈퇴된 회원 수
+		int outtotalCount();
+
+		// 탈퇴된 회원 검색
+		List<MemberManage> outsearchList(String keyword);
+		
+		//탈퇴되 회원조회
+		List<MemberManage> outSelect(int startPage, int limit);
 }

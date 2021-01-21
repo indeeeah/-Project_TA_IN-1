@@ -69,20 +69,11 @@
 
 #table_top td {
 	padding: 0 20px;
-	vertical-align: middle;
 }
 
 .table_body {
 	line-height: 45px;
 	text-align: center;
-	border-bottom: 1px solid gray;
-	vertical-align: middle;
-}
-
-.table_body_td td {
-	line-height: 30px;
-	text-align: center;
-	vertical-align: middle;
 	border-bottom: 1px solid gray;
 }
 
@@ -93,14 +84,17 @@
 
 a {
 	text-decoration: none;
-	color: #000;
+}
+
+a.moveid {
+	color: rgb(207, 3, 3);
 }
 
 a:hover {
 	cursor: pointer;
 }
 
-a.btn-action {
+.btn-action {
 	text-align: center;
 	padding: 3px 10px;
 	border: 1px solid #1a1b1d;
@@ -110,8 +104,24 @@ a.btn-action {
 	color: #fff;
 }
 </style>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('form[name=listForm]').on(
+				'submit',
+				function(e) {
+					if ($('input[name=keyword]').val() == null
+							|| $('input[name=keyword]').val() == "") {
+						alert("검색어를 입력해 주세요");
+						e.preventDefault();
+					} else {
+						return true;
+					}
+				});
+	});
+</script>
 </head>
-
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
@@ -125,67 +135,82 @@ a.btn-action {
 				<li><a href="reportBoardManagelist.do">신고(일반게시글)</a></li>
 				<li><a href="reportBsboardManagelist.do">신고(비지니스게시글)</a></li>
 				<li><a href="memberOutlist.do">탈퇴 회원</a></li>
-				<li><a onclick="logout();">로그아웃</a></li>
+            	<li><a onclick="logout();">로그아웃</a></li>
 			</ul>
 		</div>
 		<div id="contentmanage">
 			<div id="head_aticle">
-				<h2 class="tit">${BsMemberManage.m_id}님의정보</h2>
+				<h2 class="tit">탈퇴 회원 목록</h2>
 				<br> <br>
 			</div>
-			<form name="renewForm" action="bsmemberManageUpdate.do" method="post">
-				<input type="hidden" name="m_id" value="${BsMemberManage.m_id}">
-				<table align="center" cellpadding="10" cellspacing="0" width="95%">
+			<table width="100%" align="center" cellpadding="10" cellspacing="0">
+				<tr id="table_top">
+					<td colspan="3" style="border: none;" align="left">
+						<form method="post" name="listForm" action="memberOutlist.do">
+							<input type="hidden" name="page" value="${currentPage}">
+							<input type="text" name="keyword"> <input
+								class="btn-action" type="submit" value="검색">
+						</form>
+					</td>
+					<td align="right" colspan="5" cellspacing="0" style="border: none;"><input
+						class="btn-action" type="button" value="전체목록"
+						onclick="window.location='memberOutlist.do'"></td>
+				</tr>
+				<tr class="table_body">
+					<td align="center" width="40">번호</td>
+					<td align="center" width="100">아이디</td>
+					<td align="center" width="100">탈퇴종류</td>
+					<td align="center" width="200">탈퇴사유</td>
+					<td align="center" width="60">탈퇴날짜</td>
+				</tr>
+				<!-- 글이 없을 경우 -->
+				<c:if test="${listCount eq 0}">
 					<tr class="table_body">
-						<td width="200">아이디</td>
-						<td width="200">${BsMemberManage.m_id}</td>
+						<td colspan="5" align="center"><br> <br> 검색된 회원이
+							없습니다.<br> <br></td>
 					</tr>
-					<tr class="table_body">
-						<td>계정분류</td>
-						<td>${BsMemberManage.bsm_cate}</td>
-					</tr>
-					<tr class="table_body">
-						<td>회사이름</td>
-						<td>${BsMemberManage.bm_name}</td>
-					</tr>
-					<tr class="table_body">
-						<td>회사주소</td>
-						<td>${BsMemberManage.bm_addr}</td>
-					</tr>
-					<tr class="table_body">
-						<td>회사홈페이지</td>
-						<td>${BsMemberManage.bm_url}</td>
-					</tr>
-					<tr class="table_body">
-						<td>계좌번호</td>
-						<td>${BsMemberManage.bm_account}</td>
-					</tr>
-					<tr class="table_body">
-						<td>회사전화</td>
-						<td>${BsMemberManage.bm_phone}</td>
-					</tr>
-					<tr class="table_body_td">
-						<td>승인여부<br>[미승인:N, 승인:Y]
-						</td>
-						<td><select name="bm_approval">
-								<option value="${BsMemberManage.bm_approval}">현재 상태 :
-									${BsMemberManage.bm_approval}</option>
-								<option value="N">미승인</option>
-								<option value="Y">승인</option>
-						</select></td>
-					</tr>
-					<tr class="table_bottom">
-						<td colspan="2" align="center"><a class="btn-action"
-							onclick="document.forms['renewForm'].submit();">수정하기</a> &nbsp;<a
-							class="btn-action"
-							onclick="if(confirm('계정승인 하시겠습니까?')){href='bsmember2ManageUpdate.do?m_id=${BsMemberManage.m_id}'}">계정승인</a>
-							&nbsp;<c:url var="bsmemberManagelist"
-								value="bsmemberManagelist.do">
-								<c:param name="page" value="1" />
-							</c:url><a class="btn-action" href="${bsmemberManagelist}">목록</a></td>
-					</tr>
-				</table>
-			</form>
+				</c:if>
+				<c:if test="${listCount ne 0}">
+					<c:forEach var="out" items="${list}" varStatus="status">
+						<tr class="table_body">
+							<td align="center">${status.count}</td>
+							<td align="center">${out.m_id}</td>
+							<td align="center">${out.om_reason}</td>
+							<td align="center">${out.o_reasontx}</td>
+							<td align="center">${out.o_date}</td>
+						</tr>
+					</c:forEach>
+				</c:if>
+				<!-- 앞 페이지 번호 처리 -->
+				<tr class="table_bottom">
+					<td colspan="5"><c:if test="${currentPage <= 1}">
+				 [이전]&nbsp;
+				 </c:if> <c:if test="${currentPage > 1}">
+							<c:url var="blistST" value="memberOutlist.do">
+								<c:param name="page" value="${currentPage-1}" />
+							</c:url>
+							<a href="${blistST}">[이전]</a>
+						</c:if> <!-- 끝 페이지 번호 처리 --> <c:set var="endPage" value="${maxPage}" />
+						<c:forEach var="p" begin="${startPage+1}" end="${endPage}">
+							<c:if test="${p eq currentPage}">
+								<font color="black" size="4"><b>[${p}]</b></font>
+							</c:if>
+							<c:if test="${p ne currentPage}">
+								<c:url var="blistchk" value="memberOutlist.do">
+									<c:param name="page" value="${p}" />
+								</c:url>
+								<a href="${blistchk}">${p}</a>
+							</c:if>
+						</c:forEach> <c:if test="${currentPage >= maxPage}">
+					 [다음]
+					 </c:if> <c:if test="${currentPage < maxPage}">
+							<c:url var="blistEND" value="memberOutlist.do">
+								<c:param name="page" value="${currentPage+1}" />
+							</c:url>
+							<a href="${blistEND}">[다음]</a>
+						</c:if></td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </body>

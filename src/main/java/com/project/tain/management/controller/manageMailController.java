@@ -42,6 +42,6 @@ public class manageMailController {
 			System.out.println(e);
 		}
 
-		return "management/membermanagelist";
+		return "management/manageEmail";
 	}
 }

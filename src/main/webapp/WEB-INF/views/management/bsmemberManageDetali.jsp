@@ -5,21 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자</title>
 <link href="${pageContext.request.contextPath}/resources/css/reset.css"
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/resources/css/header.css"
 	rel="stylesheet" type="text/css">
-<link
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
-	rel="stylesheet" type="text/css" />
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
-	type="text/javascript"></script>
 <script src="https://kit.fontawesome.com/2409d81413.js"
 	crossorigin="anonymous"></script>
-<script
-	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <style type="text/css">
 * {
 	margin: 0;
@@ -53,7 +46,7 @@
 
 #menulist>li:hover {
 	background-color: #F6F6F6;
-	border-left: 2px solid #D5D5D5;
+	border-left: 2px solid #df871b;
 }
 
 #contentmanage {
@@ -130,6 +123,8 @@ a.btn-action {
 				<li><a href="reportmemberManagelist.do">신고회원</a></li>
 				<li><a href="reportBoardManagelist.do">신고(일반게시글)</a></li>
 				<li><a href="reportBsboardManagelist.do">신고(비지니스게시글)</a></li>
+				<li><a href="memberOutlist.do">탈퇴 회원</a></li>
+				<li><a onclick="logout();">로그아웃</a></li>
 			</ul>
 		</div>
 		<div id="contentmanage">
@@ -163,10 +158,6 @@ a.btn-action {
 					<td>${BsMemberManage.bm_account}</td>
 				</tr>
 				<tr class="table_body">
-					<td>카카오 큐알</td>
-					<td>${BsMemberManage.bm_qr}</td>
-				</tr>
-				<tr class="table_body">
 					<td>회사전화</td>
 					<td>${BsMemberManage.bm_phone}</td>
 				</tr>
@@ -182,6 +173,8 @@ a.btn-action {
 							<c:param name="m_id" value="${BsMemberManage.m_id}" />
 							<c:param name="page" value="${currentPage}" />
 						</c:url> <a class="btn-action" href="${bupview}">수정 페이지로</a>&nbsp;&nbsp;
+						<c:url var="manageEmail" value="manageEmail.do">
+						</c:url> <a class="btn-action" href="${manageEmail}">메일보내기</a>&nbsp;&nbsp;
 						<c:url var="bsmemberManagelist" value="bsmemberManagelist.do">
 						</c:url> <a class="btn-action" href="${bsmemberManagelist}">목록</a></td>
 				</tr>
@@ -189,4 +182,31 @@ a.btn-action {
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	 function logout(id) {
+         $.ajax({
+             url: "${pageContext.request.contextPath}/member/logout.do",
+             method: "POST",
+             data: {
+                 m_id: id
+             },
+             success: function(data) {
+                 console.log("success");                   
+                 alert(data);
+                 var url = "${pageContext.request.contextPath}/member/loginPage";
+                 $(location).attr('href', url);
+             },
+             error: function(request, status, error) {
+             	console.log("error");  
+                 alert("code:" +
+                     request.status +
+                     "\n" +
+                     "message:" +
+                     request.responseText +
+                     "\n" + "error:" +
+                     error);
+             }
+         });
+     }
+</script>
 </html>

@@ -54,4 +54,19 @@ public class MemberManageServiceImpl implements MemberManageService {
 		mmDao.insertOutManage(m_id);
 	}
 
+	@Override
+	public List<MemberManage> outSelect(int startPage, int limit) {
+		return mmDao.outSelect(startPage, limit);
+	}
+
+	@Override
+	public int outtotalCount() {
+		return mmDao.outlistCount();
+	}
+
+	@Override
+	public List<MemberManage> outsearchList(String keyword) {
+		return mmDao.outsearchList(keyword);
+	}
+
 }

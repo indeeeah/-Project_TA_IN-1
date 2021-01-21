@@ -5,21 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자</title>
 <link href="${pageContext.request.contextPath}/resources/css/reset.css"
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/resources/css/header.css"
 	rel="stylesheet" type="text/css">
-<link
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
-	rel="stylesheet" type="text/css" />
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
-	type="text/javascript"></script>
 <script src="https://kit.fontawesome.com/2409d81413.js"
 	crossorigin="anonymous"></script>
-<script
-	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <style type="text/css">
 * {
 	margin: 0;
@@ -53,7 +47,7 @@
 
 #menulist>li:hover {
 	background-color: #F6F6F6;
-	border-left: 2px solid #D5D5D5;
+	border-left: 2px solid #df871b;
 }
 
 #contentmanage {
@@ -116,12 +110,15 @@ a.btn-action {
 	background-color: #1a1b1d;
 	color: #fff;
 }
+
 .mail_manage {
 	line-height: 30px;
 }
+
 .form-control {
 	
 }
+
 .btn-warning {
 	text-align: center;
 	padding: 3px 10px;
@@ -145,6 +142,8 @@ a.btn-action {
 				<li><a href="reportmemberManagelist.do">신고회원</a></li>
 				<li><a href="reportBoardManagelist.do">신고(일반게시글)</a></li>
 				<li><a href="reportBsboardManagelist.do">신고(비지니스게시글)</a></li>
+				<li><a href="memberOutlist.do">탈퇴 회원</a></li>
+				<li><a onclick="logout();">로그아웃</a></li>
 			</ul>
 		</div>
 		<div id="contentmanage">
@@ -161,7 +160,8 @@ a.btn-action {
 					<!-- 제목 -->
 					<input type="text" name="title" size="120" style="width: 50%"
 						placeholder="제목을 입력해주세요" class="form-control">
-				</div><br>
+				</div>
+				<br>
 				<div class="mail_manage" align="center">
 					<!-- 내용 -->
 					<textarea name="content" cols="120" rows="12"
@@ -175,4 +175,31 @@ a.btn-action {
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	 function logout(id) {
+         $.ajax({
+             url: "${pageContext.request.contextPath}/member/logout.do",
+             method: "POST",
+             data: {
+                 m_id: id
+             },
+             success: function(data) {
+                 console.log("success");                   
+                 alert(data);
+                 var url = "${pageContext.request.contextPath}/member/loginPage";
+                 $(location).attr('href', url);
+             },
+             error: function(request, status, error) {
+             	console.log("error");  
+                 alert("code:" +
+                     request.status +
+                     "\n" +
+                     "message:" +
+                     request.responseText +
+                     "\n" + "error:" +
+                     error);
+             }
+         });
+     }
+</script>
 </html>

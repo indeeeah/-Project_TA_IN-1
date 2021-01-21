@@ -48,84 +48,12 @@ public class MemberManage implements java.io.Serializable {
 	private String approval_key;
 	private String approval_status;
 	
+	private String o_reason;
+	private Date o_date;
+	private String o_reasontx;
+	
 	public MemberManage() {
 		
-	}
-	
-	public MemberManage(String m_id, String m_usage, int m_status) {
-		super();
-		this.m_id = m_id;
-		this.m_usage = m_usage;
-		this.m_status = m_status;
-	}
-
-	public MemberManage(String m_id, String m_name, String m_email, String m_usage, int m_status) {
-		super();
-		this.m_id = m_id;
-		this.m_name = m_name;
-		this.m_email = m_email;
-		this.m_usage = m_usage;
-		this.m_status = m_status;
-	}
-
-	public MemberManage(String m_id, String m_name, String m_email, String m_phone, String m_usage) {
-		super();
-		this.m_id = m_id;
-		this.m_name = m_name;
-		this.m_email = m_email;
-		this.m_phone = m_phone;
-		this.m_usage = m_usage;
-	}
-
-	public MemberManage(String m_id, String m_pw, String m_name, String m_email, int m_addr1, String m_phone,
-			String m_usage, int m_status, int m_activity, Date m_lastact, Date m_joindate) {
-		super();
-		this.m_id = m_id;
-		this.m_pw = m_pw;
-		this.m_name = m_name;
-		this.m_email = m_email;
-		this.m_addr1 = m_addr1;
-		this.m_phone = m_phone;
-		this.m_usage = m_usage;
-		this.m_status = m_status;
-		this.m_activity = m_activity;
-		this.m_lastact = m_lastact;
-		this.m_joindate = m_joindate;
-	}
-
-	public MemberManage(String m_id, String m_pw, String m_name, String m_intro, String m_email, int m_addr1,
-			String m_addr2, String m_addr3, String m_phone, Date m_birth, String m_img, String m_usage, int m_status,
-			int m_activity, Date m_lastact, String m_language, Date m_joindate, String approval_key, String approval_status) {
-		super();
-		this.m_id = m_id;
-		this.m_pw = m_pw;
-		this.m_name = m_name;
-		this.m_intro = m_intro;
-		this.m_email = m_email;
-		this.m_addr1 = m_addr1;
-		this.m_addr2 = m_addr2;
-		this.m_addr3 = m_addr3;
-		this.m_phone = m_phone;
-		this.m_birth = m_birth;
-		this.m_img = m_img;
-		this.m_usage = m_usage;
-		this.m_status = m_status;
-		this.m_activity = m_activity;
-		this.m_lastact = m_lastact;
-		this.m_language = m_language;
-		this.m_joindate = m_joindate;
-		this.approval_key = approval_key;
-		this.approval_status = approval_status;
-	}
-
-	@Override
-	public String toString() {
-		return "MemberManage [m_id=" + m_id + ", m_pw=" + m_pw + ", m_name=" + m_name + ", m_intro=" + m_intro
-				+ ", m_email=" + m_email + ", m_addr1=" + m_addr1 + ", m_addr2=" + m_addr2 + ", m_addr3=" + m_addr3
-				+ ", m_phone=" + m_phone + ", m_birth=" + m_birth + ", m_img=" + m_img + ", m_usage=" + m_usage
-				+ ", m_status=" + m_status + ", m_activity=" + m_activity + ", m_lastact=" + m_lastact + ", m_language="
-				+ m_language + ", m_joindate=" + m_joindate + ", approval_key=" + approval_key + ", approval_status="
-				+ approval_status + "]";
 	}
 
 	public String getM_id() {
@@ -279,9 +207,40 @@ public class MemberManage implements java.io.Serializable {
 	public void setApproval_status(String approval_status) {
 		this.approval_status = approval_status;
 	}
+	
+	public String getO_reason() {
+		return o_reason;
+	}
+
+	public void setO_reason(String o_reason) {
+		this.o_reason = o_reason;
+	}
+
+	public Date getO_date() {
+		return o_date;
+	}
+
+	public void setO_date(Date o_date) {
+		this.o_date = o_date;
+	}
+
+	public String getO_reasontx() {
+		return o_reasontx;
+	}
+
+	public void setO_reasontx(String o_reasontx) {
+		this.o_reasontx = o_reasontx;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+	
+	public String getom_reason() {
+		if(o_reason=="S") {
+			return "자진탈퇴";
+		} else {
+			return "강제탈퇴";
+		}
+	}
 }
