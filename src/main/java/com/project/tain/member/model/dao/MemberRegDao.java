@@ -1,5 +1,7 @@
 package com.project.tain.member.model.dao;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,8 +83,8 @@ public class MemberRegDao {
 	}
 
 	// 아이디 찾기
-	public String find_id(String m_email) throws Exception {
-		return sqlSession.selectOne(NameSpace + ".find_id", m_email);
+	public String find_id(HashMap<String, Object> voMap) throws Exception {
+		return sqlSession.selectOne(NameSpace + ".find_id", voMap);
 	}
 
 	// 비밀번호 변경

@@ -1,5 +1,7 @@
 package com.project.tain.member.model.service;
 
+import java.util.HashMap;
+
 import com.project.tain.member.model.vo.BusinessMemberVO;
 import com.project.tain.member.model.vo.MemberRegVO;
 
@@ -11,23 +13,19 @@ public interface MemberRegService {
 	int join(MemberRegVO vo) throws Exception;
 	int businessJoin(BusinessMemberVO vo) throws Exception;
 
-//	String create_key() throws Exception;
-
 	int approval_member(MemberRegVO vo);
 
 	MemberRegVO login(MemberRegVO vo) throws Exception;
 
-	String find_id(String email) throws Exception;
+	String find_id(HashMap<String, Object> voMap) throws Exception;
 
-//	void send_mail(MemberRegVO vo, String div) throws Exception;
+
 
 	void find_pw(MemberRegVO vo)  throws Exception;
 
-//	int join(MemberRegVO vo) throws Exception;
-
-	// ·Î±×ÀÎ ÃÖÁ¾ ½Ã°£ ¾÷µ¥ÀÌÆ®
+	// ë¡œê·¸ì¸ ìµœì¢… ì‹œê°„ ì—…ë°ì´íŠ¸
 	int update_log(MemberRegVO vo)  throws Exception;
 	
-	// ÆĞ½º¿öµå Ã£±â-ÆĞ½º¿öµå ¾÷µ¥ÀÌÆ®
+	// íŒ¨ìŠ¤ì›Œë“œ ì°¾ê¸°-íŒ¨ìŠ¤ì›Œë“œ ì—…ë°ì´íŠ¸
 	int update_pw(MemberRegVO vo) throws Exception;
 }

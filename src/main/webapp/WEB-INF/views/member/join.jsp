@@ -19,15 +19,51 @@
 <!-- daum 도로명주소 찾기 api -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <style type="text/css">
-<
+h1 {
+	color: #FFF !important;
+	margin-left: 100px;
+	font: 70px Lobster;
+	text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px
+		rgba(0, 0, 0, 0.1), 0px 18px 23px rgba(0, 0, 0, 0.1);
+}
+
+@
+-webkit-keyframes scroll { 100%{
+	background-position: 0px -3000px;
+}
+
+}
+@
+-moz-keyframes scroll { 100%{
+	background-position: 0px -3000px;
+}
+
+}
+@
+-o-keyframes scroll { 100%{
+	background-position: 0px -3000px;
+}
+
+}
+@
+-ms-keyframes scroll { 100%{
+	background-position: 0px -3000px;
+}
+
+}
+@
+keyframes scroll { 100%{
+	background-position: 0px -3000px;
+}
+
+}
 style>* {
 	margin: 0;
 	padding: 0;
 }
 
 body {
-	background: white;
-	font-family: 'PT Sans';
+	background-color: white font-family: 'PT Sans';
 }
 
 button:hover {
@@ -41,15 +77,13 @@ button:hover {
 
 .wrapper {
 	background: rgba(0, 0, 0, 0.6);
-	background-color: #91d370;
-	background-image: linear-gradient(319deg, #91d370 0%, #bca0ff 37%, #f2cd54 100%);
+	background-color: #144d2af8;
 	position: relative;
 	width: 1000px;
 	height: 750px;
 	margin: 0 auto;
-	margin-top: 100px;
+	margin-top: 50px;
 	position: relative;
-	background-image: linear-gradient(319deg, #91d370 0%, #bca0ff 37%, #f2cd54 100%);
 }
 
 .left, .right {
@@ -80,7 +114,7 @@ button:hover {
 .back-p {
 	font-family: 'PT Sans';
 	letter-spacing: 1px;
-	font-size: 20px;
+	font-size: 15px;
 	line-height: 30px;
 	margin-right: 60px;
 }
@@ -123,10 +157,11 @@ button:hover {
 	border: 1px solid white;
 	color: #fafafa;
 	transition: .3s all;
+	background-color:
 }
 
 .back-btn:hover {
-	background-color: #685fb494;
+	background-color: #123d23f8;
 	border: 1px solid #0d1631;
 }
 </style>
@@ -159,10 +194,9 @@ button:hover {
 .form_group input {
 	font-size: 15px;
 	color: #333;
-	width: 100%;
 	border: none;
 	padding: 0 5px;
-	height: 40px;
+	height: 30px;
 	outline: none;
 }
 
@@ -172,7 +206,7 @@ button:hover {
 	width: 100%;
 	height: 60px;
 	border: none;
-	background-color: #082330;;
+	background-color: #123d23f8;
 	border-radius: 50px;
 	background-size: 200%;
 	border-color: white;
@@ -182,7 +216,7 @@ button:hover {
 	transition: .5s;
 }
 
-.btn-primary : hover {
+.btn-primary :hover {
 	background-position: right;
 }
 
@@ -208,6 +242,14 @@ button:hover {
 	border-color: white;
 	color: #fff;
 	outline: none;
+}
+
+footer {
+	margin-top: 200px;
+}
+
+.ck_id {
+	float: right
 }
 </style>
 <script>
@@ -422,12 +464,12 @@ button:hover {
                 // 생년월일 birthJ 유효성 검사 
                 $('#m_birth').blur(function() {
                     var dateStr = $(this).val();
-                    var year = Number(dateStr.substr(0, 4)); // 입력한 값의 0~4자리까지 (연) 
-                    var month = Number(dateStr.substr(4, 2)); // 입력한 값의 4번째 자리부터 2자리 숫자 (월) 
-                    var day = Number(dateStr.substr(6, 2)); // 입력한 값 6번째 자리부터 2자리 숫자 (일) 
-                    var today = new Date(); // 날짜 변수 선언 
-                    var yearNow = today.getFullYear(); // 올해 연도 가져옴 
-                    if (dateStr.length <= 8) { // 연도의 경우 1900 보다 작거나 yearNow 보다 크다면 false를 반환 
+                    var year = Number(dateStr.substr(0, 4));  
+                    var month = Number(dateStr.substr(4, 2)); 
+                    var day = Number(dateStr.substr(6, 2)); 
+                    var today = new Date();  
+                    var yearNow = today.getFullYear(); 
+                    if (dateStr.length <= 8) {
                         if (year > yearNow || year < 1900) {
                             $('#birth_check').text('생년월일을 확인해주세요');
                             $('#birth_check').css('color', 'red');
@@ -470,44 +512,29 @@ button:hover {
                     }
                 });
             });
-            //우편번호 찾기 버튼 클릭시 발생 이벤트
             function execPostCode() {
                 new daum.Postcode({
                     oncomplete: function(data) {
-                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분. 
-                        // 도로명 주소의 노출 규칙에 따라 주소를 조합
-                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 
                         var fullRoadAddr = data.roadAddress; // 도로명 주소 변수 
                         var extraRoadAddr = ''; // 도로명 조합형 주소 변수 
-                        // 법정동명이 있을 경우 추가한다. (법정리는 제외) 
-                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다. 
                         if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
                             extraRoadAddr += data.bname;
                         }
-                        // 건물명이 있고, 공동주택일 경우 추가한다. 
                         if (data.buildingName !== '' && data.apartment === 'Y') {
                             extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                         }
-                        // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다. 
                         if (extraRoadAddr !== '') {
                             extraRoadAddr = ' (' + extraRoadAddr + ')';
                         }
-                        // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다. 
                         if (fullRoadAddr !== '') {
                             fullRoadAddr += extraRoadAddr;
                         }
-                        // 우편번호와 주소 정보를 해당 필드에 넣는다. 
                         console.log(data.zonecode);
                         console.log(fullRoadAddr);
-                        /* var a = console.log(data.zonecode); 
-                        var b = console.log(fullRoadAddr); 
-                        if(a == null || b = null){ alert("주소를 확인하세요."); 
-                        return false; } */
                         $("[name=m_addr1]").val(data.zonecode);
                         $("[name=m_addr2]").val(fullRoadAddr);
                         document.getElementById('m_addr1').value = data.zonecode; //5자리 새우편번호 사용 
                         document.getElementById('m_addr2').value = fullRoadAddr;
-                        //document.getElementById('mem_detailaddress').value = data.jibunAddress; 
                     }
                 }).open();
             }
@@ -516,16 +543,23 @@ button:hover {
 </head>
 
 <body>
+	<header>
+		<div class="overlay">
+			<div class="logo_wrap">
+				<h1>TAIN</h1>
+			</div>
+		</div>
+	</header>
 	<div class="wrapper">
 		<div class="background">
 			<div class="left">
 				<h2 class="back-header">Tain</h2>
-				<p class="back-p">..</p>
+				<p class="back-p">TAIN은 타인과 일상을 공유합니다</p>
 				<button class="back-btn signup-but">일반 회원</button>
 			</div>
 			<div class="right">
 				<h2 class="back-header">Business</h2>
-				<p class="back-p">..</p>
+				<p class="back-p">일상을 공유하고 나의 상품을 판매해보세요</p>
 				<button class="back-btn login-but">비지니스 회원</button>
 			</div>
 		</div>
@@ -607,5 +641,6 @@ button:hover {
 			</div>
 		</div>
 	</div>
+	<footer> </footer>
 </body>
 </html>

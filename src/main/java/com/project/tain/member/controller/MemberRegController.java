@@ -1,6 +1,7 @@
 package com.project.tain.member.controller;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,72 +61,49 @@ public class MemberRegController {
 
 	// 로그인 폼 이동
 	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
-	public String loginPage() throws Exception {
-		return "/member/login";
+	public String loginPage(HttpSession session) throws Exception {
+		if (session.getAttribute("my_name") != null) // 로그인 되어 있음.
+			return "redirect:/timeLine";
+		else
+			return "/member/login";
 	}
 
 	// 로그인
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public ModelAndView login(@ModelAttribute MemberRegVO vo, RedirectAttributes redirectAttributes,
-			HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
+	@ResponseBody
+	public String login(@ModelAttribute MemberRegVO vo, RedirectAttributes redirectAttributes, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
 		try {
-			// 등록된 아이디가 없으면
-			if (service.check_id(vo.getM_id()) == 0) {
+			System.out.println("vo.getM_id(): " + vo.getM_id());
+			if (service.check_id(vo.getM_id()) == 0) { // 등록된 아이디가 없으면
 				System.out.println("alert('등록된 아이디가 없습니다.');");
-				System.out.println("history.go(-1);");
-				mv.addObject("errorMsg", "비밀번호가 다릅니다.");
-				redirectAttributes.addFlashAttribute("errorMsg", "등록된 아이디가 없습니다.");
-				String referer = request.getHeader("Referer");
-				mv.setViewName("redirect:" + referer);
-				return mv;
+				return "-1";
 			} else {
 				String m_pw = vo.getM_pw();
 				MemberRegVO voReturn = service.login(vo);
 				if (!voReturn.getM_pw().equals(m_pw)) { // 비밀번호가 다를 경우
-					System.out.println("<script>");
 					System.out.println("alert('비밀번호가 다릅니다.');");
-					System.out.println("history.go(-1);");
-					System.out.println("</script>");
-					mv.addObject("errorMsg", "비밀번호가 다릅니다.");
-					redirectAttributes.addFlashAttribute("errorMsg", "비밀번호가 다릅니다.");
-					String referer = request.getHeader("Referer");
-					mv.setViewName("redirect:" + referer);
-					return mv;
+					return "-2";
 				} else if (!voReturn.getApproval_status().equals("true ")) { // 이메일 인증을 하지 않은 경우
-					System.out.println("<script>");
 					System.out.println("alert('이메일 인증 후 로그인 하세요.');");
-					System.out.println("history.go(-1);");
-					System.out.println("</script>");
-					mv.addObject("errorMsg", "이메일 인증 후 로그인 하세요.");
-					redirectAttributes.addFlashAttribute("errorMsg", "이메일 인증 후 로그인 하세요.");
-					String referer = request.getHeader("Referer");
-					mv.setViewName("redirect:" + referer);
-					return mv;
+					return "-3";
 				} else { // 로그인 성공 // 로그인 일자 업데이트 및 회원정보 리턴
 					int updateResult = service.update_log(vo);
 					if (updateResult == 0) {
-						mv.addObject("errorMsg", "로그인 후 최종 접속시간 업데이트 실패했습니다.");
-						redirectAttributes.addFlashAttribute("errorMsg", "로그인 후 최종 접속시간 업데이트 실패했습니다.");
-						String referer = request.getHeader("Referer");
-						mv.setViewName("redirect:" + referer);
-						return mv;
+						System.out.println("로그인 후 최종 접속시간 업데이트 실패했습니다.");
+						return "-4";
 					} else {
+						System.out.println("로그인 성공!!! 세션 등록 my_name에 " + vo.getM_id() + " 등록함.");
 						// session.setAttribute("myInfo", vo);
 						session.setAttribute("my_name", vo.getM_id());
-						mv.setViewName("redirect:/timeLine");
-						return mv;
+						return "1";
 					}
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.addObject("errorMsg", "예기치 못한 오류 발생하였습니다. 다시 로그인 시도해주세요.");
-			redirectAttributes.addFlashAttribute("errorMsg", "예기치 못한 오류 발생하였습니다. 다시 로그인 시도해주세요.");
-			String referer = request.getHeader("Referer");
-			mv.setViewName("redirect:" + referer);
-			return mv;
-		} finally {
-
+			System.out.println("예기치 못한 오류 발생하였습니다. 다시 로그인 시도해주세요.");
+			return "0";
 		}
 	}
 
@@ -147,11 +124,10 @@ public class MemberRegController {
 			out.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-		} 
+
+		}
 	}
 
-	
 	// 회원 가입
 	@RequestMapping(value = "/join.do", method = RequestMethod.POST)
 	public String join(@ModelAttribute MemberRegVO vo, RedirectAttributes redirectAttributes,
@@ -179,44 +155,50 @@ public class MemberRegController {
 		}
 		return "redirect:/member/loginPage";
 	}
-	// 회원 가입
+
+	// 비즈니스 회원 가입
 	@RequestMapping(value = "/businessjoin.do", method = RequestMethod.POST)
-	public String businessjoin(@ModelAttribute BusinessMemberVO vo, RedirectAttributes redirectAttributes,
-			HttpServletResponse response) throws Exception {
+	@ResponseBody
+	public HashMap<String, Object> businessjoin(@ModelAttribute BusinessMemberVO vo,
+			RedirectAttributes redirectAttributes, HttpServletResponse response) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		int result = 0;
 		try {
 			result = service.businessJoin(vo);
+			resultMap.put("code", result);
 			if (result == -1) {
 				// 오류 상황 처리
-				System.out.println("일반회원이 아닙니다. 일반회원 가입 후 사용할 수 있습니다.");
+				resultMap.put("msg", "일반회원이 아닙니다. 일반회원 가입 후 사용할 수 있습니다.");
 				// return "";
 			} else if (result == -2) {
 				// 오류 상황 처리
-				System.out.println("일반회원이 인증이 되지 않았습니다. 메일 확인 후 사용할 수 있습니다.");
+				resultMap.put("msg", "일반회원이 인증이 되지 않았습니다. 메일 확인 후 사용할 수 있습니다.");
 				// return "";
 			} else if (result == -3) {
 				// 오류 상황 처리
-				System.out.println("이미 등록된 비즈니스 회원입니다. 로그인 후 사용하세요.");
+				resultMap.put("msg", "이미 등록된 비즈니스 회원입니다. 로그인 후 사용하세요.");
 				// return "";
 			} else if (result == -4) {
 				// 오류 상황 처리
-				System.out.println("비즈니스 회원 가입신청 중입니다.관리자 승인 후  사용가능합니다. 이메일 확인해주세요.");
+				resultMap.put("msg", "비즈니스 회원 가입신청 중입니다.관리자 승인 후  사용가능합니다. 이메일 확인해주세요.");
 				// return "";
 			} else if (result == 0) {
 				// 오류 상황 처리
-				System.out.println("가입 신청 중 오류가 발생하였습니다. 다시 가입 시도해 주세요.");
+				resultMap.put("msg", "가입 신청 중 오류가 발생하였습니다. 다시 가입 시도해 주세요.");
 				// return "";
-			} else {
+			} else if (result == 1) {
 				// 정상 가입 상황 처리
 				// 관리자 승인 후 메일 전송 후 사용가능함.
-				System.out.println("비즈니스 회원이 가입신청 되었습니다. 관리자 승인 후 사용가능합니다. 이메일 확인해주세요.");
-				//send_mail(vo, "join");
-			} 
+				resultMap.put("msg", "비즈니스 회원이 가입신청 되었습니다. 관리자 승인 후 사용가능합니다. 이메일 확인해주세요.");
+				// send_mail(vo, "join");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:/errorPage";
+			resultMap.put("msg", "오류~");
+			// return "redirect:/errorPage";
 		}
-		return "redirect:/member/loginPage";
+		// return "redirect:/member/loginPage";
+		return resultMap;
 	}
 
 	// 아이디 중복 검사
@@ -255,10 +237,14 @@ public class MemberRegController {
 
 	// 아이디 찾기
 	@RequestMapping(value = "/find_Id.do", method = RequestMethod.POST)
-	public ModelAndView find_id(@RequestParam("m_email") String m_email, RedirectAttributes redirectAttributes,
-			HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
+	public ModelAndView find_id(@RequestParam("m_email") String m_email, @RequestParam("m_name") String m_name,
+			RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response,
+			ModelAndView mv) {
 		try {
-			String m_id = service.find_id(m_email);
+			HashMap<String, Object> voMap = new HashMap<String, Object>();
+			voMap.put("m_email", m_email);
+			voMap.put("m_name", m_name);
+			String m_id = service.find_id(voMap);
 			if (m_id == null) {
 				System.out.println("<script>");
 				System.out.println("alert('가입된 이메일이 없습니다.');");

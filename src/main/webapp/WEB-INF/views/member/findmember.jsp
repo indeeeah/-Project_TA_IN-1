@@ -73,7 +73,7 @@ main h1 {
 	padding-top: 4px;
 }
 
-input[type='email'], input[type='password'], input[type='tel'], select {
+input[type='email'], input[type='text'], select {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -85,19 +85,19 @@ input[type='email'], input[type='password'], input[type='tel'], select {
 	padding-bottom: 7px;
 }
 
-input[type='email'] :hover, input[type='password'] :hover, input[type='tel'] :hover,
-	select :hover {
+input[type='email'] :hover, input[type='text'] :hover :hover, select :hover
+	{
 	background-color: transparent;
 }
 
-input[type='email']:focus, input[type='password']:focus, input[type='tel']:focus,
-	select:focus {
+input[type='email']:focus, input[type='text']:focus:focus, select:focus
+	{
 	border-bottom: 2px solid #144d2af8;
 	padding-bottom: 6px;
 	outline: none;
 }
 
-input[type='tel']::placeholder {
+input[type='text']::placeholder {
 	padding-bottom: 0;
 	font-size: 10px;
 	opacity: .5;
@@ -172,6 +172,10 @@ main {
 .know:hover {
 	text-decoration: underline;
 }
+.know a{
+   text-decoration: none;
+    color: #df871b;
+}
 
 .remute {
 	width: 30rem;
@@ -208,18 +212,7 @@ input[type='button']:focus {
 	outline: none;
 }
 
-.form-control {
-	color: #333;
-	width: 100%;
-	border: none;
-	padding: 0 5px;
-	height: 40px;
-	outline: none;
-	border: 1px solid silver;
-	border-radius: 10px;
-}
-
-.btn-primary {
+.btn-block {
 	font-size: 15px;
 	text-align: center;
 	position: relative;
@@ -237,25 +230,30 @@ input[type='button']:focus {
 </style>
 </head>
 <body>
-	<div class="container">
-		<main role="main">
 
-			<h1>계정 찾기</h1>
-			<div class="remute">
-				<input type="button" onclick="finded()" class="idw" value="아이디찾기">
-				<input type="button" onclick="find()" class="pasw" value="비밀번호 찾기">
-			</div>
-			<div class="form-group group">
+	<main role="main">
 
-				<%@ include file="/WEB-INF/views/member/memberFindId.jsp"%>
-			</div>
-			<div class="form-group group-1">
+		<h1>계정 찾기</h1>
+		<div class="remute">
+			<input type="button" onclick="finded()" class="idw" value="아이디찾기">
+			<input type="button" onclick="find()" class="pasw" value="비밀번호 찾기">
+		</div>
+		<div class="form-group group">
+			<%@ include file="/WEB-INF/views/member/memberFindId.jsp"%>
 
-				<%@ include file="/WEB-INF/views/member/memberFindPw.jsp"%>
-			</div>
+		</div>
+		<div class="form-group group-1">
+			<%@ include file="/WEB-INF/views/member/memberFindPw.jsp"%>
+		</div>
 
-		</main>
-	</div>
+	</main>
+	<h3 class="know">
+		<a href="${pageContext.request.contextPath}/member/joinPage">회원가입</a>
+	</h3>
+	<h3 class="know">
+		<a href="${pageContext.request.contextPath}/member/loginPage">로그인
+			페이지로 이동</a>
+	</h3>
 
 
 
@@ -266,7 +264,7 @@ input[type='button']:focus {
 		function finded() {
 			art1[0].style.display = "block";
 			art2[0].style.display = "none";
-			art3[0].style.borderBottom = "2px solid  #144d2af8";
+			art3[0].style.borderBottom = "2px solid #144d2af8";
 
 		}
 		function find() {
@@ -275,6 +273,9 @@ input[type='button']:focus {
 			art3[0].style.borderBottom = "none";
 		}
 	</script>
+
+</body>
+</html>
 
 </body>
 </html>
