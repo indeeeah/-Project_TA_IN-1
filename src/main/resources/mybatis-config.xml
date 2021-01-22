@@ -25,6 +25,8 @@
 		<typeAlias type="com.project.tain.membermanage.model.vo.mCartVO" alias="mFollowVO"/>
 		<typeAlias type="com.project.tain.membermanage.model.vo.mLikeVO" alias="mLikeVO"/>
 		<typeAlias type="com.project.tain.membermanage.model.vo.mOrderVO" alias="mOrderVO"/>
+		<typeAlias type="com.project.tain.membermanage.model.vo.mMessageVO" alias="mMessageVO"/>
+		<typeAlias type="com.project.tain.membermanage.model.vo.mChatVO" alias="mChatVO"/>
 		<typeAlias type="com.project.tain.businessmembermanage.model.vo.bMemberVO" alias="bMemberVO"/>
 		<typeAlias type="com.project.tain.businessmembermanage.model.vo.bAdVO" alias="bAdVO"/>
 		<typeAlias type="com.project.tain.businessmembermanage.model.vo.bCateVO" alias="bCateVO"/>
@@ -55,5 +57,6 @@
 		<mapper resource="mappers/bMember-mapper.xml" />
 		<mapper resource="mappers/bAd-mapper.xml" />
 		<mapper resource="mappers/bCate-mapper.xml" />
+		<mapper resource="mappers/message-mapper.xml" />
 	</mappers>
 </configuration>

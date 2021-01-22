@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mMessageVO">
+	<resultMap type="mMessageVO" id="mMessageMap">
+		<id property="m_id" column="m_id"/>
+		<result property="m_id2" column="m_id2"/>
+		<result property="m_message" column="m_message"/>
+		<result property="m_date" column="m_date"/>
+	</resultMap>
+	<resultMap type="mChatVO" id="chatlist">
+		<id property="chat" column="chat"/>
+		<result property="lastdate" column="lastdate"/>
+	</resultMap>
+	
+	<!-- 채팅보내기 -->
+	<insert id="sendMessage" parameterType="mMessageVO">
+	insert into Message
+	values(
+	#{m_id}, #{m_id2}, #{m_message}, TO_CHAR(sysdate, 'yyyy-mm-dd hh24:mi:ss')
+	)
+	</insert>
+	
+	<!-- 내 채팅 목록 읽어오기 -->
+	<select id="showMessageList" parameterType="String" resultType="arraylist" resultMap="chatlist">
+	select chat, max(m_date) as lastdate from(
+	select m_id2 as chat, m_date from Message where m_id = #{m_id}
+	union
+	select m_id as chat, m_date from Message where m_id2 = #{m_id}
+	) group by chat
+	</select>
+	
+	<!-- 채팅 내용 조회 -->
+	<select id="showMessage" parameterType="hashmap" resultType="arraylist" resultMap="mMessageMap">
+	select * from(
+	select * from Message where m_id = #{m_id} and m_id2 = #{m_id2} <!-- 내가 보낸거 -->
+	union
+	select * from Message where m_id = #{m_id2} and m_id2 = #{m_id} <!-- 상대가 보낸거 -->
+	) order by m_date
+	</select>
+</mapper>
