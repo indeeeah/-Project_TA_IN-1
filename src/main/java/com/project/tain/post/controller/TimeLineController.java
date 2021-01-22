@@ -106,6 +106,9 @@ public class TimeLineController {
 	@RequestMapping(value = "/aboutUs", method = RequestMethod.GET)
 	public ModelAndView aboutUs(HttpServletRequest request, ModelAndView mv) {
 		try {
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.setViewName("serviceCenter/aboutUs");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -118,6 +121,9 @@ public class TimeLineController {
 	@RequestMapping(value = "/serviceCenter", method = RequestMethod.GET)
 	public ModelAndView serviceCenter(HttpServletRequest request, ModelAndView mv) {
 		try {
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.setViewName("serviceCenter/serviceCenter");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -130,6 +136,9 @@ public class TimeLineController {
 	@RequestMapping(value = "/out", method = RequestMethod.GET)
 	public ModelAndView out(HttpServletRequest request, ModelAndView mv) {
 		try {
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.setViewName("serviceCenter/out");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

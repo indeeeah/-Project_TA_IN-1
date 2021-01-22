@@ -56,6 +56,7 @@ public class StoryController {
 		try {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("myProfile", tService.showMyProf(my_name));
 			mv.addObject("showAllStory", sService.showAllStory(my_name));
 			mv.addObject("showAllAStory", sService.showAllAStory());
@@ -73,6 +74,9 @@ public class StoryController {
 	public ModelAndView selectEachHighlight(HttpServletRequest request, @RequestParam(name = "h_name") String h_name,
 			@RequestParam(name = "m_id") String m_id, ModelAndView mv, Story st) {
 		try {
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("selectEachHighlight", sService.selectEachHighlight(st));
 			System.out.println(h_name);
 			System.out.println(m_id);
@@ -93,6 +97,7 @@ public class StoryController {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
 			mv.addObject("myProfile", tService.showMyProf(my_name));
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("eachstory", sService.eachStory(id));
 			mv.setViewName("post/eachstory");
 			System.out.println(mv);

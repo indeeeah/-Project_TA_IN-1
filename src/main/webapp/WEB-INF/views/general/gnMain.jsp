@@ -835,6 +835,15 @@
                     border-bottom: 1px solid #C7C7C7;
                     padding-bottom: 14px;
                 }
+                
+                 textarea {
+                    resize: none;
+                    width:300px;
+                    height:40px;
+                    outline:none;
+                    border:none;
+                    overflow:hidden;
+                }
             </style>
         </head>
 

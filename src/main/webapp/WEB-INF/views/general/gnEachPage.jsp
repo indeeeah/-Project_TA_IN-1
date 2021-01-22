@@ -491,6 +491,15 @@
                     float: right;
                     margin-right: 13px;
                 }
+                
+                 textarea {
+                    resize: none;
+                    width:300px;
+                    height:40px;
+                    outline:none;
+                    border:none;
+                    overflow:hidden;
+                }
             </style>
         </head>
 
@@ -752,7 +761,6 @@
             <jsp:include page="../footer.jsp"></jsp:include>
         </body>
         <script>
-        
             var memId = $(".m_id").val();
             var this_b_id = $("#for_b_id").val();
             var fchk = $("#for_modal_fchk").val();

@@ -47,6 +47,7 @@ public class GnBoardController {
 			String result = gService.userType(m_id);
 			System.out.println("usertype:" + result);
 			if (result.equals("G")) {
+				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				mv.addObject("id_img_fwr", gService.showp_one(m_id));
 				mv.addObject("fw", gService.showp_two(m_id));
 				mv.addObject("gboard", gService.showp_three(m_id));
@@ -62,6 +63,7 @@ public class GnBoardController {
 				mv.addObject("showpostCount", gService.showpostCount(m_id));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
+				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				System.out.println("timeLineList"+tService.showTimeLineList(my_name));
 				mv.addObject("timeLineList", tService.showTimeLineList(my_name));
 				mv.addObject("id_img_fwr", gService.showp_one(m_id));
@@ -116,6 +118,7 @@ public class GnBoardController {
 			String my_name = (String) session.getAttribute("my_name");
 			System.out.println("boardType : " + b_id);
 			if (b_id.startsWith("BO")) {
+				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				mv.addObject("selectEachPost", gService.selectEachPost(b_id));
 				mv.addObject("selectEachPostComments", gService.selectEachPostComments(b_id));
 				mv.addObject("selectEachPostPhotos", gService.selectEachPostPhotos(b_id));

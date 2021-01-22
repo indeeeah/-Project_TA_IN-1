@@ -50,8 +50,9 @@
                     float: right;
                     width: 500px;
                     height: 65px;
-                    background-color: crimson;
                     overflow: auto;
+                    background-color:white;
+                    border: 1px solid #C7C7C7;
                 }
                 
                 #search {
@@ -73,7 +74,6 @@
                     width: 44px;
                     height: 44px;
                     border-radius: 50%;
-                    background-color: black;
                 }
             </style>
         </head>
@@ -108,7 +108,7 @@
                         <c:if test="${not empty chkfollow }">
                             <c:forEach var="vo" items="${chkfollow }" varStatus="s">
                                 <div class="fo_con">
-                                    <div class="fo_photo fo_photo${vo.id }">${vo.m_img }</div>
+                                    <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="fo_photo fo_photo${vo.id }">
                                     <%-- <div class="fo_id">${vo.id }
                                 </div> --%>
                                         <input type="hidden" class="fo_act fo_act${vo.id }" onclick="showfollowchk('${vo.id }', '${vo.m_activity }');" value="${vo.m_activity }">
