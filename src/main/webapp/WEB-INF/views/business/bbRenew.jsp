@@ -16,6 +16,7 @@
 body {
 	width: 100%;
 	height: 100%;
+	font-family: Arial, Helvetica, sans-serif;
 	color: #262626;
 	background-color: #FAFAFA;
 }
@@ -36,16 +37,7 @@ body {
 	display: flex;
 	justify-content: center;
 }
-/* .tab_menu {
-                    width: 250px;
-                    height: 100%;
-                    border-right: 1px solid black;
-                    float: left;
-                    box-sizing: border-box;
-                    cursor: pointer;
-                    line-height: 54px;
-                    text-align: center;
-                } */
+
 .tab_menu:nth-of-type(3) {
 	border: none;
 }
@@ -124,7 +116,6 @@ body {
 
 .hashtag_con {
 	border-top: 1px Dashed #C7C7C7;
-	border-bottom: 1px solid #C7C7C7;
 }
 
 #filter_con {
@@ -168,9 +159,7 @@ body {
 a {
 	text-decoration: none;
 }
-/*   .backto_main {
-                    float: left;
-                } */
+
 .upload_post {
 	float: right;
 }
@@ -192,9 +181,42 @@ a {
 	float: right;
 	line-height: 30px;
 }
-
+#bb_name{
+	width: 500px;
+    border: none;
+    height: 26px;
+    padding: 10px 0px 10px 0px;
+    outline: none;
+    border-bottom: 1px Dashed #C7C7C7;
+}
 .bbWriteMore{
 	display:flex;
+	border-top: 1px Dashed #C7C7C7;
+    border-bottom: 1px solid #C7C7C7;
+    padding: 10px 0 10px 0;
+}
+.bbWriteMoreLeft input{
+	width: 240px;
+    border: none;
+    height: 20px;
+    padding: 10px 0px 10px 0px;
+    outline: none;
+}
+.bbWriteMoreRight input{
+	width: 240px;
+    border: none;
+    height: 15px;
+    padding: 5px 0px 5px 0px;
+    outline: none;
+}
+
+#bbWriteMoreLeft{
+	width:50%;
+	border-right:1px dashed #C7C7C7;
+	margin-right:10px;
+}
+#bbWriteMoreRight{
+	width:50%;
 }
 </style>
 </head>
@@ -236,7 +258,7 @@ a {
                     <input type="hidden" name="my_name" value="${my_name }">
                     <input type="hidden" value="${chkseq}" name="seq" id="for_seq">
                     <label for="file"><i class="far fa-image" class="image_icon"></i></label>
-                    <input type="text" name="bb_name" placeholder="상품명" value="${bbRenew.bb_name}"></input>
+                    <input type="text" id="bb_name" name="bb_name" placeholder="상품명" value="${bbRenew.bb_name}">
                     <textarea rows="5" cols="40" name="bb_info" class="b_content bb_info" placeholder="상품 소개">${bbRenew.bb_info}</textarea>
                     <input type="file" id="file" name="file" class="file" multiple required style="display:none;">
                     <div class="hashtag_con">
@@ -244,15 +266,12 @@ a {
                     </div>
                     <div id="bbWriteMore" class="bbWriteMore">
 	                    <div id="bbWriteMoreLeft" class="bbWriteMoreLeft">
-							<div id="bbWritePrice" class="bbWritePrice" value="${bbRenew.bb_price}">
-								가 격 : <input type="text" name="bb_price">
+							<div id="bbWritePrice" class="bbWritePrice">
+								<input type="text" name="bb_price" placeholder="가 격" value="${bbRenew.bb_price}">
 							</div>
 							<div id="categoryBox">
-								<div>
-									카테고리 설정
-								</div>
 								<select id="category" name="c_name">
-									<option value=''>옵션을 선택해주세요.</option>
+									<option value=''>카테고리 설정</option>
 									<c:forEach items="${category }" var="v">
 										<option value="${v.c_name }"> ${v.c_name }</option>
 									</c:forEach>
@@ -262,16 +281,16 @@ a {
 						<div id="bbWriteMoreRight" class="bbWriteMoreRight">
 							<div id="bbWriteOption" class="bbWriteOption">
 								<div class="bbWriteOptionList">
-									옵션1 : <input type="text" id="bb_option1" name="bb_option1" onblur="option_onblur(this)" placeholder="option + price" value="${bbRenew.bb_option1 }">
+									<input type="text" id="bb_option1" name="bb_option1" onblur="option_onblur(this)" placeholder="옵션1 : option + price" value="${bbRenew.bb_option1 }">
 								</div>
 								<div class="bbWriteOptionList">
-									옵션2 : <input type="text" id="bb_option2" name="bb_option2" onblur="option_onblur(this)" placeholder="option + price" value="${bbRenew.bb_option2 }">
+									<input type="text" id="bb_option2" name="bb_option2" onblur="option_onblur(this)" placeholder="옵션2 : option + price" value="${bbRenew.bb_option2 }">
 								</div>
 								<div class="bbWriteOptionList">
-									옵션3 : <input type="text" id="bb_option3" name="bb_option3" onblur="option_onblur(this)" placeholder="option + price" value="${bbRenew.bb_option3 }">
+									<input type="text" id="bb_option3" name="bb_option3" onblur="option_onblur(this)" placeholder="옵션3 : option + price" value="${bbRenew.bb_option3 }">
 								</div>
 								<div class="bbWriteOptionList">
-									옵션4 : <input type="text" id="bb_option4" name="bb_option4" onblur="option_onblur(this)" placeholder="option + price" value="${bbRenew.bb_option4 }">
+									<input type="text" id="bb_option4" name="bb_option4" onblur="option_onblur(this)" placeholder="옵션4 : option + price" value="${bbRenew.bb_option4 }">
 								</div>
 							</div>
 						</div>
@@ -281,7 +300,7 @@ a {
 							<c:param name="page" value="1"/>
 							<c:param name="m_id" value="${m_id }"/>
 						</c:url>
-						<a href=${bbList } id="backto_main" class="btn backto_main">목록으로</a>
+						<input type="button" id="backto_main" class="btn backto_main" value="돌아가기">
 						<input type="submit" class="btn upload_post" value="등록하기">&nbsp;&nbsp;
                     </div>
                 </form>
@@ -437,7 +456,7 @@ a {
                 context.drawImage(video, 0, 0, 500, 375);
             });
 
-            document.querySelector('a').addEventListener('click', event
+            document.querySelector('a').addEventListener('click', event => 
                 event.target.href = canvas.toDataURL()
             );
 
@@ -649,45 +668,6 @@ a {
                 });
             });
             
-        	/* 선택한 이미지 썸네일 */
-        	var sel_files=[];
-        	$(document).ready(function(){
-        		$("#file").on("change", handleImgsFilesSelect);
-        	});
-        	
-        	function fileUploadAction(){
-        		console.log("fileUploadAction");
-        		$("#file").trigger('click');
-        	}
-        	
-        	function handleImgsFilesSelect(e){
-        		sel_files=[];
-        		$(".select_img").empty();
-        		var files=e.target.files;
-        		var filesArr = Array.prototype.slice.call(files);
-        		var index=0;
-        		filesArr.forEach(function(f){
-        			if(!f.type.match("image.*")){
-        				alert("이미지만 가능합니다.");
-        				return;
-        			}
-        			sel_files.push(f);
-        			var reader = new FileReader();
-        			reader.onload = function(e){
-        				/* var img_html = "<img src=\"" + e.target.result+ "\"/>"; */
-        				var html = "<div class='f'><img src=\"" + e.target.result + "\" data-file='" +f.name+"' class='selProductFile'></div>"; 
-        				
-        				$(".select_img").append(html);
-        				index++;
-        									
-        				showSlides(slideIndex);
-        				
-        			}
-        			reader.readAsDataURL(f);
-        		});
-        		
-        	}
-        	
         	// 옵션 정규표현식
         	var regEx=/^([0-9a-zA-Z가-힣]{1,30})[+]([0-9]{1,8})$/;
         	function option_onblur(e){

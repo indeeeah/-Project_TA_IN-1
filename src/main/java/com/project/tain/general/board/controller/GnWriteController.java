@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.tain.general.board.model.domain.GnWrite;
 import com.project.tain.general.board.model.service.GnWriteService;
+import com.project.tain.post.model.service.TimeLineService;
 
 @Controller
 public class GnWriteController {
@@ -24,9 +26,16 @@ public class GnWriteController {
 	@Autowired
 	private GnWriteService gwService;
 	
+	@Autowired
+	private TimeLineService tService;
+
+	
 	@RequestMapping(value = "/gnWrite", method = RequestMethod.GET)
 	public ModelAndView gnWrite(HttpServletRequest request, ModelAndView mv) {
 		try {
+			HttpSession session = request.getSession();
+			String my_name = (String) session.getAttribute("my_name");
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("chkseq", gwService.chkseq());
 			mv.setViewName("general/gnWrite");
 		} catch (Exception e) {

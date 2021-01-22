@@ -14,9 +14,139 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <title>장바구니</title>
 <style>
-a {
-	display: block;
-}
+body {
+                                    text-align: center;
+                                    margin: 0;
+                                    color: #262626;
+                                    background-color: #FAFAFA;
+                                }
+                                
+                                #mManage {
+                                    display: flex;
+                                    justify-content: center;
+                                    width: 100%;
+                                }
+                                
+                                #sc_big_con {
+                                    width: 1000px;
+                                    background-color: white;
+                                }
+                                
+                                #sc_con {
+                                    width: 998px;
+                                    height: 798px;
+                                    border: 1px solid #C7C7C7;
+                                    border-top: none;
+                                }
+                                
+                                #menu {
+                                    float: left;
+                                    width: 260px;
+                                    margin: 0 auto;
+                                }
+                                
+                                #menulist {
+                                    list-style: none;
+                                    margin: 0 auto;
+                                    padding-left: 0;
+                                    width: 260px;
+                                    border-right: 1px solid #C7C7C7;
+                                    height: 798px;
+                                }
+                                
+                                #menulist>li {
+                                    width: 228px;
+                                    height: 21px;
+                                    padding: 16px 16px 16px 16px;
+                                    font-size: 14px;
+                                    line-height: 21px;
+                                    cursor: pointer;
+                                    text-align: left;
+                                }
+                                
+                                #menulist>li>a {
+                                    color: black;
+                                    text-decoration: none;
+                                }
+                                
+                                #menulist>li:hover {
+                                    background-color: #F6F6F6;
+                                    border-left: 2px solid #D5D5D5;
+                                }
+                                
+                                #contents {
+                                    display: inline-block;
+                                    width: 705px;
+                                    text-align: center;
+                                    margin: 0 auto;
+                                }
+                                
+                                td {
+                                    vertical-align: middle !important;
+                                    text-align: left;
+                                    font-size: 14px;
+                                }
+                                
+                                #imgmanageModal {
+                                    width: 400px;
+                                    height: 222px;
+                                    display: none;
+                                    position: fixed;
+                                    left: 50%;
+                                    top: 50%;
+                                    transform: translate(-50%, -50%);
+                                    background: white;
+                                }
+                                
+                                #parentModal {
+                                    background: black;
+                                    opacity: 0.5;
+                                    position: fixed;
+                                    width: 100%;
+                                    height: 100%;
+                                    display: none;
+                                    margin: 0;
+                                    z-index: 7;
+                                }
+                                
+                                #imgmanageModal {
+                                    z-index: 7;
+                                }
+                                
+                                button:focus {
+                                    border: none;
+                                    outline: none;
+                                }
+                                
+                                #sc_title {
+                                    padding: 20px 16px 20px 16px;
+                                    width: 966px;
+                                    height: 20px;
+                                    color: #999999;
+                                    font-size: 16px;
+                                    line-height: 20px;
+                                    border: 1px solid #C7C7C7;
+                                    text-align: left;
+                                }
+                                
+                                .btn2 {
+                                    height: 30px;
+                                    border: none;
+                                    margin-top: 15px;
+                                    margin-bottom: 10px;
+                                    cursor: pointer;
+                                    outline: none;
+                                    font-size: 13px;
+                                    border-radius: 5px;
+                                }
+                                
+                                .wcon {
+                                    outline: none;
+                                    border: 1px solid #C7C7C7;
+                                    height: 30px;
+                                    padding: 0px 2px 0px 2px;
+                                    box-sizing: border-box;
+                                }
 
 table {
 	border-collapse: collapse;
@@ -27,6 +157,7 @@ th, td {
 	border-bottom: 1px solid #D5D5D5;
 	border-left: 1px solid #D5D5D5;
 	vertical-align:middle !important;
+	text-align:center;
 }
 </style>
 </head>
@@ -133,6 +264,9 @@ th, td {
 <body>
 <jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
+	<div id="sc_big_con">
+                                    <div id="sc_title">장바구니</div>
+                                    <div id="sc_con">
 		<div id="menu">
 			<ul id="menulist">
 				<li><a href="mManage.do">프로필 편집</a></li>
@@ -145,8 +279,6 @@ th, td {
 			</ul>
 		</div>
 		<div id="contents" style="padding-top: 30px;">
-			<span style="margin-bottom: 50px; color:white; background:gray;">장바구니</span>
-			<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
 			<table id="cartlist" style="font-size: 10pt; margin: 40px 0 60px 0;">
 				<tr>
 					<td align="center" width="3%"><input type="checkbox" checked id="checkall"></td>
@@ -189,9 +321,9 @@ th, td {
 								value="<fmt:formatNumber
 										value="${price}" pattern="#,###" />원"></td>
 							<td><input type="button" id="order" value="주문하기"
-								style="background: white; border: 1px solid #D5D5D5;" onclick="location.href='mBuy.do?bb_id=${cl.bb_id}'"><br>
-							<br> <input type="button" id="delete" value="삭제"
-								style="background: white; border: 1px solid #D5D5D5;"
+								style="background: white; border: 1px solid #D5D5D5; margin:0px;" class="btn2" onclick="location.href='mBuy.do?bb_id=${cl.bb_id}'">
+							<br><br><input type="button" id="delete" value="삭제"
+								style="background: white; border: 1px solid #D5D5D5; margin:0px;" class="btn2"
 								onclick="location.href='mDeleteCart.do?bb_id=${cl.bb_id}'">
 							</td>
 						</tr>
@@ -213,9 +345,11 @@ th, td {
 				</tr>
 			</table>
 			<div style="padding:40px 0 30px 0;">
-			<input type="button" id="orderlist" value="주문하기" style="background: white; border: 1px solid #D5D5D5;">
-			<input type="button" id="deletelist" value="삭제하기" style="background: white; border: 1px solid #D5D5D5;">
+			<input type="button" id="orderlist" class="btn2" style="background: #6782B4; padding: 5px 20px 5px 20px; color: white;"" value="주문하기" style="background: white; border: 1px solid #D5D5D5;">
+			<input type="button" id="deletelist" class="btn2" style="background: #6782B4; padding: 5px 20px 5px 20px; color: white;"" value="삭제하기" style="background: white; border: 1px solid #D5D5D5;">
 			</div>
+		</div>
+		</div>
 		</div>
 		<div style="clear: both;"></div>
 	</div>

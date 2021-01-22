@@ -12,9 +12,139 @@
 	rel="stylesheet" type="text/css" />
 <title>계정 관리</title>
 <style>
-a {
-	display: block;
-}
+body {
+                            text-align: center;
+                            margin: 0;
+                            color: #262626;
+                            background-color: #FAFAFA;
+                        }
+                        
+                        #mManage {
+                            display: flex;
+                            justify-content: center;
+                            width: 100%;
+                        }
+                        
+                        #sc_big_con {
+                            width: 1000px;
+                            background-color: white;
+                        }
+                        
+                        #sc_con {
+                            width: 998px;
+                            height: 798px;
+                            border: 1px solid #C7C7C7;
+                            border-top: none;
+                        }
+                        
+                        #menu {
+                            float: left;
+                            width: 260px;
+                            margin: 0 auto;
+                        }
+                        
+                        #menulist {
+                            list-style: none;
+                            margin: 0 auto;
+                            padding-left: 0;
+                            width: 260px;
+                            border-right: 1px solid #C7C7C7;
+                            height: 798px;
+                        }
+                        
+                        #menulist>li {
+                            width: 228px;
+                            height: 21px;
+                            padding: 16px 16px 16px 16px;
+                            font-size: 14px;
+                            line-height: 21px;
+                            cursor: pointer;
+                            text-align: left;
+                        }
+                        
+                        #menulist>li>a {
+                            color: black;
+                            text-decoration: none;
+                        }
+                        
+                        #menulist>li:hover {
+                            background-color: #F6F6F6;
+                            border-left: 2px solid #D5D5D5;
+                        }
+                        
+                        #contents {
+                            display: inline-block;
+                            width: 705px;
+                            text-align: center;
+                            margin: 0 auto;
+                        }
+                        
+                        td {
+                            vertical-align: middle !important;
+                            text-align: left;
+                            font-size: 14px;
+                        }
+                        
+                        #imgmanageModal {
+                            width: 400px;
+                            height: 222px;
+                            display: none;
+                            position: fixed;
+                            left: 50%;
+                            top: 50%;
+                            transform: translate(-50%, -50%);
+                            background: white;
+                        }
+                        
+                        #parentModal {
+                            background: black;
+                            opacity: 0.5;
+                            position: fixed;
+                            width: 100%;
+                            height: 100%;
+                            display: none;
+                            margin: 0;
+                            z-index: 7;
+                        }
+                        
+                        #imgmanageModal {
+                            z-index: 7;
+                        }
+                        
+                        button:focus {
+                            border: none;
+                            outline: none;
+                        }
+                        
+                        #sc_title {
+                            padding: 20px 16px 20px 16px;
+                            width: 966px;
+                            height: 20px;
+                            color: #999999;
+                            font-size: 16px;
+                            line-height: 20px;
+                            border: 1px solid #C7C7C7;
+                            text-align: left;
+                        }
+                        
+                        .btn2 {
+                            height: 30px;
+                            border: none;
+                            margin-top: 15px;
+                            margin-bottom: 10px;
+                            cursor: pointer;
+                            outline: none;
+                            font-size: 13px;
+                            border-radius: 5px;
+                        }
+                        
+                        .wcon {
+                            outline: none;
+                            border: 1px solid #C7C7C7;
+                            height: 30px;
+                            padding: 0px 2px 0px 2px;
+                            box-sizing: border-box;
+                        }
 
 .submenu {
 	border: 1px solid #D5D5D5;
@@ -26,6 +156,9 @@ td{vertical-align:middle !important;}
 <body>
 <jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
+	<div id="sc_big_con">
+                            <div id="sc_title">좋아요 누른 목록</div>
+                            <div id="sc_con">
 		<div id="menu">
 			<ul id="menulist">
 				<li><a href="mManage.do">프로필 편집</a></li>
@@ -39,8 +172,6 @@ td{vertical-align:middle !important;}
 			</ul>
 		</div>
 		<div id="contents" style="padding-top: 30px;">
-			<span style="color:white; background:gray;">좋아요 누른 목록</span>
-			<hr style="width:80%; margin-top:30px; border:1px solid #EAEAEA;">
 			<div id="submenu" style="padding-top: 30px;">
 				<input type="button" id="all" class="submenu" value="전체"
 					style="background: white; text-align: center; width: 120px;"
@@ -81,7 +212,10 @@ td{vertical-align:middle !important;}
 				</c:if>
 			</div>
 		</div>
+		</div>
+		</div>
 		<div style="clear: both;"></div>
 	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>

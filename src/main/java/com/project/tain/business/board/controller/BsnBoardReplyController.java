@@ -159,6 +159,7 @@ public class BsnBoardReplyController {
 		try {
 			result.put("ack", bbrService.insertBbrr(bbr));
 			System.out.println("답글인서트완료");
+			bbr.setBb_id(bbr.getBb_topid());
 			List<BsnBoardReply> logList = bbrService.bbrrList(bbr);
 			System.out.println("답글인서트 리스트:"+logList);
 			result.put("data", logList);

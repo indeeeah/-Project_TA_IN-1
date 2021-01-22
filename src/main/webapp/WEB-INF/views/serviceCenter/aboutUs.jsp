@@ -110,6 +110,8 @@
                     width: 230px;
                     height: 230px;
                     border-radius: 50%;
+                    background-color: #2884b8;
+                    background-image: linear-gradient(315deg, #2884b8 0%, #d1bad2 74%);
                 }
                 
                 .photo2 {
@@ -119,41 +121,13 @@
                     margin-left: 15px;
                     border-radius: 50%;
                     cursor: pointer;
+                    
                 }
                 
                 .photo2:hover {
                     opacity: 0.5;
                 }
                 
-                #p1 {
-                    background-color: #bbf0f3;
-                    background-image: linear-gradient(315deg, #bbf0f3 0%, #f6d285 74%);
-                }
-                
-                #p2 {
-                    background-color: #d8dede;
-                    background-image: linear-gradient(315deg, #d8dede 0%, #e5bdf6 74%);
-                }
-                
-                #p3 {
-                    background-color: #f9ea8f;
-                    background-image: linear-gradient(315deg, #f9ea8f 0%, #aff1da 74%);
-                }
-                
-                #p4 {
-                    background-color: #2884b8;
-                    background-image: linear-gradient(315deg, #2884b8 0%, #d1bad2 74%);
-                }
-                
-                #p5 {
-                    background-color: #96c8fb;
-                    background-image: linear-gradient(315deg, #96c8fb 0%, #ddbdfc 74%);
-                }
-                
-                #p6 {
-                    background-color: #98d9e1;
-                    background-image: linear-gradient(315deg, #98d9e1 0%, #d6aed6 74%);
-                }
                 
                 .name {
                     margin-top: 20px;
