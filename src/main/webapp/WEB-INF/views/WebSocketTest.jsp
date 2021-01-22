@@ -52,14 +52,7 @@
 					var msg = $('input#msg').val();
 					var toid = $('input#user').val();
 					socket.send(id+","+toid+","+msg);
-					$("#receivemsg").append("메시지를 보냈습니다. 내용 : "+msg+"<br>");
-					$(".alarm").css("display", "inline-block");
-					$("#chkbox").css("display", "none");
 				});
-				
-				$(".alarm").click(function(){
-					$(".alarm").css("display", "none");
-				})
 			});
 </script>
 <body>

@@ -15,12 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,6 +36,7 @@ import com.project.tain.businessmembermanage.model.vo.bMemberVO;
 import com.project.tain.membermanage.model.service.mCartServiceImpl;
 import com.project.tain.membermanage.model.service.mLikeServiceImpl;
 import com.project.tain.membermanage.model.service.mMemberServiceImpl;
+import com.project.tain.membermanage.model.service.mMessageServiceImpl;
 import com.project.tain.membermanage.model.service.mOrderServiceImpl;
 import com.project.tain.membermanage.model.vo.mCartVO;
 import com.project.tain.membermanage.model.vo.mMemberVO;
@@ -57,19 +60,30 @@ public class mMangeController {
 	private bCateServiceImpl bCateServiceImpl;
 	@Autowired
 	private bOrderServiceImpl bOrderServiceImpl;
+	@Autowired
+	private mMessageServiceImpl mMessageServiceImpl;
 
 	@RequestMapping(value = "/IdSet.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String memberBusiness(HttpServletRequest request) {
 		return "IdSet";
 	}
-	
+
 	@RequestMapping(value = "/MemberIdSet.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView memberID(HttpServletRequest request, @RequestParam(name="m_id") String m_id, ModelAndView mv, HttpSession session) {
+	public ModelAndView memberID(HttpServletRequest request, @RequestParam(name = "m_id") String m_id, ModelAndView mv,
+			HttpSession session) {
 		session.setAttribute("my_name", m_id);
 		mv.setViewName("redirect:/mManage.do");
 		return mv;
 	}
 	
+	@RequestMapping(value = "/MessageIdSet.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView messageID(HttpServletRequest request, @RequestParam(name = "m_id") String m_id, ModelAndView mv,
+			HttpSession session) {
+		session.setAttribute("my_name", m_id);
+		mv.setViewName("redirect:/chatlist.do");
+		return mv;
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/mManage.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberManage(ModelAndView mv, HttpServletRequest request, HttpSession session) {
@@ -119,7 +133,6 @@ public class mMangeController {
 			e.printStackTrace();
 		}
 	}
-	
 
 	@RequestMapping(value = "/deleteProfileImg.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public void deleteProfileImg(mMemberVO mvo, HttpServletRequest request, HttpServletResponse response) {
@@ -250,13 +263,14 @@ public class mMangeController {
 			e.printStackTrace();
 		}
 	}
+
 	@RequestMapping(value = "/mDeleteCartList.do", method = RequestMethod.GET)
 	public void deleteCartlist(@RequestParam("bb_id") String bb_id, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		String[] arr = bb_id.split("/");
-		for(int i = 0; i < arr.length; i++) {
+		for (int i = 0; i < arr.length; i++) {
 			String bid = arr[i];
 			mCartServiceImpl.deleteCart(bid);
 		}
@@ -304,7 +318,7 @@ public class mMangeController {
 		String[] arr = request.getParameter("param").split("/");
 		HttpSession session = request.getSession();
 		String my_name = (String) session.getAttribute("my_name");
-		for(int i = 0; i < arr.length; i++) {
+		for (int i = 0; i < arr.length; i++) {
 			String[] insert = arr[i].split(",");
 			ovo.setBb_id(insert[0]);
 			ovo.setM_id(my_name);
@@ -326,12 +340,13 @@ public class mMangeController {
 	}
 
 	@RequestMapping(value = "/mBuylist.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView memberOrderList(ModelAndView mv, HttpServletRequest request){
+	public ModelAndView memberOrderList(ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String my_name = (String) session.getAttribute("my_name");
 		Map<String, String> map = new HashMap<String, String>();
-		for(int i = 0; i < mOrderServiceImpl.showOrderList(my_name).size(); i++) {
-			map.put("bb_img", mCartServiceImpl.showOrderImg(mOrderServiceImpl.showOrderList(my_name).get(i).getBb_id()));
+		for (int i = 0; i < mOrderServiceImpl.showOrderList(my_name).size(); i++) {
+			map.put("bb_img",
+					mCartServiceImpl.showOrderImg(mOrderServiceImpl.showOrderList(my_name).get(i).getBb_id()));
 		}
 		mv.addObject("orderimg", map);
 		mv.addObject("orderlist", mOrderServiceImpl.showOrderList(my_name));
@@ -370,7 +385,7 @@ public class mMangeController {
 	public ModelAndView mBusiness(ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String my_name = (String) session.getAttribute("my_name");
-		if(bMemberServiceImpl.showbMember(my_name) != null) {
+		if (bMemberServiceImpl.showbMember(my_name) != null) {
 			mv.addObject("bMemAddr", bMemberServiceImpl.showbMember(my_name).getBm_addr().split("/"));
 		}
 		mv.addObject("my_name", my_name);
@@ -378,19 +393,22 @@ public class mMangeController {
 		mv.setViewName("Gmember/mBusiness");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/insertbMember.do", method = RequestMethod.POST)
-	public void insertbMember(bMemberVO bvo, HttpServletResponse response, HttpServletRequest request) throws IOException {
+	public void insertbMember(bMemberVO bvo, HttpServletResponse response, HttpServletRequest request)
+			throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-			PrintWriter pw = response.getWriter();
-			bMemberServiceImpl.insertbMember(bvo);
-			pw.println("<script>alert('비즈니스 전환 신청되었습니다. 관리자 승인이 되어야 전환 됩니다.'); location.href='/tain/mBusiness.do'; </script>");
-			pw.flush();
+		PrintWriter pw = response.getWriter();
+		bMemberServiceImpl.insertbMember(bvo);
+		pw.println(
+				"<script>alert('비즈니스 전환 신청되었습니다. 관리자 승인이 되어야 전환 됩니다.'); location.href='/tain/mBusiness.do'; </script>");
+		pw.flush();
 	}
-	
+
 	@RequestMapping(value = "/updatebMember.do", method = RequestMethod.POST)
-	public void updatebMember(bMemberVO bvo, HttpServletResponse response, HttpServletRequest request) throws IOException {
+	public void updatebMember(bMemberVO bvo, HttpServletResponse response, HttpServletRequest request)
+			throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter pw = response.getWriter();
@@ -398,13 +416,13 @@ public class mMangeController {
 		pw.flush();
 		bMemberServiceImpl.updatebMember(bvo);
 	}
-	
+
 	@RequestMapping(value = "/bOut.do", method = RequestMethod.GET)
 	public ModelAndView bOut(ModelAndView mv, HttpServletRequest request) {
 		mv.setViewName("Bmember/bOut");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/bDelete.do", method = RequestMethod.GET)
 	public void bDelete(HttpServletResponse response, HttpServletRequest request) throws IOException {
 		HttpSession session = request.getSession();
@@ -412,8 +430,7 @@ public class mMangeController {
 		bMemberServiceImpl.deletebMember(my_name);
 		response.sendRedirect("mBusiness.do");
 	}
-	
-	
+
 	@RequestMapping(value = "/bAD.do", method = RequestMethod.GET)
 	public ModelAndView bAD(ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -422,10 +439,10 @@ public class mMangeController {
 		mv.setViewName("Bmember/bAD");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/insertbAd.do", method = RequestMethod.POST)
-	public void insertbAd(bAdVO bvo, @RequestParam(name = "upfile") MultipartFile report,
-			HttpServletRequest request, HttpServletResponse response) {
+	public void insertbAd(bAdVO bvo, @RequestParam(name = "upfile") MultipartFile report, HttpServletRequest request,
+			HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		HttpSession session = request.getSession();
@@ -442,9 +459,10 @@ public class mMangeController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@RequestMapping(value = "/deletebAd.do", method = RequestMethod.GET)
-	public void deletebAd(bAdVO bvo, @RequestParam(name = "s_id") String s_id, HttpServletResponse response, HttpServletRequest request) throws IOException {
+	public void deletebAd(bAdVO bvo, @RequestParam(name = "s_id") String s_id, HttpServletResponse response,
+			HttpServletRequest request) throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter pw = response.getWriter();
@@ -458,13 +476,13 @@ public class mMangeController {
 		HttpSession session = request.getSession();
 		String my_name = (String) session.getAttribute("my_name");
 		List<String> list = new ArrayList<>();
-		for(int i = 0; i < bCateServiceImpl.showbCate(my_name).size(); i++) {
-			String r,g,b;
+		for (int i = 0; i < bCateServiceImpl.showbCate(my_name).size(); i++) {
+			String r, g, b;
 			Random generator = new Random();
 			r = Integer.toString(generator.nextInt(256));
 			g = Integer.toString(generator.nextInt(256));
 			b = Integer.toString(generator.nextInt(256));
-			String color = r+","+g+","+b;
+			String color = r + "," + g + "," + b;
 			list.add(color);
 		}
 		mv.addObject("color", list);
@@ -472,7 +490,7 @@ public class mMangeController {
 		mv.setViewName("Bmember/bCategory");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/insertbCate.do", method = RequestMethod.POST)
 	public void insertbCate(bCateVO bvo, HttpServletRequest request, HttpServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
@@ -489,9 +507,10 @@ public class mMangeController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@RequestMapping(value = "/deletebCate.do", method = RequestMethod.GET)
-	public void deletebCate(bCateVO bvo, @RequestParam(name = "c_name") String c_name, HttpServletResponse response, HttpServletRequest request) throws IOException {
+	public void deletebCate(bCateVO bvo, @RequestParam(name = "c_name") String c_name, HttpServletResponse response,
+			HttpServletRequest request) throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		HttpSession session = request.getSession();
@@ -503,7 +522,7 @@ public class mMangeController {
 		pw.println("<script>alert('해당 카테고리가 삭제되었습니다.'); location.href='/tain/bCategory.do'; </script>");
 		pw.flush();
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/bOrder.do", method = RequestMethod.GET)
 	public ModelAndView bOrder(ModelAndView mv, HttpServletRequest request) {
@@ -511,14 +530,14 @@ public class mMangeController {
 		String my_name = (String) session.getAttribute("my_name");
 		Date date = new Date(System.currentTimeMillis());
 		Date enddate = new Date(date.getYear(), date.getMonth(), date.getDate());
-		Date startdate = new Date(date.getYear(), date.getMonth()-3, date.getDate());
+		Date startdate = new Date(date.getYear(), date.getMonth() - 3, date.getDate());
 		mv.addObject("startdate", startdate);
 		mv.addObject("enddate", enddate);
 		mv.addObject("bOrderList", bOrderServiceImpl.manageOrderList(my_name, startdate, enddate));
 		mv.setViewName("Bmember/bOrder");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/bOrderDateSearch.do", method = RequestMethod.GET)
 	public ModelAndView bOrderdate(ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -531,9 +550,9 @@ public class mMangeController {
 		mv.setViewName("Bmember/bOrder");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/bOrderStatus.do", method = RequestMethod.GET)
-	public void bOrderStatus( HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void bOrderStatus(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		String od_status = request.getParameter("od_status");
@@ -542,5 +561,26 @@ public class mMangeController {
 		PrintWriter pw = response.getWriter();
 		pw.println("<script>alert('배송정보가 변경되었습니다.'); location.href='/tain/bOrder.do'; </script>");
 		pw.flush();
+	}
+
+	@RequestMapping(value = "/chatlist.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView chatlist(ModelAndView mv, HttpServletRequest request, HttpSession session) {
+		String my_name = (String)session.getAttribute("my_name");
+		mv.addObject("MessageList", mMessageServiceImpl.showMessageList(my_name));
+		mv.setViewName("Gmember/chatlist");
+		return mv;
+	}
+
+	@RequestMapping(value = "/showchat.do", method = RequestMethod.GET)
+	public ModelAndView showchat(ModelAndView mv, HttpServletRequest request,
+			@RequestParam(name = "m_id2") String m_id2, HttpSession session) {
+		String my_name = (String) session.getAttribute("my_name");
+
+		mv.addObject("my_name", my_name);
+		mv.addObject("m_id2", m_id2);
+		mv.addObject("MessageList", mMessageServiceImpl.showMessageList(my_name));
+		mv.addObject("Message", mMessageServiceImpl.showMessage(my_name, m_id2));
+		mv.setViewName("Gmember/showchat");
+		return mv;
 	}
 }

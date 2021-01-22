@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 <style>
 .container {
-	max-width: 1170px;
+	max-width: 1000px;
 	margin: auto;
 }
 
@@ -111,6 +111,7 @@ img {
 .chat_people {
 	overflow: hidden;
 	clear: both;
+	cursor:pointer;
 }
 
 .chat_list {
@@ -130,7 +131,7 @@ img {
 
 .incoming_msg_img {
 	display: inline-block;
-	width: 6%;
+	width: 40%;
 }
 
 .received_msg {
@@ -184,7 +185,7 @@ img {
 
 .sent_msg {
 	float: right;
-	width: 46%;
+	width: 50%;
 }
 
 .input_msg_write input {
@@ -223,7 +224,107 @@ img {
 	height: 516px;
 	overflow-y: auto;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: rgba(0,0,0,0.35);
+}
+::-webkit-scrollbar-corner {
+  background: #0c0c0c;
+}
 </style>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+	$(document).ready(function(){
+		
+		function msg(){
+			$(".msg_history").scrollTop($(document).height());
+		}
+		
+		$(".chat_people").click(function(){
+			var m_id2 = $(this).find('input[type=text]').val();
+			location.href="showchat.do?m_id2="+m_id2;
+		});
+		
+		//소켓
+		var socket = null;
+		function connect() {
+			var ws = new WebSocket(
+					"ws://localhost:8090/tain/replyEcho?ID=${my_name}");
+			socket = ws;
+
+			//접속 처리
+			ws.onopen = function() {
+				console.log('Info: connection opened.');
+			};
+
+			//메시지 처리
+			ws.onmessage = function(event) {
+				console.log("ReceiveMessage : ", event.data + '\n');
+				var arr=[];
+				arr = event.data.split(",");
+				var id = arr[0];
+				var msg = arr[1];
+				var date = new Date;
+				var year = date.getFullYear();
+				var month = date.getMonth();
+				var day = date.getDate();
+				var hours = date.getHours();
+				var minutes = date.getMinutes();
+				var seconds = date.getSeconds();
+				var msghistory = $(".msg_history").html();
+				$(".msg_history").html(msghistory + "<div class='received_msg'><div class='received_withd_msg'><div class='incoming_msg_img'><img src='#''><b style='font-size: 9pt;'>"+id+"</b></div><p>"+msg+"</p><span class='time_date'>"+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds+"</span></div></div>");
+				setTimeout(function(){
+					$(".msg_history").scrollTop($(document).height());
+				}, 10);
+			};
+			
+			//접속 끊겼을때
+			ws.onclose = function(event) {
+				console.log('Info: connection closed.');
+				//setTimeout(function(){connect();}, 1000);   // retry connection!!
+			};
+			ws.onerror = function(err) {
+				console.log('Err:', err);
+			};
+
+		}
+
+		connect();
+
+		$('#btnSend').on('click', function(evt) {
+			evt.preventDefault();
+			if (socket.readyState !== 1)
+				return;
+			var id = "${my_name}";
+			var msg = $('input#msg').val();
+			var toid = "${m_id2}";
+			var date = new Date;
+			var year = date.getFullYear();
+			var month = date.getMonth();
+			var day = date.getDate();
+			var hours = date.getHours();
+			var minutes = date.getMinutes();
+			var seconds = date.getSeconds();
+			socket.send(id+","+toid+","+msg+","+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds);
+			var msghistory = $(".msg_history").html();
+			$(".msg_history").html(msghistory + "<div class='outgoing_msg'><div class='sent_msg'><p>"+msg+"</p><span class='time_date'>"+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds+"</span></div></div>");
+			setTimeout(function(){
+				$(".msg_history").scrollTop($(document).height());
+			}, 10);
+			$("#msg").val("");
+		});
+	});
+</script>
 </head>
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
@@ -259,7 +360,7 @@ img {
 								</div>
 								<div class="chat_ib">
 									<h5>
-										${ml.chat} <span class="chat_date">${ml.lastdate }</span>
+										${ml.chat}<input type="text" value="${ml.chat}" style="display:none;"> <span class="chat_date">${ml.lastdate }</span>
 									</h5>
 									<p>Test</p>
 								</div>
@@ -269,69 +370,44 @@ img {
 					</div>
 				</div>
 				<div class="mesgs">
-					<div class="msg_history">
-						<div class="incoming_msg">
-							<div class="incoming_msg_img">
-								<img src="#">
-							</div>
-							<div class="received_msg">
-								<div class="received_withd_msg">
-									<p>Test</p>
-									<span class="time_date"> 11:01 AM | June 9</span>
-								</div>
-							</div>
-						</div>
-						<div class="outgoing_msg">
-							<div class="sent_msg">
-								<p>Test</p>
-								<span class="time_date"> 11:01 AM | June 9</span>
-							</div>
-						</div>
-						<div class="incoming_msg">
-							<div class="incoming_msg_img">
-								<img src="#">
-							</div>
-							<div class="received_msg">
-								<div class="received_withd_msg">
-									<p>Test</p>
-									<span class="time_date"> 11:01 AM | Yesterday</span>
-								</div>
-							</div>
-						</div>
-						<div class="outgoing_msg">
-							<div class="sent_msg">
-								<p>Test</p>
-								<span class="time_date"> 11:01 AM | Today</span>
-							</div>
-						</div>
-						<div class="incoming_msg">
-							<div class="incoming_msg_img">
-								<img src="#">
-							</div>
-							<div class="received_msg">
-								<div class="received_withd_msg">
-									<p>test</p>
-									<span class="time_date"> 11:01 AM | Today</span>
-								</div>
-							</div>
-						</div>
+					<div class="msg_history" onload="msg();">
+						<c:if test="${MessageList eq null}">
+						<h1>메세지를 보내보세요!</h1>
+						</c:if>
+						<c:if test="${MessageList ne null}">
+							<c:forEach var="msg" items="${Message }" varStatus="status">
+								<c:if test="${msg.m_id eq my_name }">
+									<div class="outgoing_msg">
+										<div class="sent_msg">
+											<p>${msg.m_message }</p>
+											<span class="time_date"> ${msg.m_date }</span>
+										</div>
+									</div>
+								</c:if>
+								<c:if test="${msg.m_id ne my_name }">
+									<div class="received_msg">
+										<div class="received_withd_msg">
+											<div class="incoming_msg_img">
+												<img src="#"><b style="font-size: 9pt;">${msg.m_id }</b>
+											</div>
+											<p>${msg.m_message }</p>
+											<span class="time_date"> ${msg.m_date }</span>
+										</div>
+									</div>
+								</c:if>
+							</c:forEach>
+						</c:if>
 					</div>
 					<div class="type_msg">
 						<div class="input_msg_write">
-							<input type="text" class="write_msg" placeholder="Type a message" />
-							<button class="msg_send_btn" type="button">
+							<input type="text" id="msg" class="write_msg" placeholder="Type a message" onKeyPress="enter();"/>
+							<button id="btnSend"class="msg_send_btn" type="button">
 								<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-
-
-			<p class="text-center top_spac">
-				..<a target="_blank" href="#">..</a>
-			</p>
-
 		</div>
 	</div>
 </body>
