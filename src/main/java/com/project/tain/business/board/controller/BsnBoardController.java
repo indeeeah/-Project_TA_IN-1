@@ -87,10 +87,9 @@ public class BsnBoardController {
 				mv.addObject("bsnInfoFollower", bbService.bsnInfoFollower(m_id));
 				mv.addObject("listCount", bbService.listCount(m_id));	// 게시물카운트
 				mv.addObject("category", bbService.selectCategory(m_id));//카테고리 목록
-				mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
+//				mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
 				mv.addObject("list", bbService.selectListPage(m_id, currentPage, LIMIT));	// 게시물 텍스트정보
 				mv.setViewName("business/bsnMain");
-//				mv.setViewName("business/bsnMain_backup");	//추후 삭제
 			}
 		} catch(Exception e) {
 			mv.addObject("msg", e.getMessage());
