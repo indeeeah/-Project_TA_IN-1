@@ -444,7 +444,12 @@
 		where h_tag like concat('%',concat(UPPER(#{word}),'%')) or
 		h_tag like
 		concat('%',concat(LOWER(#{word}),'%'))
-		union
+		union 
+        select '#'||h_tag word from businesshashtag
+		where h_tag like concat('%',concat(UPPER(#{word}),'%')) or
+		h_tag like
+		concat('%',concat(LOWER(#{word}),'%'))
+        union 
 		select '@'||m_id word from
 		member where m_id like
 		concat('%',concat(UPPER(#{word}),'%')) or
@@ -455,8 +460,10 @@
 	<!-- 해쉬태그 표시 -->
 	<select id="showHashTag" parameterType="string"
 		resultType="arrayList" resultMap="resultTimeLine">
-		select h_tag from hashtag where b_id=
-		#{t_id}
+		 select h_tag from hashtag where
+		b_id=#{t_id}
+        union
+        select h_tag from businesshashtag where bb_id=#{t_id}
 	</select>
 
 	<!-- 팔로우한 계정 상태 표시 -->

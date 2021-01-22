@@ -103,6 +103,8 @@
 		resultType="arrayList" resultMap="resultGnBoard">
 		select h_tag from hashtag where
 		b_id=#{b_id}
+        union
+        select h_tag from businesshashtag where bb_id=#{b_id}
 	</select>
 
 	<!-- 팔로우 추천 -->

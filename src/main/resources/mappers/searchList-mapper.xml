@@ -8,19 +8,29 @@
 	</resultMap>
 	<select id="showHashTag" parameterType="string"
 		resultType="SearchList">
-		select distinct b_date, hashtag.b_id b_id, b_img1 b_img, h_tag hashtag from
+		select * from(
+        select distinct b_date, hashtag.b_id b_id, b_img1 b_img, h_tag hashtag from
 		hashtag
 		join boardadd on hashtag.b_id = boardadd.b_id
 		join board on hashtag.b_id = board.b_id
-		where h_tag=#{hashtag}
-		order by b_date desc
+        union
+        select distinct bb_date b_date, businesshashtag.bb_id b_id, bb_img1 b_img, h_tag hashtag from
+		businesshashtag
+		join businessboardadd on businesshashtag.bb_id = businessboardadd.bb_id
+		join businessboard on businesshashtag.bb_id = businessboard.bb_id
+        ) where hashtag = #{hashtag} order by b_date
 	</select>
 	<select id="showHashTagCount" parameterType="string" resultType="int">
-	select count(*) from(select distinct b_date, hashtag.b_id b_id, b_img1 b_img, h_tag hashtag from
+	select count(*) from(
+        select distinct b_date, hashtag.b_id b_id, b_img1 b_img, h_tag hashtag from
 		hashtag
 		join boardadd on hashtag.b_id = boardadd.b_id
 		join board on hashtag.b_id = board.b_id
-		where h_tag=#{hashtag}
-		order by b_date desc)
+        union
+        select distinct bb_date b_date, businesshashtag.bb_id b_id, bb_img1 b_img, h_tag hashtag from
+		businesshashtag
+		join businessboardadd on businesshashtag.bb_id = businessboardadd.bb_id
+		join businessboard on businesshashtag.bb_id = businessboard.bb_id
+        ) where hashtag = #{hashtag} order by b_date
 	</select>
 </mapper>
