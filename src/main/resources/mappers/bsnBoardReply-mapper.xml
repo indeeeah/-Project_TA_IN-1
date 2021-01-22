@@ -39,7 +39,7 @@
 	<!-- 댓글 등록 -->
 	<insert id="insertBbr" parameterType="BsnBoardReply" flushCache="true" statementType="PREPARED">
 		insert into businessboard values(
-			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BSNBOARD_SEQ.NEXTVAL,3,'0'), #{m_id},
+			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(B_SEQ.NEXTVAL,3,'0'), #{m_id},
 			'O', #{bb_info}, 0, '', '', '', '',
 			'C', #{bb_topid}, sysdate, ''
 		)
@@ -66,7 +66,7 @@
 	<!-- 대댓글 등록 -->
 	<insert id="insertBbrr" parameterType="BsnBoardReply" flushCache="true" statementType="PREPARED">
 		insert into businessboard values(
-			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(BSNBOARD_SEQ.NEXTVAL,3,'0'), #{m_id},
+			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(B_SEQ.NEXTVAL,3,'0'), #{m_id},
 			'O', #{bb_info}, 0, '', '', '', '',
 			'R', #{bb_topid}, sysdate, ''
 		)

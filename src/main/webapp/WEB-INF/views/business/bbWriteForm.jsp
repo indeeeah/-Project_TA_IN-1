@@ -3,10 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="UTF-8">
-<title>TA_IN 게시글 작성</title>
+<title>TA_IN 비즈니스 게시물 작성</title>
 <link href="${pageContext.request.contextPath}/resources/css/reset.css"
 	rel="stylesheet" type="text/css">
 <script type="text/javascript"
@@ -439,7 +438,7 @@ a {
                 context.drawImage(video, 0, 0, 500, 375);
             });
 
-            document.querySelector('a').addEventListener('click', event =>
+            document.querySelector('a').addEventListener('click', event
                 event.target.href = canvas.toDataURL()
             );
 
