@@ -95,7 +95,7 @@
 		insert into businessboard values(
 			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(B_SEQ.NEXTVAL,3,'0'), #{m_id},
 			#{bb_name}, #{bb_info}, #{bb_price}, #{bb_option1}, #{bb_option2}, #{bb_option3}, #{bb_option4},
-			#{bb_type}, #{bb_topid}, sysdate, #{c_name}
+			'B', #{bb_topid}, sysdate, #{c_name}
 		)
 	</insert>
 	<!-- 게시물 등록(이미지) -->

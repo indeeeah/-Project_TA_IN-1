@@ -316,21 +316,8 @@ input {
     max-width: 600px;
     max-height: 600px;
 }
-/* 모달 상세페이지 (배경) */
-.modal {
-  	display: none; /* Hidden by default */
-  	position: fixed; /* Stay in place */
-  	z-index: 10; /* Sit on top */
-  	left: 0;
-  	top: 0;
-  	width: 100%; /* Full width */
-  	height: 100%; /* Full height */
-  	overflow: auto; /* Enable scroll if needed */
-  	background-color: rgb(0,0,0); /* Fallback color */
-  	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
 
-/* 모달 상세페이지(내용)*/
+
 .modal-content {
   	background-color: #fefefe;
   	margin: auto;
@@ -339,7 +326,6 @@ input {
   	width: 90%;
   	max-width:930px;
   	display: flex;
-  	margin-top: 150px;
 }
 
 /* close */
@@ -900,118 +886,12 @@ input {
 <body>
 	<!-- 헤더 -->
 	<jsp:include page="../header.jsp"></jsp:include>
-${listCount } : ${my_name } : ${id_img_fwr.m_id }
+${listCount } : ${my_name } : ${id_img_fwr.m_id } : ${bbDetail.m_id } : ${bbDetail.bb_info }
 	<div id="content" class="content">
+	<input type="hidden" id="my_name" value="${my_name }"/>
+	<input type="hidden" id="bb_id" value="${bbDetail.bb_id }"/>
 	<input type="hidden" id="m_id" value="${id_img_fwr.m_id }"/>
-		<div id="profile_con_top">
-	        <div id="profile_photo" onclick="goStory('${id_img_fwr.m_id }');"><img src="${pageContext.request.contextPath}/resources/uploadFiles/${id_img_fwr.m_img }"></div>
-	        <input type="hidden" id="storychk" value="${storychk.story }">
-	        <div id="profile_left">
-	            <div id="profile_left_top_con">
-	                <div id="profile_name" for="${id_img_fwr.m_id }">${id_img_fwr.m_id }</div>
-	                <c:if test="${id_img_fwr.m_id eq my_name}">
-	                    <div id="setting" class="profile_btn"><a href="${pageContext.request.contextPath}/mManage.do">계정 관리</a></div>
-	                </c:if>
-	                <c:if test="${id_img_fwr.m_id ne my_name}">
-	                    <div id="send_message" class="profile_btn">메시지 보내기</div>
-	                    <c:if test="${followchk.follow ne 0}">
-	                        <div id="followchk" class="profile_btn profile_btn_ok" onclick="main_pre_unfollow('${id_img_fwr.m_id}');">
-	                            <i class="fas fa-user-check" id="pre_unfollow"></i>
-	                        </div>
-	                    </c:if>
-	                    <c:if test="${followchk.follow eq 0}">
-	                        <div id="followchk" class="profile_btn profile_btn_no" onclick="main_followBtn('${id_img_fwr.m_id}');">
-	                            팔로우
-	                        </div>
-	                    </c:if>
-	                    <label for="rf">
-	                        <div id="recom_follow" class="profile_btn">
-	                            <i class="fas fa-caret-down"></i>
-	                        </div>
-	                    </label>
-	                    <input type="checkbox" id="rf" style="display: none;">
-	                    <i class="fas fa-bars setting_icon" id="memberReport" onclick="memberReport('${id_img_fwr.m_id}');"></i>
-	                </c:if>
-	            </div>
-	            <div id="profile_middle">
-	                <div class="small_con">게시물 ${listCount } </div>
-	                <div class="small_con seefollower" style="cursor:pointer;">팔로워 ${id_img_fwr.follower }
-	                </div>
-	                <div class="small_con seefollow" style="cursor:pointer;">팔로우 ${fw.follow }</div>
-	            </div>
-	            <div id="profile_intro">${id_img_fwr.m_intro }</div>
-	        </div>
-	    </div>
-	    <div id="highlight_con">
-	        <c:if test="${not empty highlight }">
-	            <c:forEach var="vo" items="${highlight }" varStatus="s">
-	                <div class="highlight_small_con">
-	                    <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
-	                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }</div>
-	                </div>
-	            </c:forEach>
-	        </c:if>
-	    </div>
-	    <div id="hidden_follow_rec" style="display: none;">
-	        <div id="rec_title">
-	            <div id="title1">추천계정</div>
-	            <c:if test="${not empty recomFow }">
-	                <c:forEach var="vo" items="${recomFow }" varStatus="s">
-	                    <div class="each_rec_con each_rec_con${vo.r_mid }">
-	                        <div class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_img }</div>
-	                        <div class="each_rec_id" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.r_mid }</div>
-	                        <div class="each_rec_name" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_name }</div>
-	                        <div class="each_rec_followbtn" id="each_rec_followbtn${vo.r_mid }" onclick="followBtn('${vo.r_mid}');">팔로우</div>
-	                    </div>
-	                </c:forEach>
-	            </c:if>
-	        </div>
-	    </div>
-	    <hr id="line">
-		<input type="hidden" id="my_name" class="my_name" value="${my_name }">
-		<!-- 카테고리 -->
-		<div id="categoryBox">
-			<input type="hidden" id="cateLength" value="${fn:length(category)}">
-			<input id="chkAll" class="inputChkAll" type="checkbox" style="display:none;" checked><label id="allLabel" for="chkAll" style="font-weight:bold">전체보기</label>
-			<c:if test="${not empty category }">
-				<c:forEach items="${category }" var="v">
-					<input id="${v.c_name }" name="cateChk" for="${v.c_name }" onclick="cateChk(this)" type="checkbox" checked><label for="${v.c_name }" onclick="cateChk(this)" style="font-weight:bold">${v.c_name }</label>
-				</c:forEach>
-			</c:if>	
-		</div>
-		<!-- 게시물 리스트 -->
-		<c:if test="${empty list }">
-			게시물이 없습니다.
-		</c:if>
-		<div id="bbList" class="bbList">
-			<c:if test="${not empty list }">
-				<c:forEach items="${list }" var="v">
-					<div id="selectBb" class="selectBb ${v.c_name } chkAll">
-						<button type="button" id="bb" class="myBtn" onclick="mdOpen(this)" value="${v.bb_id }" style="border:none; cursor:pointer">
-							<img class="listImg" src="${pageContext.request.contextPath}/resources/uploadFiles/${v.bb_img1 }">
-							<div class="middle">
-								<div class="text">
-									<span class='list_icon list_like_icon' >
-									</span> 
-									<span>
-										${v.bb_like }  
-									</span>
-									<span class="list_icon list_write_icon">
-									</span>
-									<span>
-										${v.bbrcnt }
-									</span>
-								</div>
-							</div>
-						</button>
-					</div>
-				</c:forEach>
-			</c:if>
-		</div>
 		
-	<!-- 모달 (상세페이지) -->
-	<div id="modal" class="modal">
-	    <span type="button" class="close">&times;</span>
 		
 		<!-- Modal content -->
 		<div id="modalContent" class="modal-content">
@@ -1068,7 +948,6 @@ ${listCount } : ${my_name } : ${id_img_fwr.m_id }
 			  			<button type="button" id="cartBtn" class="cartBtn" >장바구니 담기</button>
 			  		</div>
 			  	</div>
-	</div>
 	
 	<!-- 모달 (장바구니) -->
 	<div id="mdCart">
@@ -1147,27 +1026,24 @@ function showSlides(n) {
      slides[slideIndex-1].style.display = "block";  
    }
 
-// 모달(상세페이지) open
-function mdOpen(e){
-	var a = $(e).val();
-	console.log("모달창 열기a:"+a);
-	var x = document.getElementById("modal");
-	console.log("모달창 열기x:"+x);
-    x.style.display="block";
-    $('body').css("overflow", "hidden");
     
-    // 모달창 내부(상세 페이지) 로드
+window.onload = function(){
+    	   	
+    var a = $("#bb_id").val();
+    var m_id = $("#my_name").val();
+    console.log("로드");
     $.ajax({
     	url:"bbDetail",
     	type:"post",
     	async:false,
     	data:{
     		bb_id:a,
-    		m_id:m_id
     	},
+/*     		m_id:m_id */
     	dataType:"json",
     	success:function(resp){
     		// 이미지 로드
+    		console.log("로드2");
     		var htmls="";
     		console.log("bbDetail()"+resp.bbDetail.m_id);
     		console.log("bbDetail()"+resp.bbDetail.bb_img1);
@@ -1446,10 +1322,10 @@ function mdOpen(e){
 
 /* 댓글 삭제 */
 function bbrDelete(r_bb_id){
-	console.log("bbrDelete함수:"+r_bb_id);
+	console.log("bbrDelete함수1:"+r_bb_id);
 	var a = r_bb_id;
 	var b = document.getElementById(r_bb_id);
-	console.log("bbrDelete함수:"+a+":"+b);
+	console.log("bbrDelete함수2:"+a+":"+b);
 	$.ajax({
 		url:"bbrDelete",
 		method:"POST",
@@ -1466,6 +1342,7 @@ function bbrDelete(r_bb_id){
 		}
 	});
 };
+
 /* 답글 삭제 */
 function bbrrDelete(rr_bb_id){
 	console.log("bbrDelete함수:"+rr_bb_id);
@@ -1488,6 +1365,7 @@ function bbrrDelete(rr_bb_id){
 		}
 	});
 };
+
 /* 답글 조회(답글 div 열기)  */
 function bbrrListShow(bb_id){
 	console.log("bbrrListShow함수:"+bb_id);
@@ -1646,7 +1524,7 @@ function bbrrInsert(e){
     											"<span class='bbrrL' >좋아요:<input type='button' class='lCount"+rr_bb_id+" showlCount' value='"+rr_bbrlike+"' readonly></span>"+
     										"</div>";
     					if(rr_m_id==$("#my_name").val()){
-    						htmls += 		"<button type='button' id='"+ rr_bb_id +"' class='bbrDelete "+ rr_bb_id +"' onclick=\"bbrDelete('"+ rr_bb_id +"')\">삭제</button>";
+    						htmls += 		"<button type='button' id='"+ rr_bb_id +"' class='bbrDelete "+ rr_bb_id +"' onclick=\"bbrrDelete('"+ rr_bb_id +"')\">삭제</button>";
     					}
     					htmls +=			"<button id='mdBbrBtn' class='mdBbrBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
     										"<div class='icon_reply like_icon_reply likechk"+rr_bb_id+"' onclick='pressLike(\""+rr_bb_id+"\");' width='10px' height='10px'></div>"+
@@ -1677,34 +1555,6 @@ function bbrrInsert(e){
         });
     }
 };
-
-// 모달창(상세페이지) close
-$('.close').on('click', function() {
-	/* $('#modal').hide(); */
-	var a = $(this).val();
-	console.log("모달창 닫기a:"+a);
-	var x = document.getElementById("modal");
-	console.log("모달창 닫기x:"+x);
-    x.style.display="none";
-    $('body').css("overflow", "scroll");
-    //클로즈 버튼 누르면 댓글 지워지기
-    $(".mdReply").empty();
-    slideIndex = 1;
-});
-
-// 윈도우 누르면 모달창(상세페이지) 꺼지기
-$(window).on('click', function() {
-	var modal = document.getElementById('modal');
-	console.log(modal);
-	if (event.target == modal) {
-		$('body').css("overflow", "scroll");
-		modal.style.display = "none";
-		$(".mdReply").empty();
-	}
-	/* if(event.target != insertBox){
-		insertBox.style.display = "none";
-	} */
-});
 
 //모달(장바구니) 열기
 $('#cartBtn').on('click', function() {

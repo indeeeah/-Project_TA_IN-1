@@ -124,7 +124,12 @@ public class GnBoardController {
 				System.out.println(tService.showHashTag(b_id));
 				mv.setViewName("general/gnEachPage");
 			} else if (b_id.startsWith("BB")) {
-
+				System.out.println("bbDetail:"+bbService.selectOne(b_id));
+				mv.addObject("bbDetail", bbService.selectOne(b_id));	// 게시물 상세
+				System.out.println("bbTags:"+bbService.selectOneTags(b_id));
+				mv.addObject("bbTags", bbService.selectOneTags(b_id));	// 게시물 상세 태그
+				mv.addObject("category", bbService.selectCategory(m_id));//카테고리 목록
+				mv.setViewName("business/bsnEachPage");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
