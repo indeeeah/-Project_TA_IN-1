@@ -50,5 +50,10 @@
 	delete from businessmember
 	where m_id = #{m_id}
 	</delete>
+	<update id="changemUsage" parameterType="String">
+	update member
+	set m_usage = 'G'
+	where m_id = #{m_id}
+	</update>
 	
 </mapper>

@@ -7,4 +7,5 @@ public interface bMemberService {
 	public int updatebMember(bMemberVO bvo);
 	public int insertbMember(bMemberVO bvo);
 	public int deletebMember(String m_id);
+	public int changemUsage(String m_id);
 }

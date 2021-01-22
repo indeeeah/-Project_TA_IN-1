@@ -185,12 +185,12 @@ button:focus {
 								<td width="5%">*</td>
 								<td width="30%">회사주소</td>
 								<td><input type="text" name="m_addr1" id="sample6_postcode" class="addr"
-									placeholder="우편번호" value=""> <input
+									placeholder="우편번호" value="" readonly> <input
 									type="button" onclick="sample6_execDaumPostcode()"
 									value="우편번호 찾기"
 									style="background: white; border: 1px solid #D5D5D5;"><br>
 									<input type="text" name="m_addr2" id="sample6_address" class="addr"
-									placeholder="주소" value=""><br> <input
+									placeholder="주소" value="" readonly><br> <input
 									type="text" name="m_addr3" id="sample6_detailAddress" class="addr"
 									placeholder="상세주소" value="" required
 									style="width: 295px;"> <input type="text"

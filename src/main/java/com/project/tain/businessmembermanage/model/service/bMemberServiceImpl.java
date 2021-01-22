@@ -31,4 +31,9 @@ public class bMemberServiceImpl implements bMemberService{
 		return bMemberDao.deletebMember(m_id);
 	}
 
+	@Override
+	public int changemUsage(String m_id) {
+		return bMemberDao.changemUsage(m_id);
+	}
+
 }

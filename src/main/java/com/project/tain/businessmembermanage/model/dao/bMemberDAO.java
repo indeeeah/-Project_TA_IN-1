@@ -26,4 +26,8 @@ public class bMemberDAO {
 	public int deletebMember(String m_id) {
 		return sqlSession.update("bMemberVO.deletebMember", m_id);
 	}
+	
+	public int changemUsage(String m_id) {
+		return sqlSession.update("bMemberVO.changemUsage", m_id);
+	}
 }

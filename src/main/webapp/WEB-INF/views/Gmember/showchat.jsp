@@ -246,9 +246,9 @@ img {
 <script>
 	$(document).ready(function(){
 		
-		function msg(){
-			$(".msg_history").scrollTop($(document).height());
-		}
+		setTimeout(function(){
+			$(".msg_history").scrollTop($(document).height()+10000);
+		}, 10);
 		
 		$(".chat_people").click(function(){
 			var m_id2 = $(this).find('input[type=text]').val();
@@ -284,7 +284,8 @@ img {
 				var msghistory = $(".msg_history").html();
 				$(".msg_history").html(msghistory + "<div class='received_msg'><div class='received_withd_msg'><div class='incoming_msg_img'><img src='#''><b style='font-size: 9pt;'>"+id+"</b></div><p>"+msg+"</p><span class='time_date'>"+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds+"</span></div></div>");
 				setTimeout(function(){
-					$(".msg_history").scrollTop($(document).height());
+					var scrollTop = $(".msg_history").scrollTop();
+					$(".msg_history").scrollTop($(document).height()+100000);
 				}, 10);
 			};
 			
@@ -319,7 +320,7 @@ img {
 			var msghistory = $(".msg_history").html();
 			$(".msg_history").html(msghistory + "<div class='outgoing_msg'><div class='sent_msg'><p>"+msg+"</p><span class='time_date'>"+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds+"</span></div></div>");
 			setTimeout(function(){
-				$(".msg_history").scrollTop($(document).height());
+				$(".msg_history").scrollTop($(document).height()+100000);
 			}, 10);
 			$("#msg").val("");
 		});
@@ -370,7 +371,7 @@ img {
 					</div>
 				</div>
 				<div class="mesgs">
-					<div class="msg_history" onload="msg();">
+					<div class="msg_history">
 						<c:if test="${MessageList eq null}">
 						<h1>메세지를 보내보세요!</h1>
 						</c:if>
@@ -400,7 +401,7 @@ img {
 					</div>
 					<div class="type_msg">
 						<div class="input_msg_write">
-							<input type="text" id="msg" class="write_msg" placeholder="Type a message" onKeyPress="enter();"/>
+							<input type="text" id="msg" class="write_msg" placeholder="Type a message"/>
 							<button id="btnSend"class="msg_send_btn" type="button">
 								<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 							</button>
