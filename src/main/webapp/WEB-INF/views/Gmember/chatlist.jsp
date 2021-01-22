@@ -122,7 +122,8 @@ img {
 
 .inbox_chat {
 	height: 550px;
-	overflow-y: scroll;
+	overflow-y: auto;
+	
 }
 
 .active_chat {
@@ -224,6 +225,23 @@ img {
 	height: 516px;
 	overflow-y: auto;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: rgba(0,0,0,0.35);
+}
+::-webkit-scrollbar-corner {
+  background: #0c0c0c;
+}
 </style>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
@@ -242,13 +260,12 @@ img {
 <body>
 <jsp:include page="../header.jsp"></jsp:include>
 	<div class="container">
-		<h3 class=" text-center">Chat</h3>
 		<div class="messaging">
 			<div class="inbox_msg">
 				<div class="inbox_people">
 					<div class="headind_srch">
 						<div class="recent_heading">
-							<h4>Tain</h4>
+							<h4>${profile.m_id }</h4>
 						</div>
 						<div class="srch_bar">
 							<div class="stylish-input-group">
@@ -266,7 +283,7 @@ img {
 						<div class="chat_list active_chat">
 							<div class="chat_people">
 								<div class="chat_img">
-									<img src="#">
+									<img src="${pageContext.request.contextPath}/resources/uploadFiles/${userImg[status.index] }">
 								</div>
 								<div class="chat_ib" style="">
 									<h5>

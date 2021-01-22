@@ -122,12 +122,9 @@ img {
 
 .inbox_chat {
 	height: 550px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
-.active_chat {
-	background: #ebebeb;
-}
 
 .incoming_msg_img {
 	display: inline-block;
@@ -138,17 +135,15 @@ img {
 	display: inline-block;
 	padding: 0 0 0 10px;
 	vertical-align: top;
-	width: 92%;
 }
 
 .received_withd_msg p {
-	background: #ebebeb none repeat scroll 0 0;
+	background: #ebebeb;
 	border-radius: 3px;
 	color: #646464;
 	font-size: 14px;
 	margin: 0;
-	padding: 5px 10px 5px 12px;
-	width: 100%;
+	padding: 10px 10px 10px 12px;
 }
 
 .time_date {
@@ -159,7 +154,7 @@ img {
 }
 
 .received_withd_msg {
-	width: 57%;
+	margin:5px 0 5px 0;
 }
 
 .mesgs {
@@ -169,23 +164,21 @@ img {
 }
 
 .sent_msg p {
-	background: #5e76dd none repeat scroll 0 0;
+	background: #5e76dd;
 	border-radius: 3px;
 	font-size: 14px;
 	margin: 0;
 	color: #fff;
-	padding: 5px 10px 5px 12px;
-	width: 100%;
+	padding: 10px 10px 10px 12px;
 }
 
 .outgoing_msg {
 	overflow: hidden;
-	margin: 26px 0 26px;
+	margin: 25px 0 25px;
 }
 
 .sent_msg {
 	float: right;
-	width: 50%;
 }
 
 .input_msg_write input {
@@ -223,6 +216,7 @@ img {
 .msg_history {
 	height: 516px;
 	overflow-y: auto;
+	overflow-x:hidden;
 }
 
 ::-webkit-scrollbar {
@@ -282,7 +276,7 @@ img {
 				var minutes = date.getMinutes();
 				var seconds = date.getSeconds();
 				var msghistory = $(".msg_history").html();
-				$(".msg_history").html(msghistory + "<div class='received_msg'><div class='received_withd_msg'><div class='incoming_msg_img'><img src='#''><b style='font-size: 9pt;'>"+id+"</b></div><p>"+msg+"</p><span class='time_date'>"+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds+"</span></div></div>");
+				$(".msg_history").html(msghistory + "<div class='received_msg'><div class='received_withd_msg'><div class='incoming_msg_img'><img width='44px' src='${pageContext.request.contextPath}/resources/uploadFiles/${chatImg}'><b style='font-size: 9pt;'>"+id+"</b></div><p>"+msg+"</p><span class='time_date'>"+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds+"</span></div></div>");
 				setTimeout(function(){
 					var scrollTop = $(".msg_history").scrollTop();
 					$(".msg_history").scrollTop($(document).height()+100000);
@@ -333,13 +327,12 @@ img {
 <body>
 <jsp:include page="../header.jsp"></jsp:include>
 	<div class="container">
-		<h3 class=" text-center">Chat</h3>
 		<div class="messaging">
 			<div class="inbox_msg">
 				<div class="inbox_people">
 					<div class="headind_srch">
 						<div class="recent_heading">
-							<h4>Tain</h4>
+							<h4>${my_name }</h4>
 						</div>
 						<div class="srch_bar">
 							<div class="stylish-input-group">
@@ -354,16 +347,16 @@ img {
 					</div>
 					<div class="inbox_chat">
 					<c:forEach var="ml" items="${MessageList}" varStatus="status">
-						<div class="chat_list active_chat">
+						<div class="chat_list active_chat"<c:if test="${m_id2 eq ml.chat }">style="background:#ebebeb;"</c:if>>
 							<div class="chat_people">
 								<div class="chat_img">
-									<img src="#">
+									<img src="${pageContext.request.contextPath}/resources/uploadFiles/${userImg[status.index] }">
 								</div>
 								<div class="chat_ib">
 									<h5>
 										${ml.chat}<input type="text" value="${ml.chat}" style="display:none;"> <span class="chat_date">${ml.lastdate }</span>
 									</h5>
-									<p>Test</p>
+									<p></p>
 								</div>
 							</div>
 						</div>
@@ -387,14 +380,16 @@ img {
 								</c:if>
 								<c:if test="${msg.m_id ne my_name }">
 									<div class="received_msg">
-										<div class="received_withd_msg">
+										<div class="received_withd_msg" style="display:block; word-break:normal;">
 											<div class="incoming_msg_img">
-												<img src="#"><b style="font-size: 9pt;">${msg.m_id }</b>
+												<img width="44px" src="${pageContext.request.contextPath}/resources/uploadFiles/${chatImg}"><b style="font-size: 9pt;">${msg.m_id }</b>
 											</div>
+											<div style="display:block; word-break:normal;">
 											<p>${msg.m_message }</p>
 											<span class="time_date"> ${msg.m_date }</span>
+											</div>
 										</div>
-									</div>
+									</div><br>
 								</c:if>
 							</c:forEach>
 						</c:if>
