@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.tain.membermanage.model.dao.mMessageDAO;
+import com.project.tain.membermanage.model.vo.mChatVO;
 import com.project.tain.membermanage.model.vo.mMessageVO;
 
 @Service
@@ -13,7 +14,7 @@ public class mMessageServiceImpl implements mMessageService{
 	@Autowired
 	mMessageDAO mMessageDao;
 	@Override
-	public List<String> showMessageList(String m_id) {
+	public List<mChatVO> showMessageList(String m_id) {
 		return mMessageDao.showMessageList(m_id);
 	}
 

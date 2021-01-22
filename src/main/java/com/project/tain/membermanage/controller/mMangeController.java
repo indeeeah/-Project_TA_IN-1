@@ -567,6 +567,12 @@ public class mMangeController {
 	@RequestMapping(value = "/chatlist.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView chatlist(ModelAndView mv, HttpServletRequest request, HttpSession session) {
 		String my_name = (String)session.getAttribute("my_name");
+		List<String> list = new ArrayList<>(); 
+		for(int i = 0; i < mMessageServiceImpl.showMessageList(my_name).size(); i++) {
+			list.add(mMemberServiceImpl.showProfile(mMessageServiceImpl.showMessageList(my_name).get(i).getChat()).getM_img());
+		}
+		mv.addObject("userImg", list);
+		mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 		mv.addObject("MessageList", mMessageServiceImpl.showMessageList(my_name));
 		mv.setViewName("Gmember/chatlist");
 		return mv;
@@ -576,9 +582,14 @@ public class mMangeController {
 	public ModelAndView showchat(ModelAndView mv, HttpServletRequest request,
 			@RequestParam(name = "m_id2") String m_id2, HttpSession session) {
 		String my_name = (String) session.getAttribute("my_name");
-
+		List<String> list = new ArrayList<>(); 
+		for(int i = 0; i < mMessageServiceImpl.showMessageList(my_name).size(); i++) {
+			list.add(mMemberServiceImpl.showProfile(mMessageServiceImpl.showMessageList(my_name).get(i).getChat()).getM_img());
+		}
+		mv.addObject("userImg", list);
 		mv.addObject("my_name", my_name);
 		mv.addObject("m_id2", m_id2);
+		mv.addObject("chatImg", mMemberServiceImpl.showProfile(m_id2).getM_img());
 		mv.addObject("MessageList", mMessageServiceImpl.showMessageList(my_name));
 		mv.addObject("Message", mMessageServiceImpl.showMessage(my_name, m_id2));
 		mv.setViewName("Gmember/showchat");

@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.tain.membermanage.model.vo.mChatVO;
 import com.project.tain.membermanage.model.vo.mMessageVO;
 
 @Repository("mMessageDAO")
@@ -16,7 +17,7 @@ public class mMessageDAO {
 	private SqlSession sqlSession;
 	
 //	내 채팅방 리스트 불러오기
-	public List<String> showMessageList(String m_id){
+	public List<mChatVO> showMessageList(String m_id){
 		return sqlSession.selectList("mMessageVO.showMessageList", m_id);
 	}
 	
