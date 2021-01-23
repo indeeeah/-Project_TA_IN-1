@@ -122,9 +122,9 @@
                     box-sizing: border-box;
                     width:187px;
                 }
-                a{
+               /*  a{
                 	padding:15px 85px 15px 0 !important; 
-                }
+                } */
                 #changepw{
                	width:526px;
                 }

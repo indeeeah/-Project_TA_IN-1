@@ -14,9 +14,9 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <title>장바구니</title>
 <style>
-a {
+/* a {
 	padding: 15px 85px 15px 0 !important;
-}
+} */
 
 body {
 	text-align: center;
@@ -41,7 +41,7 @@ body {
 	height: 798px;
 	border: 1px solid #C7C7C7;
 	border-top: none;
-	overflow-y: auto;
+	
 }
 
 #menu {
@@ -56,7 +56,7 @@ body {
 	padding-left: 0;
 	width: 260px;
 	height: 798px;
-	border-right: 1px solid #C7C7C7;
+	
 }
 
 #menulist>li {
@@ -84,6 +84,9 @@ body {
 	width: 730px;
 	text-align: center;
 	margin: 0 auto;
+	border-left: 1px solid #C7C7C7;
+	overflow: auto;
+	height:768px;
 }
 
 td {

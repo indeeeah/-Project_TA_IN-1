@@ -13,9 +13,9 @@
 	rel="stylesheet" type="text/css" />
 <title>계정 관리</title>
 <style>
-a {
+/* a {
 	padding: 15px 85px 15px 0 !important;
-}
+} */
 
 body {
 	text-align: center;

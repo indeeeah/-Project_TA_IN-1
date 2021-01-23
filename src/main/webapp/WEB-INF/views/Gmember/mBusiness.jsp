@@ -160,10 +160,10 @@ td {
 	vertical-align: middle !important;
 }
 
-a {
+/* a {
 	padding: 15px 85px 15px 0 !important;
 }
-
+ */
 button:focus {
 	border: none;
 	outline: none;

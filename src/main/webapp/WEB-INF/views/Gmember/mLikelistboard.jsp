@@ -147,9 +147,9 @@ button:focus {
 	box-sizing: border-box;
 }
 
-a {
+/* a {
 	padding: 15px 85px 15px 0 !important;
-}
+} */
 
 .submenu {
 	border: 1px solid #D5D5D5;

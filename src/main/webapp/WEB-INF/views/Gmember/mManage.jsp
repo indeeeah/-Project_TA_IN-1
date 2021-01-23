@@ -145,9 +145,9 @@
                     box-sizing: border-box;
                 }
                 
-                a{
+                /* a{
                 	padding:15px 85px 15px 0 !important; 
-                }
+                } */
             </style>
 
             <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">

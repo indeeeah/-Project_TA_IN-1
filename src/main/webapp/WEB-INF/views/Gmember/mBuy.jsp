@@ -14,13 +14,146 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <title>주문서 작성</title>
 <style>
-a {
-	display: block;
-}
-
-a{
-                	padding:15px 85px 15px 0 !important; 
+body {
+                    text-align: center;
+                    margin: 0;
+                    color: #262626;
+                    background-color: #FAFAFA;
                 }
+                
+                #mManage {
+                    display: flex;
+                    justify-content: center;
+                    width: 100%;
+                }
+                
+                #sc_big_con {
+                    width: 1000px;
+                    background-color: white;
+                }
+                
+                #sc_con {
+                    width: 998px;
+                    height: 798px;
+                    border: 1px solid #C7C7C7;
+                    border-top: none;
+                }
+                
+                #menu {
+                    float: left;
+                    width: 260px;
+                    margin: 0 auto;
+                }
+                
+                #menulist {
+                    list-style: none;
+                    margin: 0 auto;
+                    padding-left: 0;
+                    width: 260px;
+                    border-right: 1px solid #C7C7C7;
+                    height: 798px;
+                }
+                
+                #menulist>li {
+                    width: 228px;
+                    height: 21px;
+                    padding: 16px 16px 16px 16px;
+                    font-size: 14px;
+                    line-height: 21px;
+                    cursor: pointer;
+                    text-align: left;
+                }
+                
+                #menulist>li>a {
+                    color: black;
+                    text-decoration: none;
+                }
+                
+                #menulist>li:hover {
+                    background-color: #F6F6F6;
+                    border-left: 2px solid #D5D5D5;
+                }
+                
+                #contents {
+                    display: inline-block;
+                    width: 705px;
+                    text-align: center;
+                    margin: 0 auto;
+                    overflow: auto;
+	height:768px;
+                }
+                
+                
+                td {
+                    vertical-align: middle !important;
+                    text-align: left;
+                    font-size: 14px;
+                }
+                
+                #imgmanageModal {
+                    width: 400px;
+                    height: 222px;
+                    display: none;
+                    position: fixed;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    background: white;
+                }
+                
+                #parentModal {
+                    background: black;
+                    opacity: 0.5;
+                    position: fixed;
+                    width: 100%;
+                    height: 100%;
+                    display: none;
+                    margin: 0;
+                    z-index: 7;
+                }
+                
+                #imgmanageModal {
+                    z-index: 7;
+                }
+                
+                button:focus {
+                    border: none;
+                    outline: none;
+                }
+                
+                #sc_title {
+                    padding: 20px 16px 20px 16px;
+                    width: 966px;
+                    height: 20px;
+                    color: #999999;
+                    font-size: 16px;
+                    line-height: 20px;
+                    border: 1px solid #C7C7C7;
+                    text-align: left;
+                }
+                
+                .btn2 {
+                    height: 30px;
+                    border: none;
+                    margin-top: 15px;
+                    margin-bottom: 10px;
+                    cursor: pointer;
+                    outline: none;
+                    font-size: 13px;
+                    border-radius: 5px;
+                }
+                
+                .wcon {
+                    outline: none;
+                    border: 1px solid #C7C7C7;
+                    height: 30px;
+                    padding: 0px 2px 0px 2px;
+                    box-sizing: border-box;
+                }
+
+/* a{
+                	padding:15px 85px 15px 0 !important; 
+                } */
 
 table {
 	border-collapse: collapse;
@@ -31,6 +164,7 @@ th, td {
 	border-bottom: 1px solid #D5D5D5;
 	border-left: 1px solid #D5D5D5;
 	vertical-align:middle !important;
+	text-align:center;
 }
 
 hr {
@@ -525,10 +659,13 @@ hr {
 	}
 </script>
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 	<div id="mManage">
+	<div id="sc_big_con">
+                                    <div id="sc_title">주문서 작성</div>
+                                    <div id="sc_con">
 		<div id="contents"
 			style="width: 100%; padding-top: 30px; border-style: none;">
-			<span style="padding-bottom: 100px;">주문서 작성</span>
 			<h5 style="background: gray; color: white;">상품정보</h5>
 			<table id="cartlist"
 				style="width: 100%; font-size: 10pt; margin: 20px 0 50px 0;">
@@ -555,35 +692,35 @@ hr {
 						<c:set var="index" value="${status.index}" />
 						<tr>
 							<td align="center">${status.count}<input type="text"
-								id="bb_id" style="display: none;" value="${ol.bb_id}"></td>
+								class="wcon" id="bb_id" style="display: none;" value="${ol.bb_id}"></td>
 							<td style="border-bottom: 1px solid #D5D5D5;"><a href=""><img
 									src="${ol.bb_img1 }"
 									style="width: 110px; height: 110px; padding: 0 0 0 0;"></a></td>
 							<td style="border-bottom: 1px solid #D5D5D5;">${ol.bb_name}</td>
 							<td><input type="text" id="price" style="display: none;"
-								value="${ol.bb_price}"><span id="result"> <fmt:formatNumber
+								class="wcon" value="${ol.bb_price}"><span id="result"> <fmt:formatNumber
 										value="${price}" pattern="#,###" /></span></td>
 							<td><input type="button" class="p" value="+"
 								style="background: white; border: 1px solid #D5D5D5;"> <br>
 								<input type="text" name="pop_out"
-								value="${amount[status.index]}" id="amount"
+								 value="${amount[status.index]}" id="amount"
 								style="text-align: center; width: 50px; border: 1px solid #D5D5D5;" /><br>
 								<input type="button" class="p" value="-"
 								style="background: white; border: 1px solid #D5D5D5;"></td>
 							<td><input type="text" id="od_price"
-								value="${price*amount[status.index]}" style="display: none;">
+								 value="${price*amount[status.index]}" style="display: none;">
 								<input type="text" id="sum"
-								style="text-align: center; width: 60px; border-style: none;"
+								 style="text-align: center; width: 60px; border-style: none;"
 								value="<fmt:formatNumber
 										value="${price*amount[status.index]}" pattern="#,###" />원"></td>
-							<td><select class="size" id="od_size">
+							<td><select class="wcon" class="size" id="od_size">
 									<option>사이즈 선택</option>
 									<option value="S">S</option>
 									<option value="M">M</option>
 									<option value="L">L</option>
 									<option value="XL">XL</option>
 									<option value="F">Free</option>
-							</select><br> <select class="selectoption">
+							</select><br> <select class="wcon" class="selectoption">
 									<option>옵션 선택</option>
 									<c:if test="${ol.bb_option1 ne null}">
 										<option value="${ol.bb_option1}">${ol.bb_option1}</option>
@@ -598,8 +735,8 @@ hr {
 										<option value="${ol.bb_option4}">${ol.bb_option4}</option>
 									</c:if>
 							</select><span id="options" style="display: none;"></span><input
-								type="text" id="od_options" value="" name="options"style="display: none;"><br>
-								<input type="text" id="optionprice" style="display: none;"></td>
+								class="wcon" type="text" id="od_options" value="" name="options"style="display: none;"><br>
+								<input class="wcon" type="text" id="optionprice" style="display: none;"></td>
 						</tr>
 					</c:forEach>
 				</c:if>
@@ -610,35 +747,36 @@ hr {
 				<tbody>
 					<tr class="register" height="30">
 						<td width="20%" style="text-align: center;">배송지 선택</td>
-						<td><input type="radio" id="same" name="addroption" checked><label
+						<td style="text-align:left;"><input type="radio" id="same" name="addroption" checked><label
 							for="same">회원 정보와 동일</label> <input type="radio" id="new"
 							name="addroption"><label for="new">새로운 배송지</label></td>
 					</tr>
 					<tr class="register" height="30">
 						<td width="20%" style="text-align: center;">받으시는 분</td>
-						<td><input type="text" id="od_name" name="m_name" required
+						<td style="text-align:left;"><input type="text" class="wcon" id="od_name" name="m_name" required
 							value="${profile.m_name}" style="border: 1px solid #D5D5D5;"></td>
 					</tr>
 					<tr class="register" height="30">
 						<td width="20%" style="text-align: center;">휴대전화</td>
-						<td><input type="text" id="od_phone" name="m_phone"
+						<td style="text-align:left;"><input type="text" class="wcon" id="od_phone" name="m_phone"
 							value="${profile.m_phone}" required
 							style="border: 1px solid #D5D5D5;"></td>
 					</tr>
 					<tr class="register" height="30">
 						<td width="20%" style="text-align: center;">주소</td>
-						<td><input type="text" name="m_addr1" id="sample6_postcode"
+						<td style="text-align:left;"><input type="text" class="wcon" name="m_addr1" id="sample6_postcode"
 							placeholder="우편번호" value="${profile.m_addr1}" readonly
 							style="border: 1px solid #D5D5D5;"><input type="button"
 							onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="addrbtn"
-							style="background: white; border: 1px solid #D5D5D5; display: none;">
-							<br> <input type="text" name="m_addr2" id="sample6_address"
+							class="btn2"
+											style="background: white; border: 1px solid #D5D5D5; margin:0px; display: none;">
+							<br> <input type="text" class="wcon" name="m_addr2" id="sample6_address"
 							placeholder="주소" value="${profile.m_addr2}" readonly
 							style="border: 1px solid #D5D5D5;"><br> <input
-							type="text" name="m_addr3" id="sample6_detailAddress"
+							type="text" class="wcon" name="m_addr3" id="sample6_detailAddress"
 							placeholder="상세주소" value="${profile.m_addr3}"
 							style="width: 295px; border: 1px solid #D5D5D5;"> <input
-							type="text" id="sample6_extraAddress" placeholder="참고항목"
+							type="text" class="wcon" id="sample6_extraAddress" placeholder="참고항목"
 							style="display: none;"></td>
 					</tr>
 				</tbody>
@@ -666,13 +804,18 @@ hr {
 			</table>
 			<div style="padding: 40px 0 30px 0;">
 				<input type="button" id="orderlist" value="주문하기"
-					style="background: white; border: 1px solid #D5D5D5;">&nbsp;&nbsp;&nbsp;&nbsp;
+					class="btn2"
+							style="background: #6782B4; padding: 5px 20px 5px 20px; color: white;">&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="button" id="back" value="취소"
 					onclick="location.href='mCart.do'"
-					style="background: white; border: 1px solid #D5D5D5;">
+					class="btn2"
+							style="background: #6782B4; padding: 5px 20px 5px 20px; color: white;">
 			</div>
+		</div>
+		</div>
 		</div>
 		<div style="clear: both;"></div>
 	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>
