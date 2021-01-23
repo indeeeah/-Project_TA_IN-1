@@ -142,6 +142,7 @@ img {
 	border-radius: 3px;
 	color: #646464;
 	font-size: 14px;
+	line-height:150%;
 	margin: 0;
 	padding: 10px 10px 10px 12px;
 }
@@ -168,6 +169,7 @@ img {
 	border-radius: 3px;
 	font-size: 14px;
 	margin: 0;
+	line-height:150%;
 	color: #fff;
 	padding: 10px 10px 10px 12px;
 }
@@ -276,7 +278,7 @@ img {
 				var minutes = date.getMinutes();
 				var seconds = date.getSeconds();
 				var msghistory = $(".msg_history").html();
-				$(".msg_history").html(msghistory + "<div class='received_msg'><div class='received_withd_msg'><div class='incoming_msg_img'><img width='44px' src='${pageContext.request.contextPath}/resources/uploadFiles/${chatImg}'><b style='font-size: 9pt;'>"+id+"</b></div><p>"+msg+"</p><span class='time_date'>"+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds+"</span></div></div>");
+				$(".msg_history").html(msghistory + "<div class='received_msg'><div class='received_withd_msg'><div class='incoming_msg_img'><img width='44px' src='${pageContext.request.contextPath}/resources/uploadFiles/${chatImg}'><b style='font-size: 9pt;'>"+id+"</b></div><p>"+msg+"</p><span class='time_date'>"+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds+"</span></div></div><br>");
 				setTimeout(function(){
 					var scrollTop = $(".msg_history").scrollTop();
 					$(".msg_history").scrollTop($(document).height()+100000);

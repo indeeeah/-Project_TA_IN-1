@@ -18,6 +18,10 @@ a {
 	display: block;
 }
 
+a{
+                	padding:15px 85px 15px 0 !important; 
+                }
+
 table {
 	border-collapse: collapse;
 }

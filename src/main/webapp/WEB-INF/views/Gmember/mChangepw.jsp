@@ -122,7 +122,9 @@
                     box-sizing: border-box;
                     width:187px;
                 }
-                
+                a{
+                	padding:15px 85px 15px 0 !important; 
+                }
                 #changepw{
                	width:526px;
                 }
@@ -139,36 +141,36 @@
                     var m_pw = "${profile.m_pw}";
                     if ($("#lastpw").val() == m_pw) {
                         $("#checklastpwinfo").css("color", "green");
-                        $("#checklastpwinfo").html("이전 비밀번호와 일치합니다.");
+                        $("#checklastpwinfo").html("일치합니다.");
                     } else {
                         $("#checklastpwinfo").css("color", "red");
-                        $("#checklastpwinfo").html("비밀번호를 다시 확인해주세요.");
+                        $("#checklastpwinfo").html("다시 확인해주세요.");
                     }
                 });
 
                 $("#checknewpw").keyup(function() {
                     if ($("#newpw").val() == $("#checknewpw").val()) {
                         $("#checknewpwinfo").css("color", "green");
-                        $("#checknewpwinfo").html("새 비밀번호와 일치합니다.");
+                        $("#checknewpwinfo").html("일치합니다.");
                     } else {
                         $("#checknewpwinfo").css("color", "red");
-                        $("#checknewpwinfo").html("비밀번호를 다시 확인해주세요.");
+                        $("#checknewpwinfo").html("다시 확인해주세요.");
                     }
                 });
 
                 $("#newpw").keyup(function() {
                     if ($("#newpw").val() == $("#checknewpw").val()) {
                         $("#checknewpwinfo").css("color", "green");
-                        $("#checknewpwinfo").html("새 비밀번호가 일치합니다.");
+                        $("#checknewpwinfo").html("일치합니다.");
                     } else {
                         $("#checknewpwinfo").css("color", "red");
-                        $("#checknewpwinfo").html("비밀번호를 다시 확인해주세요.");
+                        $("#checknewpwinfo").html("다시 확인해주세요.");
                     }
                 });
 
                 $("#submit").click(function() {
-                    if ($("#checklastpwinfo").html() == "이전 비밀번호와 일치합니다.") {
-                        if ($("#checknewpwinfo").html() == "새 비밀번호와 일치합니다.") {
+                    if ($("#checklastpwinfo").html() == "일치합니다.") {
+                        if ($("#checknewpwinfo").html() == "일치합니다.") {
                             return true;
                         } else {
                             alert("새 비밀번호를 확인해주세요.");
@@ -226,23 +228,23 @@
                                         <td colspan="3">&nbsp;</td>
                                     </tr>
                                     <tr class="register" height="30">
-                                        <td style="font-size: 14px;" width="35%">이전 비밀번호</td>
-                                        <td><input class="wcon" width="65%" type="password" id="lastpw" name="lastpw" required><label style="font-size: 7pt;" id="checklastpwinfo"></label></td>
+                                        <td style="font-size: 14px;" width="40%">이전 비밀번호</td>
+                                        <td><input class="wcon" width="40%" type="password" id="lastpw" name="lastpw" required><label style="display:none;" id="checklastpwinfo"></label></td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">&nbsp;</td>
                                     </tr>
                                     <tr class="register" height="30">
-                                        <td style="font-size: 14px;" width="35%">새 비밀번호</td>
-                                        <td><input class="wcon" width="65%" type="password" id="newpw" name="newpw" required>
+                                        <td style="font-size: 14px;" width="40%">새 비밀번호</td>
+                                        <td><input class="wcon" width="40%" type="password" id="newpw" name="newpw" required>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">&nbsp;</td>
                                     </tr>
                                     <tr class="register" height="30">
-                                        <td style="font-size: 14px;" width="35%">새 비밀번호 확인</td>
-                                        <td><input class="wcon" width="65%" type="password" id="checknewpw" name="checknewpw" required><label style="font-size: 7pt;" id="checknewpwinfo"></label></td>
+                                        <td style="font-size: 14px;" width="40%">새 비밀번호 확인</td>
+                                        <td><input class="wcon" width="40%" type="password" id="checknewpw" name="checknewpw" required><label style="display:none;" id="checknewpwinfo"></label></td>
                                     </tr>
                                     <tr>
                                             <td colspan="3">&nbsp;</td>

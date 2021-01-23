@@ -26,7 +26,7 @@
 	select m_id2 as chat, m_date from Message where m_id = #{m_id}
 	union
 	select m_id as chat, m_date from Message where m_id2 = #{m_id}
-	) group by chat
+	) group by chat order by lastdate desc
 	</select>
 	
 	<!-- 채팅 내용 조회 -->
