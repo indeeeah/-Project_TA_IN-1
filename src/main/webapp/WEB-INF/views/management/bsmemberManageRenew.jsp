@@ -33,6 +33,7 @@
 				<li><a href="reportBoardManagelist.do">신고(일반게시글)</a></li>
 				<li><a href="reportBsboardManagelist.do">신고(비지니스게시글)</a></li>
 				<li><a href="memberOutlist.do">탈퇴 회원</a></li>
+				<li><a href="chartTest.do">통계</a></li>
 				<li><a onclick="logout();">로그아웃</a></li>
 			</ul>
 		</div>

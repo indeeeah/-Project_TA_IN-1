@@ -27,44 +27,37 @@ body {
 	stroke: white;
 	stroke-dasharray: 6% 29%;
 	stroke-width: 3px;
-	stroke-dashoffset: 0%;
+	stroke-dashoffset: 5%;
 	animation: stroke-offset 5.5s infinite linear;
 }
 
 .text-copy:nth-child(1) {
-	stroke: #dd5d20;
-	animation-delay: -1;
+	stroke: #4c5466;
+	animation-delay: -1s;
 }
 
 .text-copy:nth-child(2) {
-	stroke: #144d2a;
+	stroke: #1d193f;
 	animation-delay: -2s;
 }
 
 .text-copy:nth-child(3) {
-	stroke: #df871b;
+	stroke: #352c86;
 	animation-delay: -3s;
 }
 
 .text-copy:nth-child(4) {
-	stroke: #da3931;
+	stroke: #7ea0df;
 	animation-delay: -4s;
 }
 
 .text-copy:nth-child(5) {
-	stroke: #3291b6;
+	stroke: #2c5974;
 	animation-delay: -5s;
 }
-.text-copy:nth-child(5) {
-	stroke: #3291b6;
-	animation-delay: -6s;
-}
-.text-copy:nth-child(5) {
-	stroke: #3291b6;
-	animation-delay: -7s;
-}
+
 @keyframes stroke-offset { 100% {
-	stroke-dashoffset: 100%;
+	stroke-dashoffset: -30%;
 }
 
 }
@@ -98,7 +91,7 @@ svg {
 
 .lofin_msg {
 	font-size: 25px;
-	color: #144d2af8;
+	color: #506791;
 	text-align: center;
 	margin-bottom: 60px;
 }
@@ -131,7 +124,7 @@ svg {
 	outline: none;
 	transition: .5s;
 	border-radius: 10px;
-	background-color: #144d2af8;
+	background-color: #6782B4;
 }
 
 .btn-primary:hover {
@@ -145,7 +138,7 @@ svg {
 
 .find_link a {
 	text-decoration: none;
-	color: #df871b;
+	color: #506791;
 }
 </style>
 </head>
@@ -201,7 +194,8 @@ svg {
 	// 로그인
 	function login(id) {
 		var queryString = $("form[id=frm_login]").serialize();
-		$.ajax({
+		$
+				.ajax({
 					url : "${pageContext.request.contextPath}/member/login.do",
 					method : "POST",
 					data : queryString,
@@ -210,15 +204,15 @@ svg {
 						if (data == "1") {
 							console.log("success");
 							var url = "${pageContext.request.contextPath}/timeLine";
-					        $(location).attr('href', url);
-						} else if (data == "2") {   // 임시비밀번호로 로그인 경우
+							$(location).attr('href', url);
+						} else if (data == "2") { // 임시비밀번호로 로그인 경우
 							console.log("success: 임시비밀번호로 로그인 경우");
 							var url = "${pageContext.request.contextPath}/mChangepw.do";
-						    $(location).attr('href', url);
-						} else if (data == "3") {   // 관리자 로그인 경우
+							$(location).attr('href', url);
+						} else if (data == "3") { // 관리자 로그인 경우
 							console.log("success: 관리자아이디로 로그인");
-							var url = "${pageContext.request.contextPath}/membermanagelist.do";
-						    $(location).attr('href', url);
+							var url = "${pageContext.request.contextPath}/managementMain.do";
+							$(location).attr('href', url);
 						} else if (data == '-1') {
 							alert('등록된 아이디가 없습니다.');
 							//if(confirm('회원가입으로 이동하시겠습니까?')==1){};
