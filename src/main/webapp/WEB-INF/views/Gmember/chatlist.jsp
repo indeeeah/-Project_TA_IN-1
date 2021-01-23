@@ -55,7 +55,7 @@ img {
 }
 
 .recent_heading h4 {
-	color: #5e76dd;
+	color: #6782B4;
 	font-size: 21px;
 	margin: auto;
 }
@@ -72,7 +72,7 @@ img {
 	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
 	border: medium none;
 	padding: 0;
-	color: #707070;
+	color: #6782B4;
 	font-size: 18px;
 }
 
@@ -127,7 +127,7 @@ img {
 }
 
 .active_chat {
-	background: #ebebeb;
+	background: white;
 }
 
 .incoming_msg_img {
@@ -204,7 +204,7 @@ img {
 }
 
 .msg_send_btn {
-	background: #5e76dd none repeat scroll 0 0;
+	background: #6782B4 none repeat scroll 0 0;
 	border: medium none;
 	border-radius: 50%;
 	color: #fff;
@@ -242,6 +242,17 @@ img {
 ::-webkit-scrollbar-corner {
   background: #0c0c0c;
 }
+#circle1 {
+background-color:#ED4956;
+width:5px;
+height:5px;
+border-radius:75px;
+text-align:center;
+margin:0 auto;
+font-size:12px;
+vertical-align:middle;
+line-height:150px;
+}
 </style>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
@@ -250,7 +261,87 @@ img {
 			var m_id2 = $(this).find('input[type=text]').val();
 			location.href="showchat.do?m_id2="+m_id2;
 		});
+		
+		//소켓
+		var socket = null;
+		function connect() {
+			var ws = new WebSocket(
+					"ws://localhost:8090/tain/replyEcho?ID=${my_name}");
+			socket = ws;
+
+			//접속 처리
+			ws.onopen = function() {
+				console.log('Info: connection opened.');
+			};
+
+			//메시지 처리
+			ws.onmessage = function(event) {
+				console.log("ReceiveMessage : ", event.data + '\n');
+				var arr=[];
+				arr = event.data.split(",");
+				var id = arr[0];
+				var msg = arr[1];
+				var date = new Date;
+				var year = date.getFullYear();
+				var month = date.getMonth();
+				var day = date.getDate();
+				var hours = date.getHours();
+				var minutes = date.getMinutes();
+				var seconds = date.getSeconds();
+				var msghistory = $(".msg_history").html();
+				$("input[value="+id+"]").parent().css("display","block");
+				$(".msg_history").html(msghistory + "<div class='received_msg'><div class='received_withd_msg'><div class='incoming_msg_img'><img width='44px' src='${pageContext.request.contextPath}/resources/uploadFiles/${chatImg}'><b style='font-size: 9pt;'>"+id+"</b></div><p>"+msg+"</p><span class='time_date'>"+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds+"</span></div></div><br>");
+				setTimeout(function(){
+					var scrollTop = $(".msg_history").scrollTop();
+					$(".msg_history").scrollTop($(document).height()+100000);
+				}, 10);
+			};
+			
+			//접속 끊겼을때
+			ws.onclose = function(event) {
+				console.log('Info: connection closed.');
+				//setTimeout(function(){connect();}, 1000);   // retry connection!!
+			};
+			ws.onerror = function(err) {
+				console.log('Err:', err);
+			};
+
+		}
+
+		connect();
+		
+	$("#searchf").on("change keyup paste",function(){
+			var m_id2 = $("#searchf").val();
+			$.ajax({
+	            url: "findFollowing.do",
+	            type: "post",
+	            data: { 'm_id2' : m_id2 },
+	            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	            dataType: "json",
+	            async: true,
+	            success: function(result) {
+	            	var rs = "";
+	            	if($("#searchf").val() != ""){
+	            		$("#resultdiv").css("display","none");
+	            		$("#resultdiv").html("");
+		            	for(var i = 0; i<result.userId.length; i++){
+		            		$("#resultdiv").css("display","block");
+		            		rs = result.userId[i];
+		            		$("#resultdiv").append("<button style='width:100%; text-align:left; font-size:10pt; background:none; border-style:none; cursor:pointer; padding:5px 0 5px 0;' onclick=\"location.href='showchat.do?m_id2="+rs+"'\">"+rs+"</button><br>");
+		            	}
+	            	}else{
+	            		$("#resultdiv").css("display","none");
+	            		$("#resultdiv").html("");
+	            	}
+	            },
+	            error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" +
+	                    request.responseText + "\n" + "error:" + error);
+	            }
+	        });
+		});
 	});
+	
 </script>
 
 </head>
@@ -269,12 +360,15 @@ img {
 						</div>
 						<div class="srch_bar">
 							<div class="stylish-input-group">
-								<input type="text" class="search-bar" placeholder="Search">
+								<input type="text" id="searchf" class="search-bar" placeholder="Search">
 								<span class="input-group-addon">
-									<button type="button">
+									<button type="button" id="btnSearch">
 										<i class="fa fa-search" aria-hidden="true"></i>
 									</button>
 								</span>
+								<div id="resultdiv"
+								style="display:none;position:fixed;margin-left:40px;background:white;text-align:center;border: 1px solid #cdcdcd;border-width: 0 0 1px 0;width: 168px;text-align:left;	padding: 2px 0 4px 6px;">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -282,8 +376,9 @@ img {
 					<c:forEach var="ml" items="${MessageList}" varStatus="status">
 						<div class="chat_list active_chat">
 							<div class="chat_people">
-								<div class="chat_img">
-									<img src="${pageContext.request.contextPath}/resources/uploadFiles/${userImg[status.index] }">
+								<div class="chat_img" style="width: 30px; height: 30px; border-radius: 70%; overflow: hidden;">
+									<img src="${pageContext.request.contextPath}/resources/uploadFiles/${userImg[status.index] }" style="width: 100%; height:100%; object-fit: cover;">
+									<div id="circle1" class="circle1" style="margin:-15px 0 20px 60px; display:none;"><input type="text" value="${ml.chat}" style="display:none;"></div>
 								</div>
 								<div class="chat_ib" style="">
 									<h5>
@@ -296,17 +391,13 @@ img {
 					</c:forEach>
 					</div>
 				</div>
-				<div>
-				<h4>메시지 목록</h4>
+				<div style="display:inline-block; width: 59.9%; height: 656px;">
+				<h1 style="text-shadow: 1px 1px 1px #6782B4;margin:30px 0 0 30px;font-size:20pt;color:#6782B4;font-family:Serif;">#타인_채팅<br>#소통<br>#티엠<br>#TM</h1>
+				<h1 style="margin-top:200px;padding:0 0 0 110px;font-size:60pt;color:#f8f8f8;font-family:Serif;background-image: linear-gradient(319deg, #91d370 0%, #bca0ff 37%, #f2cd54 100%);">TA_IN MESSAGE</h1>
 				</div>
 			</div>
-
-
-			<p class="text-center top_spac">
-				..<a target="_blank" href="#">..</a>
-			</p>
-
 		</div>
 	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>

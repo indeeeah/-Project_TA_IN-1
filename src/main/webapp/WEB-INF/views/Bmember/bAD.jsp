@@ -293,20 +293,17 @@ img {
 			<div id="sc_con">
 				<div id="menu">
 					<ul id="menulist">
-						<li><a href="mManage.do">프로필 편집</a></li>
-						<li><a href="mChangepw.do">비밀번호 변경</a></li>
-						<li><a href="mCart.do">장바구니</a></li>
-						<li><a href="mBuylist.do">구매목록</a></li>
-						<li><a href="mLikelist.do">내가 누른 좋아요 조회</a></li>
-						<li style="border-left: 2px solid black;"><a
-							href="mBusiness.do"><span style="font-weight: bold;">비즈니스
-									계정</span></a></li>
+						<li onclick="location.href='mManage.do'">프로필 편집</li>
+						<li onclick="location.href='mChangepw.do'">비밀번호 변경</li>
+						<li onclick="location.href='mCart.do'">장바구니</li>
+						<li onclick="location.href='mBuylist.do'">구매목록</li>
+						<li onclick="location.href='mLikelist.do'">내가 누른 좋아요 조회</li>
+						<li style="border-left: 2px solid black;"
+							onclick="location.href='mBusiness.do'"><span
+							style="font-weight: bold;">비즈니스 계정</span></li>
 					</ul>
 				</div>
 				<div id="contents" style="padding-top: 30px;">
-					<span style="color: white; background: gray;">광고 컨텐츠 관리</span>
-					<hr
-						style="width: 80%; margin-top: 30px; border: 1px solid #EAEAEA;">
 					<div id="submenu" style="padding-top: 30px;">
 						<input type="button" id="all" class="submenu" value="비즈니스 정보"
 							style="background: white; text-align: center; width: 120px;"
@@ -351,8 +348,8 @@ img {
 						</c:if>
 						<br> <br>
 					</div>
-					<button id="ADADD"
-						style="background: #0095f6; border-style: none; padding: 5px 5px 5px 5px; color: white;">추가</button>
+					<button id="CateADD" class="btn2"
+						style="background: #6782B4; padding: 5px 20px 5px 20px; color: white;">추가</button>
 					<br> <br>
 				</div>
 			</div>

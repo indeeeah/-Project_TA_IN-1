@@ -239,14 +239,13 @@
                                     <div id="sc_con">
                                         <div id="menu">
                                             <ul id="menulist">
-                                                <li><a href="mManage.do">프로필 편집</a></li>
-                                                <li><a href="mChangepw.do">비밀번호 변경</a></li>
-                                                <li><a href="mCart.do">장바구니</a></li>
-                                                <li><a href="mBuylist.do">구매목록</a></li>
-                                                <li><a href="mLikelist.do">내가 누른 좋아요 조회</a></li>
-                                                <li style="border-left: 2px solid black;"><a href="mBusiness.do"><span
-															style="font-weight: bold;">비즈니스
-															계정</span></a></li>
+                                                <li onclick="location.href='mManage.do'">프로필 편집</li>
+                                                <li onclick="location.href='mChangepw.do'">비밀번호 변경</li>
+                                                <li onclick="location.href='mCart.do'">장바구니</li>
+                                                <li onclick="location.href='mBuylist.do'">구매목록</li>
+                                                <li onclick="location.href='mLikelist.do'">내가 누른 좋아요 조회</li>
+                                                <li style="border-left: 2px solid black;"onclick="location.href='mBusiness.do'"><span
+															style="font-weight: bold;">비즈니스 계정</span></li>
                                             </ul>
                                         </div>
                                         <div id="contents" style="padding-top: 30px;">
@@ -260,7 +259,7 @@
 
 				<form action="bOrderDateSearch.do" method="get">
 					<div id="JWJsearchassistant">
-						<b style="font-size: 7pt">* 조회할 기간 설정&nbsp;&nbsp;</b> <input
+						<b style="font-size: 7pt;font-weight: bold;">* 조회할 기간 설정&nbsp;&nbsp;</b> <input
 							type="date" id="startdate" name="startdate" value="${startdate }">&nbsp;&nbsp;~&nbsp;&nbsp;
 						<input type="date" id="enddate" name="enddate" value="${enddate }">&nbsp;&nbsp;
 						<input type="submit" id="setupbtn" name="setupbtn" value="조회하기"
@@ -268,7 +267,7 @@
 					</div>
 				</form>
 				<br>
-				<b style="font-size: 7pt;"> * 기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색 시
+				<b style="font-size: 7pt;font-weight: bold;"> * 기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색 시
 					지난 판매내역을 조회하실 수 있습니다.<br>리스트의 상품을 클릭하시면 처리상태를 입력하실 수 있습니다.
 				</b>
 				<hr style="width: 80%; margin-top: 30px; border: 1px solid #EAEAEA;">

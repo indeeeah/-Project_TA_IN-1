@@ -122,9 +122,9 @@
                     box-sizing: border-box;
                     width:187px;
                 }
-               /*  a{
+                a{
                 	padding:15px 85px 15px 0 !important; 
-                } */
+                }
                 #changepw{
                	width:526px;
                 }
@@ -197,14 +197,14 @@
                     <div id="sc_con">
                         <div id="menu">
                             <ul id="menulist">
-                                <li><a href="mManage.do">프로필 편집</a></li>
-                                <li style="border-left: 2px solid black;"><a href=""><span
-											style="font-weight: bold;">비밀번호 변경</span></a></li>
-                                <li><a href="mCart.do">장바구니</a></li>
-                                <li><a href="mBuylist.do">구매목록</a></li>
-                                <li><a href="mLikelist.do">내가 누른 좋아요 조회</a></li>
-                                <li><a href="mBusiness.do">비즈니스 계정</a></li>
-                            </ul>
+						<li onclick="location.href='mManage.do'">프로필 편집</li>
+						<li style="border-left: 2px solid black;" onclick="location.href='mChangepw.do'"><span
+							style="font-weight: bold;">비밀번호 변경</span></li>
+						<li onclick="location.href='mCart.do'">장바구니</li>
+						<li onclick="location.href='mBuylist.do'">구매목록</li>
+						<li onclick="location.href='mLikelist.do'">내가 누른 좋아요 조회</li>
+						<li onclick="location.href='mBusiness.do'">비즈니스 계정</li>
+					</ul>
                         </div>
                         <div id="contents" style="padding-top: 30px;">
                             <form id="changepw" method="post" action="changepw.do" style="padding-bottom: 30px; padding-top: 30px;">

@@ -145,9 +145,9 @@
                     box-sizing: border-box;
                 }
                 
-                /* a{
+                a{
                 	padding:15px 85px 15px 0 !important; 
-                } */
+                }
             </style>
 
             <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
@@ -330,14 +330,14 @@
                     <div id="sc_con">
                         <div id="menu">
                             <ul id="menulist">
-                                <li style="border-left: 2px solid black;"><a href="mManage.do"><span
-											style="font-weight: bold;">프로필 편집</span></a></li>
-                                <li><a href="mChangepw.do">비밀번호 변경</a></li>
-                                <li><a href="mCart.do">장바구니</a></li>
-                                <li><a href="mBuylist.do">구매목록</a></li>
-                                <li><a href="mLikelist.do">내가 누른 좋아요 조회</a></li>
-                                <li><a href="mBusiness.do">비즈니스 계정</a></li>
-                            </ul>
+						<li style="border-left: 2px solid black;" onclick="location.href='mManage.do'"><span
+							style="font-weight: bold;">프로필 편집</span></li>
+						<li onclick="location.href='mChangepw.do'">비밀번호 변경</li>
+						<li onclick="location.href='mCart.do'">장바구니</li>
+						<li onclick="location.href='mBuylist.do'">구매목록</li>
+						<li onclick="location.href='mLikelist.do'">내가 누른 좋아요 조회</li>
+						<li onclick="location.href='mBusiness.do'">비즈니스 계정</li>
+					</ul>
                         </div>
                         <div id="contents" style="padding-top: 30px;">
                             <form id="editProfile" name="myForm" method="post" style="padding-bottom: 30px; padding-top: 30px;">

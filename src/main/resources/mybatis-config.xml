@@ -22,7 +22,7 @@
 		<typeAlias type="com.project.tain.management.model.domain.ReportAllManage" alias="ReportAllManage"/>
 		<typeAlias type="com.project.tain.membermanage.model.vo.mMemberVO" alias="mMemberVO"/>
 		<typeAlias type="com.project.tain.membermanage.model.vo.mCartVO" alias="mCartVO"/>
-		<typeAlias type="com.project.tain.membermanage.model.vo.mCartVO" alias="mFollowVO"/>
+		<typeAlias type="com.project.tain.membermanage.model.vo.mFollowVO" alias="mFollowVO"/>
 		<typeAlias type="com.project.tain.membermanage.model.vo.mLikeVO" alias="mLikeVO"/>
 		<typeAlias type="com.project.tain.membermanage.model.vo.mOrderVO" alias="mOrderVO"/>
 		<typeAlias type="com.project.tain.membermanage.model.vo.mMessageVO" alias="mMessageVO"/>

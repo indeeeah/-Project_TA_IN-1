@@ -55,7 +55,7 @@ img {
 }
 
 .recent_heading h4 {
-	color: #5e76dd;
+	color: #6782B4;
 	font-size: 21px;
 	margin: auto;
 }
@@ -72,7 +72,7 @@ img {
 	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
 	border: medium none;
 	padding: 0;
-	color: #707070;
+	color: #6782B4;
 	font-size: 18px;
 }
 
@@ -165,7 +165,7 @@ img {
 }
 
 .sent_msg p {
-	background: #5e76dd;
+	background: #6782B4;
 	border-radius: 3px;
 	font-size: 14px;
 	margin: 0;
@@ -182,7 +182,9 @@ img {
 .sent_msg {
 	float: right;
 }
-
+.chat_list{
+	background:white;
+}
 .input_msg_write input {
 	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
 	border: medium none;
@@ -198,7 +200,7 @@ img {
 }
 
 .msg_send_btn {
-	background: #5e76dd none repeat scroll 0 0;
+	background: #6782B4 none repeat scroll 0 0;
 	border: medium none;
 	border-radius: 50%;
 	color: #fff;
@@ -236,6 +238,18 @@ img {
 }
 ::-webkit-scrollbar-corner {
   background: #0c0c0c;
+}
+
+#circle1 {
+background-color:#ED4956;
+width:5px;
+height:5px;
+border-radius:75px;
+text-align:center;
+margin:0 auto;
+font-size:12px;
+vertical-align:middle;
+line-height:150px;
 }
 </style>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -278,6 +292,7 @@ img {
 				var minutes = date.getMinutes();
 				var seconds = date.getSeconds();
 				var msghistory = $(".msg_history").html();
+				$("input[value="+id+"]").parent().css("display","block");
 				$(".msg_history").html(msghistory + "<div class='received_msg'><div class='received_withd_msg'><div class='incoming_msg_img'><img width='44px' src='${pageContext.request.contextPath}/resources/uploadFiles/${chatImg}'><b style='font-size: 9pt;'>"+id+"</b></div><p>"+msg+"</p><span class='time_date'>"+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds+"</span></div></div><br>");
 				setTimeout(function(){
 					var scrollTop = $(".msg_history").scrollTop();
@@ -320,6 +335,43 @@ img {
 			}, 10);
 			$("#msg").val("");
 		});
+		
+		$("#msg").click(function(){
+			var a = [];
+			a = document.location.href.split("=");
+			$("input[class=alarmbtn][value="+a[1]+"]").parent().css("display","none");
+		});
+		
+		$("#searchf").on("change keyup paste",function(){
+			var m_id2 = $("#searchf").val();
+			$.ajax({
+	            url: "findFollowing.do",
+	            type: "post",
+	            data: { 'm_id2' : m_id2 },
+	            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+	            dataType: "json",
+	            async: true,
+	            success: function(result) {
+	            	var rs = "";
+	            	if($("#searchf").val() != ""){
+	            		$("#resultdiv").css("display","none");
+	            		$("#resultdiv").html("");
+		            	for(var i = 0; i<result.userId.length; i++){
+		            		$("#resultdiv").css("display","block");
+		            		rs = result.userId[i];
+		            		$("#resultdiv").append("<button style='width:100%; text-align:left; font-size:10pt; background:none; border-style:none; cursor:pointer; padding:5px 0 5px 0;' onclick=\"location.href='showchat.do?m_id2="+rs+"'\">"+rs+"</button><br>");
+		            	}
+	            	}else{
+	            		$("#resultdiv").css("display","none");
+	            		$("#resultdiv").html("");
+	            	}
+	            },
+	            error: function(request, status, error) {
+	                alert("code:" + request.status + "\n" + "message:" +
+	                    request.responseText + "\n" + "error:" + error);
+	            }
+	        });
+		});
 	});
 </script>
 </head>
@@ -338,21 +390,25 @@ img {
 						</div>
 						<div class="srch_bar">
 							<div class="stylish-input-group">
-								<input type="text" class="search-bar" placeholder="Search">
+								<input type="text" id="searchf" class="search-bar" placeholder="Search">
 								<span class="input-group-addon">
-									<button type="button">
+									<button type="button" id="btnSearch">
 										<i class="fa fa-search" aria-hidden="true"></i>
 									</button>
 								</span>
+								<div id="resultdiv"
+								style="display:none;position:fixed;margin-left:40px;background:white;text-align:center;border: 1px solid #cdcdcd;border-width: 0 0 1px 0;width: 168px;text-align:left;	padding: 2px 0 4px 6px;">
+								</div>
 							</div>
 						</div>
 					</div>
 					<div class="inbox_chat">
 					<c:forEach var="ml" items="${MessageList}" varStatus="status">
-						<div class="chat_list active_chat"<c:if test="${m_id2 eq ml.chat }">style="background:#ebebeb;"</c:if>>
+						<div class="chat_list active_chat"<c:if test="${m_id2 eq ml.chat }">style="background:#6782B4;"</c:if>>
 							<div class="chat_people">
-								<div class="chat_img">
-									<img src="${pageContext.request.contextPath}/resources/uploadFiles/${userImg[status.index] }">
+								<div class="chat_img" style="width: 30px; height: 30px; border-radius: 70%; overflow: hidden;">
+									<img src="${pageContext.request.contextPath}/resources/uploadFiles/${userImg[status.index] }" style="width: 100%; height:100%; object-fit: cover;">
+									<div id="circle1" class="circle1" style="margin:-15px 0 20px 60px; display:none;"><input type="text" value="${ml.chat}" style="display:none;"></div>
 								</div>
 								<div class="chat_ib">
 									<h5>
@@ -383,8 +439,8 @@ img {
 								<c:if test="${msg.m_id ne my_name }">
 									<div class="received_msg">
 										<div class="received_withd_msg" style="display:block; word-break:normal;">
-											<div class="incoming_msg_img">
-												<img width="44px" src="${pageContext.request.contextPath}/resources/uploadFiles/${chatImg}"><b style="font-size: 9pt;">${msg.m_id }</b>
+											<div class="incoming_msg_img" style="width: 30px; height: 30px; border-radius: 70%; overflow: hidden;">
+												<img width="44px"  src="${pageContext.request.contextPath}/resources/uploadFiles/${chatImg}" style="width: 100%; height:100%; object-fit: cover;"><b style="font-size: 9pt;">${msg.m_id }</b>
 											</div>
 											<div style="display:block; word-break:normal;">
 											<p>${msg.m_message }</p>
@@ -408,5 +464,6 @@ img {
 			</div>
 		</div>
 	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>

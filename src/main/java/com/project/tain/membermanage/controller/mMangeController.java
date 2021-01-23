@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,16 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.project.tain.businessmembermanage.model.service.bAdServiceImpl;
 import com.project.tain.businessmembermanage.model.service.bCateServiceImpl;
@@ -34,6 +33,7 @@ import com.project.tain.businessmembermanage.model.vo.bAdVO;
 import com.project.tain.businessmembermanage.model.vo.bCateVO;
 import com.project.tain.businessmembermanage.model.vo.bMemberVO;
 import com.project.tain.membermanage.model.service.mCartServiceImpl;
+import com.project.tain.membermanage.model.service.mFollowServiceImpl;
 import com.project.tain.membermanage.model.service.mLikeServiceImpl;
 import com.project.tain.membermanage.model.service.mMemberServiceImpl;
 import com.project.tain.membermanage.model.service.mMessageServiceImpl;
@@ -42,6 +42,7 @@ import com.project.tain.membermanage.model.vo.mCartVO;
 import com.project.tain.membermanage.model.vo.mMemberVO;
 import com.project.tain.membermanage.model.vo.mOrderVO;
 
+@EnableWebMvc
 @Controller
 public class mMangeController {
 	@Autowired
@@ -62,6 +63,8 @@ public class mMangeController {
 	private bOrderServiceImpl bOrderServiceImpl;
 	@Autowired
 	private mMessageServiceImpl mMessageServiceImpl;
+	@Autowired
+	private mFollowServiceImpl mFollowServiceImpl;
 
 	@RequestMapping(value = "/IdSet.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String memberBusiness(HttpServletRequest request) {
@@ -594,5 +597,30 @@ public class mMangeController {
 		mv.addObject("Message", mMessageServiceImpl.showMessage(my_name, m_id2));
 		mv.setViewName("Gmember/showchat");
 		return mv;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/findFollowing.do", method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = "application/json; charset=utf-8")
+	public String findFollowing(@RequestParam String m_id2, HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		String my_name = (String)session.getAttribute("my_name");
+		System.out.println(m_id2);
+		
+		List<String> list = new ArrayList<String>();
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+		for(int i = 0; i < mFollowServiceImpl.showFollowing(my_name, m_id2).size(); i++) {
+			list.add(mFollowServiceImpl.showFollowing(my_name, m_id2).get(i).getM_id2());
+		}
+		if (list.size() == 0) {
+			list.add("검색 결과가 없습니다.");
+		}
+		map.put("userId", list);
+		JSONObject jo = new JSONObject();
+		jo.putAll(map);
+		return jo.toString();
 	}
 }

@@ -157,9 +157,9 @@ td {
 	vertical-align: middle !important;
 }
 
-/* a {
+a {
 	padding: 15px 85px 15px 0 !important;
-} */
+}
 </style>
 </head>
 
@@ -171,14 +171,13 @@ td {
 			<div id="sc_con">
 				<div id="menu">
 					<ul id="menulist">
-						<li><a href="mManage.do">프로필 편집</a></li>
-						<li><a href="mChangepw.do">비밀번호 변경</a></li>
-						<li><a href="mCart.do">장바구니</a></li>
-						<li><a href="mBuylist.do">구매목록</a></li>
-						<li style="border-left: 2px solid black;"><a
-							href="mLikelist.do"><span style="font-weight: bold;">내가
-									누른 좋아요 조회</span></a></li>
-						<li><a href="mBusiness.do">비즈니스 계정</a></li>
+						<li onclick="location.href='mManage.do'">프로필 편집</li>
+						<li onclick="location.href='mChangepw.do'">비밀번호 변경</li>
+						<li onclick="location.href='mCart.do'">장바구니</li>
+						<li onclick="location.href='mBuylist.do'">구매목록</li>
+						<li style="border-left: 2px solid black;" onclick="location.href='mLikelist.do'"><span
+							style="font-weight: bold;">내가 누른 좋아요 조회</span></li>
+						<li onclick="location.href='mBusiness.do'">비즈니스 계정</li>
 					</ul>
 				</div>
 				<div id="contents" style="padding-top: 30px;">
