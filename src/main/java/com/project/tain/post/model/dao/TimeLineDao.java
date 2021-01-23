@@ -171,4 +171,13 @@ public class TimeLineDao {
 		return sqlSession.insert("TimeLine.alertFollow", tl);
 	}
 
+	public List<TimeLine> forRegChart(TimeLine tl) {
+		System.out.println(sqlSession.selectList("TimeLine.forRegChart", tl));
+		return sqlSession.selectList("TimeLine.forRegChart", tl);
+	}
+
+	public List<TimeLine> forLikeChart(TimeLine tl) {
+		return sqlSession.selectList("TimeLine.forLikeChart", tl);
+	}
+
 }

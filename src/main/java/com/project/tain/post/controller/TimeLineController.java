@@ -41,6 +41,19 @@ public class TimeLineController {
 	public String websockettest(ModelAndView mv) {
 		return "post/websockettest";
 	}
+	@RequestMapping(value = "/chartTest.do")
+	public String chartTest(ModelAndView mv) {
+		//mv.addObject("forRegChart", tService.forRegChart());
+		return "chartTest";
+	}
+	@ResponseBody
+	@RequestMapping(value = "/forchartTest.do", method = RequestMethod.POST)
+	public Object forchartTest(ModelAndView mv, TimeLine tl) {
+			List<TimeLine> chart = tService.forRegChart(tl);
+			List<TimeLine> chartl = tService.forLikeChart(tl);
+			System.out.println(tService.forRegChart(tl));
+		return chart;
+	}
 	
 	@RequestMapping(value = "/testSession.do")
 	public ModelAndView testSession(ModelAndView mv, @RequestParam(name="m_id") String m_id, @RequestParam(name="lan") String lan, Model model, HttpSession session, HttpServletRequest request) {

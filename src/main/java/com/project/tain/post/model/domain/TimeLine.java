@@ -40,6 +40,10 @@ public class TimeLine implements java.io.Serializable{
 	private String o_reason;
 	private String o_reasontx;
 	private String m_id2;
+	private String m_joindate;
+	private String first_date;
+	private String second_date;
+	private int countl;
 	
 	public TimeLine() {
 		
@@ -365,6 +369,38 @@ public class TimeLine implements java.io.Serializable{
 
 	public void setM_id2(String m_id2) {
 		this.m_id2 = m_id2;
+	}
+
+	public String getM_joindate() {
+		return m_joindate;
+	}
+
+	public void setM_joindate(String m_joindate) {
+		this.m_joindate = m_joindate;
+	}
+
+	public String getFirst_date() {
+		return first_date;
+	}
+
+	public void setFirst_date(String first_date) {
+		this.first_date = first_date;
+	}
+
+	public String getSecond_date() {
+		return second_date;
+	}
+
+	public void setSecond_date(String second_date) {
+		this.second_date = second_date;
+	}
+
+	public int getCountl() {
+		return countl;
+	}
+
+	public void setCountl(int countl) {
+		this.countl = countl;
 	}
 	
 	

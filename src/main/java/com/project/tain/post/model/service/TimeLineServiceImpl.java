@@ -198,4 +198,14 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int alertFollow(TimeLine tl) {
 		return tDao.alertFollow(tl);
 	}
+
+	@Override
+	public List<TimeLine> forRegChart(TimeLine tl) {
+		return tDao.forRegChart(tl);
+	}
+
+	@Override
+	public List<TimeLine> forLikeChart(TimeLine tl) {
+		return tDao.forLikeChart(tl);
+	}
 }

@@ -80,4 +80,8 @@ public interface TimeLineService {
 
 	int alertFollow(TimeLine tl);
 
+	List<TimeLine> forRegChart(TimeLine tl);
+
+	List<TimeLine> forLikeChart(TimeLine tl);
+
 }
