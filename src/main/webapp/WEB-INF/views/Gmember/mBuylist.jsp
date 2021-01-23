@@ -41,7 +41,6 @@ body {
 	height: 798px;
 	border: 1px solid #C7C7C7;
 	border-top: none;
-	overflow-y: auto;
 }
 
 #menu {
@@ -56,7 +55,6 @@ body {
 	padding-left: 0;
 	width: 260px;
 	height: 798px;
-	border-right: 1px solid #C7C7C7;
 }
 
 #menulist>li {
@@ -85,6 +83,9 @@ body {
 	text-align: center;
 	margin: 0 auto;
 	padding-left: 25px;
+	border-left: 1px solid #C7C7C7;
+	overflow: auto;
+	height:768px;
 }
 
 td {
