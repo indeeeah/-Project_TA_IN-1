@@ -37,7 +37,7 @@ body {
 }
 
 #sc_con {
-	width: 1000px;
+	width: 998px;
 	height: 798px;
 	border: 1px solid #C7C7C7;
 	border-top: none;
@@ -56,6 +56,7 @@ body {
 	padding-left: 0;
 	width: 260px;
 	height: 798px;
+	border-right: 1px solid #C7C7C7;
 }
 
 #menulist>li {
@@ -80,10 +81,9 @@ body {
 
 #contents {
 	display: inline-block;
-	width: 705px;
+	width: 730px;
 	text-align: center;
 	margin: 0 auto;
-	border-left: 1px solid #C7C7C7;
 }
 
 td {
@@ -155,6 +155,7 @@ button:focus {
 
 table {
 	border-collapse: collapse;
+	width:100%;
 }
 
 th, td {
@@ -231,7 +232,7 @@ th, td {
 				});
 				
 				$("#orderlist").click(function(){
-					if(${cartlist.size() eq 0}){
+					if(${cartlist.size() == 0}){
 						alert("장바구니가 비어있습니다.");
 						return false;
 					}
@@ -250,7 +251,7 @@ th, td {
 				});
 				
 				$("#deletelist").click(function(){
-					if(${cartlist.size() eq 0}){
+					if(${cartlist.size() == 0}){
 						alert("장바구니가 비어있습니다.");
 						return false;
 					}
@@ -386,11 +387,11 @@ th, td {
 					<div style="padding: 40px 0 30px 0;">
 						<input type="button" id="orderlist" class="btn2"
 							style="background: #6782B4; padding: 5px 20px 5px 20px; color: white;"
-							" value="주문하기"
+							value="주문하기"
 							style="background: white; border: 1px solid #D5D5D5;"> <input
 							type="button" id="deletelist" class="btn2"
 							style="background: #6782B4; padding: 5px 20px 5px 20px; color: white;"
-							" value="삭제하기"
+							value="삭제하기"
 							style="background: white; border: 1px solid #D5D5D5;">
 					</div>
 				</div>
