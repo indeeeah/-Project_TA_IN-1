@@ -195,12 +195,22 @@ a {
     border-bottom: 1px solid #C7C7C7;
     padding: 10px 0 10px 0;
 }
+.bbWritePrice{
+	border-bottom: 1px Dashed #C7C7C7;
+	height:50%;
+}
 .bbWriteMoreLeft input{
 	width: 240px;
     border: none;
     height: 20px;
-    padding: 10px 0px 10px 0px;
+    padding: 20px 0px 10px 0px;
     outline: none;
+}
+#categoryBox{
+	padding: 10px 0 10px 0;
+}
+#category {
+    width: 240px;
 }
 .bbWriteMoreRight input{
 	width: 240px;
@@ -209,7 +219,15 @@ a {
     padding: 5px 0px 5px 0px;
     outline: none;
 }
-
+#bb_option1{
+	border-bottom: 1px Dashed #C7C7C7;
+}
+#bb_option2{
+	border-bottom: 1px Dashed #C7C7C7;
+}
+#bb_option3{
+	border-bottom: 1px Dashed #C7C7C7;
+}
 #bbWriteMoreLeft{
 	width:50%;
 	border-right:1px dashed #C7C7C7;
@@ -258,8 +276,8 @@ a {
                     <input type="hidden" name="m_id" value="${my_name }">
                     <input type="hidden" value="${chkseq}" name="seq" id="for_seq">
                     <label for="file"><i class="far fa-image" class="image_icon"></i></label>
-                    <input type="text" id="bb_name" name="bb_name" placeholder="상품명">
-                    <textarea rows="5" cols="40" name="bb_info" class="b_content bb_info" placeholder="상품 소개"></textarea>
+                    <input type="text" id="bb_name" name="bb_name" placeholder="상 품 명">
+                    <textarea rows="5" cols="40" name="bb_info" class="b_content bb_info" placeholder="상 품 소 개"></textarea>
                     <input type="file" id="file" name="file" class="file" multiple required style="display:none;">
                     <div class="hashtag_con">
                         <input type="text" class="tags" id="tags" name="tags" placeholder="#해시태그 입력" />
@@ -267,7 +285,7 @@ a {
                     <div id="bbWriteMore" class="bbWriteMore">
 	                    <div id="bbWriteMoreLeft" class="bbWriteMoreLeft">
 							<div id="bbWritePrice" class="bbWritePrice">
-								 <input type="text" name="bb_price" placeholder="가 격">
+								 <input type="text" name="bb_price" placeholder="상 품 가 격">
 							</div>
 							<div id="categoryBox">
 								<select id="category" name="c_name">

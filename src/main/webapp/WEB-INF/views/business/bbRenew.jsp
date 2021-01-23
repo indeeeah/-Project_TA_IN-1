@@ -195,12 +195,22 @@ a {
     border-bottom: 1px solid #C7C7C7;
     padding: 10px 0 10px 0;
 }
+.bbWritePrice{
+	border-bottom: 1px Dashed #C7C7C7;
+	height:50%;
+}
 .bbWriteMoreLeft input{
 	width: 240px;
     border: none;
     height: 20px;
-    padding: 10px 0px 10px 0px;
+    padding: 20px 0px 10px 0px;
     outline: none;
+}
+#categoryBox{
+	padding: 10px 0 10px 0;
+}
+#category {
+    width: 240px;
 }
 .bbWriteMoreRight input{
 	width: 240px;
@@ -209,7 +219,15 @@ a {
     padding: 5px 0px 5px 0px;
     outline: none;
 }
-
+#bb_option1{
+	border-bottom: 1px Dashed #C7C7C7;
+}
+#bb_option2{
+	border-bottom: 1px Dashed #C7C7C7;
+}
+#bb_option3{
+	border-bottom: 1px Dashed #C7C7C7;
+}
 #bbWriteMoreLeft{
 	width:50%;
 	border-right:1px dashed #C7C7C7;
