@@ -79,6 +79,8 @@ body {
                                     width: 705px;
                                     text-align: center;
                                     margin: 0 auto;
+                                    
+                                    
                                 }
                                 
                                 td {
