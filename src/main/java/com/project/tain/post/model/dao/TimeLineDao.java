@@ -180,4 +180,12 @@ public class TimeLineDao {
 		return sqlSession.selectList("TimeLine.forLikeChart", tl);
 	}
 
+	public int alarmcheck(String my_name) {
+		return sqlSession.selectOne("TimeLine.alarmcheck", my_name);
+	}
+
+	public int turny(String my_name) {
+		return sqlSession.update("TimeLine.turny", my_name);
+	}
+
 }

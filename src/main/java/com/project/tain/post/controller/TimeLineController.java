@@ -86,6 +86,9 @@ public class TimeLineController {
 			mv.addObject("count", tService.timeLineListCount(my_name));
 			mv.addObject("timeLineList", tService.showTimeLineListPage(my_name, currentPage, LIMIT));
 			mv.addObject("recomFollow", tService.recomFollow(my_name));
+			
+			//알람 체크 부분//
+			//mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.setViewName("post/timeline");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -517,6 +520,18 @@ public class TimeLineController {
 	@RequestMapping(value = "chkpwd.do", method = RequestMethod.POST)
 	public int chkpwd(TimeLine tl) {
 		int result = tService.chkpwd(tl);
+		try {
+			System.out.println(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+		return result;
+	}
+	@ResponseBody
+	@RequestMapping(value = "turny.do", method = RequestMethod.POST)
+	public int turny(String my_name) {
+		int result = tService.turny(my_name);
 		try {
 			System.out.println(result);
 		} catch (Exception e) {

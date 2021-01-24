@@ -8,747 +8,82 @@
             <meta charset="UTF-8">
             <title>TA_IN 타임라인</title>
             <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
-            <%-- <link href="${pageContext.request.contextPath}/resources/css/timeLine.css" rel="stylesheet"
-                type="text/css"> --%>
-                <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
-                <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
-                <style>
-                    body {
-                        width: 100%;
-                        height: 100%;
-                        color: #262626;
-                        background-color: #FAFAFA;
-                    }
-                    
-                    #content_con {
-                        display: flex;
-                        justify-content: center;
-                        width: 100%;
-                    }
-                    
-                    #timeline_big_con {
-                        width: 1000px;
-                    }
-                    
-                    #timeline_left {
-                        width: 660px;
-                        float: left;
-                    }
-                    /* 스토리 */
-                    
-                    #story_con {
-                        width: 100%;
-                        height: 118px;
-                        border: 1px solid #C7C7C7;
-                        background-color: white;
-                    }
-                    
-                    #blank_for_story {
-                        width: 10px;
-                        height: 100%;
-                        float: left;
-                    }
-                    
-                    #story_inner_con {
-                        width: 650px;
-                        height: 92px;
-                        float: left;
-                        margin-top: 16px;
-                        overflow: hidden;
-                    }
-                    
-                    .story_small_con {
-                        width: 66px;
-                        height: 84px;
-                        margin: 0px 7px 0px 7px;
-                        float: left;
-                        cursor: pointer;
-                    }
-                    
-                    .story_profile {
-                        width: 66px;
-                        height: 66px;
-                        border-radius: 50%;
-                        border: 1px solid #C7C7C7;
-                        box-sizing: border-box;
-                    }
-                    
-                    .story_profile_a {
-                        width: 66px;
-                        height: 66px;
-                        border-radius: 50%;
-                        border: 1px solid #C7C7C7;
-                        box-sizing: border-box;
-                        background-color: #fee2f8;
-                        background-image: linear-gradient(315deg, #fee2f8 0%, #dcf8ef 74%);
-                    }
-                    
-                    #sa_icon {
-                        height: 64px;
-                        width: 64px;
-                        border-radius: 50%;
-                        cursor: pointer;
-                        background-image: url('${pageContext.request.contextPath}/resources/images/signal.svg');
-                        background-size: 40px;
-                        background-repeat: no-repeat;
-                        background-position: center;
-                    }
-                    
-                    .story_id {
-                        text-align: center;
-                        width: 66px;
-                        height: 18px;
-                        width: 66px;
-                    }
-                    /* 타임라인 */
-                    
-                    #timeline_blank {
-                        width: 100%;
-                        height: 30px;
-                    }
-                    
-                    .timeline_contents {
-                        width: 100%;
-                        margin-bottom: 60px;
-                        border: 1px solid #C7C7C7;
-                    }
-                    
-                    .timeline_profile {
-                        width: 100%;
-                        height: 60px;
-                        border-bottom: 1px solid #C7C7C7;
-                        background-color: white;
-                    }
-                    
-                    .t_prof_photo {
-                        width: 28px;
-                        height: 28px;
-                        border-radius: 50%;
-                        border: 1px solid #C7C7C7;
-                        box-sizing: border-box;
-                        margin: 16px;
-                        float: left;
-                    }
-                    
-                    .t_prof_id {
-                        float: left;
-                        font-size: 14px;
-                        color: #262626;
-                        line-height: 60px;
-                    }
-                    
-                    #timeline_right {
-                        width: 340px;
-                        height: 100%;
-                        float: right;
-                    }
-                    
-                    .timeline_photo {
-                        width: 100%;
-                        height: 660px;
-                    }
-                    
-                    .timeline_comment_con {
-                        width: 100%;
-                        padding: 0px 16px;
-                    }
-                    
-                    .inner_comment_con {
-                        width: 628px;
-                    }
-                    
-                    .timeline_icon_con {
-                        width: 100%;
-                        height: 40px;
-                        margin-top: 4px;
-                    }
-                    
-                    .timeline_likes_con {
-                        width: 100%;
-                        height: 18px;
-                        margin-bottom: 8px;
-                    }
-                    
-                    .comment_con {
-                        width: 100%;
-                    }
-                    
-                    .timeline_time {
-                        width: 100%;
-                        height: 19px;
-                        margin-bottom: 4px;
-                    }
-                    
-                    .upload_comment {
-                        width: 100%;
-                        height: 56px;
-                        margin-top: 4px;
-                        border-top: 1px solid #C7C7C7;
-                    }
-                    
-                    .inner_upload {
-                        margin-top: 19px;
-                        padding: 0px 16px;
-                    }
-                    
-                    .write_space {
-                        width: 603px;
-                        height: 18px;
-                        outline: none;
-                        border: none;
-                        padding: 0px;
-                        float: left;
-                        background-color: transparent;
-                    }
-                    
-                    .comment_upload {
-                        font-size: 14px;
-                        width: 25px;
-                        height: 18px;
-                        outline: none;
-                        border: none;
-                        padding: 0px;
-                        background-color: transparent;
-                        cursor: pointer;
-                    }
-                    
-                    #my_profile_con {
-                        margin-top: 21.5px;
-                        margin-bottom: 21.5px;
-                        width: 100%;
-                        height: 56px;
-                    }
-                    
-                    #my_profile_photo {
-                        width: 56px;
-                        height: 56px;
-                        border-radius: 50%;
-                        border: 1px solid #C7C7C7;
-                        box-sizing: border-box;
-                        float: left;
-                    }
-                    
-                    #my_id {
-                        width: 242px;
-                        height: 18px;
-                        line-height: 56px;
-                        float: right;
-                    }
-                    
-                    #follow_recom_title {
-                        width: 100%;
-                        height: 19px;
-                        font-size: 14px;
-                        line-height: 19px;
-                        color: #8E8E8E;
-                    }
-                    
-                    #follow_recom_con {
-                        width: 100%;
-                        padding-top: 8px;
-                        padding-bottom: 8px;
-                    }
-                    
-                    .follow_recom_id {
-                        width: 100%;
-                        height: 32px;
-                        margin-top: 8px;
-                        margin-bottom: 8px;
-                    }
-                    
-                    .recom_profile {
-                        width: 32px;
-                        height: 32px;
-                        border-radius: 50%;
-                        border: 1px solid #C7C7C7;
-                        box-sizing: border-box;
-                        float: left;
-                    }
-                    
-                    .recom_middle {
-                        width: 231px;
-                        margin-left: 10px;
-                        height: 32px;
-                        float: left;
-                    }
-                    
-                    .followBtn {
-                        font-size: 12x;
-                        width: 37px;
-                        height: 32px;
-                        outline: none;
-                        border: none;
-                        padding: 0px;
-                        background-color: transparent;
-                        color: #0095F6;
-                    }
-                    
-                    .recom_follow {
-                        float: right;
-                    }
-                    
-                    .recom_id {
-                        width: 100%;
-                        height: 18px;
-                        font-size: 14px;
-                        color: #262626;
-                        line-height: 18px;
-                    }
-                    
-                    .recom_info {
-                        width: 100%;
-                        height: 14px;
-                        font-size: 12px;
-                        line-height: 14px;
-                        color: #8E8E8E;
-                    }
-                    
-                    #footer_info {
-                        margin-top: 20px;
-                        margin-bottom: 3px;
-                        width: 100%;
-                        height: 36px;
-                    }
-                    
-                    #footer_infoc {
-                        margin-top: 16px;
-                        width: 100%;
-                        height: 13px;
-                    }
-                    
-                    .footera {
-                        font-size: 11px;
-                        text-decoration: none;
-                        color: #C7C7C7;
-                    }
-                    
-                    #fix_logo {
-                        cursor: pointer;
-                    }
-                    
-                    .timeline_likes_con {
-                        font-size: 14px;
-                        color: #262626;
-                        line-height: 18px;
-                    }
-                    
-                    .com_detail {
-                        font-size: 14px;
-                        color: #262626;
-                        line-height: 18px;
-                        width: 100%;
-                        height: 18px;
-                        margin-bottom: 4px;
-                    }
-                    
-                    .comment_more {
-                        font-size: 14px;
-                        line-height: 18px;
-                        color: #8E8E8E;
-                        cursor: pointer;
-                    }
-                    
-                    .cm1 {
-                        display: none;
-                    }
-                    
-                    .post_id {
-                        float: left;
-                    }
-                    
-                    .post_content {
-                        float: left;
-                        margin-left: 5px;
-                        width: 515px;
-                        /* overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap; */
-                    }
-                    /* .post_content.overflow {
-					overflow: visible;
-					white-space: normal;
-					width: 570px;
-
-				}
-
-				.commentViewAll {
-					float: left;
-					width: 1.2em;
-					height: 100%;
-					cursor: pointer;
-				} */
-                    
-                    #my_id {
-                        font-size: 14px;
-                        color: #262626;
-                        line-height: 56px;
-                    }
-                    
-                    .story_id {
-                        font-size: 12px;
-                        color: #262626;
-                        line-height: 27px;
-                    }
-                    
-                    .follow_recom_title {
-                        font-size: 14px;
-                        line-height: 19px;
-                    }
-                    
-                    .timeline_time {
-                        font-size: 10px;
-                        line-height: 19px;
-                        color: #8E8E8E;
-                    }
-                    
-                    .icon {
-                        width: 24px;
-                        height: 24px;
-                        float: left;
-                        margin-top: 8px;
-                        margin-right: 16px;
-                        cursor: pointer;
-                    }
-                    
-                    .save_icon {
-                        margin-right: 0px;
-                        float: right;
-                    }
-                    
-                    #footer_infoc {
-                        font-size: 13px;
-                        color: #C7C7C7
-                    }
-                    
-                    .fa-bars {
-                        line-height: 18px;
-                        cursor: pointer;
-                        display: none;
-                        float: left;
-                        margin-left: 12px;
-                    }
-                    
-                    .com_detail:hover>.fa-bars {
-                        display: block;
-                    }
-                    
-                    .clcon {
-                        width: 12px;
-                        height: 12px;
-                        margin-top: 3px;
-                        float: right;
-                        cursor: pointer;
-                    }
-                    
-                    #follow_recom_con {
-                        max-height: 200px;
-                        overflow: hidden;
-                    }
-                    
-                    .moreCo {
-                        float: left;
-                        margin-left: 5px;
-                        font-size: 12px;
-                        margin-right: 11px;
-                        color: #8E8E8E;
-                        line-height: 18px;
-                        cursor: pointer;
-                    }
-                    
-                    .moreCoW {
-                        float: left;
-                        margin-right: 11px;
-                        margin-left: 5px;
-                        font-size: 12px;
-                        color: #8E8E8E;
-                        line-height: 18px;
-                        cursor: pointer;
-                    }
-                    
-                    .moreCoD {
-                        float: right;
-                        margin-right: 12px;
-                        font-size: 10px;
-                        color: #8E8E8E;
-                        line-height: 18px;
-                        width: 84px;
-                    }
-                    
-                    .replyCoWri {
-                        margin-left: 5px;
-                        width: 500px;
-                        outline: none;
-                        border: none;
-                        padding: 0px;
-                        float: left;
-                    }
-                    
-                    .rep_comment_upload {
-                        width: 28px;
-                        float: right;
-                        padding: 0px;
-                        border: none;
-                        outline: none;
-                        margin-right: 12px;
-                        cursor: pointer;
-                        background-color: transparent;
-                    }
-                    
-                    .replyCoMo {
-                        margin-left: 5px;
-                        width: 500px;
-                        outline: none;
-                        border: none;
-                        padding: 0px;
-                        float: left;
-                    }
-                    
-                    .rep_comment_modify {
-                        width: 28px;
-                        float: right;
-                        padding: 0px;
-                        border: none;
-                        outline: none;
-                        margin-right: 12px;
-                        cursor: pointer;
-                        background-color: transparent;
-                    }
-                    
-                    .reply_commentResult {
-                        width: 463.5px;
-                    }
-                    
-                    .showlCount {
-                        outline: none;
-                        border: none;
-                        font-size: 12px;
-                        line-height: 18px;
-                        background-color: transparent;
-                        padding: 0px;
-                    }
-                    
-                    .countLike_trigger {
-                        display: none;
-                    }
-                    
-                    .like_icon {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
-                        background-size: 24px;
-                    }
-                    
-                    .like_icon:hover {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
-                        background-size: 24px;
-                    }
-                    
-                    .unlike_icon {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
-                        background-size: 24px;
-                        display: none;
-                    }
-                    
-                    .share_icon {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/001-share-1.svg');
-                        background-size: 24px;
-                    }
-                    
-                    .share_icon:hover {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/002-share.svg');
-                        background-size: 24px;
-                    }
-                    
-                    .write_icon {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/002-speech-bubble-1.svg');
-                        background-size: 24px;
-                    }
-                    
-                    .write_icon:hover {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/001-speech-bubble.svg');
-                        background-size: 24px;
-                    }
-                    
-                    .save_icon {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/001-tag.svg');
-                        background-size: 24px;
-                    }
-                    
-                    .save_icon:hover {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/006-price-tag.svg');
-                        background-size: 24px;
-                    }
-                    
-                    .comment_lcon {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
-                        background-size: 12px;
-                    }
-                    
-                    .comment_lcon:hover {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
-                    }
-                    
-                    .comment_unlcon {
-                        background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
-                        background-size: 12px;
-                        display: none;
-                    }
-                    
-                    .timeline_photo {
-                        width: 660px;
-                        height: 660px;
-                        position: relative;
-                        overflow: hidden;
-                        z-index: -1;
-                    }
-                    
-                    .timephoto {
-                        display: flex;
-                        position: absolute;
-                        top: 0px;
-                        left: 0px;
-                    }
-                    
-                    .show_t_img {
-                        width: 660px;
-                        height: 660px;
-                        z-index: 2;
-                    }
-                    
-                    #right_small_con {
-                        width: 320px;
-                        float: right;
-                        margin-left: 20px;
-                        position: fixed;
-                    }
-                    
-                    #report_back {
-                        position: fixed;
-                        width: 100%;
-                        height: 100%;
-                        background-color: black;
-                        opacity: 0.5;
-                        display: none;
-                        z-index: 5;
-                    }
-                    
-                    #report_modal {
-                        position: fixed;
-                        width: 100%;
-                        height: 100%;
-                        display: none;
-                        z-index: 6;
-                    }
-                    
-                    #report_choose,
-                    #report_write,
-                    #report_result,
-                    #report_already,
-                    #pre_report_choose,
-                    #unfollowchk,
-                    #askunfollow,
-                    #cantunfollow,
-                    #share_con,
-                    #share_con_result {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        width: 400px;
-                        background: #fff;
-                        z-index: 7;
-                        border-radius: 20px;
-                        text-align: center;
-                        font-size: 14px;
-                    }
-                    
-                    .modal_in {
-                        width: 100%;
-                        height: 48px;
-                        line-height: 48px;
-                        cursor: pointer;
-                        border-bottom: 1px solid #8E8E8E;
-                        color: #262626;
-                    }
-                    
-                    .cancel {
-                        border: none;
-                    }
-                    
-                    #etc_write_con {
-                        height: 192px;
-                    }
-                    
-                    #etx_write_space {
-                        margin-top: 5px;
-                        margin-left: 16px;
-                        width: 364px;
-                        height: 182px;
-                        padding: 0px;
-                        border: none;
-                        outline: none;
-                    }
-                    
-                    .modal_title {
-                        height: 42px;
-                    }
-                    
-                    #report {
-                        color: #ED4956;
-                    }
-                    
-                    .modal_nocursor {
-                        cursor: default;
-                    }
-                    
-                    .modal_result {
-                        height: 96px;
-                    }
-                    
-                    .fa-bars_title {
-                        display: block;
-                        margin-right: 16px;
-                        float: right;
-                        line-height: 60px;
-                        margin-top: 22px;
-                    }
-                    
-                    .h_tag {
-                        text-decoration: none;
-                        color: rgb(0, 149, 246);
-                        font-size: 14px;
-                        line-height: 18px;
-                    }
-                    
-                    .translate {
-                        color: rgb(0, 149, 246);
-                        float: right;
-                    }
-                    
-                    #for_newbie {
-                        width: 100%;
-                        height: 300px;
-                        border: 1px solid #C7C7C7;
-                        background-color: white;
-                        text-align: center;
-                    }
-                    
-                    #newb_title {
-                        font-size: 14px;
-                        line-height: 25px;
-                        margin-top: 125px;
-                        color: white;
-                        background-color: #91d370;
-                        background-image: linear-gradient(319deg, #91d370 0%, #bca0ff 37%, #f2cd54 100%);
-                    }
-                    
-                    textarea {
-                    resize: none;
-                    width:300px;
-                    height:40px;
-                    outline:none;
-                    border:none;
-                    overflow:hidden;
+            <link href="${pageContext.request.contextPath}/resources/css/timeLine.css" rel="stylesheet" type="text/css">
+            <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+            <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
+            <style>
+                #sa_icon {
+                    height: 64px;
+                    width: 64px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    background-image: url('${pageContext.request.contextPath}/resources/images/signal.svg');
+                    background-size: 40px;
+                    background-repeat: no-repeat;
+                    background-position: center;
                 }
-                </style>
+                
+                .like_icon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
+                    background-size: 24px;
+                }
+                
+                .like_icon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
+                    background-size: 24px;
+                }
+                
+                .unlike_icon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
+                    background-size: 24px;
+                    display: none;
+                }
+                
+                .share_icon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-share-1.svg');
+                    background-size: 24px;
+                }
+                
+                .share_icon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/002-share.svg');
+                    background-size: 24px;
+                }
+                
+                .write_icon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/002-speech-bubble-1.svg');
+                    background-size: 24px;
+                }
+                
+                .write_icon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-speech-bubble.svg');
+                    background-size: 24px;
+                }
+                
+                .save_icon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-tag.svg');
+                    background-size: 24px;
+                }
+                
+                .save_icon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/006-price-tag.svg');
+                    background-size: 24px;
+                }
+                
+                .comment_lcon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/002-heart.svg');
+                    background-size: 12px;
+                }
+                
+                .comment_lcon:hover {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
+                }
+                
+                .comment_unlcon {
+                    background-image: url('${pageContext.request.contextPath}/resources/images/001-like.svg');
+                    background-size: 12px;
+                    display: none;
+                }
+            </style>
         </head>
 
         <body>
@@ -871,7 +206,7 @@
                                                 <div class="timeline_icon_con">
                                                     <div class="icon like_icon likechk${vo.t_id }" onclick="pressLike('${vo.t_id}','${vo.m_id }');"></div>
                                                     <div class="icon unlike_icon unlikechk${vo.t_id }" onclick="pressUnlike('${vo.t_id}');"></div>
-                                                    <div class="icon write_icon"></div>
+                                                    <div class="icon write_icon write_icon${vo.t_id }" onclick="movefocus('${vo.t_id }');"></div>
                                                     <div class="icon share_icon" onclick="shareurl('${vo.m_id }','${vo.t_id}')"></div>
                                                     <div style="float:right;display:none;" class="more_s${vo.t_id} more_s">
                                                         <label for="slide_btn_prev${vo.t_id }"><i class="fas fa-chevron-left"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -914,7 +249,7 @@
                                         </div>
                                         <div class="upload_comment">
                                             <div class="inner_comment_con inner_upload">
-                                                <input type="text" class="write_space" placeholder="댓글 달기..." name="t_comment">
+                                                <input type="text" class="write_space write_space${vo.t_id }" placeholder="댓글 달기..." name="t_comment">
                                                 <button class="comment_upload">게시</button>
                                                 <input type="hidden" name="t_id" value="${vo.t_id }"> <input type="hidden" name="t_type" value="${vo.t_type }" class="t_type${vo.t_id }">
                                                 <input type="hidden" value="${vo.m_id }">
@@ -1073,7 +408,7 @@
                                             '<div class="timeline_icon_con">' +
                                             '<div class="icon like_icon likechk' + resp.list[i].t_id + '" onclick="pressLike(\'' + resp.list[i].t_id + '\',\'' + resp.list[i].m_id + '\');"></div>' +
                                             '<div class="icon unlike_icon unlikechk' + resp.list[i].t_id + '" onclick="pressUnlike(\'' + resp.list[i].t_id + '\');"></div>' +
-                                            '<div class="icon write_icon"></div>' +
+                                            '<div class="icon write_icon write_space' + resp.list[i].t_id + '" onclick="movefocus(\'' + resp.list[i].t_id + '\');"></div>' +
                                             '<div class="icon share_icon" onclick="shareurl(\'' + resp.list[i].m_id + '\',\'' + resp.list[i].t_id + '\')"></div>' +
                                             '<div style="float:right;display:none;" class="more_s' + resp.list[i].t_id + ' more_s">' +
                                             '<label for="slide_btn_prev' + resp.list[i].t_id + '"><i class="fas fa-chevron-left"></i></label>&nbsp;&nbsp;&nbsp;&nbsp;' +
@@ -1111,7 +446,7 @@
                                             '</div>' +
                                             '<div class="upload_comment">' +
                                             '<div class="inner_comment_con inner_upload">' +
-                                            '<input type="text" class="write_space" placeholder="댓글 달기..." name="t_comment">' +
+                                            '<input type="text" class="write_space write_space' + resp.list[i].t_id + '" placeholder="댓글 달기..." name="t_comment">' +
                                             '<button class="comment_upload">게시</button>' +
                                             '<input type="hidden" name="t_id" value="' + resp.list[i].t_id + '"> <input type="hidden" name="t_type" value="' + resp.list[i].t_type + '" class="t_type' + resp.list[i].t_id + '">' +
                                             '<input type="hidden" value="' + resp.list[i].m_id + '">' +
@@ -1291,6 +626,11 @@
                 });
             }
 
+            // 댓글 포커스 이동
+            function movefocus(t_id) {
+                $(".write_space" + t_id).focus();
+            }
+
             // 번역하기
             function translatec(source, b_id) {
                 /* var hcount = $(".hashtag" + b_id).length;
@@ -1403,12 +743,12 @@
                 var photocount = $(".show_t_img" + t_id).length;
                 if (photocount > 1) {
                     $(".more_s" + t_id).css("display", "inline");
-                } else{
+                } else {
                     $(".more_s" + t_id).css("display", "none");
-                	
+
                 }
-                
-                
+
+
 
                 // 게시물 슬라이드
                 var slideWrapper = document.querySelector('.timeline_photo' + t_id);

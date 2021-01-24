@@ -516,27 +516,19 @@
 		<!-- <![CDATA[select count(m_id) count, m_joindate from member where m_joindate 
 			>= TO_DATE(#{first_date},'YYYY-MM-DD') AND m_joindate < TO_DATE(#{second_date},'YYYY-MM-DD')+1 
 			group by m_joindate order by m_joindate asc]]> -->
-		select count(m_id) count, to_char(m_joindate, 'yyyy/mm/dd') m_joindate 
-			from member where m_joindate between #{first_date} and #{second_date} group 
-			by to_char(m_joindate, 'yyyy/mm/dd') order by m_joindate asc
+		select count(m_id) count, to_char(m_joindate, 'yyyy/mm/dd') m_joindate
+		from member where m_joindate between #{first_date} and #{second_date}
+		group
+		by to_char(m_joindate, 'yyyy/mm/dd') order by m_joindate asc
 
-		<!-- SELECT TO_CHAR(b.dt, 'yy/mm/dd') AS m_joindate
-		, NVL(SUM(a.cnt), 0) count
-		FROM ( SELECT TO_CHAR(m_joindate, 'yy/mm/dd') AS m_joindate
-		, COUNT(*) cnt
-		FROM member
-		WHERE m_joindate BETWEEN TO_DATE('21/01/01', 'yy/mm/dd')
-		AND TO_DATE(#{first_date}, 'yy/mm/dd')
-		GROUP BY m_joindate
-		) a
-		, ( SELECT TO_DATE(#{first_date}, 'yy/mm/dd') + LEVEL - 1 AS dt
-		FROM dual
-		CONNECT BY LEVEL <![CDATA[<=]]> (TO_DATE(#{second_date}, 'yy/mm/dd')
-		- TO_DATE(#{first_date}, 'yy/mm/dd') + 1)
-		) b
-		WHERE b.dt = a.m_joindate(+)
-		GROUP BY b.dt
-		ORDER BY b.dt -->
+		<!-- SELECT TO_CHAR(b.dt, 'yy/mm/dd') AS m_joindate , NVL(SUM(a.cnt), 0) 
+			count FROM ( SELECT TO_CHAR(m_joindate, 'yy/mm/dd') AS m_joindate , COUNT(*) 
+			cnt FROM member WHERE m_joindate BETWEEN TO_DATE('21/01/01', 'yy/mm/dd') 
+			AND TO_DATE(#{first_date}, 'yy/mm/dd') GROUP BY m_joindate ) a , ( SELECT 
+			TO_DATE(#{first_date}, 'yy/mm/dd') + LEVEL - 1 AS dt FROM dual CONNECT BY 
+			LEVEL <![CDATA[<=]]> (TO_DATE(#{second_date}, 'yy/mm/dd') - TO_DATE(#{first_date}, 
+			'yy/mm/dd') + 1) ) b WHERE b.dt = a.m_joindate(+) GROUP BY b.dt ORDER BY 
+			b.dt -->
 	</select>
 	<select id="forLikeChart" parameterType="TimeLine"
 		resultType="arrayList" resultMap="resultTimeLine">
@@ -555,5 +547,14 @@
 		group by to_char(l_date,
 		'yyyy/mm/dd')) group by l_date
 	</select>
+
+	<select id="alarmcheck" parameterType="string" resultType="int">
+		select count(*) count from alarm where m_id=#{my_name}
+	</select>
+	<update id="turny" parameterType="string" flushCache="true"
+		statementType="PREPARED" timeout="20">
+		update alarm set n_check = 'Y' where
+		m_id=#{my_name}
+	</update>
 
 </mapper>
