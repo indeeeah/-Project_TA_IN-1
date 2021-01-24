@@ -88,7 +88,7 @@ public class TimeLineController {
 			mv.addObject("recomFollow", tService.recomFollow(my_name));
 			
 			//알람 체크 부분//
-			//mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.setViewName("post/timeline");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

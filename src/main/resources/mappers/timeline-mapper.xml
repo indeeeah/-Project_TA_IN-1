@@ -549,11 +549,11 @@
 	</select>
 
 	<select id="alarmcheck" parameterType="string" resultType="int">
-		select count(*) count from alarm where m_id=#{my_name}
+		select count(*) count from notice where m_id=#{my_name}
 	</select>
 	<update id="turny" parameterType="string" flushCache="true"
 		statementType="PREPARED" timeout="20">
-		update alarm set n_check = 'Y' where
+		update notice set n_check = 'Y' where
 		m_id=#{my_name}
 	</update>
 

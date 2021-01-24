@@ -29,7 +29,7 @@
                                 <div id="fix_home" class="fix_icon"><i class="fas fa-home"></i></div>
                                 <div id="fix_write" class="fix_icon"><i class="fas fa-arrow-circle-up"></i></div>
                                 <div id="fix_message" class="fix_icon"><i class="fas fa-comment-dots"></i></div>
-                                <div id="fix_alert" class="fix_icon"  <%-- onclick="turny('${my_name}');" --%>><label for="alert" style="cursor:pointer;"><i
+                                <div id="fix_alert" class="fix_icon"  onclick="turny('${my_name}');"><label for="alert" style="cursor:pointer;"><i
                                             class="fas fa-bell"></i></label></div>
                                 <input type="checkbox" id="alert" style="display:none;">
                                 <div id="fix_bag" class="fix_icon"><i class="fas fa-shopping-bag"></i></div>
@@ -198,7 +198,10 @@
                     data: {
                         m_id: my_name
                     },
-                    success: function(data) {},
+                    success: function(data) {
+                    	console.log("success turn to Y");
+                    	
+                    },
                     error: function(request, status, error) {
                         alert("code:" +
                             request.status +
