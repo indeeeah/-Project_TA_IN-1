@@ -121,7 +121,7 @@ body {
 
 .table_body_td td {
 	line-height: 30px;
-	text-align: center;
+	font-size: 14px;
 	vertical-align: middle;
 	border-bottom: 1px solid #C7C7C7;
 }
