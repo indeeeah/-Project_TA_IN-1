@@ -52,7 +52,7 @@
                             <textarea rows="5" cols="40" name="b_content" class="b_content" placeholder="여기에 내용을 쓰세요."></textarea>
                             <input type="file" id="upfile" name="upfile" class="upfile" multiple required style="display:none;">
                             <div class="hashtag_con">
-                                <input type="text" name="h_tag" class="h_tag" placeholder="태그를 콤마(,)로 구분해서 작성해주세요.">
+                                <input type="text" name="h_tag" class="h_tag" placeholder="#해시태그 입력">
                             </div>
                             <div>
                                 <input type="button" id="backto_main" class="btn backto_main" value="돌아가기">
