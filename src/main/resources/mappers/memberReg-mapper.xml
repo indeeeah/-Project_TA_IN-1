@@ -14,7 +14,8 @@
 		m_addr2,
 		m_addr3,
 		approval_key,
-		approval_status
+		approval_status,
+		m_img
 		)
 		values(
 		#{m_id},
@@ -27,7 +28,8 @@
 		#{m_addr2},
 		#{m_addr3},
 		#{approval_key},
-		#{approval_status}
+		#{approval_status},
+		'default_profile.svg'
 		)
 	</insert>
 	<!-- 아이디 중복 검사 -->

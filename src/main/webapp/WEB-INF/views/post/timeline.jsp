@@ -89,6 +89,7 @@
         <body>
             <div id="report_back"></div>
             <div id="report_modal">
+                <div class="closeallmodal"></div>
                 <div id="report_choose" style="display: none;">
                     <div id="report" class="modal_in modal_title modal_nocursor">신고하기</div>
                     <div id="fword" class="modal_in send_report">욕설</div><input type="hidden" value="욕설">
@@ -123,7 +124,7 @@
                 </div>
                 <div id="unfollowchk" style="display: none;">
                     <div class="modal_in modal_nocursor">팔로우가 취소되었습니다.</div>
-                    <div id="cancel_6" class="modal_in cancel" onclick="location.href='timeLineList.do'">화면으로 돌아가기</div>
+                    <div id="cancel_6" class="modal_in cancel">화면으로 돌아가기</div>
                 </div>
                 <div id="cantunfollow" style="display: none;">
                     <div id="pre_go" class="modal_in">게시물로 이동하기</div>
@@ -132,7 +133,7 @@
                 <div id="pre_report_choose" style="display: none;">
                     <div id="pre_report_re" class="modal_in toreport" onclick="report('b_id', 'id', 'type');">게시물 신고하기
                     </div>
-                    <div id="pre_unfollow" class="modal_in">팔로우 취소</div>
+                    <!-- <div id="pre_unfollow" class="modal_in">팔로우 취소</div> -->
                     <div id="pre_go" class="modal_in">게시물로 이동하기</div>
                     <div id="cancel_5" class="modal_in cancel">취소</div>
                 </div>
@@ -734,7 +735,7 @@
                 var a = document.getElementById("photo" + t_id);
                 for (i = 0; i < t_img.length; i++) {
                     if (t_img[i] != "" && t_img[i] != " ") {
-                        htmls += '<img class="show_t_img show_t_img' + t_id + '" src="${pageContext.request.contextPath}/resources/uploadFiles/' + t_img[i] + '"></li>';
+                        htmls += '<li class="show_t_img_con show_t_img_con' + t_id + '"><img class="show_t_img show_t_img' + t_id + '" src="${pageContext.request.contextPath}/resources/uploadFiles/' + t_img[i] + '"></li>';
                     }
                 }
                 $(a).html(htmls);
@@ -752,7 +753,7 @@
 
                 // 게시물 슬라이드
                 var slideWrapper = document.querySelector('.timeline_photo' + t_id);
-                var slides = document.querySelectorAll('.show_t_img' + t_id);
+                var slides = document.querySelectorAll('.show_t_img_con' + t_id);
                 var totalSlides = slides.length;
                 var sliderWidth = slideWrapper.clientWidth;
                 var slideIndex = 0;
@@ -1382,6 +1383,11 @@
                 $("#cantunfollow").css("display", "none");
                 $("#share_con").css("display", "none");
                 $("#share_con_result").css("display", "none");
+            });
+
+            // 윈도우 누르면 닫기
+            $(".closeallmodal").on('click', function() {
+                $(".cancel").trigger('click');
             });
 
             $("#etc").on('click', function() {

@@ -92,6 +92,7 @@
             <input type="hidden" class="post_id" value="${id_img_fwr.m_id }">
             <div id="follow_back"></div>
             <div id="follow_modal">
+                <div class="closeallmodal"></div>
                 <div id="see_follower" style="display:none;">
                     <div class="top_con">
                         <div class="blank"></div>
@@ -107,8 +108,8 @@
                                     <div class="people_id" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">${vo.followerid }</div>
                                     <div class="people_name" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">${vo.m_name }</div>
                                 </div>
-                                <div class="people_btn people_follow people_follow${vo.followerid }" style="display:none; cursor:pointer;">팔로우</div>
-                                <div class="people_btn people_alfollow people_alfollow${vo.followerid }" style="display:none; cursor:pointer;"><i class="fas fa-user-check"></i></div>
+                                <div class="people_btn people_follow people_follow${vo.followerid }" style="display:none; cursor:pointer;" onclick="gofollow('${vo.followerid }');">팔로우</div>
+                                <div class="people_btn people_alfollow people_alfollow${vo.followerid }" style="display:none; cursor:pointer;" onclick="gounfollow('${vo.followerid }');"><i class="fas fa-user-check"></i></div>
                             </div>
                         </c:forEach>
                     </c:if>
@@ -129,8 +130,8 @@
                                     <div class="people_id" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">${vo.followid }</div>
                                     <div class="people_name" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">${vo.m_name }</div>
                                 </div>
-                                <div class="people_btn people_follow people_follow${vo.followid }" style="display:none; cursor:pointer;">팔로우</div>
-                                <div class="people_btn people_alfollow people_alfollow${vo.followid}" style="display:none; cursor:pointer;"><i class="fas fa-user-check"></i></div>
+                                <div class="people_btn people_follow people_follow${vo.followid }" style="display:none; cursor:pointer;" onclick="gofollow('${vo.followid }');">팔로우</div>
+                                <div class="people_btn people_alfollow people_alfollow${vo.followid}" style="display:none; cursor:pointer;" onclick="gounfollow('${vo.followid }');"><i class="fas fa-user-check"></i></div>
                             </div>
                         </c:forEach>
                     </c:if>
@@ -198,7 +199,7 @@
                 </div>
                 <div id="modal_more_con_not_me_not_follow" style="display:none;">
                     <div class="goreportmember_modal modal_in">게시물 신고</div>
-                    <div class="follow_modal modal_in">팔로우</div>
+                    <!-- <div class="follow_modal modal_in">팔로우</div> -->
                     <div class="gothispost_modal modal_in">게시물로 이동</div>
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
                     <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
@@ -206,7 +207,7 @@
                 </div>
                 <div id="modal_more_con_not_me" style="display:none;">
                     <div class="goreportmember_modal modal_in">게시물 신고</div>
-                    <div class="unfollow_modal modal_in">팔로우 취소</div>
+                    <!-- <div class="unfollow_modal modal_in">팔로우 취소</div> -->
                     <div class="gothispost_modal modal_in">게시물로 이동</div>
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
                     <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
@@ -284,6 +285,7 @@
             </div>
             <div id="post_back"></div>
             <div id="post_modal">
+                <div class="closeallmodal"></div>
                 <input type="hidden" id="for_fuc">
                 <input type="hidden" id="for_modal_con">
                 <input type="hidden" id="for_modal_content">
@@ -305,7 +307,7 @@
                             </c:if>
                             <c:if test="${id_img_fwr.m_id ne my_name}">
                                 <c:if test="${followchk.follow eq 0}">
-                                    <div id="followbtn" onclick="followinmodal('${id_img_fwr.m_id }');">팔로잉</div>
+                                    <%-- <div id="followbtn" onclick="followinmodal('${id_img_fwr.m_id }');">팔로잉</div> --%>
                                 </c:if>
                                 <i class="fas fa-bars fa-bars_post" onclick="toModalMore('${id_img_fwr.m_id }');" style="cursor: pointer;"></i>
                             </c:if>
@@ -355,7 +357,7 @@
                             <div id="profile_left_top_con">
                                 <div id="profile_name">${id_img_fwr.m_id }</div>
                                 <c:if test="${id_img_fwr.m_id eq my_name}">
-                                    <div id="setting" class="profile_btn">계정 관리</div>
+                                    <div id="setting" class="profile_btn profile_btn_setting">계정 관리</div>
                                 </c:if>
                                 <c:if test="${id_img_fwr.m_id ne my_name}">
                                     <div id="send_message" class="profile_btn">메시지 보내기</div>
@@ -363,8 +365,14 @@
                                         <div id="followchk" class="profile_btn profile_btn_ok" onclick="main_pre_unfollow('${id_img_fwr.m_id}');">
                                             <i class="fas fa-user-check" id="pre_unfollow"></i>
                                         </div>
+                                        <div id="followchk" class="profile_btn profile_btn_no" onclick="main_followBtn('${id_img_fwr.m_id}');" style="display:none;">
+                                            팔로우
+                                        </div>
                                     </c:if>
                                     <c:if test="${followchk.follow eq 0}">
+                                        <div id="followchk" class="profile_btn profile_btn_ok" onclick="main_pre_unfollow('${id_img_fwr.m_id}');" style="display:none;">
+                                            <i class="fas fa-user-check" id="pre_unfollow"></i>
+                                        </div>
                                         <div id="followchk" class="profile_btn profile_btn_no" onclick="main_followBtn('${id_img_fwr.m_id}');">
                                             팔로우
                                         </div>
@@ -416,14 +424,9 @@
                         <div id="rec_title">
                             <div id="title1">추천계정</div>
                             <c:if test="${not empty recomFow }">
-                                <div class="highlight_small_con">
-                                    <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
-                                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }
-                                    </div>
-                                </div>
                                 <c:forEach var="vo" items="${recomFow }" varStatus="s">
                                     <div class="each_rec_con each_rec_con${vo.r_mid }">
-                                        <div class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_img }</div>
+                                        <img class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }">
                                         <div class="each_rec_id" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.r_mid }</div>
                                         <div class="each_rec_name" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_name }</div>
                                         <div class="each_rec_followbtn" id="each_rec_followbtn${vo.r_mid }" onclick="followBtn('${vo.r_mid}');">팔로우</div>
@@ -598,6 +601,57 @@
                 $("#commentbox").focus();
             }
 
+            // 팔로워 팔로잉
+            function gofollow(id) {
+                console.log(id);
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/insertFollow.do",
+                    method: "POST",
+                    data: {
+                        m_id: memId,
+                        r_mid: id,
+                        m_id2: id
+                    },
+                    success: function(data) {
+                        $(".people_alfollow" + id).css("display", "block");
+                        $(".people_follow" + id).css("display", "none");
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
+            function gounfollow(id) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/unfollow.do",
+                    method: "POST",
+                    data: {
+                        m_id: memId,
+                        id: id
+                    },
+                    success: function(data) {
+                        $(".people_alfollow" + id).css("display", "none");
+                        $(".people_follow" + id).css("display", "block");
+                    },
+                    error: function(request, status, error) {
+                        alert("code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" + "error:" +
+                            error);
+                    }
+                });
+            }
+
 
             // 팔로워 조회
             $(".seefollower").on('click', function() {
@@ -670,7 +724,7 @@
             });
 
             // 계정 관리 페이지 이동
-            $(".profile_btn").on('click', function() {
+            $(".profile_btn_setting").on('click', function() {
                 var url = "${pageContext.request.contextPath}/mManage.do";
                 $(location).attr('href', url);
             });
@@ -1225,7 +1279,7 @@
                         for (i = 0; i < b_img.length; i++) {
                             if (b_img[i] != "" && b_img[i] != " ") {
                                 console.log(b_img[i]);
-                                htmls += '<div><img class="photo_all" src="${pageContext.request.contextPath}/resources/uploadFiles/' + b_img[i] + '"></div>';
+                                htmls += '<div class="photo_all_con"><img class="photo_all" src="${pageContext.request.contextPath}/resources/uploadFiles/' + b_img[i] + '"></div>';
                             }
                         }
                         $(a).html(htmls);
@@ -1818,11 +1872,11 @@
                         m_id2: id
                     },
                     success: function(data) {
-                        $("#for_modal_fchk").val("1");
+                        /* $("#for_modal_fchk").val("1");
                         console.log("memId : " +
                             memId +
                             " id : " +
-                            id);
+                            id); */
                         var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
                         $(location).attr('href', url);
                     },
@@ -2005,6 +2059,14 @@
                 $("#modal_delete_co").css("display", "none");
                 $("#modal_delete_co_result").css("display", "none");
             });
+
+            // 윈도우 누르면 닫기
+            $(".closeallmodal").on('click', function() {
+                $(".cancel").trigger('click');
+                $(".notcancelAll").trigger('click');
+            });
+
+
             // 계정 추천
             $("#rf").change(function() {
                 if ($("#rf").is(":checked")) {

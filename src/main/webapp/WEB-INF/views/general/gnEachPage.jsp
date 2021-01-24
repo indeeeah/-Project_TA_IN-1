@@ -80,6 +80,7 @@
             <input type="hidden" id="eachpost_con" value="${selectEachPostPhotos }">
             <div id="report_back"></div>
             <div id="report_modal">
+                <div class="closeallmodal"></div>
                 <div id="share_con" style="display: none;">
                     <div class="modal_in modal_title modal_nocursor">게시물 공유하기</div>
                     <div id="url_con" class="modal_in">
@@ -341,7 +342,7 @@
             for (i = 0; i < b_img.length; i++) {
                 if (b_img[i] != "" && b_img[i] != " ") {
                     console.log(b_img[i]);
-                    $("#photo").append('<div><img class="photo_all" src="${pageContext.request.contextPath}/resources/uploadFiles/' + b_img[i] + '"></div>');
+                    $("#photo").append('<div class="photo_all_con"><img class="photo_all" src="${pageContext.request.contextPath}/resources/uploadFiles/' + b_img[i] + '"></div>');
                 }
             }
             var photoCount = $(".photo_all").length;
@@ -1364,6 +1365,12 @@
                 $("#modal_delete_co").css("display", "none");
                 $("#modal_delete_co_result").css("display", "none");
             });
+
+            // 윈도우 누르면 닫기
+            $(".closeallmodal").on('click', function() {
+                $(".notcancelAll").trigger('click');
+            });
+
 
             // 댓글 작성
             //모달 초기화 수정 필요

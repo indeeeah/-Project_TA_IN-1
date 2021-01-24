@@ -6,6 +6,12 @@ body {
     background-color: #FAFAFA;
 }
 
+.closeallmodal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
 #post_modal {
     display: flex;
     justify-content: center;
@@ -49,10 +55,16 @@ body {
     left: 0px;
 }
 
-.photo_all {
+.photo_all_con {
     width: 600px;
     height: 600px;
-    background-color: beige;
+    overflow: hidden;
+}
+
+.photo_all {
+    /*  width: 600px;
+    height: 600px;
+    overflow:hidden; */
 }
 
 #post_right {

@@ -7,7 +7,7 @@
             <meta charset="UTF-8">
             <title>TA_IN 게시글 작성</title>
             <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
-            <link href="${pageContext.request.contextPath}/resources/css/gmWrite.css" rel="stylesheet" type="text/css">
+            <link href="${pageContext.request.contextPath}/resources/css/gnWrite.css" rel="stylesheet" type="text/css">
             <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
             <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
         </head>
