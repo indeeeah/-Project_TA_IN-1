@@ -315,6 +315,9 @@ line-height:150px;
 
 		$('#btnSend').on('click', function(evt) {
 			evt.preventDefault();
+			if(${Message.size() eq 0}){
+				window.location.reload();
+			}
 			if (socket.readyState !== 1)
 				return;
 			var id = "${my_name}";
