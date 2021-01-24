@@ -8,98 +8,12 @@
             <meta charset="UTF-8">
             <title>TA_IN 고객 센터</title>
             <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
+            <link href="${pageContext.request.contextPath}/resources/css/serviceCenter.css" rel="stylesheet" type="text/css">
             <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
             <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
 
             <style>
-                body {
-                    width: 100%;
-                    height: 100%;
-                    color: #262626;
-                    background-color: #FAFAFA;
-                }
-                
-                #content_con {
-                    display: flex;
-                    justify-content: center;
-                    width: 100%;
-                }
-                
-                #sc_big_con {
-                    width: 1000px;
-                    background-color: white;
-                }
-                
-                #sc_title {
-                    padding: 20px 16px 20px 16px;
-                    width: 966px;
-                    height: 20px;
-                    color: #999999;
-                    font-size: 16px;
-                    line-height: 20px;
-                    border: 1px solid #C7C7C7;
-                }
-                
-                #sc_con {
-                    width: 998px;
-                    height: 798px;
-                    border: 1px solid #C7C7C7;
-                    border-top: none;
-                }
-                
-                #left_side {
-                    height: 100%;
-                    width: 260px;
-                    border-right: 1px solid #C7C7C7;
-                    float: left;
-                }
-                
-                #right_side {
-                    height: 768px;
-                    width: 705px;
-                    padding: 0px 0px 0px 32px;
-                    float: left;
-                    overflow: auto;
-                }
-                
-                .h3_title {
-                    font-size: 14px;
-                    color: #262626;
-                    height: 21px;
-                    line-height: 21px;
-                    margin-bottom: 16px;
-                    margin-top: 32px;
-                }
-                
-                a {
-                    text-decoration: none;
-                    color: rgb(56, 151, 240);
-                }
-                
-                .li_ct {
-                    list-style-type: disc;
-                    height: 28px;
-                    font-size: 13px;
-                    line-height: 28px;
-                    margin-left: 32px;
-                }
-                
-                .li_ct_no {
-                    list-style-type: decimal;
-                    height: 28px;
-                    font-size: 13px;
-                    line-height: 28px;
-                    margin-left: 32px;
-                }
-                
-                .cate {
-                    width: 228px;
-                    height: 21px;
-                    padding: 16px 16px 16px 16px;
-                    font-size: 14px;
-                    line-height: 21px;
-                    cursor: pointer;
-                }
+
             </style>
         </head>
 

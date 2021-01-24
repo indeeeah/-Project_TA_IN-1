@@ -8,87 +8,9 @@
             <meta charset="UTF-8">
             <title>TA_IN 탈퇴하기</title>
             <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
+            <link href="${pageContext.request.contextPath}/resources/css/out.css" rel="stylesheet" type="text/css">
             <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
             <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
-            <style>
-                body {
-                    width: 100%;
-                    height: 100%;
-                    color: #262626;
-                    background-color: #FAFAFA;
-                }
-                
-                #content_con {
-                    display: flex;
-                    justify-content: center;
-                    width: 100%;
-                }
-                
-                #out_big_con {
-                    width: 926px;
-                    height: 800px;
-                    border: 1px solid #C7C7C7;
-                    padding: 32px 40px 0px 32px;
-                }
-                
-                #out_title {
-                    margin-bottom: 25px;
-                    font-size: 36px;
-                }
-                
-                #ask_again {
-                    font-size: 14px;
-                    color: #222222;
-                    line-height: 20px;
-                    margin-bottom: 10px;
-                }
-                
-                #rs,
-                #chkps,
-                #chkdate,
-                #chkdatee {
-                    width: 926px;
-                    height: 60px;
-                }
-                
-                #out_sub,
-                #pswd {
-                    margin-top: 40px;
-                    font-size: 14px;
-                    line-height: 20px;
-                    color: #222222;
-                    width: 330px;
-                    float: left;
-                }
-                
-                #o_reason,
-                #pw,
-                #pchk {
-                    margin-top: 40px;
-                    float: left;
-                }
-                
-                #ask,
-                #dates,
-                #dates2 {
-                    margin-top: 20px;
-                    font-size: 14px;
-                    line-height: 20px;
-                    color: rgb(63, 114, 155);
-                    text-decoration: none;
-                    width: 926px;
-                    margin-bottom: 40px;
-                }
-                
-                #for_flex {
-                    display: flex;
-                    justify-content: center;
-                }
-                
-                #sub {
-                    margin-top: 20px;
-                }
-            </style>
         </head>
 
         <body>
@@ -100,7 +22,7 @@
                     <div id="ask_again">TA_IN은 회원님이 원하는 소셜 미디어가 되려고 노력하고 있습니다.</div>
                     <hr>
                     <form id="reason" action="outmember" method="post">
-                    <input type="hidden" name="m_id" value="${my_name }">
+                        <input type="hidden" name="m_id" value="${my_name }">
                         <div id="rs">
                             <div id="out_sub">${my_name }을(를) 삭제하려는 이유가 무엇인가요?</div>
                             <select name="o_reasontx" id="o_reason">
@@ -127,7 +49,7 @@
                             <div id="chkdate">
                             </div>
                             <hr>
-                            <div id="for_flex" style="display:none;" >
+                            <div id="for_flex" style="display:none;">
                                 <input type="submit" id="sub" value="${my_name } 삭제">
                             </div>
                             <div id="chkdatee" style="display:none;">
@@ -139,7 +61,7 @@
             <jsp:include page="../footer.jsp"></jsp:include>
         </body>
         <script>
-        var memId = $("#m_id").val();
+            var memId = $("#m_id").val();
             $(function() {
                 $("#o_reason").change(function() {
                     $("#nonecon").css("display", "block");
@@ -160,34 +82,33 @@
                 htmls2 += '<div id="dates2" style="color:#262626;">삭제를 클릭하시면 회원님의 프로필과 계정 상세 정보는 ' + today + '에 삭제되며 모든 게시글과 댓글은 복구할 수 없습니다.</div>';
                 $(a).html(htmls);
                 $(b).html(htmls2);
-                
+
             });
-            $("#pchk").on('click', function(){
-            	
-            	var pw = $("#pw").val();
-            	$.ajax({
+            $("#pchk").on('click', function() {
+
+                var pw = $("#pw").val();
+                $.ajax({
                     url: "chkpwd.do",
                     type: "post",
                     dataType: "json",
                     data: {
-                        m_id:memId,
-                        m_pw : pw
+                        m_id: memId,
+                        m_pw: pw
                     },
                     success: function(resp) {
-                    	console.log(resp);
-                    	if(resp==0){
-                    		alert("비밀번호를 다시 입력해주세요.")
-                    		$("#pw").val('');
-                    		$("#for_flex").css("display", "none");
-                    		$("#chkdatee").css("display", "none");
-                    	} else if(resp>0){
-                    		$("#for_flex").css("display", "flex");
-                    		$("#chkdatee").css("display", "block");
-                    	}
+                        console.log(resp);
+                        if (resp == 0) {
+                            alert("비밀번호를 다시 입력해주세요.")
+                            $("#pw").val('');
+                            $("#for_flex").css("display", "none");
+                            $("#chkdatee").css("display", "none");
+                        } else if (resp > 0) {
+                            $("#for_flex").css("display", "flex");
+                            $("#chkdatee").css("display", "block");
+                        }
                     }
                 });
             });
-            
         </script>
 
         </html>

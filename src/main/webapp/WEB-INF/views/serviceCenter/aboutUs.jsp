@@ -7,153 +7,19 @@
             <meta charset="UTF-8">
             <title>About TA_IN</title>
             <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
+            <link href="${pageContext.request.contextPath}/resources/css/aboutUs.css" rel="stylesheet" type="text/css">
             <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
             <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
             <link rel="preconnect" href="https://fonts.gstatic.com">
             <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
             <style>
-                body {
-                    width: 100%;
-                    height: 100%;
-                    font-family: 'Noto Sans KR', sans-serif;
-                    color: white;
-                }
-                
-                #content_con {
-                    position: fixed;
-                    width: 100%;
-                    height: 1200px;
-                    background-color: #91d370;
-                    background-image: linear-gradient(319deg, #91d370 0%, #bca0ff 37%, #f2cd54 100%);
-                    overflow: auto;
-                }
-                
-                #content_big_con {
-                    padding: 0px 64px 0px 64px;
-                }
-                
-                #title1 {
-                    top: 285px;
-                    position: absolute;
-                    font-size: 62px;
-                    font-weight: 500;
-                }
-                
-                #title2 {
-                    top: 347px;
-                    position: absolute;
-                    font-size: 62px;
-                    font-weight: 500;
-                }
-                
-                #title3 {
-                    top: 409px;
-                    position: absolute;
-                    font-size: 80px;
-                    left: 467px;
-                    font-weight: 700;
-                }
-                
-                #intro1 {
-                    top: 545px;
-                    position: absolute;
-                    font-size: 15px;
-                    line-height: 21px;
-                }
-                
-                #big_con {
-                    top: 900px;
-                    position: absolute;
-                    width: 100%;
-                    height: 830px;
-                    display: flex;
-                    justify-content: center;
-                }
-                
-                #con {
-                    width: 1000px;
-                }
-                
-                #title {
-                    font-size: 80px;
-                    font-weight: 700;
-                    text-align: center;
-                }
-                
-                #top {
-                    margin-top: 70px;
-                    width: 750px;
-                    height: 250px;
-                    float: left;
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: space-between;
-                }
-                
-                #bottom {
-                    margin-top: 30px;
-                    width: 750px;
-                    height: 250px;
-                    float: right;
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: space-between;
-                }
-                
-                .each {
-                    float: left;
-                    width: 230px;
-                    height: 250px;
-                }
-                
-                .photo {
-                    width: 230px;
-                    height: 230px;
-                    border-radius: 50%;
-                    background-color: #2884b8;
-                    background-image: linear-gradient(315deg, #2884b8 0%, #d1bad2 74%);
-                }
-                
-                .photo2 {
-                    width: 200px;
-                    height: 200px;
-                    margin-top: 15px;
-                    margin-left: 15px;
-                    border-radius: 50%;
-                    cursor: pointer;
-                    
-                }
-                
-                .photo2:hover {
-                    opacity: 0.5;
-                }
-                
-                
-                .name {
-                    margin-top: 20px;
-                    text-align: center;
-                    display: block;
-                    cursor: pointer;
-                }
-                
-                a {
-                    text-decoration: none;
-                    color: white;
-                }
-                
-                .fa-arrow-left{
-                font-size:40px;
-                margin-left:20px;
-                position:absolute;
-                top:15px;
-                cursor:pointer;
-                }
+
             </style>
         </head>
 
         <body>
             <div id="content_con">
-        <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-left"></i>
             </div>
             <div id="content_big_con">
                 <div id="title1">
@@ -206,10 +72,11 @@
                 </div>
             </div>
         </body>
-<script>
-$(".fa-arrow-left").on('click', function(){
-	var url = "${pageContext.request.contextPath}/timeLine";
-    $(location).attr('href', url);
-});
-</script>
+        <script>
+            $(".fa-arrow-left").on('click', function() {
+                var url = "${pageContext.request.contextPath}/timeLine";
+                $(location).attr('href', url);
+            });
+        </script>
+
         </html>

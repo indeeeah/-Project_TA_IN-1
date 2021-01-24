@@ -208,4 +208,14 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public List<TimeLine> forLikeChart(TimeLine tl) {
 		return tDao.forLikeChart(tl);
 	}
+
+	@Override
+	public int alarmcheck(String my_name) {
+		return tDao.alarmcheck(my_name);
+	}
+
+	@Override
+	public int turny(String my_name) {
+		return tDao.turny(my_name);
+	}
 }

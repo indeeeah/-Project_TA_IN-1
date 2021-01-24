@@ -84,4 +84,8 @@ public interface TimeLineService {
 
 	List<TimeLine> forLikeChart(TimeLine tl);
 
+	int alarmcheck(String my_name);
+
+	int turny(String my_name);
+
 }
