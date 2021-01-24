@@ -72,7 +72,7 @@ button:hover {
 
 .wrapper {
 	background: rgba(0, 0, 0, 0.6);
-	background-color: #144d2af8;
+	background-image: linear-gradient(319deg, #91d370 0%, #6782B4 37%, #f2cd54 100%);
 	position: relative;
 	width: 1000px;
 	height: 750px;
@@ -93,11 +93,18 @@ button:hover {
 	float: right
 }
 
-.back-header, .back-p {
+.back-header {
 	margin: 50px;
 	color: #fafafa;
 	letter-spacing: 1px;
 	color: #fafafa;
+}
+
+.back-p {
+	color: #fafafa;
+	letter-spacing: 1px;
+	color: #fafafa;
+	margin-left: 50px
 }
 
 .back-header {
@@ -152,12 +159,12 @@ button:hover {
 	border: 1px solid white;
 	color: #fafafa;
 	transition: .3s all;
-	background-color:
+	background-color: #6782B4;
 }
 
 .back-btn:hover {
-	background-color: #123d23f8;
-	border: 1px solid #0d1631;
+	background-color: #455a80;
+	border: 1px solid white;
 }
 </style>
 <style type="text/css">
@@ -201,7 +208,7 @@ button:hover {
 	width: 100%;
 	height: 60px;
 	border: none;
-	background-color: #123d23f8;
+	background-color: #586f9b;
 	border-radius: 50px;
 	background-size: 200%;
 	border-color: white;
@@ -231,7 +238,7 @@ button:hover {
 	width: 100%;
 	height: 20px;
 	border: none;
-	background-color: #082330;;
+	background-color: #586f9b;
 	border-radius: 50px;
 	background-size: 200%;
 	border-color: white;
@@ -549,12 +556,15 @@ footer {
 		<div class="background">
 			<div class="left">
 				<h2 class="back-header">Tain</h2>
-				<p class="back-p">TAIN은 타인과 일상을 공유합니다</p>
+				<p class="back-p">TAIN에서 타인과 함께 일상을 공유해보세요.</p>
 				<button class="back-btn signup-but">일반 회원</button>
 			</div>
 			<div class="right">
 				<h2 class="back-header">Business</h2>
-				<p class="back-p">일상을 공유하고 나의 상품을 판매해보세요</p>
+				<p class="back-p">
+					TAIN의 비즈니스계정이 필요하신가요?<br>나의 상품을 판매하고 고객과 소통하며 <br>타인과 일상을
+					공유하는 비즈니스계정을<br>만들어보세요.
+				</p>
 				<button class="back-btn login-but">비지니스 회원</button>
 			</div>
 		</div>
@@ -589,7 +599,7 @@ footer {
 
 							<div class="form_group">
 								<input type="tel" class="form_control" id="m_birth"
-									name="m_birth" placeholder="생년월일">
+									name="m_birth" placeholder="생년월일  ex)20210101">
 								<div class="check_font" id="birth_check"></div>
 							</div>
 							<div class="form_group">

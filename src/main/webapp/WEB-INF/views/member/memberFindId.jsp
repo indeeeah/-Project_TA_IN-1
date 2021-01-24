@@ -17,7 +17,7 @@ body {
 	position: relative;
 	margin: 7px 0;
 	color: #f7f7f7;
-	background-color: #144d2af8;
+	background-color: #6782B4;
 	width: 100%;
 	border: none;
 	padding: 0 5px;

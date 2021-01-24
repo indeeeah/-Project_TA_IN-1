@@ -36,7 +36,7 @@ html {
 }
 
 input[type='button'].idw {
-	border-bottom: 2px solid #144d2af8;
+	border-bottom: 2px solid #6782B4;
 }
 
 .group-1 {
@@ -94,7 +94,7 @@ input[type='email'] :hover, input[type='text'] :hover :hover, select :hover
 
 input[type='email']:focus, input[type='text']:focus:focus, select:focus
 	{
-	border-bottom: 2px solid #144d2af8;
+	border-bottom: 2px solid #6782B4;
 	padding-bottom: 6px;
 	outline: none;
 }
@@ -115,7 +115,7 @@ input[type='text']::placeholder {
 	text-align: center;
 	cursor: pointer;
 	position: relative;
-	background: #144d2af8;
+	background: #6782B4;
 	color: #fff;
 	transition: 1s;
 	justify-content: space-between;
@@ -174,9 +174,10 @@ main {
 .know:hover {
 	text-decoration: underline;
 }
-.know a{
-   text-decoration: none;
-    color: #df871b;
+
+.know a {
+	text-decoration: none;
+	color: #475b80;
 }
 
 .remute {
@@ -206,11 +207,11 @@ input[type='button'] {
 }
 
 input[type='button']:hover {
-	border-bottom: 2px solid #144d2af8;
+	border-bottom: 2px solid #6782B4;
 }
 
 input[type='button']:focus {
-	border-bottom: 2px solid #144d2af8;
+	border-bottom: 2px solid #6782B4;
 	outline: none;
 }
 
@@ -220,7 +221,7 @@ input[type='button']:focus {
 	position: relative;
 	margin: 7px 0;
 	color: #f7f7f7;
-	background-color: #144d2af8;
+	background-color: #6782B4;
 	width: 100%;
 	border: none;
 	padding: 0 5px;
@@ -266,7 +267,7 @@ input[type='button']:focus {
 		function finded() {
 			art1[0].style.display = "block";
 			art2[0].style.display = "none";
-			art3[0].style.borderBottom = "2px solid #144d2af8";
+			art3[0].style.borderBottom = "2px solid #6782B4";
 
 		}
 		function find() {
