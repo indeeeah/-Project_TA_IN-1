@@ -10,7 +10,6 @@
 		<result property="bm_addr" column="bm_addr" />
 		<result property="bm_url" column="bm_url" />
 		<result property="bm_account" column="bm_account" />
-		<result property="bm_qr" column="bm_qr" />
 		<result property="bm_intro" column="bm_intro" />
 		<result property="bm_phone" column="bm_phone" />
 		<result property="bm_approval" column="bm_approval" />

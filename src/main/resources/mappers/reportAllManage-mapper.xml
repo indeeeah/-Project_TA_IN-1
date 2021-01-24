@@ -34,6 +34,7 @@
 		resultType="arraylist" resultMap="resultReportAManage">
 		SELECT * FROM ReportMember
 		WHERE m_id1 LIKE '%'|| #{keyword} ||'%'
+		OR m_id2 LIKE '%'|| #{keyword} ||'%'
 		ORDER BY m_id1 DESC
 	</select>
 	
@@ -53,6 +54,7 @@
 		resultType="arraylist" resultMap="resultReportAManage">
 		SELECT * FROM ReportBoard
 		WHERE b_id LIKE '%'|| #{keyword} ||'%'
+		OR m_id LIKE '%'|| #{keyword} ||'%'
 		ORDER BY b_id DESC
 	</select>
 	
@@ -72,6 +74,7 @@
 		resultType="arraylist" resultMap="resultReportAManage">
 		SELECT * FROM ReportBusinessBoard
 		WHERE bb_id LIKE '%'|| #{keyword} ||'%'
+		OR m_id LIKE '%'|| #{keyword} ||'%'
 		ORDER BY bb_id DESC
 	</select>
 </mapper>

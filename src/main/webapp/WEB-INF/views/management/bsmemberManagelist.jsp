@@ -47,16 +47,16 @@
 			<div id="mM_con">
 				<div id="menu">
 					<ul id="menulist">
-						<li><a href="membermanagelist.do">일반회원</a></li>
-						<li><a href="bsmemberManagelist.do">비지니스회원</a></li>
-						<li><a href="boardManagelist.do">일반게시글</a></li>
-						<li><a href="bsboardManagelist.do">비지니스게시글</a></li>
-						<li><a href="reportmemberManagelist.do">신고회원</a></li>
-						<li><a href="reportBoardManagelist.do">신고(일반게시글)</a></li>
-						<li><a href="reportBsboardManagelist.do">신고(비지니스게시글)</a></li>
-						<li><a href="memberOutlist.do">탈퇴 회원</a></li>
-						<li><a href="chartTest.do">통계</a></li>
-						<li><a onclick="logout();">로그아웃</a></li>
+						<li onclick="location.href='membermanagelist.do'">일반회원</li>
+						<li onclick="location.href='bsmemberManagelist.do'">비지니스회원</li>
+						<li onclick="location.href='boardManagelist.do'">일반게시글</li>
+						<li onclick="location.href='bsboardManagelist.do'">비지니스게시글</li>
+						<li onclick="location.href='reportmemberManagelist.do'">신고회원</li>
+						<li onclick="location.href='reportBoardManagelist.do'">신고(일반게시글)</li>
+						<li onclick="location.href='reportBsboardManagelist.do'">신고(비지니스게시글)</li>
+						<li onclick="location.href='memberOutlist.do'">탈퇴 회원</li>
+						<li onclick="location.href='chartTest.do'">통계</li>
+						<li onclick="location.href=logout();">로그아웃</li>
 					</ul>
 				</div>
 				<div id="contentmanage">
@@ -71,7 +71,7 @@
 									<form method="get" name="listForm"
 										action="bsmemberManagelist.do">
 										<input type="hidden" name="page" value="${currentPage}">
-										<input type="text" name="keyword"> <input
+										<input type="text" name="keyword" placeholder="ID Search"> <input
 											class="btn-action" type="submit" value="검색">
 									</form>
 								</td>

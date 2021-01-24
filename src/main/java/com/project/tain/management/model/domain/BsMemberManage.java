@@ -21,7 +21,6 @@ public class BsMemberManage implements java.io.Serializable{
 	private String bm_addr;
 	private String bm_url;
 	private String bm_account;
-	private String bm_qr;
 	private String bm_intro;
 	private String bm_phone;
 	private String bm_approval;
@@ -36,19 +35,18 @@ public class BsMemberManage implements java.io.Serializable{
 		this.bm_approval = bm_approval;
 	}
 
-	public BsMemberManage(String m_id, int bm_cate, String bm_name, String bm_account, String bm_qr,
+	public BsMemberManage(String m_id, int bm_cate, String bm_name, String bm_account,
 			String bm_approval) {
 		super();
 		this.m_id = m_id;
 		this.bm_cate = bm_cate;
 		this.bm_name = bm_name;
 		this.bm_account = bm_account;
-		this.bm_qr = bm_qr;
 		this.bm_approval = bm_approval;
 	}
 
 	public BsMemberManage(String m_id, int bm_cate, String bm_name, String bm_addr, String bm_url, String bm_account,
-			String bm_qr, String bm_intro, String bm_phone, String bm_approval) {
+			String bm_intro, String bm_phone, String bm_approval) {
 		super();
 		this.m_id = m_id;
 		this.bm_cate = bm_cate;
@@ -56,7 +54,6 @@ public class BsMemberManage implements java.io.Serializable{
 		this.bm_addr = bm_addr;
 		this.bm_url = bm_url;
 		this.bm_account = bm_account;
-		this.bm_qr = bm_qr;
 		this.bm_intro = bm_intro;
 		this.bm_phone = bm_phone;
 		this.bm_approval = bm_approval;
@@ -65,7 +62,7 @@ public class BsMemberManage implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "BsMemberManage [m_id=" + m_id + ", bm_cate=" + bm_cate + ", bm_name=" + bm_name + ", bm_addr=" + bm_addr
-				+ ", bm_url=" + bm_url + ", bm_account=" + bm_account + ", bm_qr=" + bm_qr + ", bm_intro=" + bm_intro
+				+ ", bm_url=" + bm_url + ", bm_account=" + bm_account + ", bm_intro=" + bm_intro
 				+ ", bm_phone=" + bm_phone + ", bm_approval=" + bm_approval + "]";
 	}
 
@@ -115,14 +112,6 @@ public class BsMemberManage implements java.io.Serializable{
 
 	public void setBm_account(String bm_account) {
 		this.bm_account = bm_account;
-	}
-
-	public String getBm_qr() {
-		return bm_qr;
-	}
-
-	public void setBm_qr(String bm_qr) {
-		this.bm_qr = bm_qr;
 	}
 
 	public String getBm_intro() {

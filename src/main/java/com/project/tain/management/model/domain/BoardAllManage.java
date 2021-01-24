@@ -18,6 +18,7 @@ public class BoardAllManage implements java.io.Serializable {
 	private String bb_type;
 	private String bb_topid;
 	private Date bb_date;
+	private String c_name;
 	
 	private String b_id;
 	private String b_content;
@@ -220,6 +221,14 @@ public class BoardAllManage implements java.io.Serializable {
 
 	public void setBb_date(Date bb_date) {
 		this.bb_date = bb_date;
+	}
+	
+	public String getC_name() {
+		return c_name;
+	}
+
+	public void setC_name(String c_name) {
+		this.c_name = c_name;
 	}
 
 	public static long getSerialversionuid() {
