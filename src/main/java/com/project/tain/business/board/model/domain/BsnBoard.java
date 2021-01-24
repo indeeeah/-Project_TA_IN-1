@@ -56,6 +56,10 @@ public class BsnBoard implements java.io.Serializable{
 	// 접속자 아이디
 	private String my_name;
 	
+	// 팔로우 아이디
+	private String followid;
+	// 팔로워 아이디
+	private String followerid;
 //	비즈니스정보
 //	private String b_cate;
 //	private String bm_name;
@@ -92,195 +96,6 @@ public class BsnBoard implements java.io.Serializable{
 //	private String b_img9;
 //	private String b_img10;
 	
-	// 기본 생성자
-	public BsnBoard() {}
-	
-	//t_num없는거
-	public BsnBoard(String m_id, String bb_name, String bb_info, int bb_price, String bb_option1, String bb_option2,
-			String bb_option3, String bb_option4, String bb_type, String bb_topid) {
-		super();
-		this.m_id = m_id;
-		this.bb_name = bb_name;
-		this.bb_info = bb_info;
-		this.bb_price = bb_price;
-		this.bb_option1 = bb_option1;
-		this.bb_option2 = bb_option2;
-		this.bb_option3 = bb_option3;
-		this.bb_option4 = bb_option4;
-		this.bb_type = bb_type;
-		this.bb_topid = bb_topid;
-	}
-	
-	//bb전체
-	public BsnBoard(String bb_id, String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
-			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date, int t_num) {
-		super();
-		this.bb_id = bb_id;
-		this.m_id = m_id;
-		this.bb_name = bb_name;
-		this.bb_info = bb_info;
-		this.bb_price = bb_price;
-		this.bb_option1 = bb_option1;
-		this.bb_option2 = bb_option2;
-		this.bb_option3 = bb_option3;
-		this.bb_option4 = bb_option4;
-		this.bb_type = bb_type;
-		this.bb_topid = bb_topid;
-		this.bb_date = bb_date;
-		this.t_num = t_num;
-	}
-
-	public BsnBoard(String bb_img1) {
-		super();
-		this.bb_img1 = bb_img1;
-	}
-//	public BsnBoard(String bb_img1, String bb_img2) {
-//		super();
-//		this.bb_img1 = bb_img1;
-//		this.bb_img2 = bb_img2;
-//	}
-	public BsnBoard(String bb_img1, String bb_img2, String bb_img3) {
-		super();
-		this.bb_img1 = bb_img1;
-		this.bb_img2 = bb_img2;
-		this.bb_img3 = bb_img3;
-	}
-	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4) {
-		super();
-		this.bb_img1 = bb_img1;
-		this.bb_img2 = bb_img2;
-		this.bb_img3 = bb_img3;
-		this.bb_img4 = bb_img4;
-	}
-	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5) {
-		super();
-		this.bb_img1 = bb_img1;
-		this.bb_img2 = bb_img2;
-		this.bb_img3 = bb_img3;
-		this.bb_img4 = bb_img4;
-		this.bb_img5 = bb_img5;
-	}
-	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
-			String bb_img6) {
-		super();
-		this.bb_img1 = bb_img1;
-		this.bb_img2 = bb_img2;
-		this.bb_img3 = bb_img3;
-		this.bb_img4 = bb_img4;
-		this.bb_img5 = bb_img5;
-		this.bb_img6 = bb_img6;
-	}
-	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
-			String bb_img6, String bb_img7) {
-		super();
-		this.bb_img1 = bb_img1;
-		this.bb_img2 = bb_img2;
-		this.bb_img3 = bb_img3;
-		this.bb_img4 = bb_img4;
-		this.bb_img5 = bb_img5;
-		this.bb_img6 = bb_img6;
-		this.bb_img7 = bb_img7;
-	}
-	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
-			String bb_img6, String bb_img7, String bb_img8) {
-		super();
-		this.bb_img1 = bb_img1;
-		this.bb_img2 = bb_img2;
-		this.bb_img3 = bb_img3;
-		this.bb_img4 = bb_img4;
-		this.bb_img5 = bb_img5;
-		this.bb_img6 = bb_img6;
-		this.bb_img7 = bb_img7;
-		this.bb_img8 = bb_img8;
-	}
-	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
-			String bb_img6, String bb_img7, String bb_img8, String bb_img9) {
-		super();
-		this.bb_img1 = bb_img1;
-		this.bb_img2 = bb_img2;
-		this.bb_img3 = bb_img3;
-		this.bb_img4 = bb_img4;
-		this.bb_img5 = bb_img5;
-		this.bb_img6 = bb_img6;
-		this.bb_img7 = bb_img7;
-		this.bb_img8 = bb_img8;
-		this.bb_img9 = bb_img9;
-	}
-	public BsnBoard(String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
-			String bb_img6, String bb_img7, String bb_img8, String bb_img9, String bb_img10) {
-		super();
-		this.bb_img1 = bb_img1;
-		this.bb_img2 = bb_img2;
-		this.bb_img3 = bb_img3;
-		this.bb_img4 = bb_img4;
-		this.bb_img5 = bb_img5;
-		this.bb_img6 = bb_img6;
-		this.bb_img7 = bb_img7;
-		this.bb_img8 = bb_img8;
-		this.bb_img9 = bb_img9;
-		this.bb_img10 = bb_img10;
-	}
-	public BsnBoard(String bb_id, String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5,
-			String bb_img6, String bb_img7, String bb_img8, String bb_img9, String bb_img10) {
-		super();
-		this.bb_id = bb_id;
-		this.bb_img1 = bb_img1;
-		this.bb_img2 = bb_img2;
-		this.bb_img3 = bb_img3;
-		this.bb_img4 = bb_img4;
-		this.bb_img5 = bb_img5;
-		this.bb_img6 = bb_img6;
-		this.bb_img7 = bb_img7;
-		this.bb_img8 = bb_img8;
-		this.bb_img9 = bb_img9;
-		this.bb_img10 = bb_img10;
-	}
-
-	public BsnBoard(String bb_id, String h_tag) {
-		super();
-		this.bb_id = bb_id;
-		this.h_tag = h_tag;
-	}
-	
-	// 전체
-	public BsnBoard(String bb_id, String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
-			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date,
-			int t_num, String bb_img1, String bb_img2, String bb_img3, String bb_img4, String bb_img5, String bb_img6,
-			String bb_img7, String bb_img8, String bb_img9, String bb_img10, String m_img, String h_tag,
-			List<String> tags, int bb_like, int bbrcnt, String c_name, String my_name) {
-		super();
-		this.bb_id = bb_id;
-		this.m_id = m_id;
-		this.bb_name = bb_name;
-		this.bb_info = bb_info;
-		this.bb_price = bb_price;
-		this.bb_option1 = bb_option1;
-		this.bb_option2 = bb_option2;
-		this.bb_option3 = bb_option3;
-		this.bb_option4 = bb_option4;
-		this.bb_type = bb_type;
-		this.bb_topid = bb_topid;
-		this.bb_date = bb_date;
-		this.t_num = t_num;
-		this.bb_img1 = bb_img1;
-		this.bb_img2 = bb_img2;
-		this.bb_img3 = bb_img3;
-		this.bb_img4 = bb_img4;
-		this.bb_img5 = bb_img5;
-		this.bb_img6 = bb_img6;
-		this.bb_img7 = bb_img7;
-		this.bb_img8 = bb_img8;
-		this.bb_img9 = bb_img9;
-		this.bb_img10 = bb_img10;
-		this.m_img = m_img;
-		this.h_tag = h_tag;
-		this.tags = tags;
-		this.bb_like = bb_like;
-		this.bbrcnt = bbrcnt;
-		this.c_name = c_name;
-		this.my_name = my_name;
-	}
-
 	@Override
 	public String toString() {
 		return "BsnBoard [bb_id=" + bb_id + ", m_id=" + m_id + ", bb_name=" + bb_name + ", bb_info=" + bb_info
@@ -290,8 +105,10 @@ public class BsnBoard implements java.io.Serializable{
 				+ bb_img2 + ", bb_img3=" + bb_img3 + ", bb_img4=" + bb_img4 + ", bb_img5=" + bb_img5 + ", bb_img6="
 				+ bb_img6 + ", bb_img7=" + bb_img7 + ", bb_img8=" + bb_img8 + ", bb_img9=" + bb_img9 + ", bb_img10="
 				+ bb_img10 + ", m_img=" + m_img + ", h_tag=" + h_tag + ", tags=" + tags + ", bb_like=" + bb_like
-				+ ", bbrcnt=" + bbrcnt + ", c_name=" + c_name + ", my_name=" + my_name + "]";
+				+ ", bbrcnt=" + bbrcnt + ", c_name=" + c_name + ", my_name=" + my_name + ", followid=" + followid
+				+ ", followerid=" + followerid + "]";
 	}
+	
 
 	public String getBb_id() {
 		return bb_id;
@@ -579,6 +396,22 @@ public class BsnBoard implements java.io.Serializable{
 
 	public void setMy_name(String my_name) {
 		this.my_name = my_name;
+	}
+
+	public String getFollowid() {
+		return followid;
+	}
+
+	public void setFollowid(String followid) {
+		this.followid = followid;
+	}
+
+	public String getFollowerid() {
+		return followerid;
+	}
+
+	public void setFollowerid(String followerid) {
+		this.followerid = followerid;
 	}
 
 	

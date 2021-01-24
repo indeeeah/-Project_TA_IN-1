@@ -64,8 +64,6 @@ public class GnBoardController {
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
 				mv.addObject("chkfollow", tService.chkfollow(my_name));
-				System.out.println("timeLineList"+tService.showTimeLineList(my_name));
-				mv.addObject("timeLineList", tService.showTimeLineList(my_name));
 				mv.addObject("id_img_fwr", gService.showp_one(m_id));
 				mv.addObject("fw", gService.showp_two(m_id));
 				mv.addObject("gboard", gService.showp_three(m_id));
@@ -77,9 +75,12 @@ public class GnBoardController {
 				mv.addObject("recomFow", gService.recomFow(my_name, m_id));
 				mv.addObject("selectFollow", gService.selectFollow(m_id));
 				mv.addObject("selectFollower", gService.selectFollower(m_id));
+				mv.addObject("showpostCount", gService.showpostCount(m_id));
+				mv.addObject("bsnInfo", bbService.bsnInfo(m_id));
+				mv.addObject("bsnInfoFollow", bbService.bsnInfoFollow(m_id));
+				mv.addObject("bsnInfoFollower", bbService.bsnInfoFollower(m_id));
 				mv.addObject("listCount", bbService.listCount(m_id));	// 게시물카운트
 				mv.addObject("category", bbService.selectCategory(m_id));//카테고리 목록
-				mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
 				mv.addObject("list", bbService.selectListPage(m_id, currentPage, LIMIT));	// 게시물 텍스트정보
 				mv.setViewName("business/bsnMain");
 			} else if (result.equals("M")) {

@@ -10,6 +10,7 @@
 <title>비즈니스 메인</title>
 <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+<script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
 <style>
 a{
 	text-decoration:none;
@@ -29,7 +30,6 @@ button{
     cursor:pointer;
 }
 input {
-    border: 1px solid #C7C7C7;
     border-radius:5px;
 }
 .content{
@@ -99,18 +99,62 @@ input {
     margin-top: 20px;
 }
 
-#profile_intro {
+#bsn_name {
+	width:100%;
+	margin-top:20px;
+	font-size:20px;
+}
+#bsn_intro {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 16px;
 }
+#bsn_info_more {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    font-size: 13px;
+    margin-top:10px;
+}
+#bsn_url>a{
+	color:black;
+}
+#bsn_url>a:hover{
+	text-decoration:revert;
+}
+#url_icon_box{
+	background-image: url('${pageContext.request.contextPath}/resources/images/world-wide-web.svg');
+	background-size: 11px;
+	width: 11px;
+    height: 11px;
+    display:-webkit-inline-box;
+}
+#bsn_phone{
 
+}
+#phone_icon_box{
+	background-image: url('${pageContext.request.contextPath}/resources/images/telephone.svg');
+	background-size: 11px;
+	width: 11px;
+    height: 11px;
+    display:-webkit-inline-box;
+}
+#bsn_addr{
+
+}
+#addr_icon_box{
+	background-image: url('${pageContext.request.contextPath}/resources/images/home-address.svg');
+	background-size: 11px;
+	width: 11px;
+    height: 11px;
+    display:-webkit-inline-box;
+}
 #highlight_con {
     margin-top: 44px;
     margin-bottom: 44px;
     height: 130px;
     width: 100%;
-    display: none;
+    /* display:none; */
 }
 
 .highlight_small_con {
@@ -125,12 +169,31 @@ input {
     width: 87px;
     background-color: green;
     border-radius: 50%;
-    margin-top: 10px;
     cursor: pointer;
     border: 1px solid #C7C7C7;
     box-sizing: border-box;
 }
-
+.highlight_photo_h {
+    height: 87px;
+    width: 87px;
+    border-radius: 50%;
+    margin-top: 10px;
+    cursor: pointer;
+    border: 1px solid #C7C7C7;
+    box-sizing: border-box;
+    background-color: #fee2f8;
+    background-image: linear-gradient(315deg, #fee2f8 0%, #dcf8ef 74%);
+}
+.h_icon {
+    height: 87px;
+    width: 87px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-image: url('${pageContext.request.contextPath}/resources/images/button.svg');
+    background-size: 45px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .highlight_title {
     height: 18px;
     width: 100%;
@@ -267,9 +330,10 @@ input {
 	
 }
 .selectBb{
-	margin-bottom:28px;
-	margin-right:28px;
-	position:relative;
+	margin-bottom: 28px;
+    margin-right: 17px;
+    margin: 0 8px 28px 9px;
+    position: relative;
 }
 .selectBb img{
 	opacity: 1;
@@ -282,8 +346,8 @@ input {
 	opacity:0.3;
 }
 .listImg{
-	width:293px;
-	height:293px;
+	width:312px;
+	height:312px;
 }
 
 
@@ -309,12 +373,8 @@ input {
 }
 
 #mdImg img{
-	width:100%;
-	height:100%;
-    min-width: 450px;
-    min-height: 450px;
-    max-width: 600px;
-    max-height: 600px;
+	width:600px;
+	height:600px;
 }
 /* 모달 상세페이지 (배경) */
 .modal {
@@ -332,16 +392,14 @@ input {
 
 /* 모달 상세페이지(내용)*/
 .modal-content {
-  	background-color: #fefefe;
-  	margin: auto;
-  	padding: 10px;
-  	border: 1px solid #C7C7C7;
-  	width: 90%;
-  	max-width:930px;
-  	display: flex;
-  	margin-top: 150px;
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #C7C7C7;
+    width: 1000px;
+    height: 600px;
+    display: flex;
+    margin-top: 150px;
 }
-
 /* close */
 .close {
     float: right;
@@ -366,26 +424,22 @@ input {
     display: contents;
 }
 #mdImg {
-    margin-right: 20px;
-    min-width:450px;
-	min-height:450px;
-	max-width:600px;
-	max-height:600px;
+    width: 600px;
+    height: 600px;
 }
 #mdText {
     max-height: 600px;
-   	width: 100%;
+   	width: 400px;
    	position:relative;
+   	border-left:1px solid #C7C7C7;
 }
 #mdInfo {
-    height: 72px;
+    height: 40px;
     right: 0;
-    width: 100%;
     line-height: 50px;
+    border-bottom:1px solid #C7C7C7;
+    padding:16px;
     position:relative;
-}
-#mdInfoText{
-	border-bottom:1px solid #C7C7C7;
 }
 #mdInfoText>a{
 	margin-right:15px;
@@ -415,26 +469,39 @@ input {
 }
 
 #mdBoard {
-	height:70%;
+	clear:both;
+	height:69%;
     overflow-x: hidden;
     min-height: 250px;
-    margin-bottom: 15px;
+    padding-top:16px;
+    padding-right:16px;
+    padding-left:16px;
+}
+#mdBoard::-webkit-scrollbar {
+    display: none;
 }
 #mdContent {
     margin-bottom: 10px;
     position:relative;
 }
+#mdContent>pre {
+    border-bottom: 1px dashed #C7C7C7;
+    padding-bottom: 10px;
+}
 #bbName{
+	padding-bottom:10px;
+	border-bottom:1px dashed #C7C7C7;
 }
 #bbInfo{
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
 .translate {
+	color: rgb(0, 149, 246);
     right: 0px;
-    bottom:13px;
+    bottom:34px;
     position: absolute;
-}
+}.
 .mrd{
 	margin-bottom:20px;
 	position: relative;
@@ -503,12 +570,7 @@ input {
 #bbrrInBox {
     clear: both;
 }
-#mdBoard {
-    margin-bottom: 15px;
-}
-#mdBoard::-webkit-scrollbar {
-    display: none;
-}
+
 
 .bbrrImg{
 	float:left;
@@ -526,23 +588,24 @@ input {
 .bbrrOpt {
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 #mdMore {
     position: absolute;
-    bottom: 35px;
-    border-bottom: 1px solid #C7C7C7;
-    width: 100%;
-    padding-bottom: 7px;
+    bottom: 52px;
+    width: 367px;
     background-color: white;
+    border-bottom: 1px solid #C7C7C7;
     border-top: 1px solid #C7C7C7;
+    padding:5px 16px 16px 16px;
 }
 #mdWrite{
-	margin-top:10px;
 	position:absolute;
 	bottom:0px;
+	padding:16px;
 }
 #bb_info {
-    width: 400px;
+    width: 329px;
     height: 18px;
     outline: none;
     border: none;
@@ -566,8 +629,7 @@ input {
 	margin: auto;
   	padding: 10px;
   	border: 1px solid #C7C7C7;
-  	width: 90%;
-  	max-width:930px;
+  	width: 980px;
   	display: flex;
   	margin-top: 20px;
   	justify-content: space-around;
@@ -579,9 +641,7 @@ input {
 	
 	/* Slideshow container */
 	.mdImg {
-	  max-width: 500px;
 	  position: relative;
-	  margin: auto;
 	}
 	
 	/* Next & previous buttons */
@@ -645,11 +705,17 @@ input {
 	
 	.bbrrInBox{
 		display:none;
+		border-bottom:1px solid #C7C7C7;
+		border-top:1px dashed #C7C7C7;
 	}
 	.bbrrInBox input{
 		margin-left: 0px;
-    	width: 230px;
    		margin-right: 10px;
+   		margin-top: 10px;
+   		margin-bottom: 10px;
+    	width: 230px;
+		border:none;
+		outline: none;
 		
 	}
 	
@@ -795,7 +861,29 @@ input {
 		cursor:pointer;
 	}
 	
+	/* 모달 팔로우+팔로워 +신고*/
+	#report_back,
+	#follow_back {
+	    display: none; /* Hidden by default */
+	  	position: fixed; /* Stay in place */
+	  	z-index: 10; /* Sit on top */
+	  	left: 0;
+	  	top: 0;
+	  	width: 100%; /* Full width */
+	  	height: 100%; /* Full height */
+	  	overflow: auto; /* Enable scroll if needed */
+	  	background-color: rgb(0,0,0); /* Fallback color */
+	  	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
 	
+	#report_modal,
+	#follow_modal {
+		position: fixed;
+        width: 100%;
+        height: 100%;
+        display: none;
+        z-index: 11;
+	}
 	
 	
 	.timeline_icon_con {
@@ -804,6 +892,91 @@ input {
 	    margin-top: 4px;
 	}
 	
+	#see_follow,
+    #see_follower {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 400px;
+        width: 400px;
+        background: #fff;
+        z-index: 9;
+        border-radius: 20px;
+        text-align: center;
+        font-size: 14px;
+        overflow: auto;
+    }
+    
+    .top_con {
+        width: 100%;
+        height: 42px;
+        border-bottom: 1px solid #C7C7C7;
+    }
+    
+    .blank {
+        width: 48px;
+        height: 42px;
+        float: left;
+    }
+    
+    .fo_title {
+        width: 304px;
+        height: 100%;
+        float: left;
+        font-size: 16px;
+        line-height: 42px;
+    }
+    
+    .people_con {
+        width: 363px;
+        height: 38px;
+        padding: 8px 16px 8px 21px;
+    }
+    
+    .people_photo {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-top: 5px;
+        float: left;
+    }
+    
+    .people_middle {
+        margin-left: 12px;
+        float: left;
+        width: 250px;
+        height: 38px;
+        text-align: left;
+    }
+    
+    .people_id,
+    .people_name {
+        width: 100%;
+        height: 18px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+    
+    .people_btn {
+        float: right;
+        font-size: 14px;
+        line-height: 38px;
+        height: 32px;
+        width: 56px;
+        border: 1px solid #C7C7C7;
+    }
+    
+    .cate_mine {
+        color: #C7C7C7;
+        cursor: pointer;
+    }
+    
+    .fa-times {
+        font-size: 21px;
+        margin-top: 10.5px;
+        cursor: pointer;
+    }
 	.icon {
 	    width: 24px;
 	    height: 24px;
@@ -900,8 +1073,8 @@ input {
 <body>
 	<!-- 헤더 -->
 	<jsp:include page="../header.jsp"></jsp:include>
-${listCount } : ${my_name } : ${id_img_fwr.m_id }
 	<div id="content" class="content">
+	<input type="hidden" id="bm_name" value="${bsnInfo.bm_name }"/>
 	<input type="hidden" id="m_id" value="${id_img_fwr.m_id }"/>
 		<div id="profile_con_top">
 	        <div id="profile_photo" onclick="goStory('${id_img_fwr.m_id }');"><img src="${pageContext.request.contextPath}/resources/uploadFiles/${id_img_fwr.m_img }"></div>
@@ -939,34 +1112,73 @@ ${listCount } : ${my_name } : ${id_img_fwr.m_id }
 	                </div>
 	                <div class="small_con seefollow" style="cursor:pointer;">팔로우 ${fw.follow }</div>
 	            </div>
-	            <div id="profile_intro">${id_img_fwr.m_intro }</div>
+	            <div id="bsn_name">${bsnInfo.bm_name }</div>
+	            <div id="bsn_intro">${bsnInfo.bm_intro}</div>
+	            <div id="bsn_info_more">
+		            <div id="bsn_url">
+		            	<div id="url_icon_box">
+		            	</div>
+		            	<a href="${bsnInfo.bm_url }" >${bsnInfo.bm_url }</a>
+		            </div>
+		            <div id="bsn_phone">
+		            	<div id="phone_icon_box">
+		            	</div>
+		            	${bsnInfo.bm_phone}
+		            </div>
+		            <div id="bsn_addr">
+		            	<div id="addr_icon_box">
+		            	</div>
+		            	${bsnInfo.bm_addr}
+		            </div>
+	            </div>
 	        </div>
 	    </div>
-	    <div id="highlight_con">
-	        <c:if test="${not empty highlight }">
-	            <c:forEach var="vo" items="${highlight }" varStatus="s">
-	                <div class="highlight_small_con">
-	                    <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
-	                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }</div>
-	                </div>
-	            </c:forEach>
-	        </c:if>
-	    </div>
-	    <div id="hidden_follow_rec" style="display: none;">
-	        <div id="rec_title">
-	            <div id="title1">추천계정</div>
-	            <c:if test="${not empty recomFow }">
-	                <c:forEach var="vo" items="${recomFow }" varStatus="s">
-	                    <div class="each_rec_con each_rec_con${vo.r_mid }">
-	                        <div class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_img }</div>
-	                        <div class="each_rec_id" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.r_mid }</div>
-	                        <div class="each_rec_name" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_name }</div>
-	                        <div class="each_rec_followbtn" id="each_rec_followbtn${vo.r_mid }" onclick="followBtn('${vo.r_mid}');">팔로우</div>
-	                    </div>
-	                </c:forEach>
-	            </c:if>
-	        </div>
-	    </div>
+	     <div id="highlight_con">
+	     <input type="hidden" class="post_id" value="${id_img_fwr.m_id }">
+                        <c:if test="${empty highlight }">
+                            <div class="highlight_small_con">
+                                <div class="highlight_photo_h">
+                                    <div class="h_icon"></div>
+                                </div>
+                                <div class="highlight_title">하이라이트<br>추가</div>
+                            </div>
+                        </c:if>
+                        <c:if test="${not empty highlight }">
+                            <div class="highlight_small_con">
+                                <div class="highlight_photo_h">
+                                    <div class="h_icon"></div>
+                                </div>
+                                <div class="highlight_title">하이라이트<br>추가</div>
+                            </div>
+                            <c:forEach var="vo" items="${highlight }" varStatus="s">
+                                <div class="highlight_small_con">
+                                    <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
+                                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:if>
+                    </div>
+                    <div id="hidden_follow_rec" style="display: none;">
+                        <div id="rec_title">
+                            <div id="title1">추천계정</div>
+                            <c:if test="${not empty recomFow }">
+                                <div class="highlight_small_con">
+                                    <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
+                                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }
+                                    </div>
+                                </div>
+                                <c:forEach var="vo" items="${recomFow }" varStatus="s">
+                                    <div class="each_rec_con each_rec_con${vo.r_mid }">
+                                        <div class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_img }</div>
+                                        <div class="each_rec_id" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.r_mid }</div>
+                                        <div class="each_rec_name" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_name }</div>
+                                        <div class="each_rec_followbtn" id="each_rec_followbtn${vo.r_mid }" onclick="followBtn('${vo.r_mid}');">팔로우</div>
+                                    </div>
+                                </c:forEach>
+                            </c:if>
+                        </div>
+                    </div>
 	    <hr id="line">
 		<input type="hidden" id="my_name" class="my_name" value="${my_name }">
 		<!-- 카테고리 -->
@@ -1118,8 +1330,60 @@ ${listCount } : ${my_name } : ${id_img_fwr.m_id }
 		</div>
 	</div>
 	
+	<!-- 모달 (팔로우 + 팔로워) -->
+	<div id="follow_back">
+		<div id="follow_modal">
+		    <div id="see_follower" style="display:none;">
+		        <div class="top_con">
+		            <div class="blank"></div>
+		            <div class="fo_title">팔로워</div>
+		            <div class="blank notcancelAll" style="cursor:pointer;"><i class="fas fa-times"></i></div>
+		        </div>
+		        <c:if test="${ not empty selectFollower}">
+		            <c:forEach var="vo" items="${selectFollower }" varStatus="s">
+		                <input type="hidden" class="fochkWithMe" onclick="fochkWithMe('${vo.followerid }');">
+		                <div class="people_con">
+		                    <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="people_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">
+		                    <div class="people_middle">
+		                        <div class="people_id" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">${vo.followerid }</div>
+		                        <div class="people_name" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">${vo.m_name }</div>
+		                    </div>
+		                    <div class="people_btn people_follow people_follow${vo.followerid }" style="display:none; cursor:pointer;">팔로우</div>
+		                    <div class="people_btn people_alfollow people_alfollow${vo.followerid }" style="display:none; cursor:pointer;"><i class="fas fa-user-check"></i></div>
+		                </div>
+		            </c:forEach>
+		        </c:if>
+		    </div>
+		    <div id="see_follow" style="display:none;">
+		        <div class="top_con">
+		            <div class="blank"></div>
+		            <div class="fo_title">팔로우</div>
+		            <div class="blank notcancelAll" style="cursor:pointer;"><i class="fas fa-times"></i></div>
+		
+		        </div>
+		        <c:if test="${ not empty selectFollow}">
+		            <c:forEach var="vo" items="${selectFollow }" varStatus="s">
+		                <input type="hidden" class="fochkWithMe" onclick="fochkWithMe('${vo.followid }');">
+		                <div class="people_con">
+		                    <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="people_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">
+		                    <div class="people_middle">
+		                        <div class="people_id" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">${vo.followid }</div>
+		                        <div class="people_name" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">${vo.m_name }</div>
+		                    </div>
+		                    <div class="people_btn people_follow people_follow${vo.followid }" style="display:none; cursor:pointer;">팔로우</div>
+		                    <div class="people_btn people_alfollow people_alfollow${vo.followid}" style="display:none; cursor:pointer;"><i class="fas fa-user-check"></i></div>
+		                </div>
+		            </c:forEach>
+		        </c:if>
+		    </div>
+		</div>
+	</div>
+	
+	
+	
 	<input type="button"  value="글쓰기" onclick="window.location='bbWriteForm.do'">
 	</div>
+	
 	<jsp:include page="../footer.jsp"></jsp:include>
 <script>
 var m_id = document.getElementById("m_id").value;
@@ -1695,15 +1959,20 @@ $('.close').on('click', function() {
 // 윈도우 누르면 모달창(상세페이지) 꺼지기
 $(window).on('click', function() {
 	var modal = document.getElementById('modal');
-	console.log(modal);
+	var follow = document.getElementById('follow_modal');
 	if (event.target == modal) {
+		console.log("모달 닫기"+modal);
 		$('body').css("overflow", "scroll");
 		modal.style.display = "none";
 		$(".mdReply").empty();
+		$("#follow_back").hide();
 	}
-	/* if(event.target != insertBox){
-		insertBox.style.display = "none";
-	} */
+	if (event.target == follow) {
+		console.log("팔로우 닫기"+follow);
+		$('body').css("overflow", "scroll");
+		follow.style.display = "none";
+		$("#follow_back").css("display", "none");
+	}
 });
 
 //모달(장바구니) 열기
@@ -1781,12 +2050,67 @@ $('.cancel').on('click', function() {
 function mdReport(e){
 	$("#mdBbr").css("display", "block");
 }
-
-
 //모달(댓글+답글) 닫기
 $('.cancel').on('click', function() {
 	$("#mdBbr").css("display", "none");
 });
+
+
+//모달(팔로우+팔로워) 열기
+$(".seefollower").on('click', function() {
+    $("#follow_back").css("display", "block");
+    $("#follow_modal").css("display", "block");
+    $("#see_follower").css("display", "block");
+    $("#see_follow").css("display", "none");
+});
+$(".seefollow").on('click', function() {
+    $("#follow_back").css("display", "block");
+    $("#follow_modal").css("display", "block");
+    $("#see_follow").css("display", "block");
+    $("#see_follower").css("display", "none");
+});
+//모달(팔로우+팔로워) 열기
+$('.fas').on('click', function() {
+	$("#follow_back").css("display", "none");
+	
+});
+//팔로우 체크
+function fochkWithMe(fid) {
+	console.log(fid+" : "+my_name);
+	console.log("hLike.follow:111111111111");
+    if (fid != my_name) {
+	console.log("hLike.follow:222222222222222");
+        $.ajax({
+            url: "${pageContext.request.contextPath}/followchkf.do",
+            method: "POST",
+            data: {
+                my_name: my_name,
+                m_id: fid
+            },
+            dataType: "json",
+            success: function(hLike) {
+                console.log("hLike.follow:"+hLike.follow);
+                if (hLike.follow == 0) {
+                    $(".people_follow" + fid).css("display", "block");
+                    $(".people_alfollow" + fid).css("display", "none");
+                } else {
+                    $(".people_follow" + fid).css("display", "none");
+                    $(".people_alfollow" + fid).css("display", "block");
+                }
+            },
+            error: function(request,
+                status, error) {
+                console.log("code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" + "error:" +
+                    error);
+            }
+        });
+    }
+}
 
 //윈도우 누르면 모달창 꺼지기
 $(window).on('click', function() {
@@ -1802,6 +2126,7 @@ $(window).on('click', function() {
 	if (event.target == mdBbr) {
 		mdBbr.style.display = "none";
 	}
+	
 	
 });
     
@@ -2307,9 +2632,12 @@ $("#etc").on('click', function() {
 
 <!-- 댓글 입력 에이작스 -->
 <script type="text/javascript">
-
+var m_id = document.getElementById("m_id").value;
+var my_name = $("#my_name").val();
+var memId = $(".m_id").val();
+console.log("m_id:"+m_id+"my_name:"+my_name+"memId:"+memId);
 $(function(){
-	var my_name=$("#my_name").val();
+	$(".fochkWithMe").trigger('click');
 	/* 댓글등록 */
 	$(".bbrInsert").on('click', function(){
 		var a = $("#bb_topid").val();
@@ -2495,6 +2823,8 @@ $(function(){
 	    });
 	
 	}
+	
+	
 });
 //페이지 로딩 시 처음 두개 댓글 나타내기 trigger - .hidden_commentchk
 // 댓글 좋아요 표시 외 수정 불가
@@ -2668,6 +2998,191 @@ function showAllCoHidden(t_id) {
             });
         });
     }
+    
+    
+    
+}
+
+//해당 계정 페이지 이동
+function goEachAcount(id) {
+	console.log("goEachAcount"+id+":"+m_id);
+	
+    var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
+    $(location).attr('href', url);
+}
+// 하이라이트 페이지 이동
+function highlight(h_name) {
+    var m_id = $(".post_id").val();
+    var url = "${pageContext.request.contextPath}/eachHighlight?m_id=" + m_id + "&h_name=" + h_name;
+    $(location).attr('href', url);
+}
+// 스토리 작성 페이지 이동
+$(".highlight_photo_h").on('click', function() {
+    var url = "${pageContext.request.contextPath}/writeStory";
+    $(location).attr('href', url);
+});
+//계정 관리 페이지 이동
+$(".profile_btn").on('click', function() {
+    var url = "${pageContext.request.contextPath}/mManage.do";
+    $(location).attr('href', url);
+});
+
+
+//메인 팔로우
+function main_followBtn(id) {
+    $.ajax({
+        url: "${pageContext.request.contextPath}/insertFollow.do",
+        method: "POST",
+        data: {
+            m_id: memId,
+            r_mid: id,
+            m_id2: id
+        },
+        success: function(data) {
+            $("#for_modal_fchk").val("1");
+            console.log("memId : " +
+                memId +
+                " id : " +
+                id);
+            var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
+            $(location).attr('href', url);
+        },
+        error: function(request, status, error) {
+            alert("code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" + "error:" +
+                error);
+        }
+    });
+}
+// 메인 언팔로우
+function main_pre_unfollow(id) {
+    $.ajax({
+        url: "${pageContext.request.contextPath}/unfollow.do",
+        method: "POST",
+        data: {
+            m_id: memId,
+            id: id
+        },
+        success: function(data) {
+            console.log("언팔 완료");
+            var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
+            $(location).attr('href', url);
+        },
+        error: function(request, status, error) {
+            alert("code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" + "error:" +
+                error);
+        }
+    });
+}
+// 추천 계정 팔로우
+function followBtn(id) {
+    console.log(recCount);
+    $.ajax({
+        url: "${pageContext.request.contextPath}/insertFollow.do",
+        method: "POST",
+        data: {
+            m_id: memId,
+            r_mid: id,
+            m_id2: id
+        },
+        success: function(data) {
+            $("#for_modal_fchk").val("1");
+            console.log("memId : " +
+                memId +
+                " id : " +
+                id);
+            var post_id = $(".post_id").val();
+            if (post_id == id) {
+                var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
+                $(location).attr('href', url);
+            } else {
+                recCount--;
+                console.log("follow Result : " + recCount);
+                if (recCount == 0) {
+                    $("#recom_follow").css("display", "none");
+                    $("#hidden_follow_rec").css("display", "none");
+                }
+                $(".each_rec_con" + id).css("display", "none");
+            }
+        },
+        error: function(request, status, error) {
+            alert("code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" + "error:" +
+                error);
+        }
+    });
+}
+// 모달 팔로우
+function followinmodal(id) {
+    $.ajax({
+        url: "${pageContext.request.contextPath}/insertFollow.do",
+        method: "POST",
+        data: {
+            m_id: memId,
+            r_mid: id,
+            m_id2: id
+        },
+        success: function(data) {
+            $("#for_modal_fchk").val("1");
+            $(".profile_btn_ok").css("display", "block");
+            $(".profile_btn_no").css("display", "none");
+        },
+        error: function(request, status, error) {
+            alert("code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" + "error:" +
+                error);
+        }
+    });
+}
+
+// 언팔로우
+function pre_unfollow(id) {
+    $("#modal_more_con_not_me").css("display", "none");
+    $("#askunfollow").css("display", "block");
+    $("#yes_unfollow").on('click', function() {
+        $.ajax({
+            url: "${pageContext.request.contextPath}/unfollow.do",
+            method: "POST",
+            data: {
+                m_id: memId,
+                id: id
+            },
+            success: function(data) {
+                console.log("언팔 완료");
+                $("#for_modal_fchk").val("0");
+                $(".profile_btn_ok").css("display", "none");
+                $(".profile_btn_no").css("display", "block");
+                $("#askunfollow").css("display", "none");
+                $("#unfollowchk").css("display", "block");
+            },
+            error: function(request, status, error) {
+                alert("code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" + "error:" +
+                    error);
+            }
+        });
+    });
 }
 </script>
 </html>

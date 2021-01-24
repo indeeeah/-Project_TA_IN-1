@@ -270,15 +270,16 @@ a {
 			<div class="upload photo_upload">
 				<div class="upload_id">${my_name }</div>
 				<div class="story_img_con select_img">
-					<img src="${pageContext.request.contextPath}/resources/uploadFiles/${bbRenew.bb_img1 }"/>
+					<img class="image" src="${pageContext.request.contextPath}/resources/uploadFiles/${bbRenew.bb_img1 }"/>
 				</div>
-				<form class="form_up" action="insertboard.do" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="my_name" value="${my_name }">
+				<form class="form_up" action="bbUpdate.do" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="m_id" value="${my_name }">
+                    <input type="hidden" name="bb_id" value="${bbRenew.bb_id }">
                     <input type="hidden" value="${chkseq}" name="seq" id="for_seq">
                     <label for="file"><i class="far fa-image" class="image_icon"></i></label>
                     <input type="text" id="bb_name" name="bb_name" placeholder="상품명" value="${bbRenew.bb_name}">
                     <textarea rows="5" cols="40" name="bb_info" class="b_content bb_info" placeholder="상품 소개">${bbRenew.bb_info}</textarea>
-                    <input type="file" id="file" name="file" class="file" multiple required style="display:none;">
+                    <input type="file" id="file" name="file" class="file" accept="image/*" multiple style="display:none;">
                     <div class="hashtag_con">
                         <input type="text" class="tags" id="tags" name="tags" placeholder="#해시태그 입력"  value="<c:forEach items="${bbTags }" var="v">#${v.h_tag }</c:forEach>"/>
                     </div>
@@ -454,29 +455,6 @@ a {
                 });
             });
 
-            // 웹캠 연결
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({
-                    video: true
-                }).then(function(stream) {
-                    var video = document.getElementById('video');
-                    video.srcObject = stream;
-                    video.play();
-                });
-            }
-
-            // 웹캠 화면 캡쳐
-            var canvas = document.getElementById('canvas');
-            var context = canvas.getContext('2d');
-            var video = document.getElementById('video');
-            document.getElementById("webcamBtn").addEventListener("click", function() {
-                $("#canvas").css("display", "block");
-                context.drawImage(video, 0, 0, 500, 375);
-            });
-
-            document.querySelector('a').addEventListener('click', event => 
-                event.target.href = canvas.toDataURL()
-            );
 
             // 업로드 파일 미리보기
 

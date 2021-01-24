@@ -49,28 +49,29 @@ public class BsnBoardController {
 	public ModelAndView bbListService(@RequestParam(name="page", defaultValue = "1") int page, 
 			@RequestParam(name="m_id") String m_id, 
 			ModelAndView mv, HttpServletRequest request) {
-		System.out.println("리스트 m_id:"+m_id);
 		HttpSession session = request.getSession();
 		String my_name=(String) session.getAttribute("my_name");
 		String result=gService.userType(m_id);
 		int currentPage=page;
 		try {
 			if(result.equals("G")) {
+				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				mv.addObject("id_img_fwr", gService.showp_one(m_id));
 				mv.addObject("fw", gService.showp_two(m_id));
 				mv.addObject("gboard", gService.showp_three(m_id));
 				mv.addObject("bboard", gService.showp_four(m_id));
 				mv.addObject("storychk", gService.storychk(m_id));
-				mv.addObject("showpost", gService.showpost(m_id));
+				//mv.addObject("showpost", gService.showpost(m_id));
+				mv.addObject("showpost", gService.showpostPage(m_id, currentPage, LIMIT));
 				mv.addObject("highlight", gService.highlight(m_id));
 				mv.addObject("followchk", gService.followchk(my_name, m_id));
 				mv.addObject("recomFow", gService.recomFow(my_name, m_id));
 				mv.addObject("selectFollow", gService.selectFollow(m_id));
 				mv.addObject("selectFollower", gService.selectFollower(m_id));
+				mv.addObject("showpostCount", gService.showpostCount(m_id));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
-				System.out.println("timeLineList"+tService.showTimeLineList(my_name));
-				mv.addObject("timeLineList", tService.showTimeLineList(my_name));
+				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				mv.addObject("id_img_fwr", gService.showp_one(m_id));
 				mv.addObject("fw", gService.showp_two(m_id));
 				mv.addObject("gboard", gService.showp_three(m_id));
@@ -82,12 +83,12 @@ public class BsnBoardController {
 				mv.addObject("recomFow", gService.recomFow(my_name, m_id));
 				mv.addObject("selectFollow", gService.selectFollow(m_id));
 				mv.addObject("selectFollower", gService.selectFollower(m_id));
+				mv.addObject("showpostCount", gService.showpostCount(m_id));
 				mv.addObject("bsnInfo", bbService.bsnInfo(m_id));
 				mv.addObject("bsnInfoFollow", bbService.bsnInfoFollow(m_id));
 				mv.addObject("bsnInfoFollower", bbService.bsnInfoFollower(m_id));
 				mv.addObject("listCount", bbService.listCount(m_id));	// 게시물카운트
 				mv.addObject("category", bbService.selectCategory(m_id));//카테고리 목록
-//				mv.addObject("list", bbService.selectListAll(m_id));	// 게시물 텍스트정보
 				mv.addObject("list", bbService.selectListPage(m_id, currentPage, LIMIT));	// 게시물 텍스트정보
 				mv.setViewName("business/bsnMain");
 			}
@@ -263,6 +264,7 @@ public class BsnBoardController {
 				uploadFiles(bb, request);
 				System.out.println("업데이트 이미지 저장");
 			}
+			System.out.println("업데이트 어디감?"+bbService.updateBsnBoard(bb));
 			if(bbService.updateBsnBoard(bb)!=null) {
 				System.out.println("업데이트 이프");
 //				mv.addObject("bbUpdate", bbService.updateBsnBoard(bb));
@@ -272,6 +274,7 @@ public class BsnBoardController {
 				mv.setViewName("redirect:bbList.do");
 			}
 		} catch(Exception e) {
+			e.printStackTrace();
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("errorPage");
 		}
