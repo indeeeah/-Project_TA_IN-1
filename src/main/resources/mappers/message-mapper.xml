@@ -6,6 +6,7 @@
 		<result property="m_id2" column="m_id2"/>
 		<result property="m_message" column="m_message"/>
 		<result property="m_date" column="m_date"/>
+		<result property="m_check" column="m_check"/>
 	</resultMap>
 	<resultMap type="mChatVO" id="chatlist">
 		<id property="chat" column="chat"/>
@@ -16,7 +17,7 @@
 	<insert id="sendMessage" parameterType="mMessageVO">
 	insert into Message
 	values(
-	#{m_id}, #{m_id2}, #{m_message}, TO_CHAR(sysdate, 'yyyy-mm-dd hh24:mi:ss')
+	#{m_id}, #{m_id2}, #{m_message}, TO_CHAR(sysdate, 'yyyy-mm-dd hh24:mi:ss'), #{m_check}
 	)
 	</insert>
 	
@@ -28,6 +29,16 @@
 	select m_id as chat, m_date from Message where m_id2 = #{m_id}
 	) group by chat order by lastdate desc
 	</select>
+	
+	<!-- 안읽은 메세지 확인 -->
+	<select id="checkmessage" parameterType="String" resultType="arraylist" resultMap="mMessageMap">
+	select * from message where m_id2 = #{m_id2} order by m_date desc 
+	</select>
+	
+	<!-- 메세지 읽음처리 -->
+	<update id="readmessage" parameterType="hashmap">
+	update message set m_check = 'Y' where m_id=#{m_id} and m_id2=#{m_id2}
+	</update>
 	
 	<!-- 채팅 내용 조회 -->
 	<select id="showMessage" parameterType="hashmap" resultType="arraylist" resultMap="mMessageMap">

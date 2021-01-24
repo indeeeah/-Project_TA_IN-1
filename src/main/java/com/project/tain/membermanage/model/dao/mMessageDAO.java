@@ -21,6 +21,10 @@ public class mMessageDAO {
 		return sqlSession.selectList("mMessageVO.showMessageList", m_id);
 	}
 	
+	public List<mMessageVO> checkmessage(String m_id){
+		return sqlSession.selectList("mMessageVO.checkmessage", m_id);
+	}
+	
 //	채팅내용 불러오기
 	public List<mMessageVO> showMessage(String m_id, String m_id2){
 		Map<String, String> map = new HashMap<String, String>();
@@ -32,6 +36,13 @@ public class mMessageDAO {
 //	메세지보내기
 	public int sendMessage(mMessageVO mvo) {
 		return sqlSession.insert("mMessageVO.sendMessage", mvo);
+	}
+
+	public int readmessage(String m_id, String m_id2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("m_id", m_id); //상대 아이디
+		map.put("m_id2", m_id2); //내 아이디
+		return sqlSession.update("mMessageVO.readmessage", map);
 	}
 
 }

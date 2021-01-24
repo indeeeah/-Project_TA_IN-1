@@ -17,6 +17,11 @@ public class mMessageServiceImpl implements mMessageService{
 	public List<mChatVO> showMessageList(String m_id) {
 		return mMessageDao.showMessageList(m_id);
 	}
+	
+	@Override
+	public List<mMessageVO> checkmessage(String m_id) {
+		return mMessageDao.checkmessage(m_id);
+	}
 
 	@Override
 	public List<mMessageVO> showMessage(String m_id, String m_id2) {
@@ -26,6 +31,11 @@ public class mMessageServiceImpl implements mMessageService{
 	@Override
 	public int sendMessage(mMessageVO mvo) {
 		return mMessageDao.sendMessage(mvo);
+	}
+	
+	@Override
+	public int readmessage(String m_id, String m_id2) {
+		return mMessageDao.readmessage(m_id, m_id2);
 	}
 
 }

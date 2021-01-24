@@ -408,8 +408,10 @@ line-height:150px;
 							<div class="chat_people">
 								<div class="chat_img" style="width: 30px; height: 30px; border-radius: 70%; overflow: hidden;">
 									<img src="${pageContext.request.contextPath}/resources/uploadFiles/${userImg[status.index] }" style="width: 100%; height:100%; object-fit: cover;">
-									<div id="circle1" class="circle1" style="margin:-15px 0 20px 60px; display:none;"><input type="text" value="${ml.chat}" style="display:none;"></div>
 								</div>
+									<div id="circle1" class="circle1" style="margin:0 0 20px 40px;
+										<c:if test="${readcheck[status.index].m_check eq 'N'}">display:block;</c:if>
+								<c:if test="${readcheck[status.index].m_check ne 'N'}">display:none;</c:if>"><input type="text" class="alarmbtn" value="${ml.chat}" style="display:none;"></div>
 								<div class="chat_ib">
 									<h5>
 										${ml.chat}<input type="text" value="${ml.chat}" style="display:none;"> <span class="chat_date">${ml.lastdate }</span>

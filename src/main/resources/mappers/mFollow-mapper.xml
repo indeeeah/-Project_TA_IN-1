@@ -2,24 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="mFollowVO">
 	<resultMap type="mFollowVO" id="mFollowMap">
-		<id property="m_id1" column="m_id1" />
 		<result property="m_id2" column="m_id2" />
-		<result property="f_date" column="f_date" />
 	</resultMap>
 	
 	<!-- 팔로잉 목록 -->
-	<select id="showFollowing" parameterType="String"
-		resultType="arraylist" resultMap="mFollowMap">
-		select m.m_id, m.m_img
-		from follow f, member m
-		where f.m_id2 = m.m_id and m_id1 = #{m_id}
-	</select>
-	
-	<!-- 팔로워 목록 -->
-	<select id="showFollower" parameterType="String"
-		resultType="arraylist" resultMap="mFollowMap">
-		select m.m_id, m.m_img
-		from follow f, member m
-		where f.m_id1 = m.m_id and m_id2 = #{m_id}
+	<select id="showFollowing" parameterType="hashmap" resultType="arraylist" resultMap="mFollowMap">
+		select m_id2 from Follow where m_id1 = #{m_id1} and m_id2 like #{m_id2}
 	</select>
 </mapper>

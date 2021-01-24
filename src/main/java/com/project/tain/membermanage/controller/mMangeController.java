@@ -574,6 +574,10 @@ public class mMangeController {
 		for(int i = 0; i < mMessageServiceImpl.showMessageList(my_name).size(); i++) {
 			list.add(mMemberServiceImpl.showProfile(mMessageServiceImpl.showMessageList(my_name).get(i).getChat()).getM_img());
 		}
+		mv.addObject("readcheck", mMessageServiceImpl.checkmessage(my_name));
+		for(int i = 0; i < mMessageServiceImpl.checkmessage(my_name).size(); i++) {
+			System.out.println(mMessageServiceImpl.checkmessage(my_name).get(i).getM_check());
+		}
 		mv.addObject("userImg", list);
 		mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 		mv.addObject("MessageList", mMessageServiceImpl.showMessageList(my_name));
@@ -589,6 +593,8 @@ public class mMangeController {
 		for(int i = 0; i < mMessageServiceImpl.showMessageList(my_name).size(); i++) {
 			list.add(mMemberServiceImpl.showProfile(mMessageServiceImpl.showMessageList(my_name).get(i).getChat()).getM_img());
 		}
+		mMessageServiceImpl.readmessage(m_id2, my_name);
+		mv.addObject("readcheck", mMessageServiceImpl.checkmessage(my_name));
 		mv.addObject("userImg", list);
 		mv.addObject("my_name", my_name);
 		mv.addObject("m_id2", m_id2);

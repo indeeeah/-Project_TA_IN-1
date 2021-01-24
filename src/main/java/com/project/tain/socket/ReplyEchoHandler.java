@@ -48,11 +48,12 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 			String toid = strs[1];
 			String content = strs[2];
 			String m_date = strs[3];
-			mMessageVO mvo = new mMessageVO(id, toid, content, m_date);
+			mMessageVO mvo = new mMessageVO(id, toid, content, m_date, "N");
 			mvo.setM_id(id);
 			mvo.setM_id2(toid);
 			mvo.setM_message(content);
 			mvo.setM_date(m_date);
+			mvo.setM_check("N");
 			System.out.println(mvo);
 			mMessageServiceImpl.sendMessage(mvo);
 			WebSocketSession m_id = userSessions.get(toid);
