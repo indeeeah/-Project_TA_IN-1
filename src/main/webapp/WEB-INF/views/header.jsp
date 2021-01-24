@@ -127,9 +127,19 @@
                 var url = "${pageContext.request.contextPath}/timeLine";
                 $(location).attr('href', url);
             });
+            $("#fix_message").on('click', function() {
+                var memId = $(".m_id").val();
+                var url = "${pageContext.request.contextPath}/chatlist.do";
+                $(location).attr('href', url);
+            });
             $("#fix_write").on('click', function() {
                 var memId = $(".m_id").val();
                 var url = "${pageContext.request.contextPath}/gnWrite";
+                $(location).attr('href', url);
+            });
+            $("#fix_bag").on('click', function() {
+                var memId = $(".m_id").val();
+                var url = "${pageContext.request.contextPath}/mCart.do";
                 $(location).attr('href', url);
             });
             $("#fix_profile").on('click', function() {
