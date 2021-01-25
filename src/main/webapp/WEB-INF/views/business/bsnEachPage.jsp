@@ -1169,7 +1169,6 @@ input {
 		</div>
 	</div>
 	
-	<input type="button"  value="글쓰기" onclick="window.location='bbWriteForm.do'">
 	</div>
 	
 	<jsp:include page="../footer.jsp"></jsp:include>
@@ -2160,7 +2159,6 @@ function pressUnlike(t_id) {
         });
 }
 function pushSocket(t){
-	alert("pushSocket() : " + t);
 	$("#toid").attr("value", t);
 	$("#toid").trigger('click');
 }

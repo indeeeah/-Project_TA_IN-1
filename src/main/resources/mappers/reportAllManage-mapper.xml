@@ -57,7 +57,13 @@
 		OR m_id LIKE '%'|| #{keyword} ||'%'
 		ORDER BY b_id DESC
 	</select>
-	
+
+	<!-- 게시물 삭제(텍스트) -->
+	<delete id="deleteBoardManage"
+		flushCache="true" statementType="PREPARED">
+		delete from Board where b_id=#{b_id}
+	</delete>
+
 	<!-- 비지니스게시글 전체 신고 수 조회 -->
 	<select id="rbblistCount" resultType="int">
 		select count(*) from ReportBusinessBoard
@@ -77,4 +83,11 @@
 		OR m_id LIKE '%'|| #{keyword} ||'%'
 		ORDER BY bb_id DESC
 	</select>
+	
+	<!-- 비지니스 게시물 삭제(텍스트) -->
+	<delete id="deleteBsboardManage"
+		flushCache="true" statementType="PREPARED">
+		delete from businessboard where
+		bb_id=#{bb_id}
+	</delete>
 </mapper>

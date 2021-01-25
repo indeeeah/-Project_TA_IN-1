@@ -36,7 +36,7 @@ public class GnBoardController {
 	private BsnBoardService bbService;
 	
 	public static final int LIMIT = 6;
-
+	
 	@RequestMapping(value = "/gnMain", method = RequestMethod.GET)
 	public ModelAndView gnMain(@RequestParam(name = "page", defaultValue = "1") int page, HttpServletRequest request,
 			@RequestParam(name = "m_id") String m_id, ModelAndView mv) {
@@ -65,6 +65,9 @@ public class GnBoardController {
 				mv.addObject("shownotice", tService.shownotice(my_name));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
+				mv.addObject("chkfollow", tService.chkfollow(my_name));
+				mv.addObject("shownotice", tService.shownotice(my_name));
+				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				mv.addObject("id_img_fwr", gService.showp_one(m_id));
 				mv.addObject("fw", gService.showp_two(m_id));
@@ -132,6 +135,9 @@ public class GnBoardController {
 				mv.addObject("shownotice", tService.shownotice(my_name));
 				mv.setViewName("general/gnEachPage");
 			} else if (b_id.startsWith("BB")) {
+				mv.addObject("shownotice", tService.shownotice(my_name));
+				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				System.out.println("bbDetail:"+bbService.selectOne(b_id));
 				mv.addObject("bbDetail", bbService.selectOne(b_id));	// 게시물 상세
 				System.out.println("bbTags:"+bbService.selectOneTags(b_id));

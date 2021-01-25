@@ -49,9 +49,14 @@ public class ReportAllManageDao {
 	public List<ReportAllManage> rbsearchList(String keyword) {
 		return sqlSession.selectList("ReportAllManage.rbsearchList", keyword);
 	}
-	
-	
-	//****************************//
+
+	// 게시물 삭제(텍스트)
+	public int deleteBoardManage(String b_id) {
+		return sqlSession.delete("ReportAllManage.deleteBoardManage", b_id);
+
+	}
+
+	// ****************************//
 	// 비지니스 게시글 전체 신고 수 조회
 	public int rbblistCount() {
 		return sqlSession.selectOne("ReportAllManage.listCount");
@@ -68,5 +73,9 @@ public class ReportAllManageDao {
 	public List<ReportAllManage> rbbsearchList(String keyword) {
 		return sqlSession.selectList("ReportAllManage.rbbsearchList", keyword);
 	}
-	
+
+	// 비지니스 게시물 삭제(텍스트)
+	public int deleteBsboardManage(String bb_id) {
+		return sqlSession.delete("ReportAllManage.deleteBsboardManage", bb_id);
+	}
 }

@@ -19,6 +19,9 @@ public interface ReportAllManageService {
 	// 페이지 단위의 게시글 신고 조회
 	List<ReportAllManage> rbselectList(int startPage, int limit);
 
+	// 게시물 삭제(텍스트)
+	int deleteBoardManage(String b_id);
+
 	// 게시물 검색
 	List<ReportAllManage> rbsearchList(String keyword);
 
@@ -28,5 +31,7 @@ public interface ReportAllManageService {
 
 	// 게시물 검색
 	List<ReportAllManage> rbbsearchList(String keyword);
-	
+
+	// 비지니스 게시물 삭제(텍스트)
+	int deleteBsboardManage(String bb_id);
 }
