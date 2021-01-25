@@ -23,12 +23,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.project.tain.post.model.domain.TimeLine;
 import com.project.tain.post.model.service.TimeLineService;
+import com.project.tain.membermanage.model.service.mMessageServiceImpl;
+
 
 @Controller
 public class TimeLineController {
 
 	@Autowired
 	private TimeLineService tService;
+	
+	@Autowired
+	   private mMessageServiceImpl mMessageServiceImpl;
 	
 	public static final int LIMIT=3;
 
@@ -91,6 +96,7 @@ public class TimeLineController {
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.setViewName("post/timeline");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -129,6 +135,7 @@ public class TimeLineController {
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.setViewName("serviceCenter/aboutUs");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -146,6 +153,7 @@ public class TimeLineController {
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.setViewName("serviceCenter/serviceCenter");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -163,6 +171,7 @@ public class TimeLineController {
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.setViewName("serviceCenter/out");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

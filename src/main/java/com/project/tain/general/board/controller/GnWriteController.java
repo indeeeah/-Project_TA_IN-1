@@ -21,6 +21,7 @@ import com.project.tain.general.board.model.domain.GnWrite;
 import com.project.tain.general.board.model.service.GnBoardService;
 import com.project.tain.general.board.model.service.GnWriteService;
 import com.project.tain.post.model.service.TimeLineService;
+import com.project.tain.membermanage.model.service.mMessageServiceImpl;
 
 @Controller
 public class GnWriteController {
@@ -36,6 +37,9 @@ public class GnWriteController {
 
 	@Autowired
 	private BsnBoardService bbService;
+	
+	@Autowired
+	   private mMessageServiceImpl mMessageServiceImpl;
 
 	@RequestMapping(value = "/gnWrite", method = RequestMethod.GET)
 	public ModelAndView gnWrite(HttpServletRequest request, ModelAndView mv) {
@@ -48,6 +52,7 @@ public class GnWriteController {
 				mv.addObject("chkseq", gwService.chkseq());
 				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 				mv.addObject("shownotice", tService.shownotice(my_name));
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 				mv.setViewName("general/gnWrite");
 			} else if (result.equals("B")) {
 				mv.addObject("m_id", my_name);

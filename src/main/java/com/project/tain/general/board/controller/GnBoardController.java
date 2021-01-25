@@ -19,9 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.tain.business.board.model.service.BsnBoardService;
 import com.project.tain.general.board.model.domain.GnBoard;
 import com.project.tain.general.board.model.service.GnBoardService;
-import com.project.tain.post.model.domain.TimeLine;
-import com.project.tain.post.model.service.SearchListService;
 import com.project.tain.post.model.service.TimeLineService;
+import com.project.tain.membermanage.model.service.mMessageServiceImpl;
 
 @Controller
 public class GnBoardController {
@@ -34,6 +33,9 @@ public class GnBoardController {
 
 	@Autowired
 	private BsnBoardService bbService;
+	
+	@Autowired
+	   private mMessageServiceImpl mMessageServiceImpl;
 	
 	public static final int LIMIT = 6;
 	
@@ -63,6 +65,7 @@ public class GnBoardController {
 				mv.addObject("showpostCount", gService.showpostCount(m_id));
 				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 				mv.addObject("shownotice", tService.shownotice(my_name));
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
 				mv.addObject("chkfollow", tService.chkfollow(my_name));
@@ -133,6 +136,7 @@ public class GnBoardController {
 				System.out.println(tService.showHashTag(b_id));
 				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 				mv.addObject("shownotice", tService.shownotice(my_name));
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 				mv.setViewName("general/gnEachPage");
 			} else if (b_id.startsWith("BB")) {
 				mv.addObject("shownotice", tService.shownotice(my_name));

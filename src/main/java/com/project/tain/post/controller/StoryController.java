@@ -21,9 +21,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.project.tain.post.model.domain.Story;
-import com.project.tain.post.model.domain.TimeLine;
 import com.project.tain.post.model.service.StoryService;
 import com.project.tain.post.model.service.TimeLineService;
+import com.project.tain.membermanage.model.service.mMessageServiceImpl;
+
 
 @Controller
 public class StoryController {
@@ -32,6 +33,9 @@ public class StoryController {
 
 	@Autowired
 	private StoryService sService;
+	
+	@Autowired
+	   private mMessageServiceImpl mMessageServiceImpl;
 
 	@RequestMapping(value = "/writeStory", method = RequestMethod.GET)
 	public ModelAndView writeStory(HttpServletRequest request, ModelAndView mv) {
@@ -44,6 +48,7 @@ public class StoryController {
 			mv.addObject("selectHighlight", sService.selectHighlight(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.setViewName("post/writeStory");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -64,6 +69,7 @@ public class StoryController {
 			mv.addObject("showAllAStory", sService.showAllAStory());
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.setViewName("post/stories");
 			System.out.println(mv);
 		} catch (Exception e) {
@@ -84,6 +90,7 @@ public class StoryController {
 			mv.addObject("selectEachHighlight", sService.selectEachHighlight(st));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			System.out.println(h_name);
 			System.out.println(m_id);
 			System.out.println(sService.selectEachHighlight(st));
@@ -107,6 +114,7 @@ public class StoryController {
 			mv.addObject("eachstory", sService.eachStory(id));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.setViewName("post/eachstory");
 			System.out.println(mv);
 		} catch (Exception e) {

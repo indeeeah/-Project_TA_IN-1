@@ -18,21 +18,24 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.tain.post.model.domain.SearchList;
 import com.project.tain.post.model.service.SearchListService;
 import com.project.tain.post.model.service.TimeLineService;
+import com.project.tain.membermanage.model.service.mMessageServiceImpl;
 
 @Controller
 public class SearchListController {
 	@Autowired
 	private TimeLineService tService;
-	
+
 	@Autowired
 	private SearchListService sService;
-	
+
+	@Autowired
+	private mMessageServiceImpl mMessageServiceImpl;
+
 	public static final int LIMIT = 6;
 
-
 	@RequestMapping(value = "/explore")
-	public ModelAndView SearchList(@RequestParam(name = "page", defaultValue = "1") int page,HttpServletRequest request,
-			@RequestParam(name = "hashtag") String hashtag, ModelAndView mv) {
+	public ModelAndView SearchList(@RequestParam(name = "page", defaultValue = "1") int page,
+			HttpServletRequest request, @RequestParam(name = "hashtag") String hashtag, ModelAndView mv) {
 		int currentPage = page;
 		try {
 			HttpSession session = request.getSession();
@@ -43,7 +46,9 @@ public class SearchListController {
 			mv.addObject("searchResult", sService.showHashTag(hashtag));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
-			//mv.addObject("searchResult", sService.showHashTagPage(hashtag, currentPage, LIMIT));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
+			// mv.addObject("searchResult", sService.showHashTagPage(hashtag, currentPage,
+			// LIMIT));
 			mv.setViewName("post/searchList");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -52,24 +57,24 @@ public class SearchListController {
 		}
 		return mv;
 	}
-	
+
 	// 게시물 스크롤 페이징
-		@ResponseBody
-		@RequestMapping(value = "/exploreScroll.do", method = RequestMethod.POST)
-		public HashMap<String, Object> gnMainScroll(Model model, HttpServletRequest request,
-				@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "hashtag") String hashtag) {
-			System.out.println("들어가나?");
-			HashMap<String, Object> result = new HashMap<String, Object>();
-			System.out.println("해시태그는"+hashtag);
-			int currentPage = page;
-			int listCount = sService.showHashTagCount(hashtag);
-			int maxPage = (int) ((double) listCount / LIMIT + 0.9);
-			List<SearchList> logList = sService.showHashTagPage(hashtag, currentPage, LIMIT);
-			result.put("count",sService.showHashTagCount(hashtag)); // 게시물카운트
-			result.put("currentPage", currentPage); // 현재 페이지
-			result.put("maxPage", maxPage); // 최대 페이지
-			result.put("list", logList); // 게시물 텍스트정보
-			System.out.println("list:" + logList);
-			return result;
-		}
+	@ResponseBody
+	@RequestMapping(value = "/exploreScroll.do", method = RequestMethod.POST)
+	public HashMap<String, Object> gnMainScroll(Model model, HttpServletRequest request,
+			@RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name = "hashtag") String hashtag) {
+		System.out.println("들어가나?");
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		System.out.println("해시태그는" + hashtag);
+		int currentPage = page;
+		int listCount = sService.showHashTagCount(hashtag);
+		int maxPage = (int) ((double) listCount / LIMIT + 0.9);
+		List<SearchList> logList = sService.showHashTagPage(hashtag, currentPage, LIMIT);
+		result.put("count", sService.showHashTagCount(hashtag)); // 게시물카운트
+		result.put("currentPage", currentPage); // 현재 페이지
+		result.put("maxPage", maxPage); // 최대 페이지
+		result.put("list", logList); // 게시물 텍스트정보
+		System.out.println("list:" + logList);
+		return result;
+	}
 }
