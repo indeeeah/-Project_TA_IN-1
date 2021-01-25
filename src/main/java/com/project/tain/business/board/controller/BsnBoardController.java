@@ -43,6 +43,9 @@ public class BsnBoardController {
 	@Autowired
 	private TimeLineService tService;
 	
+	@Autowired
+	private com.project.tain.membermanage.model.service.mMessageServiceImpl mMessageServiceImpl;
+	
 	public static final int LIMIT=9;
 	
 	// 게시물 목록
@@ -75,6 +78,7 @@ public class BsnBoardController {
 				mv.addObject("shownotice", tService.shownotice(my_name));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 				mv.addObject("shownotice", tService.shownotice(my_name));
 				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 				mv.addObject("chkfollow", tService.chkfollow(my_name));
@@ -156,6 +160,7 @@ public class BsnBoardController {
 		String m_id=(String) session.getAttribute("my_name");
 		String my_name=(String) session.getAttribute("my_name");
 		try {
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
@@ -195,6 +200,7 @@ public class BsnBoardController {
 				System.out.println("H_tag : "+bb.getH_tag());
 				bbService.saveBsnTag(bb);
 			}
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
@@ -253,6 +259,7 @@ public class BsnBoardController {
 		String m_id=(String) session.getAttribute("my_name");
 		String my_name=(String) session.getAttribute("my_name");
 		try {
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
@@ -292,6 +299,7 @@ public class BsnBoardController {
 //				mv.addObject("bbUpdate", bbService.updateBsnBoard(bb));
 				bbService.updateBsnBoard(bb);
 				System.out.println("업데이트 애드 m_id"+m_id);
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				mv.addObject("shownotice", tService.shownotice(my_name));
 				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
