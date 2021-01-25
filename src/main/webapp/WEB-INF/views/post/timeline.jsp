@@ -83,6 +83,8 @@
                     background-size: 12px;
                     display: none;
                 }
+                
+                
             </style>
         </head>
 
@@ -206,7 +208,7 @@
                                         <div class="timeline_comment_con">
                                             <div class="inner_comment_con">
                                                 <div class="timeline_icon_con">
-                                                    <div class="icon like_icon likechk${vo.t_id }" onclick="pressLike('${vo.t_id}','${vo.m_id }');"></div>
+                                                    <div class="icon like_icon socket likechk${vo.t_id }" onclick="pressLike('${vo.t_id}','${vo.m_id }');"></div>
                                                     <div class="icon unlike_icon unlikechk${vo.t_id }" onclick="pressUnlike('${vo.t_id}');"></div>
                                                     <div class="icon write_icon write_icon${vo.t_id }" onclick="movefocus('${vo.t_id }');"></div>
                                                     <div class="icon share_icon" onclick="shareurl('${vo.m_id }','${vo.t_id}')"></div>
@@ -282,7 +284,7 @@
                                                 <div class="recom_id" onclick="goboard('${vo.r_mid }');" style="cursor:pointer;">${vo.r_mid }</div>
                                                 <div class="recom_info">${vo.count }명이 팔로우합니다</div>
                                             </div>
-                                            <button class="recom_follow followBtn" style="cursor:pointer;">팔로우</button>
+                                            <button class="recom_follow followBtn socket" style="cursor:pointer;">팔로우</button>
                                             <input type="hidden" value="${vo.r_mid }">
                                         </div>
                                     </c:forEach>
@@ -449,7 +451,7 @@
                                             '<div class="upload_comment">' +
                                             '<div class="inner_comment_con inner_upload">' +
                                             '<input type="text" class="write_space write_space' + resp.list[i].t_id + '" placeholder="댓글 달기..." name="t_comment">' +
-                                            '<button class="comment_upload">게시</button>' +
+                                            '<button class="comment_upload socket">게시</button>' +
                                             '<input type="hidden" name="t_id" value="' + resp.list[i].t_id + '"> <input type="hidden" name="t_type" value="' + resp.list[i].t_type + '" class="t_type' + resp.list[i].t_id + '">' +
                                             '<input type="hidden" value="' + resp.list[i].m_id + '">' +
                                             '</div>' +
@@ -1437,7 +1439,7 @@
                                 // 전체 댓글 append - cm3  // 댓글 좋아요 체크 trigger 사용
                                 htmls += '<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                     id + '</div><div class="commentResult post_content">' +
-                                    b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + ' lbtn"></div>' +
+                                    b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon socket clcon likechk' + b_id + ' lbtn"></div>' +
                                     '<div class="comment_unlcon clcon unlikechk' + b_id + ' unlbtn"></div>' +
                                     '<input type="hidden" value="' + b_id + '"><input type="hidden" value="' + id + '"></div></div>';
                                 htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
@@ -1460,7 +1462,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload socket">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
@@ -1480,7 +1482,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload socket">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
                                     }
 
@@ -1500,7 +1502,7 @@
                                             '<input type="hidden" value="' + b_id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload socket">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
 
@@ -1512,7 +1514,7 @@
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo"  style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>';
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload socket">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>';
                                     }
 
                                 }
@@ -1685,7 +1687,7 @@
                                             htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                                 mother_id + '</div><div class="commentRId post_id" style="margin-left:5px;" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                                 id + '</div><div class="commentResult post_content reply_commentResult">' +
-                                                b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
+                                                b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon socket clcon likechk' + b_id + '"></div>' +
                                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
                                                 '<input type="hidden" value="' + b_id + '"><input type="hidden" value="' + id + '"></div></div>';
                                             htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
@@ -1991,7 +1993,7 @@
                                 // 전체 댓글 append - cm3  // 댓글 좋아요 체크 trigger 사용
                                 htmls += '<div class="com_detail"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                     id + '</div><div class="commentResult post_content">' +
-                                    b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
+                                    b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon socket clcon likechk' + b_id + '"></div>' +
                                     '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
                                     '<input type="hidden" value="' + b_id + '"><input type="hidden" value="' + id + '"></div></div>';
                                 htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
@@ -2014,7 +2016,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload socket">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
@@ -2033,7 +2035,7 @@
                                             '<input type="hidden" value="' + id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload socket">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<ul class="cm4' + b_id + '" id="cm4' + b_id + '"></ul>';
                                     }
 
@@ -2053,7 +2055,7 @@
                                             '<input type="hidden" value="' + b_id + '">' +
                                             '<div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload socket">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>' +
                                             '<div class="com_detail replyMo" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
                                             id + '</div><input type="text" class="replyCoMo write_space" value="' + b_content + '"><button class="rep_comment_modify">수정</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"></div>';
 
@@ -2065,7 +2067,7 @@
                                             '<input type="hidden" class="t_type' + b_id + '" value="' + b_type + '">' +
                                             '<div class="moreCoW' + b_id + ' moreCoW">답글 달기</div><div class="moreCoD' + b_id + ' moreCoD">' + b_date + '</div></div>' +
                                             '<div class="com_detail replyCo"  style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>';
+                                            id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload socket">게시</button><input type="hidden" value="' + b_id + '"><input type="hidden" class="' + b_id + 'forRbtn" value="' + b_type + '"><input type="hidden" value="' + id + '"></div>';
                                     }
 
                                 }
@@ -2238,7 +2240,7 @@
                                             htmls += '<div class="com_detail"><div class="commentRId post_id" style="color:transparent;">' +
                                                 mother_id + '</div><div class="commentRId post_id" style="margin-left:5px;" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                                 id + '</div><div class="commentResult post_content reply_commentResult">' +
-                                                b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
+                                                b_content + '</div><a class="commentViewAll"></a><i class="fas fa-bars" onclick="report(\'' + b_id + '\',\'' + id + '\',\'' + type + '\');"></i><div class="comment_lcon socket clcon likechk' + b_id + '"></div>' +
                                                 '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
                                                 '<input type="hidden" value="' + b_id + '"><input type="hidden" value="' + id + '"></div></div>';
                                             htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +

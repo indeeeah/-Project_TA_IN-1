@@ -218,4 +218,9 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int turny(String m_id) {
 		return tDao.turny(m_id);
 	}
+
+	@Override
+	public List<TimeLine> shownotice(String my_name) {
+		return tDao.shownotice(my_name);
+	}
 }

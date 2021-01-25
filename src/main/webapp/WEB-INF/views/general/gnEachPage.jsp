@@ -142,21 +142,21 @@
                 </div>
                 <div id="modal_more_con_not_me_not_follow" style="display:none;">
                     <div class="goreportmember_modal modal_in">게시물 신고</div>
-                    <div class="follow_modal modal_in">팔로우</div>
+                    <!-- <div class="follow_modal modal_in">팔로우</div> -->
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
                     <!-- <div class="savepost_modal modal_in">게시물 저장하기</div>-->
                     <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="modal_more_con_not_me" style="display:none;">
                     <div class="goreportmember_modal modal_in">게시물 신고</div>
-                    <div class="unfollow_modal modal_in">팔로우 취소</div>
+                    <!-- <div class="unfollow_modal modal_in">팔로우 취소</div> -->
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
                     <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
                     <div class="modal_in notcancelAll">돌아가기</div>
                 </div>
                 <div id="modal_more_con_me" style="display:none;">
                     <div class="modifypost_modal modal_in">게시물 수정</div>
-                    <div class="deletepost_modal modal_in" onclick="deletepost();">게시물 삭제</div>
+                    <!-- <div class="deletepost_modal modal_in" onclick="deletepost();">게시물 삭제</div> -->
                     <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
                     <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
                     <div class="modal_in notcancelAll">돌아가기</div>
@@ -294,7 +294,7 @@
                                                 </div>
                                             </div>
                                             <i class="fas fa-bars fa-bars_reply_title" style="cursor:pointer;" onclick="moreForComment('${vo.m_id}','${vo.b_id}','${vo.b_content}');"></i>
-                                            <div class="icon_com like_icon comment_lcon likechk${vo.b_id}" onclick="pressLike_co('${vo.b_id}', '${vo.m_id}');"></div>
+                                            <div class="icon_com like_icon soket comment_lcon likechk${vo.b_id}" onclick="pressLike_co('${vo.b_id}', '${vo.m_id}');"></div>
                                             <div class="icon_com unlike_icon comment_unlcon unlikechk${vo.b_id}" onclick="pressUnLike_co('${vo.b_id}');"></div>
                                         </div>
                                         <input type="hidden" id="for_reco${vo.b_id}" class="for_reco" onclick="show_re_more('${vo.b_id}','${vo.comments }');" value="${vo.comments }">
@@ -303,14 +303,14 @@
                                     <div class="re_con re_con${vo.b_id}" id="re_con${vo.b_id}"></div>
                                     <div class="com_detail replyCo replyCo${vo.b_id}" style="display:none;">
                                         <div class="commentRId post_id" style="color:transparent;">${vo.m_id}</div>
-                                        <input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="${vo.m_id}">
+                                        <input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload socket">게시</button><input type="hidden" value="${vo.m_id}">
                                     </div>
                                 </c:forEach>
                             </c:if>
                         </div>
                         <div id="post_right_bottom">
                             <div id="post_icon_box">
-                                <div class="icon like_icon likechk" onclick="pressLike('${selectEachPost.b_id }','${selectEachPost.m_id }');">
+                                <div class="icon like_icon socket likechk" onclick="pressLike('${selectEachPost.b_id }','${selectEachPost.m_id }');">
                                 </div>
                                 <div class="icon unlike_icon unlikechk" onclick="pressUnLike('${selectEachPost.b_id }');"></div>
                                 <div class="icon write_icon" onclick="movefocus();"></div>
@@ -327,7 +327,7 @@
                             <div id="post_date">${selectEachPost.time }</div>
                             <div id="reply_box">
                                 <input type="text" id="commentbox" placeholder="댓글 달기..">
-                                <div id="sendbtn" class="comment_upload">게시</div><input type="hidden" value="${selectEachPost.m_id }">
+                                <div id="sendbtn" class="comment_upload socket">게시</div><input type="hidden" value="${selectEachPost.m_id }">
                             </div>
                         </div>
                     </div>
@@ -1123,7 +1123,7 @@
                                 '</div>' +
                                 '</div>' +
                                 '<i class="fas fa-bars fa-bars_reply_title" style="cursor:pointer;" onclick="moreForComment(\'' + id + '\',\'' + b_id + '\',\'' + b_content + '\');"></i>' +
-                                '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\',\'' + id + '\');"></div>' +
+                                '<div class="icon_com like_icon socket comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\',\'' + id + '\');"></div>' +
                                 '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
                                 '</div>' +
                                 '</div>';
@@ -1131,6 +1131,8 @@
 
                         $(a).html(htmls);
 
+                        $(a).css("border-top", "1px dashed #C7C7C7");
+                        $(a).css("border-bottom", "3px double #C7C7C7");
                         $(".chkCoLike").trigger('click');
                         $(".countLike_trigger").trigger('click');
 

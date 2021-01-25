@@ -45,6 +45,7 @@ public class TimeLine implements java.io.Serializable{
 	private String second_date;
 	private int countl;
 	private String my_name;
+	private String n_contents;
 	
 	public TimeLine() {
 		
@@ -410,6 +411,14 @@ public class TimeLine implements java.io.Serializable{
 
 	public void setMy_name(String my_name) {
 		this.my_name = my_name;
+	}
+
+	public String getN_contents() {
+		return n_contents;
+	}
+
+	public void setN_contents(String n_contents) {
+		this.n_contents = n_contents;
 	}
 	
 	

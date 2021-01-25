@@ -9,6 +9,9 @@
             <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
             <link href="${pageContext.request.contextPath}/resources/css/header.css" rel="stylesheet" type="text/css">
             <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+            <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap" rel="stylesheet">
             <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
             <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
             <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
@@ -19,7 +22,7 @@
                 <div id="big_con">
                     <div id="header_con">
                         <div id="header_left">
-                            <div id="fix_logo"></div>
+                            <div id="fix_logo">TA_IN</div>
                             <input type="hidden" name="m_id" class="m_id" value="${my_name }">
                             <input type="hidden" name="alarmcheck" id="alarmcheck" value="${alarmcheck }">
                         </div>
@@ -53,8 +56,8 @@
             </header>
             <div id="alert_con">
                 <div>
-                    <div id="chk_my_follower">
-                        <c:if test="${not empty chkfollow }">
+                    <c:if test="${not empty chkfollow }">
+                        <div class="chk_my_follower">
                             <c:forEach var="vo" items="${chkfollow }" varStatus="s">
                                 <div class="fo_con">
                                     <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="fo_photo fo_photo${vo.id }">
@@ -64,72 +67,83 @@
                                         <input type="hidden" class="fo_act fo_act${vo.id }" onclick="showfollowchk('${vo.id }', '${vo.m_activity }');" value="${vo.m_activity }">
                                 </div>
                             </c:forEach>
-                        </c:if>
-                    </div>
+                        </div>
+                    </c:if>
                     <!-- 아래에 실시간 알림 -->
+                    <c:if test="${not empty shownotice }">
+                    <div class="hck_con">
+                    <c:forEach var="vo" items="${shownotice }" varStatus="s">
+                    	<div class="chk_my_follower2" onclick="goEachProf('${vo.m_id }');" style="cursor:pointer;">
+                    	<img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="fo_photo2 fo_photo${vo.m_id }">
+                    	<div class="alert_cont alert_text">${vo.n_contents }</div>
+                    	</div>
+                    	</c:forEach>
+                    </div>
+                    </c:if>
                 </div>
             </div>
             <div id="forheader"></div>
         </body>
         <script>
-        $(document).ready(function(){
-        	var socket = null;
-    		function connect() {
-    			var ws = new WebSocket(
-    					"ws://localhost:8090/tain/replyEcho?ID=${my_name}");
-    			socket = ws;
+            $(document).ready(function() {
+                var socket = null;
 
-    			//접속 처리
-    			ws.onopen = function() {
-    				console.log('Info: connection opened.');
-    			};
+                function connect() {
+                    var ws = new WebSocket(
+                        "ws://localhost:8090/tain/replyEcho?ID=${my_name}");
+                    socket = ws;
 
-    			//메시지 처리
-    			ws.onmessage = function(event) {
-    				console.log("ReceiveMessage : ", event.data + '\n');
-    				var arr=[];
-    				arr = event.data.split(",");
-    				var id = arr[0];
-    				var msg = arr[1];
-    				if(msg=="!Alarm"){
-    					$(".circle2").css("display", "block");
-    				}
-    				if(msg!="!Alarm"){
-    					$(".circle1").css("display", "block");
-    				}
-    			};
-    			
-    			//접속 끊겼을때
-    			ws.onclose = function(event) {
-    				console.log('Info: connection closed.');
-    				//setTimeout(function(){connect();}, 1000);   // retry connection!!
-    			};
-    			ws.onerror = function(err) {
-    				console.log('Err:', err);
-    			};
+                    //접속 처리
+                    ws.onopen = function() {
+                        console.log('Info: connection opened.');
+                    };
 
-    		}
+                    //메시지 처리
+                    ws.onmessage = function(event) {
+                        console.log("ReceiveMessage : ", event.data + '\n');
+                        var arr = [];
+                        arr = event.data.split(",");
+                        var id = arr[0];
+                        var msg = arr[1];
+                        if (msg == "!Alarm") {
+                            $(".circle2").css("display", "block");
+                        }
+                        if (msg != "!Alarm") {
+                            $(".circle1").css("display", "block");
+                        }
+                    };
 
-    		connect();
-			
-    		//댓글등록 버튼, 팔로우 버튼, 좋아요버튼
-    		$('.socket').on('click', function(evt) {
-    			evt.preventDefault();
-    			if (socket.readyState !== 1)
-    				return;
-    			var id = "${my_name}"; //내 아이디
-    			var msg = "!Alarm";
-    			var toid = $("#toid").val(); //알림을 받을 사람 아이디
-    			var date = new Date;
-    			var year = date.getFullYear();
-    			var month = date.getMonth();
-    			var day = date.getDate();
-    			var hours = date.getHours();
-    			var minutes = date.getMinutes();
-    			var seconds = date.getSeconds();
-    			socket.send(id+","+toid+","+msg+","+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds);
-    		});
-        });
+                    //접속 끊겼을때
+                    ws.onclose = function(event) {
+                        console.log('Info: connection closed.');
+                        //setTimeout(function(){connect();}, 1000);   // retry connection!!
+                    };
+                    ws.onerror = function(err) {
+                        console.log('Err:', err);
+                    };
+
+                }
+
+                connect();
+
+                //댓글등록 버튼, 팔로우 버튼, 좋아요버튼
+                $('.socket').on('click', function(evt) {
+                    evt.preventDefault();
+                    if (socket.readyState !== 1)
+                        return;
+                    var id = "${my_name}"; //내 아이디
+                    var msg = "!Alarm";
+                    var toid = $("#toid").val(); //알림을 받을 사람 아이디
+                    var date = new Date;
+                    var year = date.getFullYear();
+                    var month = date.getMonth();
+                    var day = date.getDate();
+                    var hours = date.getHours();
+                    var minutes = date.getMinutes();
+                    var seconds = date.getSeconds();
+                    socket.send(id + "," + toid + "," + msg + "," + year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds);
+                });
+            });
         </script>
         <script type="text/javascript">
             var memId = $(".m_id").val();
@@ -290,6 +304,11 @@
                             error);
                     }
                 });
+            }
+            
+            function goEachProf(m_id){
+            	var url = "${pageContext.request.contextPath}/gnMain?m_id=" + m_id;
+                $(location).attr('href', url);
             }
         </script>
 

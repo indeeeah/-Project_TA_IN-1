@@ -88,4 +88,6 @@ public interface TimeLineService {
 
 	int turny(String m_id);
 
+	List<TimeLine> shownotice(String my_name);
+
 }

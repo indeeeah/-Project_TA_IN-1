@@ -298,13 +298,13 @@
 		flushCache="true" statementType="PREPARED" timeout="20">
 		insert into notice
 		(m_id, m_id2, b_id, n_contents) values (#{m_id}, #{m_id2}, #{t_id},
-		#{m_id}||'님이 화원님의 게시글을 좋아합니다.')
+		#{m_id}||'님이 회원님의 게시글을 좋아합니다.')
 	</insert>
 	<insert id="alertLikeco" parameterType="TimeLine"
 		flushCache="true" statementType="PREPARED" timeout="20">
 		insert into notice
 		(m_id, m_id2, b_id, n_contents) values (#{m_id}, #{m_id2}, #{t_id},
-		#{m_id}||'님이 화원님의 댓글을 좋아합니다.')
+		#{m_id}||'님이 회원님의 댓글을 좋아합니다.')
 	</insert>
 	<delete id="pressUnLike" parameterType="TimeLine"
 		flushCache="true" statementType="PREPARED" timeout="20">
@@ -549,14 +549,23 @@
 	</select>
 
 	<select id="alarmcheck" parameterType="string" resultType="int">
-		select count(*) count from notice where m_id2=#{my_name} and n_check='N'
+		select count(*) count from notice where m_id2=#{my_name} and
+		n_check='N'
 		and not m_id=#{my_name}
-	</select> 
-	
+	</select>
+
 	<update id="turny" parameterType="string" flushCache="true"
 		statementType="PREPARED" timeout="20">
 		update notice set n_check = 'Y' where
 		m_id2=#{m_id}
 	</update>
+
+	<select id="shownotice" parameterType="TimeLine"
+		resultType="arrayList" resultMap="resultTimeLine">
+		select notice.m_id m_id, n_contents,
+		m_img from notice join member on notice.m_id=member.m_id where
+		m_id2=#{my_name}
+		and not notice.m_id=#{my_name}
+	</select>
 
 </mapper>

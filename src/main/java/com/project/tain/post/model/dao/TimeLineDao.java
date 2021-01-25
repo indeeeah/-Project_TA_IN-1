@@ -188,4 +188,8 @@ public class TimeLineDao {
 		return sqlSession.update("TimeLine.turny", m_id);
 	}
 
+	public List<TimeLine> shownotice(String my_name) {
+		return sqlSession.selectList("TimeLine.shownotice", my_name);
+	}
+
 }

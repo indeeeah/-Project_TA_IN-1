@@ -113,7 +113,7 @@
                                     <div class="people_id" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">${vo.followerid }</div>
                                     <div class="people_name" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">${vo.m_name }</div>
                                 </div>
-                                <div class="people_btn people_follow people_follow${vo.followerid }" style="display:none; cursor:pointer;" onclick="gofollow('${vo.followerid }');">팔로우</div>
+                                <div class="people_btn socket people_follow people_follow${vo.followerid }" style="display:none; cursor:pointer;" onclick="gofollow('${vo.followerid }');">팔로우</div>
                                 <div class="people_btn people_alfollow people_alfollow${vo.followerid }" style="display:none; cursor:pointer;" onclick="gounfollow('${vo.followerid }');"><i class="fas fa-user-check"></i></div>
                             </div>
                         </c:forEach>
@@ -135,7 +135,7 @@
                                     <div class="people_id" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">${vo.followid }</div>
                                     <div class="people_name" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">${vo.m_name }</div>
                                 </div>
-                                <div class="people_btn people_follow people_follow${vo.followid }" style="display:none; cursor:pointer;" onclick="gofollow('${vo.followid }');">팔로우</div>
+                                <div class="people_btn socket people_follow people_follow${vo.followid }" style="display:none; cursor:pointer;" onclick="gofollow('${vo.followid }');">팔로우</div>
                                 <div class="people_btn people_alfollow people_alfollow${vo.followid}" style="display:none; cursor:pointer;" onclick="gounfollow('${vo.followid }');"><i class="fas fa-user-check"></i></div>
                             </div>
                         </c:forEach>
@@ -329,7 +329,7 @@
                         </div>
                         <div id="post_right_bottom">
                             <div id="post_icon_box">
-                                <div class="icon like_icon likechk" onclick="pressLike('${id_img_fwr.m_id }');"></div>
+                                <div class="icon like_icon socket likechk" onclick="pressLike('${id_img_fwr.m_id }');"></div>
                                 <div class="icon unlike_icon unlikechk" onclick="pressUnLike();"></div>
                                 <div class="icon write_icon" onclick="movefocus();"></div>
                                 <div class="icon share_icon" onclick="shareurl();"></div>
@@ -344,7 +344,7 @@
                             <div id="post_date"></div>
                             <div id="reply_box">
                                 <input type="text" id="commentbox" placeholder="댓글 달기..">
-                                <div id="sendbtn" class="comment_upload">게시</div>
+                                <div id="sendbtn" class="comment_upload socket">게시</div>
                             </div>
                         </div>
                     </div>
@@ -370,7 +370,7 @@
                                         <div id="followchk" class="profile_btn profile_btn_ok" onclick="main_pre_unfollow('${id_img_fwr.m_id}');">
                                             <i class="fas fa-user-check" id="pre_unfollow"></i>
                                         </div>
-                                        <div id="followchk" class="profile_btn profile_btn_no" onclick="main_followBtn('${id_img_fwr.m_id}');" style="display:none;">
+                                        <div id="followchk" class="profile_btn socket profile_btn_no" onclick="main_followBtn('${id_img_fwr.m_id}');" style="display:none;">
                                             팔로우
                                         </div>
                                     </c:if>
@@ -378,7 +378,7 @@
                                         <div id="followchk" class="profile_btn profile_btn_ok" onclick="main_pre_unfollow('${id_img_fwr.m_id}');" style="display:none;">
                                             <i class="fas fa-user-check" id="pre_unfollow"></i>
                                         </div>
-                                        <div id="followchk" class="profile_btn profile_btn_no" onclick="main_followBtn('${id_img_fwr.m_id}');">
+                                        <div id="followchk" class="profile_btn socket profile_btn_no" onclick="main_followBtn('${id_img_fwr.m_id}');">
                                             팔로우
                                         </div>
                                     </c:if>
@@ -395,7 +395,7 @@
                                 <div class="small_con">게시물 ${gboard.post }</div>
                                 <div class="small_con seefollower" style="cursor:pointer;">팔로워 ${id_img_fwr.follower }
                                 </div>
-                                <div class="small_con seefollow" style="cursor:pointer;">팔로우 ${fw.follow }</div>
+                                <div class="small_con socket seefollow" style="cursor:pointer;">팔로우 ${fw.follow }</div>
                             </div>
                             <div id="profile_intro">${id_img_fwr.m_intro }</div>
                         </div>
@@ -434,7 +434,7 @@
                                         <img class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }">
                                         <div class="each_rec_id" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.r_mid }</div>
                                         <div class="each_rec_name" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_name }</div>
-                                        <div class="each_rec_followbtn" id="each_rec_followbtn${vo.r_mid }" onclick="followBtn('${vo.r_mid}');">팔로우</div>
+                                        <div class="each_rec_followbtn socket" id="each_rec_followbtn${vo.r_mid }" onclick="followBtn('${vo.r_mid}');">팔로우</div>
                                     </div>
                                 </c:forEach>
                             </c:if>
@@ -609,7 +609,7 @@
             // 팔로워 팔로잉
             function gofollow(id) {
                 console.log(id);
-                $("#toid").val(m_id2);
+                $("#toid").val(id);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/insertFollow.do",
                     method: "POST",
@@ -1419,13 +1419,13 @@
                                     '</div>' +
                                     '</div>' +
                                     '<i class="fas fa-bars fa-bars_reply_title" style="cursor:pointer;" onclick="moreForComment(\'' + id + '\',\'' + b_id + '\',\'' + b_content + '\');"></i>' +
-                                    '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\',\'' + id + '\');"></div>' +
+                                    '<div class="icon_com socket like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\',\'' + id + '\');"></div>' +
                                     '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
                                     '</div>' +
                                     '<div class="show_re_re show_re_re' + b_id + '" onclick ="show_re_re(\'' + b_id + '\');">답글 보기 (' + countr + ')개</div>' +
                                     '</div><div class="re_con re_con' + b_id + '" id="re_con' + b_id + '"></div>' +
                                     '<div class="com_detail replyCo replyCo' + b_id + '" id="replyCo' + b_id + '" style="display:none;"><div class="commentRId post_id" style="color:transparent;">' +
-                                    id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload">게시</button><input type="hidden" value="' + id + '"></div>' +
+                                    id + '</div><input type="text" class="replyCoWri write_space" placeholder="답글 작성..."><button class="rep_comment_upload socket">게시</button><input type="hidden" value="' + id + '"></div>' +
                                     '<input type="hidden" class="c_for_re c_for_re' + b_id + '" value="' + countr + '" onclick="cforre(\'' + b_id + '\',\'' + countr + '\');">';
 
                             }
@@ -1687,7 +1687,7 @@
                                     '</div>' +
                                     '</div>' +
                                     '<i class="fas fa-bars fa-bars_reply_title" style="cursor:pointer;" onclick="moreForComment(\'' + id + '\',\'' + b_id + '\',\'' + b_content + '\');"></i>' +
-                                    '<div class="icon_com like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\',\'' + id + '\');"></div>' +
+                                    '<div class="icon_com socket like_icon comment_lcon likechk' + b_id + '" onclick="pressLike_co(\'' + b_id + '\',\'' + id + '\');"></div>' +
                                     '<div class="icon_com unlike_icon comment_unlcon unlikechk' + b_id + '" onclick="pressUnLike_co(\'' + b_id + '\');"></div>' +
                                     '</div>' +
                                     '</div>';

@@ -47,6 +47,7 @@ public class GnWriteController {
 				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				mv.addObject("chkseq", gwService.chkseq());
 				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+				mv.addObject("shownotice", tService.shownotice(my_name));
 				mv.setViewName("general/gnWrite");
 			} else if (result.equals("B")) {
 				mv.addObject("m_id", my_name);

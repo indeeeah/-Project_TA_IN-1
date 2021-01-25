@@ -80,9 +80,7 @@ public class TimeLineController {
 			System.out.println("세션에 저장 돼 있는 변수 : "+my_name);
 			System.out.println("==============================");
 			mv.addObject("myProfile", tService.showMyProf(my_name));
-			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("storyList", tService.showStoryList(my_name));
-			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 
 			//mv.addObject("timeLineList", tService.showTimeLineList(my_name));
 			mv.addObject("count", tService.timeLineListCount(my_name));
@@ -90,6 +88,8 @@ public class TimeLineController {
 			mv.addObject("recomFollow", tService.recomFollow(my_name));
 			
 			//알람 체크 부분//
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.setViewName("post/timeline");
 		} catch (Exception e) {
@@ -128,6 +128,7 @@ public class TimeLineController {
 			String my_name = (String) session.getAttribute("my_name");
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.setViewName("serviceCenter/aboutUs");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -144,6 +145,7 @@ public class TimeLineController {
 			String my_name = (String) session.getAttribute("my_name");
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.setViewName("serviceCenter/serviceCenter");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -160,6 +162,7 @@ public class TimeLineController {
 			String my_name = (String) session.getAttribute("my_name");
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.setViewName("serviceCenter/out");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
