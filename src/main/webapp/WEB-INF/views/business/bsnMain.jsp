@@ -1049,6 +1049,7 @@ input {
 </style>
 </head>
 <body>
+<input type="hidden" id="toid" class="socket" value="">
 	<!-- 헤더 -->
 	<jsp:include page="../header.jsp"></jsp:include>
 	<div id="content" class="content">
@@ -1071,7 +1072,7 @@ input {
 	                        </div>
 	                    </c:if>
 	                    <c:if test="${followchk.follow eq 0}">
-	                        <div id="followchk" class="profile_btn profile_btn_no" onclick="main_followBtn('${id_img_fwr.m_id}');">
+	                        <div id="followchk" class="profile_btn profile_btn_no socket" value="${id_img_fwr.m_id}" onclick="main_followBtn('${id_img_fwr.m_id}');">
 	                            팔로우
 	                        </div>
 	                    </c:if>
@@ -1111,52 +1112,52 @@ input {
 	            </div>
 	        </div>
 	    </div>
-	     <div id="highlight_con">
-	     <input type="hidden" class="post_id" value="${id_img_fwr.m_id }">
-                        <c:if test="${empty highlight }">
-                            <div class="highlight_small_con">
-                                <div class="highlight_photo_h">
-                                    <div class="h_icon"></div>
-                                </div>
-                                <div class="highlight_title">하이라이트<br>추가</div>
-                            </div>
-                        </c:if>
-                        <c:if test="${not empty highlight }">
-                            <div class="highlight_small_con">
-                                <div class="highlight_photo_h">
-                                    <div class="h_icon"></div>
-                                </div>
-                                <div class="highlight_title">하이라이트<br>추가</div>
-                            </div>
-                            <c:forEach var="vo" items="${highlight }" varStatus="s">
-                                <div class="highlight_small_con">
-                                    <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
-                                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </c:if>
+		<div id="highlight_con">
+		<input type="hidden" class="post_id" value="${id_img_fwr.m_id }">
+            <c:if test="${empty highlight }">
+                <div class="highlight_small_con">
+                    <div class="highlight_photo_h">
+                        <div class="h_icon"></div>
                     </div>
-                    <div id="hidden_follow_rec" style="display: none;">
-                        <div id="rec_title">
-                            <div id="title1">추천계정</div>
-                            <c:if test="${not empty recomFow }">
-                                <div class="highlight_small_con">
-                                    <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
-                                    <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }
-                                    </div>
-                                </div>
-                                <c:forEach var="vo" items="${recomFow }" varStatus="s">
-                                    <div class="each_rec_con each_rec_con${vo.r_mid }">
-                                        <div class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_img }</div>
-                                        <div class="each_rec_id" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.r_mid }</div>
-                                        <div class="each_rec_name" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_name }</div>
-                                        <div class="each_rec_followbtn" id="each_rec_followbtn${vo.r_mid }" onclick="followBtn('${vo.r_mid}');">팔로우</div>
-                                    </div>
-                                </c:forEach>
-                            </c:if>
+                    <div class="highlight_title">하이라이트<br>추가</div>
+                </div>
+            </c:if>
+            <c:if test="${not empty highlight }">
+                <div class="highlight_small_con">
+                    <div class="highlight_photo_h">
+                        <div class="h_icon"></div>
+                    </div>
+                    <div class="highlight_title">하이라이트<br>추가</div>
+                </div>
+                <c:forEach var="vo" items="${highlight }" varStatus="s">
+                    <div class="highlight_small_con">
+                        <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
+                        <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }
                         </div>
                     </div>
+                </c:forEach>
+            </c:if>
+        </div>
+        <div id="hidden_follow_rec" style="display: none;">
+            <div id="rec_title">
+                <div id="title1">추천계정</div>
+                <c:if test="${not empty recomFow }">
+                    <div class="highlight_small_con">
+                        <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
+                        <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }
+                        </div>
+                    </div>
+                    <c:forEach var="vo" items="${recomFow }" varStatus="s">
+                        <div class="each_rec_con each_rec_con${vo.r_mid }">
+                            <div class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_img }</div>
+                            <div class="each_rec_id" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.r_mid }</div>
+                            <div class="each_rec_name" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_name }</div>
+                            <div class="each_rec_followbtn" id="each_rec_followbtn${vo.r_mid }" onclick="followBtn('${vo.r_mid}');">팔로우</div>
+                        </div>
+                    </c:forEach>
+                </c:if>
+            </div>
+        </div>
 	    <hr id="line">
 		<input type="hidden" id="my_name" class="my_name" value="${my_name }">
 		<!-- 카테고리 -->
@@ -1185,12 +1186,12 @@ input {
 			</c:if>
 		</div>
 		
-	<!-- 모달 (상세페이지) -->
-	<div id="modal" class="modal">
-	    <span type="button" class="close">&times;</span>
-		
-		<!-- Modal content -->
-		<div id="modalContent" class="modal-content">
+		<!-- 모달 (상세페이지) -->
+		<div id="modal" class="modal">
+		    <span type="button" class="close">&times;</span>
+			
+			<!-- Modal content -->
+			<div id="modalContent" class="modal-content">
 				<div id="mdImg" class="mdImg">
 			  	</div>
 			  	<div id="mdText">
@@ -1223,123 +1224,267 @@ input {
 			  		<div id="mdWrite">
 			  			<form action="bbrInsert.do" id="bbrInForm" class="bbrInForm" method="post">
 			  				<input type="text" id="bb_info" class="bb_info" name="bb_info" placeholder="댓글 달기...">
-			  				<button type="button" id="bbrInsert" class="bbrInsert" name="bbrInsert" style="cursor:pointer">게시</button>
+			  				<button type="button" id="bbrInsert" class="bbrInsert socket" value="" name="bbrInsert" style="cursor:pointer">게시</button>
 			  				<div id="hiddenTopid"></div>
 			  			</form>
 			  		</div>
 			  	</div>
+			</div>
+		  	<div id="mdFooter">
+		  		<div id="mdPrice">
+		  			가격 : <span id="mdprices"></span>
+		  		</div>
+		  		<div id="hidePrice">
+		  			
+		  		</div>
+		  		<div id="mdOption">
+					<select name="option" id="option">
+					</select>
+		  		</div>
+		  		<div id="cart">
+		  			<button type="button" id="cartBtn" class="cartBtn" >장바구니 담기</button>
+		  		</div>
+		  	</div>
 		</div>
-			  	<div id="mdFooter">
-			  		<div id="mdPrice">
-			  			가격 : <span id="mdprices"></span>
-			  		</div>
-			  		<div id="hidePrice">
-			  			
-			  		</div>
-			  		<div id="mdOption">
-						<select name="option" id="option">
-						</select>
-			  		</div>
-			  		<div id="cart">
-			  			<button type="button" id="cartBtn" class="cartBtn" >장바구니 담기</button>
-			  		</div>
-			  	</div>
-	</div>
-	
-	<!-- 모달 (장바구니) -->
-	<div id="mdCart">
-		<div id="mdcContent" class="mdcContent">
-			<div id="goCart" onclick="location.href='${pageContext.request.contextPath}/mCart.do'">
-				장바구니로 가기
-			</div>
-			<div id="shopping">
-				계속 쇼핑하기
-			</div>
-		</div>
-	</div>
-	
-	<!-- 모달 (게시물) -->
-	<div id="mdBb">
-		<div id="mdbbContent" class="mdcContent">
-			<div id="bbReport" class="bbReport" onclick="bbRepoart(this)">
-				<span class="pointer">게시물 신고</span>
-			</div>
-			<div id="goBbPage" class="goBbPage" onclick="location.href='#'">
-				<span class="pointer">게시물로 이동</span>
-			</div>
-			<div id="shareBb" class="shareBb">
-				<span class="pointer">게시물 공유하기</span>
-			</div>
-			<div id="cancel" class="cancel">
-				<span class="pointer">취소</span>
-			</div>
-		</div>
-	</div>
-	
-	<!-- 모달 (댓글 + 답글) -->
-	<div id="mdBbr">
-		<div id="mdbbrContent" class="mdcContent">
-			<div id="bbReport" class="bbReport" onclick="bbRepoart(this)">
-				<span class="report pointer">신고</span>
-			</div>
-			<div id="cancel" class="cancel">
-				<span class="pointer">취소</span>
-			</div>
-		</div>
-	</div>
-	
-	<!-- 모달 (팔로우 + 팔로워) -->
-	<div id="follow_back">
-		<div id="follow_modal">
-		    <div id="see_follower" style="display:none;">
-		        <div class="top_con">
-		            <div class="blank"></div>
-		            <div class="fo_title">팔로워</div>
-		            <div class="blank notcancelAll" style="cursor:pointer;"><i class="fas fa-times"></i></div>
-		        </div>
-		        <c:if test="${ not empty selectFollower}">
-		            <c:forEach var="vo" items="${selectFollower }" varStatus="s">
-		                <input type="hidden" class="fochkWithMe" onclick="fochkWithMe('${vo.followerid }');">
-		                <div class="people_con">
-		                    <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="people_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">
-		                    <div class="people_middle">
-		                        <div class="people_id" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">${vo.followerid }</div>
-		                        <div class="people_name" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">${vo.m_name }</div>
-		                    </div>
-		                    <div class="people_btn people_follow people_follow${vo.followerid }" style="display:none; cursor:pointer;">팔로우</div>
-		                    <div class="people_btn people_alfollow people_alfollow${vo.followerid }" style="display:none; cursor:pointer;"><i class="fas fa-user-check"></i></div>
-		                </div>
-		            </c:forEach>
-		        </c:if>
-		    </div>
-		    <div id="see_follow" style="display:none;">
-		        <div class="top_con">
-		            <div class="blank"></div>
-		            <div class="fo_title">팔로우</div>
-		            <div class="blank notcancelAll" style="cursor:pointer;"><i class="fas fa-times"></i></div>
 		
-		        </div>
-		        <c:if test="${ not empty selectFollow}">
-		            <c:forEach var="vo" items="${selectFollow }" varStatus="s">
-		                <input type="hidden" class="fochkWithMe" onclick="fochkWithMe('${vo.followid }');">
-		                <div class="people_con">
-		                    <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="people_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">
-		                    <div class="people_middle">
-		                        <div class="people_id" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">${vo.followid }</div>
-		                        <div class="people_name" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">${vo.m_name }</div>
-		                    </div>
-		                    <div class="people_btn people_follow people_follow${vo.followid }" style="display:none; cursor:pointer;">팔로우</div>
-		                    <div class="people_btn people_alfollow people_alfollow${vo.followid}" style="display:none; cursor:pointer;"><i class="fas fa-user-check"></i></div>
-		                </div>
-		            </c:forEach>
-		        </c:if>
-		    </div>
+		<!-- 모달 (장바구니) -->
+		<div id="mdCart">
+			<div id="mdcContent" class="mdcContent">
+				<div id="goCart" onclick="location.href='${pageContext.request.contextPath}/mCart.do'">
+					장바구니로 가기
+				</div>
+				<div id="shopping">
+					계속 쇼핑하기
+				</div>
+			</div>
 		</div>
-	</div>
-	
-	
-	
-	<input type="button"  value="글쓰기" onclick="window.location='bbWriteForm.do'">
+		
+		<!-- 모달 (게시물) -->
+		<div id="mdBb">
+			<div id="mdbbContent" class="mdcContent">
+				<div id="bbReport" class="bbReport" onclick="bbRepoart(this)">
+					<span class="pointer">게시물 신고</span>
+				</div>
+				<div id="goBbPage" class="goBbPage" onclick="location.href='#'">
+					<span class="pointer">게시물로 이동</span>
+				</div>
+				<div id="shareBb" class="shareBb">
+					<span class="pointer">게시물 공유하기</span>
+				</div>
+				<div id="cancel" class="cancel">
+					<span class="pointer">취소</span>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 모달 (댓글 + 답글) -->
+		<div id="mdBbr">
+			<div id="mdbbrContent" class="mdcContent">
+				<div id="bbReport" class="bbReport" onclick="bbRepoart(this)">
+					<span class="report pointer">신고</span>
+				</div>
+				<div id="cancel" class="cancel">
+					<span class="pointer">취소</span>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 모달 (팔로우 + 팔로워) -->
+		<div id="follow_back">
+			<div id="follow_modal">
+			    <div id="see_follower" style="display:none;">
+			        <div class="top_con">
+			            <div class="blank"></div>
+			            <div class="fo_title">팔로워</div>
+			            <div class="blank notcancelAll" style="cursor:pointer;"><i class="fas fa-times"></i></div>
+			        </div>
+			        <c:if test="${ not empty selectFollower}">
+			            <c:forEach var="vo" items="${selectFollower }" varStatus="s">
+			                <input type="hidden" class="fochkWithMe" onclick="fochkWithMe('${vo.followerid }');">
+			                <div class="people_con">
+			                    <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="people_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">
+			                    <div class="people_middle">
+			                        <div class="people_id" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">${vo.followerid }</div>
+			                        <div class="people_name" style="cursor:pointer;" onclick="goEachAcount('${vo.followerid }');">${vo.m_name }</div>
+			                    </div>
+			                    <div class="people_btn people_follow people_follow${vo.followerid }" style="display:none; cursor:pointer;">팔로우</div>
+			                    <div class="people_btn people_alfollow people_alfollow${vo.followerid }" style="display:none; cursor:pointer;"><i class="fas fa-user-check"></i></div>
+			                </div>
+			            </c:forEach>
+			        </c:if>
+			    </div>
+			    <div id="see_follow" style="display:none;">
+			        <div class="top_con">
+			            <div class="blank"></div>
+			            <div class="fo_title">팔로우</div>
+			            <div class="blank notcancelAll" style="cursor:pointer;"><i class="fas fa-times"></i></div>
+			
+			        </div>
+			        <c:if test="${ not empty selectFollow}">
+			            <c:forEach var="vo" items="${selectFollow }" varStatus="s">
+			                <input type="hidden" class="fochkWithMe" onclick="fochkWithMe('${vo.followid }');">
+			                <div class="people_con">
+			                    <img src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.m_img }" class="people_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">
+			                    <div class="people_middle">
+			                        <div class="people_id" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">${vo.followid }</div>
+			                        <div class="people_name" style="cursor:pointer;" onclick="goEachAcount('${vo.followid }');">${vo.m_name }</div>
+			                    </div>
+			                    <div class="people_btn people_follow people_follow${vo.followid }" style="display:none; cursor:pointer;">팔로우</div>
+			                    <div class="people_btn people_alfollow people_alfollow${vo.followid}" style="display:none; cursor:pointer;"><i class="fas fa-user-check"></i></div>
+			                </div>
+			            </c:forEach>
+			        </c:if>
+			    </div>
+			</div>
+		</div>
+		<%-- <div id="report_back">
+            <div id="report_modal">
+                <div id="share_con" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물 공유하기</div>
+                    <div id="url_con" class="modal_in">
+                        <textarea id="url" readonly></textarea>
+                    </div>
+                    <div id="share_chk" class="modal_in">복사하기</div>
+                    <div class="modal_in notcancelAll">취소</div>
+                </div>
+                <div id="share_con_result" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물의 주소가 복사됐습니다.</div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
+                </div>
+                <div id="modal_modifypost" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물 수정하기</div>
+                    <div id="modify_con" class="modal_in">
+                        <textarea id="modify_text"></textarea>
+                    </div>
+                    <div id="savemodify" class="modal_in">수정하기</div>
+                    <div class="modal_in notcancelAll">취소</div>
+                </div>
+                <div id="modify_con_result" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물이 수정되었습니다.</div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
+                </div>
+                <div id="askunfollow" style="display: none;">
+                    <div class="modal_in modal_nocursor">팔로우를 취소하시겠습니까?</div>
+                    <div id="yes_unfollow" class="modal_in">팔로우 취소하기</div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
+                </div>
+                <div id="unfollowchk" style="display: none;">
+                    <div class="modal_in modal_nocursor">팔로우가 취소되었습니다.</div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
+                </div>
+                <div id="report_member" style="display:none;">
+                    <div id="goreportmember" class="modal_in send_report">이 사용자 신고하기</div>
+                    <div class="modal_in notcancelAll">돌아가기</div>
+                </div>
+                <div id="report_comment" style="display:none;">
+                    <div id="goreportcomment" class="modal_in">신고하기</div>
+                    <div class="modal_in notcancelAll">돌아가기</div>
+                </div>
+                <div id="more_about_my_co" style="display:none;">
+                    <div id="modify_co" class="modal_in">댓글 수정하기</div>
+                    <div id="delete_co" class="modal_in">댓글 삭제하기</div>
+                    <div class="modal_in notcancelAll">돌아가기</div>
+                </div>
+                <div id="modal_modifyco" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">댓글 수정하기</div>
+                    <div id="modify_co_con" class="modal_in">
+                        <textarea id="modify_text_co"></textarea>
+                    </div>
+                    <div id="savemodify_co" class="modal_in">수정하기</div>
+                    <div class="modal_in notcancelAll">취소</div>
+                </div>
+                <div id="modify_con_co_result" style="display: none;">
+                    <div class="modal_in modal_title modal_nocursor">댓글이 수정되었습니다.</div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
+                </div>
+                <div id="modal_more_con_not_me_not_follow" style="display:none;">
+                    <div class="goreportmember_modal modal_in">게시물 신고</div>
+                    <!-- <div class="follow_modal modal_in">팔로우</div> -->
+                    <div class="gothispost_modal modal_in">게시물로 이동</div>
+                    <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
+                    <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
+                    <div class="modal_in notcancelAll">돌아가기</div>
+                </div>
+                <div id="modal_more_con_not_me" style="display:none;">
+                    <div class="goreportmember_modal modal_in">게시물 신고</div>
+                    <!-- <div class="unfollow_modal modal_in">팔로우 취소</div> -->
+                    <div class="gothispost_modal modal_in">게시물로 이동</div>
+                    <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
+                    <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
+                    <div class="modal_in notcancelAll">돌아가기</div>
+                </div>
+                <div id="modal_more_con_me" style="display:none;">
+                    <div class="modifypost_modal modal_in" onclick="modifypost('${id_img_fwr.m_id }');">게시물 수정</div>
+                    <div class="deletepost_modal modal_in" onclick="deletepost();">게시물 삭제</div>
+                    <div class="gothispost_modal modal_in">게시물로 이동</div>
+                    <div class="sharepost_modal modal_in" onclick="shareurl();">게시물 공유하기</div>
+                    <!-- <div class="savepost_modal modal_in">게시물 저장하기</div> -->
+                    <div class="modal_in notcancelAll">돌아가기</div>
+                </div>
+                <div id="modal_delete" style="display:none;">
+                    <div id="delete_post" class="modal_in modal_title modal_nocursor">이 게시물을 삭제하시겠습니까?</div>
+                    <div class="delete_modal modal_in">삭제하기</div>
+                    <div class="modal_in notcancelAll">돌아가기</div>
+                </div>
+                <div id="modal_delete_result" style="display:none;">
+                    <div class="modal_in modal_title modal_nocursor">게시물이 삭제되었습니다.</div>
+                    <div class="modal_in cancel">돌아가기</div>
+                </div>
+                <div id="modal_delete_co" style="display:none;">
+                    <div class="modal_in modal_title modal_nocursor">이 댓글을 삭제하시겠습니까?</div>
+                    <div class="delete_modal_co modal_in">삭제하기</div>
+                    <div class="modal_in notcancelAll">돌아가기</div>
+                </div>
+                <div id="modal_delete_co_result" style="display:none;">
+                    <div class="modal_in modal_title modal_nocursor">댓글이 삭제되었습니다.</div>
+                    <div class="modal_in notcancelAll">돌아가기</div>
+                </div>
+                <div id="report_choose" style="display: none;">
+                    <div id="report" class="modal_in modal_title modal_nocursor">신고하기</div>
+                    <div id="fword" class="modal_in send_report">욕설</div><input type="hidden" value="욕설">
+                    <div id="pornography" class="modal_in send_report">음란물</div><input type="hidden" value="음란물">
+                    <div id="falsecon" class="modal_in send_report">허위내용</div><input type="hidden" value="허위내용">
+                    <div id="embezzlement" class="modal_in send_report">도용된 자료 포함</div><input type="hidden" value="도용된 자료 포함">
+                    <div id="etc" class="modal_in etc_mem">기타</div>
+                    <div class="modal_in notcancelAll">취소</div>
+                </div>
+                <div id="report_write_mem" style="display: none;">
+                    <div id="etc_con_mem" class="modal_in modal_title modal_nocursor">이 회원을 신고한는 이유</div>
+                    <div id="etc_write_con_mem" class="modal_in">
+                        <textarea id="etx_write_space_mem"></textarea>
+                    </div>
+                    <div id="send_r_mem" class="modal_in send_report_text">신고하기</div>
+                    <div class="modal_in notcancelAll">취소</div>
+                </div>
+                <div id="report_write" style="display: none;">
+                    <div id="etc_con" class="modal_in modal_title modal_nocursor">이 게시물을 신고한는 이유</div>
+                    <div id="etc_write_con" class="modal_in">
+                        <textarea id="etx_write_space"></textarea>
+                    </div>
+                    <div id="send_r" class="modal_in send_report_text">신고하기</div>
+                    <div class="modal_in notcancelAll">취소</div>
+                </div>
+                <div id="report_write_co" style="display: none;">
+                    <div id="etc_con_co" class="modal_in modal_title modal_nocursor">이 댓글을 신고한는 이유</div>
+                    <div id="etc_write_con_co" class="modal_in">
+                        <textarea id="etx_write_space_co"></textarea>
+                    </div>
+                    <div id="send_r_co" class="modal_in send_report_text">신고하기</div>
+                    <div class="modal_in notcancelAll">취소</div>
+                </div>
+                <div id="report_result" style="display: none;">
+                    <div class="modal_in  modal_title modal_nocursor">신고 완료</div>
+                    <div class="modal_in modal_nocursor modal_result">${my_name }님의 신고가 정상적으로 접수되었습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.
+                    </div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
+                </div>
+                <div id="report_already" style="display: none;">
+                    <div class="modal_in modal_nocursor modal_result">이미 신고하셨습니다.<br> 빠른 시일 내 검토 후 조치하겠습니다.</div>
+                    <div class="modal_in notcancelAll">화면으로 돌아가기</div>
+                </div>
+            </div>
+		</div> --%>
+		
 	</div>
 	
 	<jsp:include page="../footer.jsp"></jsp:include>
@@ -1467,10 +1612,11 @@ function mdOpen(e){
    			timeline += '<div class="timeline_comment_con">'+
 				            '<div class="inner_comment_con">'+
 					            '<div class="timeline_icon_con">'+
-					                '<div class="icon like_icon likechk'+resp.bbDetail.bb_id+'" onclick="pressLike(\''+resp.bbDetail.bb_id+'\');"></div>'+
+					                '<div class="socket icon like_icon likechk'+resp.bbDetail.bb_id+'" value="'+resp.bbDetail.m_id+'"onclick="pressLike(\''+resp.bbDetail.bb_id+'\');"></div>'+
 					                '<div class="icon unlike_icon unlikechk'+resp.bbDetail.bb_id+'" onclick="pressUnlike(\''+resp.bbDetail.bb_id+'\');"></div>'+
 					                '<div class="icon write_icon" id="write_icon" onclick="write_icon()"></div>'+
 					                '<div class="icon share_icon" onclick="shareurl(\''+resp.bbDetail.bb_id+','+resp.bbDetail.bb_id+'\')"></div>'+
+					                "<input type='hidden' class='socket like"+resp.bbDetail.bb_id+"' id='like"+resp.bbDetail.bb_id+"' value='abc' onclick='pushSocket(\""+resp.bbDetail.m_id+"\");'/>"+
 					                /* '<div class="icon save_icon"></div>'+ */
 					            '</div>'+
 					            '<div class="timeline_likes_con">좋아요 <input type="button" class="lCount'+resp.bbDetail.bb_id+' showlCount" value="'+resp.bbDetail.bb_like+'" readonly>개</div>'+
@@ -1485,9 +1631,10 @@ function mdOpen(e){
    			var hashtag="";
    			console.log("태그갯수"+resp.bbTags.length);
    			for(var i = 0; i < resp.bbTags.length; i++){
-   				hashtag+="<a href='${pageContext.request.contextPath}/explore?hashtag="+resp.bbTags[i].h_tag+"'>#"+resp.bbTags[i].h_tag+"</a>";
+   				hashtag+="<a href='${pageContext.request.contextPath}/explore?hashtag="+resp.bbTags[i].h_tag+"'> #"+resp.bbTags[i].h_tag+"</a>";
    			}
    			$("#bbHashtag").html(hashtag);
+   			$("#bbrInsert").attr("value",resp.bbDetail.m_id);
    			// 댓글 입력시 bb_topid 값을 세팅하기 위한 인풋박스
     		$("#hiddenTopid").html('<input type="hidden" id="bb_topid" name="bb_topid" value="'+resp.bbDetail.bb_id+'">');
    			// 상품 가격
@@ -1615,13 +1762,15 @@ function mdOpen(e){
 						htmls += 				"<button type='button' id='"+r_bb_id+"' class='bbrDelete "+ r_bb_id +"' onclick=\"bbrDelete('"+r_bb_id+"')\">삭제</button>";
 					}
 					htmls +=				"<button type='button'  id='mdBbBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
+							                "<input type='hidden' class='socket like"+r_bb_id+"' id='like"+r_bb_id+"' value='abc' onclick='pushSocket(\""+r_m_id+"\");'/>"+
 											"<div class='icon_reply like_icon_reply likechk"+r_bb_id+"' onclick='pressLike(\""+r_bb_id+"\");' width='10px' height='10px'></div>"+
 							                "<div class='icon_reply unlike_icon_reply unlikechk"+r_bb_id+"' onclick='pressUnlike(\""+r_bb_id+"\");'></div>"+
 							                "<div></div>"+
 											"<div id='bbrrInBox' class='bbrrInBox' >"+
 												"<input type='text' class='replyCoWri write_space' placeholder='답글 작성...'/>"+
-												"<button id='bbrrup"+r_bb_id+"' onclick='bbrrInsert(this)'>게시</button>"+
+												"<button id='bbrrup"+r_bb_id+"' class='socket' value='"+r_m_id+"' onclick='bbrrInsert(this)'>게시</button>"+
 												"<input type='hidden' value='" + r_bb_id + "'/>"+
+												"<input type='hidden' class='socket' id='bbrInsert' vlaue='"+r_m_id+"' onclick='pushSocket(\""+r_m_id+"\");'/>"+
 											"</div>"+
 										"</div>"+
 									"</div>"+
@@ -1766,6 +1915,7 @@ function bbrrListShow(bb_id){
 					htmls +=			"<button id='mdBbrBtn' class='mdBbrBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
 										"<div class='icon_reply like_icon_reply likechk"+rr_bb_id+"' onclick='pressLike(\""+rr_bb_id+"\");' width='10px' height='10px'></div>"+
 						                "<div class='icon_reply unlike_icon_reply unlikechk"+rr_bb_id+"' onclick='pressUnlike(\""+rr_bb_id+"\");'></div>"+
+						                "<input type='hidden' class='socket like"+rr_bb_id+"' id='like"+rr_bb_id+"' value='abc' onclick='pushSocket(\""+rr_m_id+"\");'/>"+
 						                "<div></div>"+
 									"</div>"+
 								"</div>"+
@@ -1808,8 +1958,8 @@ function bbrrListHide(bb_id){
 function bbrrWrite(e){
 	$(".bbrrInBox").css("display", "none");
 	console.log($(e).attr("class"));
-    $(e).parent().next().next().next().next().next().css("display", "block");
     $(e).parent().next().next().next().next().next().next().css("display", "block");
+    $(e).parent().next().next().next().next().next().next().next().css("display", "block");
 };
 
 
@@ -1821,7 +1971,7 @@ function bbrrInsert(e){
     var a2 = document.getElementById(a);
     var b = "bbrrhide"+bb_topid;
     var b2 = document.getElementById(b);
-    console.log("memId: "+memId+" bb_topid: "+bb_topid+" bb_info:"+bb_info);
+    console.log("memId: "+memId+" bb_topid: "+bb_topid+" bb_info:"+bb_info+" my_name:"+my_name);
     
     if (bb_info == "") {
         console.log("reply comment won't be uploaded");
@@ -1832,9 +1982,9 @@ function bbrrInsert(e){
             url: "bbrrInsert",
             method: "POST",
             data: {
-                bb_info: bb_info,
-                bb_topid: bb_topid,
-                m_id:my_name
+                bb_info : bb_info,
+                bb_topid : bb_topid,
+                m_id : my_name
             },
             dataType:"json",
             success: function(resp) {
@@ -1874,6 +2024,7 @@ function bbrrInsert(e){
     					htmls +=			"<button id='mdBbrBtn' class='mdBbrBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
     										"<div class='icon_reply like_icon_reply likechk"+rr_bb_id+"' onclick='pressLike(\""+rr_bb_id+"\");' width='10px' height='10px'></div>"+
     						                "<div class='icon_reply unlike_icon_reply unlikechk"+rr_bb_id+"' onclick='pressUnlike(\""+rr_bb_id+"\");'></div>"+
+    						                "<input type='hidden' class='socket' id='like"+rr_bb_id+"' onclick='pushSocket(\""+rr_m_id+"\");'/>"+
     						                "<div></div>"+
     									"</div>"+
     								"</div>"+
@@ -1899,6 +2050,7 @@ function bbrrInsert(e){
             }
         });
     }
+    $('#bbrInsert').trigger('click');
 };
 
 // 모달창(상세페이지) close
@@ -2238,8 +2390,14 @@ function pressLike(t_id) {
     console.log("게시물 좋아요:"+t_id);
     console.log("게시물 좋아요 lCount:"+lcount);
     lcount++;
-    console.log("게시물 좋아요 lCount:"+lcount);
-    console.log("게시물 좋아요 m_id:"+m_id);
+    /* var a = "like"+t_id;	추후삭제
+    var b = document.getElementById(a);
+    var b2 = document.getElementsByClassName(a);
+    var c = $(b).val();
+    var c2 = $(b2).val();
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaa : " + a);
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaa : " + b);
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaa : " + c); */
 
 	$.ajax({
 	    url: "${pageContext.request.contextPath}/pressLikeB.do",
@@ -2269,6 +2427,8 @@ function pressLike(t_id) {
 	            error);
 	    }
 	});
+	
+	$('#like' + t_id).trigger('click');
     
 }
 
@@ -2278,7 +2438,6 @@ function pressUnlike(t_id) {
     console.log("좋아요 취소 lcount1:"+lcount);
     lcount--;
     console.log("좋아요 취소 lcount2:"+lcount);
-
         // 게시물 좋아요 취소 - 비즈니스 게시판
         $.ajax({
             url: "${pageContext.request.contextPath}/pressUnLikeB.do",
@@ -2296,6 +2455,7 @@ function pressUnlike(t_id) {
                 $(".likechk" + t_id).css("display", "block");
                 $(".unlikechk" + t_id).css("display", "none");
                	$(".lCount" + t_id).val(lcount);
+               	
                	/* $(".lCount" + t_id).load(location.href+".lCount" + t_id); */
             },
             error: function(request, status, error) {
@@ -2309,7 +2469,11 @@ function pressUnlike(t_id) {
             }
         });
 }
-
+function pushSocket(t){
+	alert("pushSocket() : " + t);
+	$("#toid").attr("value", t);
+	$("#toid").trigger('click');
+}
 //공유
 /* function shareurl(m_id, b_id) {
     $("#report_modal").css("display", "block");
@@ -2656,6 +2820,7 @@ $(function(){
 								htmls += 				"<button type='button' id='"+r_bb_id+"' class='bbrDelete "+ r_bb_id +"' onclick=\"bbrDelete('"+r_bb_id+"')\">삭제</button>";
 							}
 							htmls +=				"<button type='button'  id='mdBbBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
+									                "<input type='hidden' class='socket like"+r_bb_id+"' id='like"+r_bb_id+"' value='abc' onclick='pushSocket(\""+r_m_id+"\");'/>"+
 													"<div class='icon_reply like_icon_reply likechk"+r_bb_id+"' onclick='pressLike(\""+r_bb_id+"\");' width='10px' height='10px'></div>"+
 									                "<div class='icon_reply unlike_icon_reply unlikechk"+r_bb_id+"' onclick='pressUnlike(\""+r_bb_id+"\");'></div>"+
 									                "<div></div>"+
@@ -2663,6 +2828,7 @@ $(function(){
 														"<input type='text' class='replyCoWri write_space' placeholder='답글 작성...'/>"+
 														"<button id='bbrrup"+r_bb_id+"' onclick='bbrrInsert(this)'>게시</button>"+
 														"<input type='hidden' value='" + r_bb_id + "'/>"+
+														"<input type='hidden' class='socket' id='bbrInsert' vlaue='"+r_m_id+"' onclick='pushSocket(\""+r_m_id+"\");'/>"+
 													"</div>"+
 												"</div>"+
 											"</div>"+
@@ -2971,6 +3137,13 @@ function goEachAcount(id) {
     var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
     $(location).attr('href', url);
 }
+//게시물 페이지 이동
+$(".gothispost_modal").on('click', function() {
+    var postid = $(".post_id").val();
+    var b_id = $("#for_modal_con").val();
+    var url = "${pageContext.request.contextPath}/gnEachPage?b_id=" + b_id;
+    $(location).attr('href', url);
+});
 // 하이라이트 페이지 이동
 function highlight(h_name) {
     var m_id = $(".post_id").val();
@@ -2983,7 +3156,7 @@ $(".highlight_photo_h").on('click', function() {
     $(location).attr('href', url);
 });
 //계정 관리 페이지 이동
-$(".profile_btn").on('click', function() {
+$("#setting").on('click', function() {
     var url = "${pageContext.request.contextPath}/mManage.do";
     $(location).attr('href', url);
 });
@@ -3070,7 +3243,7 @@ function followBtn(id) {
                 console.log("follow Result : " + recCount);
                 if (recCount == 0) {
                     $("#recom_follow").css("display", "none");
-                    $("#hidden_follow_rec").css("display", "none");
+                    $("#hidden_follow_rec").css("display", "block");
                 }
                 $(".each_rec_con" + id).css("display", "none");
             }
@@ -3086,6 +3259,14 @@ function followBtn(id) {
         }
     });
 }
+//계정 추천
+$("#rf").change(function() {
+    if ($("#rf").is(":checked")) {
+        $("#hidden_follow_rec").css("display", "block");
+    } else {
+        $("#hidden_follow_rec").css("display", "none");
+    }
+});
 // 모달 팔로우
 function followinmodal(id) {
     $.ajax({

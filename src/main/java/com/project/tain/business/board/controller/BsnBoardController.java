@@ -176,7 +176,7 @@ public class BsnBoardController {
 			bbService.insertBsnBoard(bb);
 			System.out.println("게시물 등록 인서트성공");
 			List<String> tagList = Utils.tagParser(tags);
-			System.out.println("tagList");
+			System.out.println("tagList"+tagList);
 			for(String h_tag : tagList) {
 				bb.setH_tag(h_tag);
 				System.out.println("H_tag : "+bb.getH_tag());
