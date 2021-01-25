@@ -28,6 +28,7 @@ import com.project.tain.general.board.model.service.GnBoardService;
 import com.project.tain.post.model.service.TimeLineService;
 import com.project.tain.util.Utils;
 
+
 @Controller
 public class BsnBoardController {
 	
@@ -45,6 +46,7 @@ public class BsnBoardController {
 	public static final int LIMIT=9;
 	
 	// 게시물 목록
+	
 	@RequestMapping(value="/bbList.do", method = RequestMethod.GET)
 	public ModelAndView bbListService(@RequestParam(name="page", defaultValue = "1") int page, 
 			@RequestParam(name="m_id") String m_id, 
@@ -69,8 +71,12 @@ public class BsnBoardController {
 				mv.addObject("selectFollow", gService.selectFollow(m_id));
 				mv.addObject("selectFollower", gService.selectFollower(m_id));
 				mv.addObject("showpostCount", gService.showpostCount(m_id));
+				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+				mv.addObject("shownotice", tService.shownotice(my_name));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
+				mv.addObject("shownotice", tService.shownotice(my_name));
+				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				mv.addObject("id_img_fwr", gService.showp_one(m_id));
 				mv.addObject("fw", gService.showp_two(m_id));
@@ -129,6 +135,7 @@ public class BsnBoardController {
 		HashMap<String, Object> result = new HashMap <String,Object>();	
 		
 		try {
+			
 			System.out.println("bbDetail:"+bbService.selectOne(bb.getBb_id()));
 			result.put("bbDetail", bbService.selectOne(bb.getBb_id()));	// 게시물 상세
 			System.out.println("bbTags:"+bbService.selectOneTags(bb.getBb_id()));
@@ -147,7 +154,11 @@ public class BsnBoardController {
 	public ModelAndView bbInsertForm(ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String m_id=(String) session.getAttribute("my_name");
+		String my_name=(String) session.getAttribute("my_name");
 		try {
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("m_id", m_id);
 			mv.addObject("category", bbService.selectCategory(m_id));
 			System.out.println("category: "+bbService.selectCategory(m_id));
@@ -166,6 +177,8 @@ public class BsnBoardController {
 			MultipartHttpServletRequest request, ModelAndView mv) {
 		System.out.println("게시물 등록 컨트롤러" + bb);
 		System.out.println("게시물 등록 컨트롤러" + bb.getM_id());
+		HttpSession session = request.getSession();
+		String my_name=(String) session.getAttribute("my_name");
 		bb.setMy_name(bb.getM_id());
 		String m_id = bb.getM_id();
 		try {
@@ -182,6 +195,9 @@ public class BsnBoardController {
 				System.out.println("H_tag : "+bb.getH_tag());
 				bbService.saveBsnTag(bb);
 			}
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("m_id", m_id);
 			mv.setViewName("redirect:bbList.do");
 		} catch(Exception e) {
@@ -235,7 +251,11 @@ public class BsnBoardController {
 	public ModelAndView boardDetail(@RequestParam(name="bb_id") String bb_id, ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String m_id=(String) session.getAttribute("my_name");
+		String my_name=(String) session.getAttribute("my_name");
 		try {
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("m_id", m_id);
 			mv.addObject("bbRenew", bbService.selectOne(bb_id));
 			mv.addObject("bbTags", bbService.selectOneTags(bb_id));
@@ -255,6 +275,7 @@ public class BsnBoardController {
 			MultipartHttpServletRequest request, ModelAndView mv) {
 		HttpSession session = request.getSession();
 		String m_id=(String) session.getAttribute("my_name");
+		String my_name=(String) session.getAttribute("my_name");
 		System.out.println("게시물 업데이트 컨트롤러 : "+ bb);
 		System.out.println("게시물 업데이트 컨트롤러 : "+ request);
 		try {
@@ -271,6 +292,9 @@ public class BsnBoardController {
 //				mv.addObject("bbUpdate", bbService.updateBsnBoard(bb));
 				bbService.updateBsnBoard(bb);
 				System.out.println("업데이트 애드 m_id"+m_id);
+				mv.addObject("chkfollow", tService.chkfollow(my_name));
+				mv.addObject("shownotice", tService.shownotice(my_name));
+				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 				mv.addObject("m_id", m_id);
 				mv.setViewName("redirect:bbList.do");
 			}
