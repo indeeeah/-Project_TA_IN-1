@@ -2550,7 +2550,6 @@ function pressUnlike(t_id) {
         });
 }
 function pushSocket(t){
-	alert("pushSocket() : " + t);
 	$("#toid").attr("value", t);
 	$("#toid").trigger('click');
 }
