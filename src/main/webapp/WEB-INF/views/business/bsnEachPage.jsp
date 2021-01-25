@@ -1315,6 +1315,7 @@ window.onload = function(){
    				hashtag+="<a href='${pageContext.request.contextPath}/explore?hashtag="+resp.bbTags[i].h_tag+"'> #"+resp.bbTags[i].h_tag+"</a>";
    			}
    			$("#bbHashtag").html(hashtag);
+   			$("#toid").attr("value",resp.bbDetail.m_id);
    			$("#bbrInsert").attr("value",resp.bbDetail.m_id);
    			// 댓글 입력시 bb_topid 값을 세팅하기 위한 인풋박스
     		$("#hiddenTopid").html('<input type="hidden" id="bb_topid" name="bb_topid" value="'+resp.bbDetail.bb_id+'">');
@@ -2914,6 +2915,7 @@ function main_followBtn(id) {
                 error);
         }
     });
+    $("#toid").attr("value",id);
 }
 // 메인 언팔로우
 function main_pre_unfollow(id) {

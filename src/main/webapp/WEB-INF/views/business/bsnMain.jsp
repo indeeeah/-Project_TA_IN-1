@@ -1707,6 +1707,7 @@ function mdOpen(e){
    			}
    			$("#bbHashtag").html(hashtag);
    			$("#bbrInsert").attr("value",resp.bbDetail.m_id);
+   			$("#toid").attr("value",resp.bbDetail.m_id);
    			// 댓글 입력시 bb_topid 값을 세팅하기 위한 인풋박스
     		$("#hiddenTopid").html('<input type="hidden" id="bb_topid" name="bb_topid" value="'+resp.bbDetail.bb_id+'">');
    			// 상품 가격
@@ -3374,6 +3375,7 @@ function main_followBtn(id) {
                 error);
         }
     });
+    $("#toid").attr("value",id);
 }
 // 메인 언팔로우
 function main_pre_unfollow(id) {
