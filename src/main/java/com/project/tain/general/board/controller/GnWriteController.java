@@ -33,10 +33,10 @@ public class GnWriteController {
 
 	@Autowired
 	private TimeLineService tService;
-	
+
 	@Autowired
 	private BsnBoardService bbService;
-	
+
 	@RequestMapping(value = "/gnWrite", method = RequestMethod.GET)
 	public ModelAndView gnWrite(HttpServletRequest request, ModelAndView mv) {
 		try {
@@ -52,7 +52,7 @@ public class GnWriteController {
 			} else if (result.equals("B")) {
 				mv.addObject("m_id", my_name);
 				mv.addObject("category", bbService.selectCategory(my_name));
-				System.out.println("category: "+bbService.selectCategory(my_name));
+				System.out.println("category: " + bbService.selectCategory(my_name));
 				mv.setViewName("business/bbWriteForm");
 			}
 		} catch (Exception e) {
@@ -94,13 +94,18 @@ public class GnWriteController {
 			System.out.println(seq);
 			gwService.insertboard(gw);
 			gwService.insertboardimg(gw);
-			h_tag = h_tag.substring(1);
-			System.out.println(h_tag);
-			String[] array = h_tag.split(" #");
-			for (int i = 0; i < array.length; i++) {
-				gw.setH_tag(array[i]);
-				System.out.println(array[i]);
-				gwService.insertboardhashtag(gw);
+			System.out.println("h_tag:" + h_tag);
+			int h_taglen = h_tag.length();
+			System.out.println(h_taglen);
+			if (h_taglen != 0) {
+				h_tag = h_tag.substring(1);
+				System.out.println(h_tag);
+				String[] array = h_tag.split(" #");
+				for (int i = 0; i < array.length; i++) {
+					gw.setH_tag(array[i]);
+					System.out.println(array[i]);
+					gwService.insertboardhashtag(gw);
+				}
 			}
 			mv.setViewName("redirect:/timeLine");
 		} catch (Exception e) {

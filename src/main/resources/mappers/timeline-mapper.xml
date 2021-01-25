@@ -565,7 +565,7 @@
 		select notice.m_id m_id, n_contents,
 		m_img from notice join member on notice.m_id=member.m_id where
 		m_id2=#{my_name}
-		and not notice.m_id=#{my_name}
+		and not notice.m_id=#{my_name} order by n_date desc
 	</select>
 
 </mapper>
