@@ -10,6 +10,7 @@
 <title>비즈니스 메인</title>
 <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+<script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
 <style>
 a{
 	text-decoration:none;
@@ -29,7 +30,6 @@ button{
     cursor:pointer;
 }
 input {
-    border: 1px solid #C7C7C7;
     border-radius:5px;
 }
 .content{
@@ -277,26 +277,11 @@ input {
 	transition: .1s ease;
 	backface-visibility: hidden;
 }
-.selectBb:hover img{
-	background-color:black;
-	opacity:0.3;
-}
 .listImg{
 	width:293px;
 	height:293px;
 }
 
-
-.middle {
-  transition: .1s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
 .myBtn img{
 	border:1px solid #C7C7C7 !important;
 }
@@ -489,7 +474,7 @@ input {
 }
 #bbrr {
     padding-left: 15px;
-    margin: 13px 0;
+    margin-top: 13px;
 }
 .bbrrbtn {
     float: left;
@@ -809,7 +794,6 @@ input {
 		position: fixed;
         width: 100%;
         height: 100%;
-        display: none;
         z-index: 11;
 	}
 	
@@ -905,6 +889,84 @@ input {
         margin-top: 10.5px;
         cursor: pointer;
     }
+    
+    #report_choose,
+#report_write,
+#report_result,
+#report_already,
+#pre_report_choose,
+#unfollowchk,
+#askunfollow,
+#cantunfollow,
+#share_con,
+#share_con_result,
+#report_member,
+#modal_more_con_not_me,
+#modal_more_con_me,
+#modal_delete,
+#modal_modifypost,
+#modify_con_result,
+#modal_more_con_not_me_not_follow,
+#report_write_mem,
+#report_comment,
+#report_write_co,
+#more_about_my_co,
+#modal_modifyco,
+#modify_con_co_result,
+#modal_delete_co,
+#modal_delete_co_result,
+#modal_delete_result {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background: #fff;
+    z-index: 9;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.modal_in {
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    cursor: pointer;
+    border-bottom: 1px solid #8E8E8E;
+    color: #262626;
+}
+
+#etc_write_con {
+    height: 192px;
+}
+
+#etx_write_space {
+    margin-top: 5px;
+    margin-left: 16px;
+    width: 364px;
+    height: 182px;
+    padding: 0px;
+    border: none;
+    outline: none;
+}
+
+.modal_title {
+    height: 42px;
+}
+
+#report {
+    color: #ED4956;
+}
+
+.modal_nocursor {
+    cursor: default;
+}
+
+.modal_result {
+    height: 96px;
+}
+    
 	.icon {
 	    width: 24px;
 	    height: 24px;
@@ -999,9 +1061,11 @@ input {
 </style>
 </head>
 <body>
+<input type="hidden" id="toid" class="socket" value="">
 	<!-- 헤더 -->
 	<jsp:include page="../header.jsp"></jsp:include>
 	<div id="content" class="content">
+	<input type="hidden" id="bm_name" value="${bsnInfo.bm_name }"/>
 	<input type="hidden" id="my_name" value="${my_name }"/>
 	<input type="hidden" id="bb_id" value="${bbDetail.bb_id }"/>
 	<input type="hidden" id="m_id" value="${id_img_fwr.m_id }"/>
@@ -1041,7 +1105,7 @@ input {
 			  		<div id="mdWrite">
 			  			<form action="bbrInsert.do" id="bbrInForm" class="bbrInForm" method="post">
 			  				<input type="text" id="bb_info" class="bb_info" name="bb_info" placeholder="댓글 달기...">
-			  				<button type="button" id="bbrInsert" class="bbrInsert" name="bbrInsert" style="cursor:pointer">게시</button>
+			  				<button type="button" id="bbrInsert" class="bbrInsert socket" value="" name="bbrInsert" style="cursor:pointer">게시</button>
 			  				<div id="hiddenTopid"></div>
 			  			</form>
 			  		</div>
@@ -1077,8 +1141,8 @@ input {
 	
 	<!-- 모달 (게시물) -->
 	<div id="mdBb">
-		<div id="mdbbContent" class="mdcContent">
-			<div id="bbReport" class="bbReport" onclick="bbRepoart(this)">
+			<div id="mdbbContent" class="mdcContent">
+				<div id="bbReport" class="bbReport" onclick="memberReport('${bbDetail.m_id}')">
 				<span class="pointer">게시물 신고</span>
 			</div>
 			<div id="goBbPage" class="goBbPage" onclick="location.href='#'">
@@ -1110,6 +1174,7 @@ input {
 	
 	<jsp:include page="../footer.jsp"></jsp:include>
 <script>
+
 var m_id = document.getElementById("m_id").value;
 var my_name = $("#my_name").val();
 var memId = $(".m_id").val();
@@ -1147,12 +1212,11 @@ window.onload = function(){
     	async:false,
     	data:{
     		bb_id:a,
+    		m_id:m_id
     	},
-/*     		m_id:m_id */
     	dataType:"json",
     	success:function(resp){
     		// 이미지 로드
-    		console.log("로드2");
     		var htmls="";
     		console.log("bbDetail()"+resp.bbDetail.m_id);
     		console.log("bbDetail()"+resp.bbDetail.bb_img1);
@@ -1216,9 +1280,9 @@ window.onload = function(){
    			// 게시글번호 및 멤버아이디(추후삭제)
    			console.log("#my_name:"+$("#my_name").val());
    			if(resp.bbDetail.m_id==$("#my_name").val()){
-    			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id +'</a><a id="bbUpdate" href="bbRenew.do?bb_id='+resp.bbDetail.bb_id+'">수정</a><a id="bbDelete" href="bbDelete.do?bb_id='+resp.bbDetail.bb_id+'">삭제</a><span id="mdBbBtn" class="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
+    			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id +'</a><a id="bbUpdate" href="bbRenew.do?bb_id='+resp.bbDetail.bb_id+'">수정</a><a id="bbDelete" href="bbDelete.do?bb_id='+resp.bbDetail.bb_id+'&m_id='+resp.bbDetail.m_id+'">삭제</a><span id="mdBbBtn" class="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
    			} else {
-    			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id + '</a><span id="follow" value="'+resp.bbDetail.m_id+'" onclick="follow(\''+resp.bbDetail.m_id+'\')">팔로우</span><span id="unFollow" value="'+resp.bbDetail.m_id+'" onclick="unFollow(\''+resp.bbDetail.m_id+'\')" style="cursor:pointer">팔로잉</span><span id="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
+    			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id + '</a><span id="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
    			}
    			// 상품명
     		$("#bbName").html(resp.bbDetail.bb_name);
@@ -1229,10 +1293,11 @@ window.onload = function(){
    			timeline += '<div class="timeline_comment_con">'+
 				            '<div class="inner_comment_con">'+
 					            '<div class="timeline_icon_con">'+
-					                '<div class="icon like_icon likechk'+resp.bbDetail.bb_id+'" onclick="pressLike(\''+resp.bbDetail.bb_id+'\');"></div>'+
+					                '<div class="socket icon like_icon likechk'+resp.bbDetail.bb_id+'" value="'+resp.bbDetail.m_id+'"onclick="pressLike(\''+resp.bbDetail.bb_id+'\');"></div>'+
 					                '<div class="icon unlike_icon unlikechk'+resp.bbDetail.bb_id+'" onclick="pressUnlike(\''+resp.bbDetail.bb_id+'\');"></div>'+
 					                '<div class="icon write_icon" id="write_icon" onclick="write_icon()"></div>'+
 					                '<div class="icon share_icon" onclick="shareurl(\''+resp.bbDetail.bb_id+','+resp.bbDetail.bb_id+'\')"></div>'+
+					                "<input type='hidden' class='socket like"+resp.bbDetail.bb_id+"' id='like"+resp.bbDetail.bb_id+"' value='abc' onclick='pushSocket(\""+resp.bbDetail.m_id+"\");'/>"+
 					                /* '<div class="icon save_icon"></div>'+ */
 					            '</div>'+
 					            '<div class="timeline_likes_con">좋아요 <input type="button" class="lCount'+resp.bbDetail.bb_id+' showlCount" value="'+resp.bbDetail.bb_like+'" readonly>개</div>'+
@@ -1247,9 +1312,10 @@ window.onload = function(){
    			var hashtag="";
    			console.log("태그갯수"+resp.bbTags.length);
    			for(var i = 0; i < resp.bbTags.length; i++){
-   				hashtag+="<a href='${pageContext.request.contextPath}/explore?hashtag="+resp.bbTags[i].h_tag+"'>#"+resp.bbTags[i].h_tag+"</a>";
+   				hashtag+="<a href='${pageContext.request.contextPath}/explore?hashtag="+resp.bbTags[i].h_tag+"'> #"+resp.bbTags[i].h_tag+"</a>";
    			}
    			$("#bbHashtag").html(hashtag);
+   			$("#bbrInsert").attr("value",resp.bbDetail.m_id);
    			// 댓글 입력시 bb_topid 값을 세팅하기 위한 인풋박스
     		$("#hiddenTopid").html('<input type="hidden" id="bb_topid" name="bb_topid" value="'+resp.bbDetail.bb_id+'">');
    			// 상품 가격
@@ -1377,13 +1443,15 @@ window.onload = function(){
 						htmls += 				"<button type='button' id='"+r_bb_id+"' class='bbrDelete "+ r_bb_id +"' onclick=\"bbrDelete('"+r_bb_id+"')\">삭제</button>";
 					}
 					htmls +=				"<button type='button'  id='mdBbBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
+							                "<input type='hidden' class='socket like"+r_bb_id+"' id='like"+r_bb_id+"' value='abc' onclick='pushSocket(\""+r_m_id+"\");'/>"+
 											"<div class='icon_reply like_icon_reply likechk"+r_bb_id+"' onclick='pressLike(\""+r_bb_id+"\");' width='10px' height='10px'></div>"+
 							                "<div class='icon_reply unlike_icon_reply unlikechk"+r_bb_id+"' onclick='pressUnlike(\""+r_bb_id+"\");'></div>"+
 							                "<div></div>"+
 											"<div id='bbrrInBox' class='bbrrInBox' >"+
 												"<input type='text' class='replyCoWri write_space' placeholder='답글 작성...'/>"+
-												"<button id='bbrrup"+r_bb_id+"' onclick='bbrrInsert(this)'>게시</button>"+
+												"<button id='bbrrup"+r_bb_id+"' class='socket' value='"+r_m_id+"' onclick='bbrrInsert(this)'>게시</button>"+
 												"<input type='hidden' value='" + r_bb_id + "'/>"+
+												"<input type='hidden' class='socket' id='bbrInsert' vlaue='"+r_m_id+"' onclick='pushSocket(\""+r_m_id+"\");'/>"+
 											"</div>"+
 										"</div>"+
 									"</div>"+
@@ -1528,6 +1596,7 @@ function bbrrListShow(bb_id){
 					htmls +=			"<button id='mdBbrBtn' class='mdBbrBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
 										"<div class='icon_reply like_icon_reply likechk"+rr_bb_id+"' onclick='pressLike(\""+rr_bb_id+"\");' width='10px' height='10px'></div>"+
 						                "<div class='icon_reply unlike_icon_reply unlikechk"+rr_bb_id+"' onclick='pressUnlike(\""+rr_bb_id+"\");'></div>"+
+						                "<input type='hidden' class='socket like"+rr_bb_id+"' id='like"+rr_bb_id+"' value='abc' onclick='pushSocket(\""+rr_m_id+"\");'/>"+
 						                "<div></div>"+
 									"</div>"+
 								"</div>"+
@@ -1570,8 +1639,8 @@ function bbrrListHide(bb_id){
 function bbrrWrite(e){
 	$(".bbrrInBox").css("display", "none");
 	console.log($(e).attr("class"));
-    $(e).parent().next().next().next().next().next().css("display", "block");
     $(e).parent().next().next().next().next().next().next().css("display", "block");
+    $(e).parent().next().next().next().next().next().next().next().css("display", "block");
 };
 
 
@@ -1583,7 +1652,7 @@ function bbrrInsert(e){
     var a2 = document.getElementById(a);
     var b = "bbrrhide"+bb_topid;
     var b2 = document.getElementById(b);
-    console.log("memId: "+memId+" bb_topid: "+bb_topid+" bb_info:"+bb_info);
+    console.log("memId: "+memId+" bb_topid: "+bb_topid+" bb_info:"+bb_info+" my_name:"+my_name);
     
     if (bb_info == "") {
         console.log("reply comment won't be uploaded");
@@ -1594,9 +1663,9 @@ function bbrrInsert(e){
             url: "bbrrInsert",
             method: "POST",
             data: {
-                bb_info: bb_info,
-                bb_topid: bb_topid,
-                m_id:my_name
+                bb_info : bb_info,
+                bb_topid : bb_topid,
+                m_id : my_name
             },
             dataType:"json",
             success: function(resp) {
@@ -1631,11 +1700,12 @@ function bbrrInsert(e){
     											"<span class='bbrrL' >좋아요:<input type='button' class='lCount"+rr_bb_id+" showlCount' value='"+rr_bbrlike+"' readonly></span>"+
     										"</div>";
     					if(rr_m_id==$("#my_name").val()){
-    						htmls += 		"<button type='button' id='"+ rr_bb_id +"' class='bbrDelete "+ rr_bb_id +"' onclick=\"bbrrDelete('"+ rr_bb_id +"')\">삭제</button>";
+    						htmls += 		"<button type='button' id='"+ rr_bb_id +"' class='bbrDelete "+ rr_bb_id +"' onclick=\"bbrDelete('"+ rr_bb_id +"')\">삭제</button>";
     					}
     					htmls +=			"<button id='mdBbrBtn' class='mdBbrBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
     										"<div class='icon_reply like_icon_reply likechk"+rr_bb_id+"' onclick='pressLike(\""+rr_bb_id+"\");' width='10px' height='10px'></div>"+
     						                "<div class='icon_reply unlike_icon_reply unlikechk"+rr_bb_id+"' onclick='pressUnlike(\""+rr_bb_id+"\");'></div>"+
+    						                "<input type='hidden' class='socket' id='like"+rr_bb_id+"' onclick='pushSocket(\""+rr_m_id+"\");'/>"+
     						                "<div></div>"+
     									"</div>"+
     								"</div>"+
@@ -1661,7 +1731,48 @@ function bbrrInsert(e){
             }
         });
     }
+    $('#bbrInsert').trigger('click');
 };
+
+// 모달창(상세페이지) close
+$('.close').on('click', function() {
+	/* $('#modal').hide(); */
+	var a = $(this).val();
+	console.log("모달창 닫기a:"+a);
+	var x = document.getElementById("modal");
+	console.log("모달창 닫기x:"+x);
+    x.style.display="none";
+    $('body').css("overflow", "scroll");
+    //클로즈 버튼 누르면 댓글 지워지기
+    $(".mdReply").empty();
+    slideIndex = 1;
+});
+
+// 윈도우 누르면 모달창(상세페이지) 꺼지기
+$(window).on('click', function() {
+	var modal = document.getElementById('modal');
+	var follow = document.getElementById('follow_modal');
+	var report = document.getElementById('report_modal');
+	if (event.target == modal) {
+		console.log("모달 닫기"+modal);
+		$('body').css("overflow", "scroll");
+		modal.style.display = "none";
+		$(".mdReply").empty();
+		$("#follow_back").hide();
+	}
+	if (event.target == follow) {
+		console.log("팔로우 닫기"+follow);
+		$('body').css("overflow", "scroll");
+		follow.style.display = "none";
+		$("#follow_back").css("display", "none");
+	}
+	if (event.target == report) {
+		console.log("팔로우 닫기"+follow);
+		$('body').css("overflow", "scroll");
+		follow.style.display = "none";
+		$("#report_back").css("display", "none");
+	}
+});
 
 //모달(장바구니) 열기
 $('#cartBtn').on('click', function() {
@@ -1742,6 +1853,63 @@ function mdReport(e){
 $('.cancel').on('click', function() {
 	$("#mdBbr").css("display", "none");
 });
+
+
+//모달(팔로우+팔로워) 열기
+$(".seefollower").on('click', function() {
+    $("#follow_back").css("display", "block");
+    $("#follow_modal").css("display", "block");
+    $("#see_follower").css("display", "block");
+    $("#see_follow").css("display", "none");
+});
+$(".seefollow").on('click', function() {
+    $("#follow_back").css("display", "block");
+    $("#follow_modal").css("display", "block");
+    $("#see_follow").css("display", "block");
+    $("#see_follower").css("display", "none");
+});
+//모달(팔로우+팔로워) 열기
+$('.fas').on('click', function() {
+	$("#follow_back").css("display", "none");
+	
+});
+//팔로우 체크
+function fochkWithMe(fid) {
+	console.log(fid+" : "+my_name);
+	console.log("hLike.follow:111111111111");
+    if (fid != my_name) {
+	console.log("hLike.follow:222222222222222");
+        $.ajax({
+            url: "${pageContext.request.contextPath}/followchkf.do",
+            method: "POST",
+            data: {
+                my_name: my_name,
+                m_id: fid
+            },
+            dataType: "json",
+            success: function(hLike) {
+                console.log("hLike.follow:"+hLike.follow);
+                if (hLike.follow == 0) {
+                    $(".people_follow" + fid).css("display", "block");
+                    $(".people_alfollow" + fid).css("display", "none");
+                } else {
+                    $(".people_follow" + fid).css("display", "none");
+                    $(".people_alfollow" + fid).css("display", "block");
+                }
+            },
+            error: function(request,
+                status, error) {
+                console.log("code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" + "error:" +
+                    error);
+            }
+        });
+    }
+}
 
 //윈도우 누르면 모달창 꺼지기
 $(window).on('click', function() {
@@ -1910,8 +2078,14 @@ function pressLike(t_id) {
     console.log("게시물 좋아요:"+t_id);
     console.log("게시물 좋아요 lCount:"+lcount);
     lcount++;
-    console.log("게시물 좋아요 lCount:"+lcount);
-    console.log("게시물 좋아요 m_id:"+m_id);
+    /* var a = "like"+t_id;	추후삭제
+    var b = document.getElementById(a);
+    var b2 = document.getElementsByClassName(a);
+    var c = $(b).val();
+    var c2 = $(b2).val();
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaa : " + a);
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaa : " + b);
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaa : " + c); */
 
 	$.ajax({
 	    url: "${pageContext.request.contextPath}/pressLikeB.do",
@@ -1941,6 +2115,8 @@ function pressLike(t_id) {
 	            error);
 	    }
 	});
+	
+	$('#like' + t_id).trigger('click');
     
 }
 
@@ -1968,6 +2144,7 @@ function pressUnlike(t_id) {
                 $(".likechk" + t_id).css("display", "block");
                 $(".unlikechk" + t_id).css("display", "none");
                	$(".lCount" + t_id).val(lcount);
+               	
                	/* $(".lCount" + t_id).load(location.href+".lCount" + t_id); */
             },
             error: function(request, status, error) {
@@ -1981,7 +2158,11 @@ function pressUnlike(t_id) {
             }
         });
 }
-
+function pushSocket(t){
+	alert("pushSocket() : " + t);
+	$("#toid").attr("value", t);
+	$("#toid").trigger('click');
+}
 //공유
 /* function shareurl(m_id, b_id) {
     $("#report_modal").css("display", "block");
@@ -2258,6 +2439,110 @@ $("#etc").on('click', function() {
     $("#report_choose").css("display", "none");
     $("#report_write").css("display", "block");
 });
+//멤버 신고
+function memberReport(id) {
+    $.ajax({
+        url: "${pageContext.request.contextPath}/chkReportMember.do",
+        method: "POST",
+        data: {
+            my_name: memId,
+            m_id: id
+        },
+        success: function(data) {
+            $("#report_back").css("display", "block");
+            $('body').css("overflow", "hidden");
+            if (data == 0) {
+                $("#report_member").css("display", "block");
+                $("#goreportmember").on('click', function() {
+                    $("#report_member").css("display", "none");
+                    $("#report_choose").css("display", "block");
+                    $(".send_report").on('click', function() {
+                        var report_reason = $(this).next().val();
+                        $.ajax({
+                            url: "${pageContext.request.contextPath}/insertReportMember.do",
+                            method: "POST",
+                            data: {
+                                m_id: id,
+                                my_name: memId,
+                                rm_reason: report_reason
+                            },
+                            success: function(data) {
+                                console.log("신고 완료");
+                                $("#report_choose").css("display", "none");
+                                $("#report_write").css("display", "none");
+                                $("#pre_report_choose").css("display", "none");
+                                $("#report_result").css("display", "block");
+                                $(".send_report").off('click');
+                                $(".toreport").off('click');
+                            },
+                            error: function(request, status, error) {
+                                alert("code:" +
+                                    request.status +
+                                    "\n" +
+                                    "message:" +
+                                    request.responseText +
+                                    "\n" + "error:" +
+                                    error);
+                            }
+                        });
+                    });
+                    $(".etc_mem").on('click', function() {
+                        $("#report_choose").css("display", "none");
+                        $("#report_write_mem").css("display", "block");
+                        $(".send_report_text").on('click', function() {
+                            var report_reason = $("#etx_write_space_mem").val();
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/insertReportMember.do",
+                                method: "POST",
+                                data: {
+                                    m_id: id,
+                                    my_name: memId,
+                                    rm_reason: report_reason
+                                },
+                                success: function(data) {
+                                    console.log("신고 완료");
+                                    $("#report_choose").css("display", "none");
+                                    $("#report_write_mem").css("display", "none");
+                                    $("#report_result").css("display", "block");
+                                    $("#pre_report_choose").css("display", "none");
+                                    $("#etx_write_space_mem").val('');
+                                    $(".send_report_text").off('click');
+                                    $(".toreport").off('click');
+                                },
+                                error: function(request, status, error) {
+                                    alert("code:" +
+                                        request.status +
+                                        "\n" +
+                                        "message:" +
+                                        request.responseText +
+                                        "\n" + "error:" +
+                                        error);
+                                }
+                            });
+                        });
+                    });
+                });
+            } else {
+                $("#report_already").css("display", "block");
+            }
+        },
+        error: function(request, status, error) {
+            alert("code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" + "error:" +
+                error);
+        }
+    });
+}
+//모달 안닫히는 cencel
+$(".notcancelAll").on('click', function() {
+    $("#report_back").css("display", "none");
+    $('body').css("overflow", "scroll");
+    
+});
 </script>
 </body>
 
@@ -2328,6 +2613,7 @@ $(function(){
 								htmls += 				"<button type='button' id='"+r_bb_id+"' class='bbrDelete "+ r_bb_id +"' onclick=\"bbrDelete('"+r_bb_id+"')\">삭제</button>";
 							}
 							htmls +=				"<button type='button'  id='mdBbBtn' onclick='mdReport(this)' style='cursor:pointer'>&#149;&#149;&#149;</button>"+
+									                "<input type='hidden' class='socket like"+r_bb_id+"' id='like"+r_bb_id+"' value='abc' onclick='pushSocket(\""+r_m_id+"\");'/>"+
 													"<div class='icon_reply like_icon_reply likechk"+r_bb_id+"' onclick='pressLike(\""+r_bb_id+"\");' width='10px' height='10px'></div>"+
 									                "<div class='icon_reply unlike_icon_reply unlikechk"+r_bb_id+"' onclick='pressUnlike(\""+r_bb_id+"\");'></div>"+
 									                "<div></div>"+
@@ -2335,6 +2621,7 @@ $(function(){
 														"<input type='text' class='replyCoWri write_space' placeholder='답글 작성...'/>"+
 														"<button id='bbrrup"+r_bb_id+"' onclick='bbrrInsert(this)'>게시</button>"+
 														"<input type='hidden' value='" + r_bb_id + "'/>"+
+														"<input type='hidden' class='socket' id='bbrInsert' vlaue='"+r_m_id+"' onclick='pushSocket(\""+r_m_id+"\");'/>"+
 													"</div>"+
 												"</div>"+
 											"</div>"+
@@ -2559,6 +2846,304 @@ function showAllCoHidden(t_id) {
                         error);
                 }
             });
+        });
+    }
+    
+    
+    
+}
+
+//해당 계정 페이지 이동
+function goEachAcount(id) {
+	console.log("goEachAcount"+id+":"+m_id);
+	
+    var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
+    $(location).attr('href', url);
+}
+//게시물 페이지 이동
+$(".gothispost_modal").on('click', function() {
+    var postid = $(".post_id").val();
+    var b_id = $("#for_modal_con").val();
+    var url = "${pageContext.request.contextPath}/gnEachPage?b_id=" + b_id;
+    $(location).attr('href', url);
+});
+// 하이라이트 페이지 이동
+function highlight(h_name) {
+    var m_id = $(".post_id").val();
+    var url = "${pageContext.request.contextPath}/eachHighlight?m_id=" + m_id + "&h_name=" + h_name;
+    $(location).attr('href', url);
+}
+// 스토리 작성 페이지 이동
+$(".highlight_photo_h").on('click', function() {
+    var url = "${pageContext.request.contextPath}/writeStory";
+    $(location).attr('href', url);
+});
+//계정 관리 페이지 이동
+$("#setting").on('click', function() {
+    var url = "${pageContext.request.contextPath}/mManage.do";
+    $(location).attr('href', url);
+});
+
+
+//메인 팔로우
+function main_followBtn(id) {
+    $.ajax({
+        url: "${pageContext.request.contextPath}/insertFollow.do",
+        method: "POST",
+        data: {
+            m_id: memId,
+            r_mid: id,
+            m_id2: id
+        },
+        success: function(data) {
+            $("#for_modal_fchk").val("1");
+            console.log("memId : " +
+                memId +
+                " id : " +
+                id);
+            var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
+            $(location).attr('href', url);
+        },
+        error: function(request, status, error) {
+            alert("code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" + "error:" +
+                error);
+        }
+    });
+}
+// 메인 언팔로우
+function main_pre_unfollow(id) {
+    $.ajax({
+        url: "${pageContext.request.contextPath}/unfollow.do",
+        method: "POST",
+        data: {
+            m_id: memId,
+            id: id
+        },
+        success: function(data) {
+            console.log("언팔 완료");
+            var url = "${pageContext.request.contextPath}/gnMain?m_id=" + id;
+            $(location).attr('href', url);
+        },
+        error: function(request, status, error) {
+            alert("code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" + "error:" +
+                error);
+        }
+    });
+}
+// 추천 계정 팔로우
+function followBtn(id) {
+    console.log(recCount);
+    $.ajax({
+        url: "${pageContext.request.contextPath}/insertFollow.do",
+        method: "POST",
+        data: {
+            m_id: memId,
+            r_mid: id,
+            m_id2: id
+        },
+        success: function(data) {
+            $("#for_modal_fchk").val("1");
+            console.log("memId : " +
+                memId +
+                " id : " +
+                id);
+            var post_id = $(".post_id").val();
+            if (post_id == id) {
+                var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
+                $(location).attr('href', url);
+            } else {
+                recCount--;
+                console.log("follow Result : " + recCount);
+                if (recCount == 0) {
+                    $("#recom_follow").css("display", "none");
+                    $("#hidden_follow_rec").css("display", "block");
+                }
+                $(".each_rec_con" + id).css("display", "none");
+            }
+        },
+        error: function(request, status, error) {
+            alert("code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" + "error:" +
+                error);
+        }
+    });
+}
+//계정 추천
+$("#rf").change(function() {
+    if ($("#rf").is(":checked")) {
+        $("#hidden_follow_rec").css("display", "block");
+    } else {
+        $("#hidden_follow_rec").css("display", "none");
+    }
+});
+// 모달 팔로우
+function followinmodal(id) {
+    $.ajax({
+        url: "${pageContext.request.contextPath}/insertFollow.do",
+        method: "POST",
+        data: {
+            m_id: memId,
+            r_mid: id,
+            m_id2: id
+        },
+        success: function(data) {
+            $("#for_modal_fchk").val("1");
+            $(".profile_btn_ok").css("display", "block");
+            $(".profile_btn_no").css("display", "none");
+        },
+        error: function(request, status, error) {
+            alert("code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" + "error:" +
+                error);
+        }
+    });
+}
+
+// 언팔로우
+function pre_unfollow(id) {
+    $("#modal_more_con_not_me").css("display", "none");
+    $("#askunfollow").css("display", "block");
+    $("#yes_unfollow").on('click', function() {
+        $.ajax({
+            url: "${pageContext.request.contextPath}/unfollow.do",
+            method: "POST",
+            data: {
+                m_id: memId,
+                id: id
+            },
+            success: function(data) {
+                console.log("언팔 완료");
+                $("#for_modal_fchk").val("0");
+                $(".profile_btn_ok").css("display", "none");
+                $(".profile_btn_no").css("display", "block");
+                $("#askunfollow").css("display", "none");
+                $("#unfollowchk").css("display", "block");
+            },
+            error: function(request, status, error) {
+                alert("code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" + "error:" +
+                    error);
+            }
+        });
+    });
+ 	// 멤버 신고
+    function memberReport(id) {
+        $.ajax({
+            url: "${pageContext.request.contextPath}/chkReportMember.do",
+            method: "POST",
+            data: {
+                my_name: memId,
+                m_id: id
+            },
+            success: function(data) {
+                $("#report_modal").css("display", "block");
+                $("#report_back").css("display", "block");
+                if (data == 0) {
+                    $("#report_member").css("display", "block");
+                    $("#goreportmember").on('click', function() {
+                        $("#report_member").css("display", "none");
+                        $("#report_choose").css("display", "block");
+                        $(".send_report").on('click', function() {
+                            var report_reason = $(this).next().val();
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/insertReportMember.do",
+                                method: "POST",
+                                data: {
+                                    m_id: id,
+                                    my_name: memId,
+                                    rm_reason: report_reason
+                                },
+                                success: function(data) {
+                                    console.log("신고 완료");
+                                    $("#report_choose").css("display", "none");
+                                    $("#report_write").css("display", "none");
+                                    $("#pre_report_choose").css("display", "none");
+                                    $("#report_result").css("display", "block");
+                                    $(".send_report").off('click');
+                                    $(".toreport").off('click');
+                                },
+                                error: function(request, status, error) {
+                                    alert("code:" +
+                                        request.status +
+                                        "\n" +
+                                        "message:" +
+                                        request.responseText +
+                                        "\n" + "error:" +
+                                        error);
+                                }
+                            });
+                        });
+                        $(".etc_mem").on('click', function() {
+                            $("#report_choose").css("display", "none");
+                            $("#report_write_mem").css("display", "block");
+                            $(".send_report_text").on('click', function() {
+                                var report_reason = $("#etx_write_space_mem").val();
+                                $.ajax({
+                                    url: "${pageContext.request.contextPath}/insertReportMember.do",
+                                    method: "POST",
+                                    data: {
+                                        m_id: id,
+                                        my_name: memId,
+                                        rm_reason: report_reason
+                                    },
+                                    success: function(data) {
+                                        console.log("신고 완료");
+                                        $("#report_choose").css("display", "none");
+                                        $("#report_write_mem").css("display", "none");
+                                        $("#report_result").css("display", "block");
+                                        $("#pre_report_choose").css("display", "none");
+                                        $("#etx_write_space_mem").val('');
+                                        $(".send_report_text").off('click');
+                                        $(".toreport").off('click');
+                                    },
+                                    error: function(request, status, error) {
+                                        alert("code:" +
+                                            request.status +
+                                            "\n" +
+                                            "message:" +
+                                            request.responseText +
+                                            "\n" + "error:" +
+                                            error);
+                                    }
+                                });
+                            });
+                        });
+                    });
+                } else {
+                    $("#report_already").css("display", "block");
+                }
+            },
+            error: function(request, status, error) {
+                alert("code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" + "error:" +
+                    error);
+            }
         });
     }
 }

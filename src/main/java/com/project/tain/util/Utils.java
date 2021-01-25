@@ -7,14 +7,15 @@ import java.util.List;
 public class Utils {
 	public static List<String> tagParser(String tags){
 		String temp[] = tags.split("#");
-		
+		System.out.println("유틸s"+temp[1]);
 		List<String> tagList = new ArrayList<String>();
 		
 		int len = temp.length;
 		
 		for(int i =1; i<len; i++) {
-			tagList.add(temp[i]);
-			System.out.println("tagList : "+temp[i]);
+			String str = temp[i].trim();
+			tagList.add(str);
+			System.out.println("tagList : "+str);
 		}
 		return tagList;
 	}

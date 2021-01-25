@@ -859,7 +859,6 @@ input {
 		position: fixed;
         width: 100%;
         height: 100%;
-        display: none;
         z-index: 11;
 	}
 	
@@ -955,6 +954,84 @@ input {
         margin-top: 10.5px;
         cursor: pointer;
     }
+    
+    #report_choose,
+#report_write,
+#report_result,
+#report_already,
+#pre_report_choose,
+#unfollowchk,
+#askunfollow,
+#cantunfollow,
+#share_con,
+#share_con_result,
+#report_member,
+#modal_more_con_not_me,
+#modal_more_con_me,
+#modal_delete,
+#modal_modifypost,
+#modify_con_result,
+#modal_more_con_not_me_not_follow,
+#report_write_mem,
+#report_comment,
+#report_write_co,
+#more_about_my_co,
+#modal_modifyco,
+#modify_con_co_result,
+#modal_delete_co,
+#modal_delete_co_result,
+#modal_delete_result {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background: #fff;
+    z-index: 9;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.modal_in {
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    cursor: pointer;
+    border-bottom: 1px solid #8E8E8E;
+    color: #262626;
+}
+
+#etc_write_con {
+    height: 192px;
+}
+
+#etx_write_space {
+    margin-top: 5px;
+    margin-left: 16px;
+    width: 364px;
+    height: 182px;
+    padding: 0px;
+    border: none;
+    outline: none;
+}
+
+.modal_title {
+    height: 42px;
+}
+
+#report {
+    color: #ED4956;
+}
+
+.modal_nocursor {
+    cursor: default;
+}
+
+.modal_result {
+    height: 96px;
+}
+    
 	.icon {
 	    width: 24px;
 	    height: 24px;
@@ -1142,11 +1219,6 @@ input {
             <div id="rec_title">
                 <div id="title1">추천계정</div>
                 <c:if test="${not empty recomFow }">
-                    <div class="highlight_small_con">
-                        <img class="highlight_photo" onclick="highlight('${vo.h_name }');" src="${pageContext.request.contextPath}/resources/uploadFiles/${vo.h_img }">
-                        <div class="highlight_title" onclick="highlight('${vo.h_name }');">${vo.h_name }
-                        </div>
-                    </div>
                     <c:forEach var="vo" items="${recomFow }" varStatus="s">
                         <div class="each_rec_con each_rec_con${vo.r_mid }">
                             <div class="each_rec_photo" style="cursor:pointer;" onclick="goEachAcount('${vo.r_mid}');">${vo.m_img }</div>
@@ -1262,7 +1334,7 @@ input {
 		<!-- 모달 (게시물) -->
 		<div id="mdBb">
 			<div id="mdbbContent" class="mdcContent">
-				<div id="bbReport" class="bbReport" onclick="bbRepoart(this)">
+				<div id="bbReport" class="bbReport" onclick="memberReport('${bbDetail.m_id}')">
 					<span class="pointer">게시물 신고</span>
 				</div>
 				<div id="goBbPage" class="goBbPage" onclick="location.href='#'">
@@ -1337,7 +1409,7 @@ input {
 			    </div>
 			</div>
 		</div>
-		<%-- <div id="report_back">
+		<div id="report_back">
             <div id="report_modal">
                 <div id="share_con" style="display: none;">
                     <div class="modal_in modal_title modal_nocursor">게시물 공유하기</div>
@@ -1483,7 +1555,7 @@ input {
                     <div class="modal_in notcancelAll">화면으로 돌아가기</div>
                 </div>
             </div>
-		</div> --%>
+		</div>
 		
 	</div>
 	
@@ -1601,7 +1673,7 @@ function mdOpen(e){
    			if(resp.bbDetail.m_id==$("#my_name").val()){
     			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id +'</a><a id="bbUpdate" href="bbRenew.do?bb_id='+resp.bbDetail.bb_id+'">수정</a><a id="bbDelete" href="bbDelete.do?bb_id='+resp.bbDetail.bb_id+'&m_id='+resp.bbDetail.m_id+'">삭제</a><span id="mdBbBtn" class="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
    			} else {
-    			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id + '</a><span id="follow" value="'+resp.bbDetail.m_id+'" onclick="follow(\''+resp.bbDetail.m_id+'\')">팔로우</span><span id="unFollow" value="'+resp.bbDetail.m_id+'" onclick="unFollow(\''+resp.bbDetail.m_id+'\')" style="cursor:pointer">팔로잉</span><span id="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
+    			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id + '</a><span id="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
    			}
    			// 상품명
     		$("#bbName").html(resp.bbDetail.bb_name);
@@ -2071,6 +2143,7 @@ $('.close').on('click', function() {
 $(window).on('click', function() {
 	var modal = document.getElementById('modal');
 	var follow = document.getElementById('follow_modal');
+	var report = document.getElementById('report_modal');
 	if (event.target == modal) {
 		console.log("모달 닫기"+modal);
 		$('body').css("overflow", "scroll");
@@ -2083,6 +2156,12 @@ $(window).on('click', function() {
 		$('body').css("overflow", "scroll");
 		follow.style.display = "none";
 		$("#follow_back").css("display", "none");
+	}
+	if (event.target == report) {
+		console.log("팔로우 닫기"+follow);
+		$('body').css("overflow", "scroll");
+		follow.style.display = "none";
+		$("#report_back").css("display", "none");
 	}
 });
 
@@ -2750,6 +2829,110 @@ $("#etc").on('click', function() {
     $("#report_choose").css("display", "none");
     $("#report_write").css("display", "block");
 });
+//멤버 신고
+function memberReport(id) {
+    $.ajax({
+        url: "${pageContext.request.contextPath}/chkReportMember.do",
+        method: "POST",
+        data: {
+            my_name: memId,
+            m_id: id
+        },
+        success: function(data) {
+            $("#report_back").css("display", "block");
+            $('body').css("overflow", "hidden");
+            if (data == 0) {
+                $("#report_member").css("display", "block");
+                $("#goreportmember").on('click', function() {
+                    $("#report_member").css("display", "none");
+                    $("#report_choose").css("display", "block");
+                    $(".send_report").on('click', function() {
+                        var report_reason = $(this).next().val();
+                        $.ajax({
+                            url: "${pageContext.request.contextPath}/insertReportMember.do",
+                            method: "POST",
+                            data: {
+                                m_id: id,
+                                my_name: memId,
+                                rm_reason: report_reason
+                            },
+                            success: function(data) {
+                                console.log("신고 완료");
+                                $("#report_choose").css("display", "none");
+                                $("#report_write").css("display", "none");
+                                $("#pre_report_choose").css("display", "none");
+                                $("#report_result").css("display", "block");
+                                $(".send_report").off('click');
+                                $(".toreport").off('click');
+                            },
+                            error: function(request, status, error) {
+                                alert("code:" +
+                                    request.status +
+                                    "\n" +
+                                    "message:" +
+                                    request.responseText +
+                                    "\n" + "error:" +
+                                    error);
+                            }
+                        });
+                    });
+                    $(".etc_mem").on('click', function() {
+                        $("#report_choose").css("display", "none");
+                        $("#report_write_mem").css("display", "block");
+                        $(".send_report_text").on('click', function() {
+                            var report_reason = $("#etx_write_space_mem").val();
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/insertReportMember.do",
+                                method: "POST",
+                                data: {
+                                    m_id: id,
+                                    my_name: memId,
+                                    rm_reason: report_reason
+                                },
+                                success: function(data) {
+                                    console.log("신고 완료");
+                                    $("#report_choose").css("display", "none");
+                                    $("#report_write_mem").css("display", "none");
+                                    $("#report_result").css("display", "block");
+                                    $("#pre_report_choose").css("display", "none");
+                                    $("#etx_write_space_mem").val('');
+                                    $(".send_report_text").off('click');
+                                    $(".toreport").off('click');
+                                },
+                                error: function(request, status, error) {
+                                    alert("code:" +
+                                        request.status +
+                                        "\n" +
+                                        "message:" +
+                                        request.responseText +
+                                        "\n" + "error:" +
+                                        error);
+                                }
+                            });
+                        });
+                    });
+                });
+            } else {
+                $("#report_already").css("display", "block");
+            }
+        },
+        error: function(request, status, error) {
+            alert("code:" +
+                request.status +
+                "\n" +
+                "message:" +
+                request.responseText +
+                "\n" + "error:" +
+                error);
+        }
+    });
+}
+//모달 안닫히는 cencel
+$(".notcancelAll").on('click', function() {
+    $("#report_back").css("display", "none");
+    $('body').css("overflow", "scroll");
+    
+});
 </script>
 </body>
 
@@ -3325,6 +3508,104 @@ function pre_unfollow(id) {
             }
         });
     });
+ 	// 멤버 신고
+    function memberReport(id) {
+        $.ajax({
+            url: "${pageContext.request.contextPath}/chkReportMember.do",
+            method: "POST",
+            data: {
+                my_name: memId,
+                m_id: id
+            },
+            success: function(data) {
+                $("#report_modal").css("display", "block");
+                $("#report_back").css("display", "block");
+                if (data == 0) {
+                    $("#report_member").css("display", "block");
+                    $("#goreportmember").on('click', function() {
+                        $("#report_member").css("display", "none");
+                        $("#report_choose").css("display", "block");
+                        $(".send_report").on('click', function() {
+                            var report_reason = $(this).next().val();
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/insertReportMember.do",
+                                method: "POST",
+                                data: {
+                                    m_id: id,
+                                    my_name: memId,
+                                    rm_reason: report_reason
+                                },
+                                success: function(data) {
+                                    console.log("신고 완료");
+                                    $("#report_choose").css("display", "none");
+                                    $("#report_write").css("display", "none");
+                                    $("#pre_report_choose").css("display", "none");
+                                    $("#report_result").css("display", "block");
+                                    $(".send_report").off('click');
+                                    $(".toreport").off('click');
+                                },
+                                error: function(request, status, error) {
+                                    alert("code:" +
+                                        request.status +
+                                        "\n" +
+                                        "message:" +
+                                        request.responseText +
+                                        "\n" + "error:" +
+                                        error);
+                                }
+                            });
+                        });
+                        $(".etc_mem").on('click', function() {
+                            $("#report_choose").css("display", "none");
+                            $("#report_write_mem").css("display", "block");
+                            $(".send_report_text").on('click', function() {
+                                var report_reason = $("#etx_write_space_mem").val();
+                                $.ajax({
+                                    url: "${pageContext.request.contextPath}/insertReportMember.do",
+                                    method: "POST",
+                                    data: {
+                                        m_id: id,
+                                        my_name: memId,
+                                        rm_reason: report_reason
+                                    },
+                                    success: function(data) {
+                                        console.log("신고 완료");
+                                        $("#report_choose").css("display", "none");
+                                        $("#report_write_mem").css("display", "none");
+                                        $("#report_result").css("display", "block");
+                                        $("#pre_report_choose").css("display", "none");
+                                        $("#etx_write_space_mem").val('');
+                                        $(".send_report_text").off('click');
+                                        $(".toreport").off('click');
+                                    },
+                                    error: function(request, status, error) {
+                                        alert("code:" +
+                                            request.status +
+                                            "\n" +
+                                            "message:" +
+                                            request.responseText +
+                                            "\n" + "error:" +
+                                            error);
+                                    }
+                                });
+                            });
+                        });
+                    });
+                } else {
+                    $("#report_already").css("display", "block");
+                }
+            },
+            error: function(request, status, error) {
+                alert("code:" +
+                    request.status +
+                    "\n" +
+                    "message:" +
+                    request.responseText +
+                    "\n" + "error:" +
+                    error);
+            }
+        });
+    }
 }
 </script>
 </html>
