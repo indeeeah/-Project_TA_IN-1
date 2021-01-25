@@ -93,6 +93,7 @@ public class GnBoardController {
 				mv.addObject("list", bbService.selectListPage(m_id, currentPage, LIMIT));	// 게시물 텍스트정보
 				mv.setViewName("business/bsnMain");
 			} else if (result.equals("M")) {
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 				mv.setViewName("management/managementMain");
 			}
 		} catch (Exception e) {
