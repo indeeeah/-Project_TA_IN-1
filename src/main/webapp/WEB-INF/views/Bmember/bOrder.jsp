@@ -271,7 +271,7 @@
 					지난 판매내역을 조회하실 수 있습니다.<br>리스트의 상품을 클릭하시면 처리상태를 입력하실 수 있습니다.
 				</b>
 				<hr style="width: 80%; margin-top: 30px; border: 1px solid #EAEAEA;">
-				<table style="font-size: 8pt; width: 100%;padding:50px 0 50px 0;">
+				<table style="font-size: 7pt; width: 100%;padding:50px 0 50px 0;">
 					<tr>
 						<td>Date</td>
 						<td>Product</td>
