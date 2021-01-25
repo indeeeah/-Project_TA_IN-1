@@ -252,7 +252,7 @@
                                         <div class="upload_comment">
                                             <div class="inner_comment_con inner_upload">
                                                 <input type="text" class="write_space write_space${vo.t_id }" placeholder="댓글 달기..." name="t_comment">
-                                                <button class="comment_upload">게시</button>
+                                                <button class="comment_upload socket">게시</button>
                                                 <input type="hidden" name="t_id" value="${vo.t_id }"> <input type="hidden" name="t_type" value="${vo.t_type }" class="t_type${vo.t_id }">
                                                 <input type="hidden" value="${vo.m_id }">
                                             </div>

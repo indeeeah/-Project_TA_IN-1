@@ -50,7 +50,8 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 			mvo.setM_date(m_date);
 			mvo.setM_check("N");
 			System.out.println(mvo);
-			if(content != "!Alarm") {
+			if(content.equals("!Alarm") == false) {
+				System.out.println(content);
 				mMessageServiceImpl.sendMessage(mvo);
 			}
 			WebSocketSession m_id = userSessions.get(toid);

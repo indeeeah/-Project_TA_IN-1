@@ -252,6 +252,11 @@ th, td {
 							presult.push($("#finalresult").html());
 					location.href="mBuy.do?bb_id="+bb_id+"&od_amount="+od_amount+"&presult="+presult;
 				});
+				$("#order").click(function(){
+					var bb_id =;
+					var od_amount =;
+					var presult =;
+				});
 				
 				$("#deletelist").click(function(){
 					if(${cartlist.size() eq 0}){

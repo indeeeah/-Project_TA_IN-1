@@ -333,7 +333,7 @@ img {
 						</c:if>
 					</div>
 					<div
-						style="padding-top: 40px; padding-left: 50px; text-align: left;">
+						style="padding-top: 40px; padding-left: 30px; text-align: left;">
 						<c:if test="${ADList.size() ne 0}">
 							<c:forEach var="si" items="${ADList}" varStatus="status">
 								<span class="img"> <img class="adimg"
