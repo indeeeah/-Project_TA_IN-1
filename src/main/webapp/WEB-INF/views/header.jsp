@@ -33,7 +33,8 @@
                                 <div id="fix_write" class="fix_icon"><i class="fas fa-arrow-circle-up"></i></div>
                                 <div id="fix_message" class="fix_icon">
                                     <i class="fas fa-comment-dots"></i>
-                                    <div id="circle1" class="circle1" style="display:none;position:relative;right:4px;top:10px;background-color: #ED4956; width: 5px; height: 5px;
+                                    <div id="circle1" class="circle1" style="<c:if test="${messagecheck ne null}">display:block;</c:if>
+								<c:if test="${messagecheck eq null}">display:none;</c:if>position:relative;right:4px;top:10px;background-color: #ED4956; width: 5px; height: 5px;
             border-radius: 75px; text-align: center; margin: 0 auto; font-size: 12px; vertical-align: middle;
             line-height: 150px;"></div>
                                 </div>
