@@ -44,5 +44,9 @@ public class mMessageDAO {
 		map.put("m_id2", m_id2); //내 아이디
 		return sqlSession.update("mMessageVO.readmessage", map);
 	}
+	
+	public int readcheck(String m_id2) {
+		return sqlSession.selectOne("mMessageVO.readcheck", m_id2);
+	}
 
 }

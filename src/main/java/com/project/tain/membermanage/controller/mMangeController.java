@@ -98,6 +98,7 @@ public class mMangeController {
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name)); 
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 			mv.setViewName("Gmember/mManage");
 		} catch (Exception e) {
@@ -213,6 +214,7 @@ public class mMangeController {
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name)); 
 			mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 			mv.setViewName("Gmember/mChangepw");
 		} catch (Exception e) {
@@ -253,6 +255,7 @@ public class mMangeController {
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.addObject("productprice", price);
 			mv.addObject("allprice", price + 3000);
 			mv.addObject("cartlist", mCartServiceImpl.showCart(my_name));
@@ -316,6 +319,7 @@ public class mMangeController {
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("shownotice", tService.shownotice(my_name));
 			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 			mv.addObject("realval", realval);
 			mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 			mv.addObject("presult", presult);
@@ -369,6 +373,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name)); 
 		mv.addObject("orderimg", map);
 		mv.addObject("orderlist", mOrderServiceImpl.showOrderList(my_name));
 		mv.setViewName("Gmember/mBuylist");
@@ -382,6 +387,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name)); 
 		mv.addObject("likelist", mLikeServiceImpl.showLike(my_name));
 		mv.setViewName("Gmember/mLikelist");
 		return mv;
@@ -394,6 +400,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 		mv.addObject("likelist", mLikeServiceImpl.showLike(my_name));
 		mv.setViewName("Gmember/mLikelistboard");
 		return mv;
@@ -406,6 +413,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 		mv.addObject("likelist", mLikeServiceImpl.showLike(my_name));
 		mv.setViewName("Gmember/mLikelistbboard");
 		return mv;
@@ -421,6 +429,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name)); 
 		mv.addObject("my_name", my_name);
 		mv.addObject("bMember", bMemberServiceImpl.showbMember(my_name));
 		mv.setViewName("Gmember/mBusiness");
@@ -457,6 +466,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 		mv.setViewName("Bmember/bOut");
 		return mv;
 	}
@@ -477,6 +487,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 		mv.addObject("ADList", bAdServiceImpl.showbAd(my_name));
 		mv.setViewName("Bmember/bAD");
 		return mv;
@@ -530,6 +541,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 		mv.addObject("color", list);
 		mv.addObject("CateList", bCateServiceImpl.showbCate(my_name));
 		mv.setViewName("Bmember/bCategory");
@@ -579,6 +591,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 		mv.addObject("startdate", startdate);
 		mv.addObject("enddate", enddate);
 		mv.addObject("bOrderList", bOrderServiceImpl.manageOrderList(my_name, startdate, enddate));
@@ -595,6 +608,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 		mv.addObject("startdate", startdate);
 		mv.addObject("enddate", enddate);
 		mv.addObject("bOrderList", bOrderServiceImpl.manageOrderList(my_name, startdate, enddate));
@@ -628,6 +642,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 		mv.addObject("userImg", list);
 		mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 		mv.addObject("MessageList", mMessageServiceImpl.showMessageList(my_name));
@@ -647,6 +662,7 @@ public class mMangeController {
 		mv.addObject("chkfollow", tService.chkfollow(my_name));
 		mv.addObject("shownotice", tService.shownotice(my_name));
 		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 		mv.addObject("readcheck", mMessageServiceImpl.checkmessage(my_name));
 		mv.addObject("userImg", list);
 		mv.addObject("my_name", my_name);

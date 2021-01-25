@@ -35,6 +35,10 @@
 	select * from message where m_id2 = #{m_id2} order by m_date desc 
 	</select>
 	
+	<select id="readcheck" parameterType="String" resultType="int">
+	select count(*) count from message where m_id2 = #{m_id2} and m_check = 'N'
+	</select>
+	
 	<!-- 메세지 읽음처리 -->
 	<update id="readmessage" parameterType="hashmap">
 	update message set m_check = 'Y' where m_id=#{m_id} and m_id2=#{m_id2}

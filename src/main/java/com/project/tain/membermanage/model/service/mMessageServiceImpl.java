@@ -38,4 +38,9 @@ public class mMessageServiceImpl implements mMessageService{
 		return mMessageDao.readmessage(m_id, m_id2);
 	}
 
+	@Override
+	public int readcheck(String m_id2) {
+		return mMessageDao.readcheck(m_id2);
+	}
+
 }
