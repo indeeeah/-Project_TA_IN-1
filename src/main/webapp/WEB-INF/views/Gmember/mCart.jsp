@@ -252,12 +252,16 @@ th, td {
 							presult.push($("#finalresult").html());
 					location.href="mBuy.do?bb_id="+bb_id+"&od_amount="+od_amount+"&presult="+presult;
 				});
+
 				$("#order").click(function(){
-					var bb_id =;
-					var od_amount =;
-					var presult =;
+					var bb_id =$(this).parent().parent().find("input[id=bb_id]").val();
+					var od_amount =$(this).parent().parent().find("input[id=amount]").val();
+					var presult =[];
+					presult.push($(this).parent().parent().find("input[id=sum]").val());
+					presult.push($(this).parent().parent().find("input[id=sumval]").val());
+					location.href="mBuy.do?bb_id="+bb_id+"&od_amount="+od_amount+"&presult="+presult;
 				});
-				
+
 				$("#deletelist").click(function(){
 					if(${cartlist.size() eq 0}){
 						alert("장바구니가 비어있습니다.");
@@ -358,11 +362,12 @@ th, td {
 									<td><input type="text" id="sum"
 										style="text-align: center; width: 60px; border-style: none;"
 										value="<fmt:formatNumber
-										value="${price}" pattern="#,###" />원"></td>
+										value="${price}" pattern="#,###" />원">
+										<input type="text" id="sumval" style="display:none;" value="<fmt:formatNumber
+										value="${price+3000}" pattern="#,###" />원"></td>
 									<td><input type="button" id="order" value="주문하기"
 										style="background: white; border: 1px solid #D5D5D5; margin: 0px;"
-										class="btn2"
-										onclick="location.href='mBuy.do?bb_id=${cl.bb_id}'"> <br>
+										class="btn2"> <br>
 									<br>
 									<input type="button" id="delete" value="삭제"
 										style="background: white; border: 1px solid #D5D5D5; margin: 0px;"
