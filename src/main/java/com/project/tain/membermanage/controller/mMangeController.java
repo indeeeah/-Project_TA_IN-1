@@ -41,6 +41,7 @@ import com.project.tain.membermanage.model.service.mOrderServiceImpl;
 import com.project.tain.membermanage.model.vo.mCartVO;
 import com.project.tain.membermanage.model.vo.mMemberVO;
 import com.project.tain.membermanage.model.vo.mOrderVO;
+import com.project.tain.post.model.service.TimeLineService;
 
 @EnableWebMvc
 @Controller
@@ -65,6 +66,8 @@ public class mMangeController {
 	private mMessageServiceImpl mMessageServiceImpl;
 	@Autowired
 	private mFollowServiceImpl mFollowServiceImpl;
+	@Autowired
+	private TimeLineService tService;
 
 	@RequestMapping(value = "/IdSet.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String memberBusiness(HttpServletRequest request) {
@@ -92,6 +95,9 @@ public class mMangeController {
 	public ModelAndView memberManage(ModelAndView mv, HttpServletRequest request, HttpSession session) {
 		String my_name = (String) session.getAttribute("my_name");
 		try {
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name)); 
 			mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 			mv.setViewName("Gmember/mManage");
 		} catch (Exception e) {
@@ -204,6 +210,9 @@ public class mMangeController {
 		HttpSession session = request.getSession();
 		String my_name = (String) session.getAttribute("my_name");
 		try {
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 			mv.setViewName("Gmember/mChangepw");
 		} catch (Exception e) {
@@ -241,6 +250,9 @@ public class mMangeController {
 			for (int i = 0; i < mCartServiceImpl.showCart(my_name).size(); i++) {
 				price += mCartServiceImpl.showCart(my_name).get(i).getBb_price();
 			}
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("productprice", price);
 			mv.addObject("allprice", price + 3000);
 			mv.addObject("cartlist", mCartServiceImpl.showCart(my_name));
@@ -301,6 +313,9 @@ public class mMangeController {
 			for (int i = 0; i < bb_id.length; i++) {
 				list.add(mCartServiceImpl.showOrder(my_name, bb_id[i]));
 			}
+			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("shownotice", tService.shownotice(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.addObject("realval", realval);
 			mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 			mv.addObject("presult", presult);
@@ -351,6 +366,9 @@ public class mMangeController {
 			map.put("bb_img",
 					mCartServiceImpl.showOrderImg(mOrderServiceImpl.showOrderList(my_name).get(i).getBb_id()));
 		}
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("orderimg", map);
 		mv.addObject("orderlist", mOrderServiceImpl.showOrderList(my_name));
 		mv.setViewName("Gmember/mBuylist");
@@ -361,6 +379,9 @@ public class mMangeController {
 	public ModelAndView memberLikelist(ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String my_name = (String) session.getAttribute("my_name");
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("likelist", mLikeServiceImpl.showLike(my_name));
 		mv.setViewName("Gmember/mLikelist");
 		return mv;
@@ -370,6 +391,9 @@ public class mMangeController {
 	public ModelAndView memberLikelistboard(ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String my_name = (String) session.getAttribute("my_name");
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("likelist", mLikeServiceImpl.showLike(my_name));
 		mv.setViewName("Gmember/mLikelistboard");
 		return mv;
@@ -379,6 +403,9 @@ public class mMangeController {
 	public ModelAndView memberLikelistbboard(ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String my_name = (String) session.getAttribute("my_name");
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("likelist", mLikeServiceImpl.showLike(my_name));
 		mv.setViewName("Gmember/mLikelistbboard");
 		return mv;
@@ -391,6 +418,9 @@ public class mMangeController {
 		if (bMemberServiceImpl.showbMember(my_name) != null) {
 			mv.addObject("bMemAddr", bMemberServiceImpl.showbMember(my_name).getBm_addr().split("/"));
 		}
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("my_name", my_name);
 		mv.addObject("bMember", bMemberServiceImpl.showbMember(my_name));
 		mv.setViewName("Gmember/mBusiness");
@@ -422,6 +452,11 @@ public class mMangeController {
 
 	@RequestMapping(value = "/bOut.do", method = RequestMethod.GET)
 	public ModelAndView bOut(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String my_name = (String) session.getAttribute("my_name");
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.setViewName("Bmember/bOut");
 		return mv;
 	}
@@ -439,6 +474,9 @@ public class mMangeController {
 	public ModelAndView bAD(ModelAndView mv, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String my_name = (String) session.getAttribute("my_name");
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("ADList", bAdServiceImpl.showbAd(my_name));
 		mv.setViewName("Bmember/bAD");
 		return mv;
@@ -489,6 +527,9 @@ public class mMangeController {
 			String color = r + "," + g + "," + b;
 			list.add(color);
 		}
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("color", list);
 		mv.addObject("CateList", bCateServiceImpl.showbCate(my_name));
 		mv.setViewName("Bmember/bCategory");
@@ -535,6 +576,9 @@ public class mMangeController {
 		Date date = new Date(System.currentTimeMillis());
 		Date enddate = new Date(date.getYear(), date.getMonth(), date.getDate());
 		Date startdate = new Date(date.getYear(), date.getMonth() - 3, date.getDate());
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("startdate", startdate);
 		mv.addObject("enddate", enddate);
 		mv.addObject("bOrderList", bOrderServiceImpl.manageOrderList(my_name, startdate, enddate));
@@ -548,6 +592,9 @@ public class mMangeController {
 		String my_name = (String) session.getAttribute("my_name");
 		Date enddate = Date.valueOf(request.getParameter("enddate"));
 		Date startdate = Date.valueOf(request.getParameter("startdate"));
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("startdate", startdate);
 		mv.addObject("enddate", enddate);
 		mv.addObject("bOrderList", bOrderServiceImpl.manageOrderList(my_name, startdate, enddate));
@@ -578,6 +625,9 @@ public class mMangeController {
 		for(int i = 0; i < mMessageServiceImpl.checkmessage(my_name).size(); i++) {
 			System.out.println(mMessageServiceImpl.checkmessage(my_name).get(i).getM_check());
 		}
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("userImg", list);
 		mv.addObject("profile", mMemberServiceImpl.showProfile(my_name));
 		mv.addObject("MessageList", mMessageServiceImpl.showMessageList(my_name));
@@ -594,6 +644,9 @@ public class mMangeController {
 			list.add(mMemberServiceImpl.showProfile(mMessageServiceImpl.showMessageList(my_name).get(i).getChat()).getM_img());
 		}
 		mMessageServiceImpl.readmessage(m_id2, my_name);
+		mv.addObject("chkfollow", tService.chkfollow(my_name));
+		mv.addObject("shownotice", tService.shownotice(my_name));
+		mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 		mv.addObject("readcheck", mMessageServiceImpl.checkmessage(my_name));
 		mv.addObject("userImg", list);
 		mv.addObject("my_name", my_name);
