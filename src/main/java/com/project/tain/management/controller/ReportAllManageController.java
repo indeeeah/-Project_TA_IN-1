@@ -86,4 +86,28 @@ public class ReportAllManageController {
 		}
 		return mv;
 	}
+	
+	@RequestMapping(value = "boardManageDelete.do", method = RequestMethod.GET)
+	public ModelAndView deleteBoardManage(@RequestParam(name = "b_id") String b_id, ModelAndView mv) {
+		try {
+			reAllmService.deleteBoardManage(b_id);
+			mv.setViewName("redirect:reportBoardManagelist.do");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "boardBsManageDelete.do", method = RequestMethod.GET)
+	public ModelAndView deleteBsboardManage(@RequestParam(name = "bb_id") String bb_id, ModelAndView mv) {
+		try {
+			reAllmService.deleteBsboardManage(bb_id);
+			mv.setViewName("redirect:reportBsboardManagelist.do");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("errorPage");
+		}
+		return mv;
+	}
 }

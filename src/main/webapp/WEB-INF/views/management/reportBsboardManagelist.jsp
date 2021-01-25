@@ -75,7 +75,7 @@
 											class="btn-action" type="submit" value="검색">
 									</form>
 								</td>
-								<td align="right" colspan="5" cellspacing="0"><input
+								<td align="right" colspan="6" cellspacing="0"><input
 									class="btn-action" type="button" value="전체목록"
 									onclick="window.location='reportBsboardManagelist.do'"></td>
 							</tr>
@@ -85,11 +85,12 @@
 								<td width="100">신고자</td>
 								<td width="300">신고사유</td>
 								<td align="center" width="100">신고날짜</td>
+								<td align="center" width="100">삭제</td>
 							</tr>
 							<!-- 글이 없을 경우 -->
 							<c:if test="${rbblistCount eq 0}">
 								<tr class="table_body">
-									<td colspan="5" align="center"><br> <br> 신고된
+									<td colspan="6" align="center"><br> <br> 신고된
 										게시글이 없습니다.<br> <br></td>
 								</tr>
 							</c:if>
@@ -103,12 +104,14 @@
 										<td>${rbb.m_id}</td>
 										<td>${rbb.rbb_reason}</td>
 										<td align="center">${rbb.rbb_date}</td>
+										<td align="center"><a class="btn-delete"
+											onclick="if(confirm('정말 삭제 처리 하시겠습니까?')){href='boardBsManageDelete.do?bb_id=${rbb.bb_id}'}">삭제</a></td>
 									</tr>
 								</c:forEach>
 							</c:if>
 							<!-- 앞 페이지 번호 처리 -->
 							<tr class="table_bottom">
-								<td colspan="5"><c:if test="${currentPage <= 1}">
+								<td colspan="6"><c:if test="${currentPage <= 1}">
 				 [이전]&nbsp;
 				 </c:if> <c:if test="${currentPage > 1}">
 										<c:url var="rblistST" value="reportBsboardManagelist.do">

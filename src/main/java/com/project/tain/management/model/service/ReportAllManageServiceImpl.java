@@ -61,4 +61,14 @@ public class ReportAllManageServiceImpl implements ReportAllManageService {
 		return reAllmDao.rbbsearchList(keyword);
 	}
 
+	@Override
+	public int deleteBoardManage(String b_id) {
+		return reAllmDao.deleteBoardManage(b_id);
+	}
+
+	@Override
+	public int deleteBsboardManage(String bb_id) {
+		return reAllmDao.deleteBsboardManage(bb_id);
+	}
+
 }
