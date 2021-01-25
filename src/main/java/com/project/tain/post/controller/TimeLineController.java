@@ -82,6 +82,8 @@ public class TimeLineController {
 			mv.addObject("myProfile", tService.showMyProf(my_name));
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("storyList", tService.showStoryList(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+
 			//mv.addObject("timeLineList", tService.showTimeLineList(my_name));
 			mv.addObject("count", tService.timeLineListCount(my_name));
 			mv.addObject("timeLineList", tService.showTimeLineListPage(my_name, currentPage, LIMIT));
@@ -125,6 +127,7 @@ public class TimeLineController {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.setViewName("serviceCenter/aboutUs");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -140,6 +143,7 @@ public class TimeLineController {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.setViewName("serviceCenter/serviceCenter");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -155,6 +159,7 @@ public class TimeLineController {
 			HttpSession session = request.getSession();
 			String my_name = (String) session.getAttribute("my_name");
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.setViewName("serviceCenter/out");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

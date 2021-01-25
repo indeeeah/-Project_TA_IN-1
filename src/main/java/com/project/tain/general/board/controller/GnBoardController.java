@@ -61,6 +61,7 @@ public class GnBoardController {
 				mv.addObject("selectFollow", gService.selectFollow(m_id));
 				mv.addObject("selectFollower", gService.selectFollower(m_id));
 				mv.addObject("showpostCount", gService.showpostCount(m_id));
+				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 				mv.setViewName("general/gnMain");
 			} else if (result.equals("B")) {
 				mv.addObject("chkfollow", tService.chkfollow(my_name));
@@ -126,6 +127,7 @@ public class GnBoardController {
 				System.out.println(gService.selectEachPostPhotos(b_id));
 				mv.addObject("hashtag", tService.showHashTag(b_id));
 				System.out.println(tService.showHashTag(b_id));
+				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 				mv.setViewName("general/gnEachPage");
 			} else if (b_id.startsWith("BB")) {
 				System.out.println("bbDetail:"+bbService.selectOne(b_id));

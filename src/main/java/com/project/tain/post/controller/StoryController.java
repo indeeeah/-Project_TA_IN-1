@@ -42,6 +42,7 @@ public class StoryController {
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("myStory", sService.showMyStory(my_name));
 			mv.addObject("selectHighlight", sService.selectHighlight(my_name));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.setViewName("post/writeStory");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -60,6 +61,7 @@ public class StoryController {
 			mv.addObject("myProfile", tService.showMyProf(my_name));
 			mv.addObject("showAllStory", sService.showAllStory(my_name));
 			mv.addObject("showAllAStory", sService.showAllAStory());
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.setViewName("post/stories");
 			System.out.println(mv);
 		} catch (Exception e) {
@@ -78,6 +80,7 @@ public class StoryController {
 			String my_name = (String) session.getAttribute("my_name");
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("selectEachHighlight", sService.selectEachHighlight(st));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			System.out.println(h_name);
 			System.out.println(m_id);
 			System.out.println(sService.selectEachHighlight(st));
@@ -99,6 +102,7 @@ public class StoryController {
 			mv.addObject("myProfile", tService.showMyProf(my_name));
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("eachstory", sService.eachStory(id));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			mv.setViewName("post/eachstory");
 			System.out.println(mv);
 		} catch (Exception e) {

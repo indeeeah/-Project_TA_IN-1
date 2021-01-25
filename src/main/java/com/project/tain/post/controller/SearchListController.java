@@ -41,6 +41,7 @@ public class SearchListController {
 			mv.addObject("chkfollow", tService.chkfollow(my_name));
 			mv.addObject("showHashTagCount", sService.showHashTagCount(hashtag));
 			mv.addObject("searchResult", sService.showHashTag(hashtag));
+			mv.addObject("alarmcheck", tService.alarmcheck(my_name));
 			//mv.addObject("searchResult", sService.showHashTagPage(hashtag, currentPage, LIMIT));
 			mv.setViewName("post/searchList");
 		} catch (Exception e) {
