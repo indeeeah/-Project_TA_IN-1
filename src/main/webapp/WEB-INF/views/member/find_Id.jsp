@@ -34,7 +34,7 @@ html {
 }
 
 input[type='button'].idw {
-	border-bottom: 2px solid #144d2af8;
+	border-bottom: 2px solid #6782B4;
 }
 
 .group-1 {
@@ -92,7 +92,7 @@ input[type='email'] :hover, input[type='text'] :hover :hover, select :hover
 
 input[type='email']:focus, input[type='text']:focus:focus, select:focus
 	{
-	border-bottom: 2px solid #144d2af8;
+	border-bottom: 2px solid #6782B4;
 	padding-bottom: 6px;
 	outline: none;
 }
@@ -113,7 +113,7 @@ input[type='text']::placeholder {
 	text-align: center;
 	cursor: pointer;
 	position: relative;
-	background: #144d2af8;
+	background: #6782B4;
 	color: #fff;
 	transition: 1s;
 	justify-content: space-between;
@@ -175,7 +175,7 @@ main {
 
 .know a {
 	text-decoration: none;
-	color: #df871b;
+	color: #475b80;
 }
 
 .remute {
@@ -205,11 +205,11 @@ input[type='button'] {
 }
 
 input[type='button']:hover {
-	border-bottom: 2px solid #144d2af8;
+	border-bottom: 2px solid #6782B4;
 }
 
 input[type='button']:focus {
-	border-bottom: 2px solid #144d2af8;
+	border-bottom: 2px solid #6782B4;
 	outline: none;
 }
 
@@ -219,7 +219,7 @@ input[type='button']:focus {
 	position: relative;
 	margin: 7px 0;
 	color: #f7f7f7;
-	background-color: #144d2af8;
+	background-color: #6782B4;
 	width: 100%;
 	border: none;
 	padding: 0 5px;
@@ -235,7 +235,7 @@ input[type='button']:focus {
 	position: relative;
 	margin: 7px 0;
 	color: #f7f7f7;
-	background-color: #144d2af8;
+	background-color: #6782B4;
 	width: 100%;
 	border: none;
 	padding: 0 5px;
@@ -250,7 +250,7 @@ h5 {
 	font-size: 2.3rem;
 	margin-top: 10px;
 	margin-bottom: 30px;
-	color: #144d2af8;
+	color: #6782B4;
 }
 </style>
 </head>
