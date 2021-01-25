@@ -64,10 +64,6 @@
                             <div class="photo" id="p3">
                                 <a href="https://github.com/tae85"><img class="photo2" src="${pageContext.request.contextPath}/resources/images/KakaoTalk_Photo_2021-01-21-09-10-48.jpeg"></a><a href="https://github.com/tae85" class="name">김경태</a></div>
                         </div>
-                        <div class="each">
-                            <div class="photo" id="p6">
-                                <a href="https://github.com/jhjang7760"><img class="photo2" src="${pageContext.request.contextPath}/resources/images/KakaoTalk_Photo_2021-01-21-09-10-51.jpeg"></a><a href="https://github.com/jhjang7760" class="name">장재혁</a></div>
-                        </div>
                     </div>
                 </div>
             </div>

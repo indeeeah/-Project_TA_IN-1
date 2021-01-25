@@ -42,8 +42,7 @@
                         <a class="footera" href="https://github.com/jiyong26">김지용&nbsp;&nbsp;|&nbsp;&nbsp;</a>
                         <a class="footera" href="https://github.com/tae85">김경태&nbsp;&nbsp;|&nbsp;&nbsp;</a>
                         <a class="footera" href="https://github.com/indeeeah">김수민&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                        <a class="footera" href="https://github.com/kwakej/Spring-project">곽은지&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                        <a class="footera" href="https://github.com/jhjang7760">장재혁</a>
+                        <a class="footera" href="https://github.com/kwakej/Spring-project">곽은지</a>
                     </div>
                 </c:if>
 

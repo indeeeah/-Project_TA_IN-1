@@ -530,15 +530,16 @@ public class TimeLineController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "turny.do", method = RequestMethod.POST)
-	public int turny(String my_name) {
-		int result = tService.turny(my_name);
+	public String turny(String m_id) {
+		JSONObject job = new JSONObject();
 		try {
-			System.out.println(result);
+			job.put("ack", tService.turny(m_id));
+			System.out.println("turny 아이디는 : "+m_id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return -1;
+		} finally {
+			return job.toJSONString();
 		}
-		return result;
 	}
 	
 }

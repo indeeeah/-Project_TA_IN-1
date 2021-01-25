@@ -87,6 +87,7 @@
         </head>
 
         <body>
+            <input type="hidden" id="toid">
             <div id="report_back"></div>
             <div id="report_modal">
                 <div class="closeallmodal"></div>
@@ -488,6 +489,7 @@
                                     console.log(memId);
                                     console.log(type);
                                     console.log(m_id2);
+                                    $("#toid").val(m_id2);
                                     if (comment == "" || comment == null) {
                                         console.log("comment won't be uploaded");
                                         return false;
@@ -519,6 +521,7 @@
                                                         " postid : " +
                                                         postid);
                                                     $(".write_space").val('');
+
                                                 },
                                                 error: function(request, status, error) {
                                                     alert("code:" +
@@ -835,6 +838,7 @@
                 console.log(memId);
                 console.log(type);
                 console.log(m_id2);
+                $("#toid").val(m_id2);
                 if (comment == "" || comment == null) {
                     console.log("comment won't be uploaded");
                     return false;
@@ -976,6 +980,7 @@
                 console.log(lcount);
                 lcount++;
                 console.log(lcount);
+                $("#toid").val(m_id2);
 
                 // 게시물 좋아요 - 일반 게시판
                 if (type == "G") {
@@ -1603,6 +1608,7 @@
                                     var r_comment = $(this).prev().val();
                                     var r_type = $(this).next().next().val();
                                     var m_id2 = $(this).next().next().next().val();
+                                    $("#toid").val(m_id2);
                                     console.log(memId);
                                     console.log(b_id);
                                     console.log(r_comment);
@@ -1723,6 +1729,7 @@
                                         $(".comment_lcon").on('click', function() {
                                             var b_id = $(this).next().next().val();
                                             var m_id2 = $(this).next().next().next().val();
+                                            $("#toid").val(m_id2);
                                             console.log("m_id2" + m_id2);
                                             console.log(memId);
                                             console.log(b_id);
@@ -1885,6 +1892,7 @@
                                 console.log("m_id2" + m_id2);
                                 console.log(memId);
                                 console.log(b_id);
+                                $("#toid").val(m_id2);
                                 $.ajax({
                                     url: "${pageContext.request.contextPath}/pressLikeco.do",
                                     method: "POST",
@@ -2153,6 +2161,7 @@
                                     var r_comment = $(this).prev().val();
                                     var r_type = $(this).next().next().val();
                                     var m_id2 = $(this).next().next().next().val();
+                                    $("#toid").val(m_id2);
                                     console.log(memId);
                                     console.log(b_id);
                                     console.log(r_comment);
@@ -2276,6 +2285,7 @@
                                             console.log("m_id2" + m_id2);
                                             console.log(memId);
                                             console.log(b_id);
+                                            $("#toid").val(m_id2);
                                             $.ajax({
                                                 url: "${pageContext.request.contextPath}/pressLikeBco.do",
                                                 method: "POST",
@@ -2435,6 +2445,7 @@
                                 console.log("m_id2" + m_id2);
                                 console.log(memId);
                                 console.log(b_id);
+                                $("#toid").val(m_id2);
                                 $.ajax({
                                     url: "${pageContext.request.contextPath}/pressLikeBco.do",
                                     method: "POST",
@@ -2536,8 +2547,9 @@
                             // 댓글 append - cm2 // 댓글 좋아요 체크 trigger 사용
                             htmls += '<div class="com_detail two' + t_id + '"><div class="commentRId post_id" onclick="goboard(\'' + id + '\');" style="cursor:pointer;">' +
                                 id + '</div><div class="commentResult post_content">' +
-                                b_content + '</div><a class="commentViewAll"></a><div class="comment_lcon clcon likechk' + b_id + '"></div>' +
-                                '<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
+                                b_content + '</div><a class="commentViewAll"></a>' +
+                                //'<div class="comment_lcon clcon likechk' + b_id + '"></div>' +
+                                //'<div class="comment_unlcon clcon unlikechk' + b_id + '"></div>' +
                                 '<input type="hidden" value="' + b_id + '"><input type="hidden" value="' + id + '"></div></div>';
                             htmls += "<input type='hidden' class='" + b_id + "lBtn hidden_likechk' onclick='likechk(\"" + b_id + "\");' value='" + b_id + "'>" +
                                 "<input type='hidden' class='" + b_id + "forRbtn' value='" + b_type + "'>";
@@ -2564,6 +2576,7 @@
                         console.log("m_id2" + m_id2);
                         console.log(memId);
                         console.log(b_id);
+                        $("#toid").val(m_id2);
                         $.ajax({
                             url: "${pageContext.request.contextPath}/pressLikeco.do",
                             method: "POST",
@@ -2635,6 +2648,7 @@
                         console.log("m_id2" + m_id2);
                         console.log(memId);
                         console.log(b_id);
+                        $("#toid").val(m_id2);
                         $.ajax({
                             url: "${pageContext.request.contextPath}/pressLikeBco.do",
                             method: "POST",

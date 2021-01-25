@@ -86,6 +86,6 @@ public interface TimeLineService {
 
 	int alarmcheck(String my_name);
 
-	int turny(String my_name);
+	int turny(String m_id);
 
 }

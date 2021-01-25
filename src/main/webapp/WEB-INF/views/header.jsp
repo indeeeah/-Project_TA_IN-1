@@ -13,6 +13,7 @@
             <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
             <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
         </head>
+
         <body>
             <header id="header">
                 <div id="big_con">
@@ -20,40 +21,34 @@
                         <div id="header_left">
                             <div id="fix_logo"></div>
                             <input type="hidden" name="m_id" class="m_id" value="${my_name }">
-                            <input type="hidden" name="alarmcheck" value="${alarmcheck }">
+                            <input type="hidden" name="alarmcheck" id="alarmcheck" value="${alarmcheck }">
                         </div>
                         <input type="text" id="search" placeholder="검색" style="text-align: center;">
-				<div id="header_right">
-					<div id="header_icon_con">
-						<div id="fix_home" class="fix_icon">
-							<i class="fas fa-home"></i>
-						</div>
-						<div id="fix_write" class="fix_icon">
-							<i class="fas fa-arrow-circle-up"></i>
-						</div>
-						<div id="fix_message" class="fix_icon">
-							<i class="fas fa-comment-dots"></i>
-							<div id="circle1" class="circle1"style="display:none;position:relative;right:4px;top:10px;background-color: #ED4956; width: 5px; height: 5px;
-				border-radius: 75px; text-align: center; margin: 0 auto; font-size: 12px; vertical-align: middle;
-				line-height: 150px;"></div>
-						</div>
-						<div id="fix_alert" class="fix_icon"<%-- onclick="turny('${my_name}');" --%>>
-							<label for="alert" style="cursor: pointer;"> <i
-								class="fas fa-bell"></i></label>
-								<div id="circle2" class="circle2"style="display:none;position:relative;right:4px;top:10px;background-color: #ED4956; width: 5px; height: 5px;
-				border-radius: 75px; text-align: center; margin: 0 auto; font-size: 12px; vertical-align: middle;
-				line-height: 150px;"></div>
-						</div>
-						<input type="checkbox" id="alert" style="display: none;">
-						<div id="fix_bag" class="fix_icon">
-							<i class="fas fa-shopping-bag"></i>
-						</div>
-						<div id="fix_profile" class="fix_icon">
-							<i class="fas fa-user-circle"></i>
-						</div>
-					</div>
-				</div>
-			</div>
+                        <div id="header_right">
+                            <div id="header_icon_con">
+                                <div id="fix_home" class="fix_icon"><i class="fas fa-home"></i></div>
+                                <div id="fix_write" class="fix_icon"><i class="fas fa-arrow-circle-up"></i></div>
+                                <div id="fix_message" class="fix_icon">
+                                    <i class="fas fa-comment-dots"></i>
+                                    <div id="circle1" class="circle1" style="display:none;position:relative;right:4px;top:10px;background-color: #ED4956; width: 5px; height: 5px;
+            border-radius: 75px; text-align: center; margin: 0 auto; font-size: 12px; vertical-align: middle;
+            line-height: 150px;"></div>
+                                </div>
+                                <label for="alert" style="cursor: pointer;">
+                                    <div id="fix_alert" class="fix_icon" onclick="turny('${my_name}');">
+                                        <i class="fas fa-bell"></i>
+                                        <div id="circle2" class="circle2" style="display:none;position:relative;right:4px;top:10px;background-color: #ED4956; width: 5px; height: 5px;
+            border-radius: 75px; text-align: center; margin: 0 auto; font-size: 12px; vertical-align: middle;
+            line-height: 150px;"></div>
+                                    </div>
+                                </label>
+
+                                <input type="checkbox" id="alert" style="display:none;">
+                                <div id="fix_bag" class="fix_icon"><i class="fas fa-shopping-bag"></i></div>
+                                <div id="fix_profile" class="fix_icon"><i class="fas fa-user-circle"></i></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </header>
             <div id="alert_con">
@@ -138,7 +133,11 @@
         </script>
         <script type="text/javascript">
             var memId = $(".m_id").val();
-
+            var alarmcheck = $("#alarmcheck").val();
+            console.log("alarmcheck : " + alarmcheck);
+            if (alarmcheck > 0) {
+                $("#circle2").css("display", "block");
+            }
             $(function() {
                 $("#search").autocomplete({
                     source: function(request, response) {
@@ -204,9 +203,19 @@
                 var url = "${pageContext.request.contextPath}/timeLine";
                 $(location).attr('href', url);
             });
+            $("#fix_message").on('click', function() {
+                var memId = $(".m_id").val();
+                var url = "${pageContext.request.contextPath}/chatlist.do";
+                $(location).attr('href', url);
+            });
             $("#fix_write").on('click', function() {
                 var memId = $(".m_id").val();
                 var url = "${pageContext.request.contextPath}/gnWrite";
+                $(location).attr('href', url);
+            });
+            $("#fix_bag").on('click', function() {
+                var memId = $(".m_id").val();
+                var url = "${pageContext.request.contextPath}/mCart.do";
                 $(location).attr('href', url);
             });
             $("#fix_profile").on('click', function() {
@@ -265,7 +274,12 @@
                     data: {
                         m_id: my_name
                     },
-                    success: function(data) {},
+                    success: function(data) {
+                        console.log(my_name);
+                        console.log("success turn to Y");
+                        console.log(data);
+                        $("#circle2").css("display", "none");
+                    },
                     error: function(request, status, error) {
                         alert("code:" +
                             request.status +

@@ -76,6 +76,7 @@
         </head>
 
         <body>
+            <input type="hidden" id="toid">
             <input type="hidden" class="m_id" value="${my_name }">
             <input type="hidden" id="eachpost_con" value="${selectEachPostPhotos }">
             <div id="report_back"></div>
@@ -262,10 +263,11 @@
                                 <c:if test="${not empty hashtag }">
                                     <div class="reply_right" id="hashtag_con">
                                         <c:forEach var="vo" items="${hashtag }" varStatus="s">
-                                            <a href="${pageContext.request.contextPath}/explore?hashtag=${vo.h_tag }">#${vo.h_tag}</a>
+                                            <a href="${pageContext.request.contextPath}/explore?hashtag=${vo.h_tag }" class="hashatag">#${vo.h_tag}</a>
                                         </c:forEach>
                                     </div>
                                 </c:if>
+                                <c:if test="${empty hashtag }"></c:if>
                             </div>
                             <c:if test="${not empty selectEachPostComments }">
                                 <c:forEach var="vo" items="${selectEachPostComments }" varStatus="s">
@@ -353,9 +355,15 @@
 
             }
 
-            console.log("하하" + $(".photo_all").length);
             var photoCount = $(".photo_all").length;
 
+            var hashatag = $(".hashatag").length;
+            console.log(hashatag);
+            var hashtagcnt = $(".hashatag")[0].innerText;
+            console.log(hashtagcnt);
+            if (hashatag == 1 && hashtagcnt == "#") {
+                $("#hashtag_con").css("display", "none");
+            }
             // 게시물 슬라이드
             var slideWrapper = document.querySelector('#slide_photo_con');
             var slides = document.querySelectorAll('.photo_all');
@@ -1015,6 +1023,7 @@
             // 답글 좋아요
             function pressLike_co(b_id, m_id2) {
                 var lcount = document.getElementById("lcount" + b_id).value;
+                $("#toid").val(m_id2);
                 lcount++;
                 $.ajax({
                     url: "${pageContext.request.contextPath}/pressLikeco.do",
@@ -1146,6 +1155,7 @@
                 $(".rep_comment_upload").on('click', function() {
                     var r_comment = $(this).prev().val();
                     var m_id2 = $(this).next().val();
+                    $("#toid").val(m_id2);
                     if (r_comment == "" || r_comment == null) {
                         console.log("reply comment won't be uploaded");
                         $(".replyCo").css("display", "none");
@@ -1191,6 +1201,7 @@
             // 게시물 좋아요
             function pressLike(b_id, m_id2) {
                 var lcount = $("#lCount").val();
+                $("#toid").val(m_id2);
                 lcount++;
 
                 $.ajax({
@@ -1279,6 +1290,7 @@
 
             // 모달 팔로우
             function followinmodal(id) {
+            	$("#toid").val(id);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/insertFollow.do",
                     method: "POST",
@@ -1377,6 +1389,7 @@
             $(".comment_upload").on('click', function() {
                 var comment = $(this).prev().val();
                 var m_id2 = $(this).next().val();
+                $("#toid").val(m_id2);
                 if (comment == "" || comment == null) {
                     console.log("comment won't be uploaded");
                     return false;

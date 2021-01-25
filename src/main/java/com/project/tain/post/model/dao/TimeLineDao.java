@@ -184,8 +184,8 @@ public class TimeLineDao {
 		return sqlSession.selectOne("TimeLine.alarmcheck", my_name);
 	}
 
-	public int turny(String my_name) {
-		return sqlSession.update("TimeLine.turny", my_name);
+	public int turny(String m_id) {
+		return sqlSession.update("TimeLine.turny", m_id);
 	}
 
 }

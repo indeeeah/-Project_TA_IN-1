@@ -549,12 +549,14 @@
 	</select>
 
 	<select id="alarmcheck" parameterType="string" resultType="int">
-		select count(*) count from notice where m_id=#{my_name}
-	</select>
+		select count(*) count from notice where m_id2=#{my_name} and n_check='N'
+		and not m_id=#{my_name}
+	</select> 
+	
 	<update id="turny" parameterType="string" flushCache="true"
 		statementType="PREPARED" timeout="20">
 		update notice set n_check = 'Y' where
-		m_id=#{my_name}
+		m_id2=#{m_id}
 	</update>
 
 </mapper>

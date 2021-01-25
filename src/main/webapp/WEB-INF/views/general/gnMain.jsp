@@ -84,10 +84,15 @@
                     background-size: 12px;
                     display: none;
                 }
+                /* .re_con{
+	border-top: 1px dashed #C7C7C7;
+	border-bottom: 1px solid #C7C7C7;
+} */
             </style>
         </head>
 
         <body>
+            <input type="hidden" id="toid">
             <input type="hidden" class="m_id" value="${my_name }">
             <input type="hidden" class="post_id" value="${id_img_fwr.m_id }">
             <div id="follow_back"></div>
@@ -604,6 +609,7 @@
             // 팔로워 팔로잉
             function gofollow(id) {
                 console.log(id);
+                $("#toid").val(m_id2);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/insertFollow.do",
                     method: "POST",
@@ -1575,6 +1581,7 @@
             function pressLike_co(b_id, m_id2) {
                 var count = $(".lcount" + b_id).val();
                 var count2 = $("#lcount" + b_id).val();
+                $("#toid").val(m_id2);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/pressLikeco.do",
                     method: "POST",
@@ -1689,6 +1696,8 @@
                         $(a).html(htmls);
                         $(".chkCoLike").trigger('click');
                         $(".countLike_trigger").trigger('click');
+                        $(a).css("border-top", "1px dashed #C7C7C7");
+                        $(a).css("border-bottom", "3px double #C7C7C7");
                     },
                     error: function(request, status, error) {
                         alert("code:" +
@@ -1709,6 +1718,7 @@
                     var or_id = $("#for_fuc").val();
                     var r_comment = $(this).prev().val();
                     var m_id2 = $(this).next().val();
+                    $("#toid").val(m_id2);
                     console.log(m_id2);
                     if (r_comment == "" || r_comment == null) {
                         console.log("reply comment won't be uploaded");
@@ -1753,6 +1763,7 @@
             function pressLike(m_id2) {
                 var lcount = $("#lCount").val();
                 var b_id = $("#for_fuc").val();
+                $("#toid").val(m_id2);
                 lcount++;
                 $.ajax({
                     url: "${pageContext.request.contextPath}/pressLike.do",
@@ -1863,6 +1874,7 @@
             }
             // 메인 팔로우
             function main_followBtn(id) {
+                $("#toid").val(id);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/insertFollow.do",
                     method: "POST",
@@ -1919,6 +1931,7 @@
             // 추천 계정 팔로우
             function followBtn(id) {
                 console.log(recCount);
+                $("#toid").val(id);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/insertFollow.do",
                     method: "POST",
@@ -1960,6 +1973,7 @@
             }
             // 모달 팔로우
             function followinmodal(id) {
+                $("#toid").val(id);
                 $.ajax({
                     url: "${pageContext.request.contextPath}/insertFollow.do",
                     method: "POST",
@@ -2076,11 +2090,11 @@
                 }
             });
             // 댓글 작성
-            //모달 초기화 수정 필요
             $(".comment_upload").on('click', function() {
                 var b_id = $("#for_fuc").val();
                 var comment = $(this).prev().val();
                 var post_id = $(".post_id").val();
+                $("#toid").val(post_id);
                 if (comment == "" || comment == null) {
                     console.log("comment won't be uploaded");
                     return false;

@@ -215,7 +215,7 @@ public class TimeLineServiceImpl implements TimeLineService {
 	}
 
 	@Override
-	public int turny(String my_name) {
-		return tDao.turny(my_name);
+	public int turny(String m_id) {
+		return tDao.turny(m_id);
 	}
 }
