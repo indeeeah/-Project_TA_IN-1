@@ -2034,20 +2034,21 @@
             //모달 초기화 수정 필요
             $(".cancel").on('click', function() {
                 var post_id = $(".post_id").val();
-                $("#post_back").css("display", "none");
-                $("#post_modal").css("display", "none");
-                $("#post_con").css("display", "none");
+                
                 //$("#report_modal").css("display", "none");
                 //$("#report_back").css("display", "none");
                 //$("#share_con").css("display", "none");
                 //$("#share_con_result").css("display", "none");
                 //$(".each_photo").off('click');
                 //$("#unfollowchk").css("display", "none");
-                //var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
-                //$(location).attr('href', url);
+                var url = "${pageContext.request.contextPath}/gnMain?m_id=" + post_id;
+                $(location).attr('href', url);
             });
             // 모달 안닫히는 cencel
             $(".notcancelAll").on('click', function() {
+            	$("#post_back").css("display", "none");
+                $("#post_modal").css("display", "none");
+                $("#post_con").css("display", "none");
                 $("#report_modal").css("display", "none");
                 $("#report_back").css("display", "none");
                 $("#share_con_result").css("display", "none");
@@ -2076,7 +2077,6 @@
 
             // 윈도우 누르면 닫기
             $(".closeallmodal").on('click', function() {
-                $(".cancel").trigger('click');
                 $(".notcancelAll").trigger('click');
             });
 
