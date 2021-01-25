@@ -12,12 +12,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.tain.management.model.domain.MemberManage;
 import com.project.tain.management.model.service.MemberManageService;
+import com.project.tain.membermanage.model.service.mMessageServiceImpl;
 
 @Controller
 public class MemberManageController {
 	@Autowired
 	private MemberManageService mmService;
-
+	
+	@Autowired
+	private mMessageServiceImpl mMessageServiceImpl;
+	
 	public static final int LIMIT = 10;
 	
 //	//테스트 로그인
@@ -32,6 +36,7 @@ public class MemberManageController {
 		String my_name = (String) session.getAttribute("my_name");
 		System.out.println(my_name);
 		session.setAttribute("my_name", my_name);
+		mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 		mv.setViewName("management/managementMain");
 		return mv;
 	}
@@ -56,6 +61,7 @@ public class MemberManageController {
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
 				mv.addObject("listCount", listCount);
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 				mv.setViewName("management/membermanagelist");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -72,6 +78,7 @@ public class MemberManageController {
 			// 한 페이지당 출력할 목록 갯수
 			mv.addObject("MemberManage", mmService.selectOne(m_id));
 			mv.addObject("currentPage", currentPage);
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 			mv.setViewName("management/memberManageDetail");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -84,6 +91,7 @@ public class MemberManageController {
 	public ModelAndView memberDetail(@RequestParam(name = "m_id") String m_id, ModelAndView mv) {
 		try {
 			mv.addObject("MemberManage", mmService.selectOne(m_id));
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 			mv.setViewName("management/memberManageRenew");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -96,6 +104,7 @@ public class MemberManageController {
 	public ModelAndView memberUpdate(MemberManage m, ModelAndView mv) {
 		try {
 			mv.addObject("m_id", mmService.updateMmanage(m).getM_id());
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 			mv.setViewName("redirect:memberManageDetail.do");
 			System.out.println("성공");
 		} catch (Exception e) {
@@ -110,6 +119,7 @@ public class MemberManageController {
 		try {
 			mmService.insertOutManage(m_id);
 			mmService.deleteMmanage(m_id);
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 			mv.setViewName("redirect:membermanagelist.do");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -133,6 +143,7 @@ public class MemberManageController {
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
 				mv.addObject("listCount", listCount);
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 				mv.setViewName("management/memberOutlist");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

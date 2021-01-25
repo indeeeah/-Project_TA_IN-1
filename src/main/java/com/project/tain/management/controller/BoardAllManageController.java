@@ -7,12 +7,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.tain.membermanage.model.service.mMessageServiceImpl;
 import com.project.tain.management.model.service.BoardAllManageService;
 
 @Controller
 public class BoardAllManageController {
 	@Autowired
 	private BoardAllManageService bAllmService;
+
+	@Autowired
+	private mMessageServiceImpl mMessageServiceImpl;
 
 	public static final int LIMIT = 10;
 
@@ -31,6 +35,7 @@ public class BoardAllManageController {
 			mv.addObject("currentPage", currentPage);
 			mv.addObject("maxPage", maxPage);
 			mv.addObject("listCount", listCount);
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 			mv.setViewName("management/boardManagelist");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -43,6 +48,7 @@ public class BoardAllManageController {
 	public ModelAndView deleteBManage(@RequestParam(name = "b_id") String b_id, ModelAndView mv) {
 		try {
 			bAllmService.deleteBManage(b_id);
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 			mv.setViewName("redirect:boardManagelist.do");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -66,6 +72,7 @@ public class BoardAllManageController {
 			mv.addObject("currentPage", currentPage);
 			mv.addObject("maxPage", maxPage);
 			mv.addObject("listCount", listCount);
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 			mv.setViewName("management/bsBoardManagelist");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -78,6 +85,7 @@ public class BoardAllManageController {
 	public ModelAndView deleteBsnBoard(@RequestParam(name = "bb_id") String bb_id, ModelAndView mv) {
 		try {
 			bAllmService.deleteBsbManage(bb_id);
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 			mv.setViewName("redirect:bsboardManagelist.do");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

@@ -8,11 +8,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.tain.management.model.service.ReportAllManageService;
+import com.project.tain.membermanage.model.service.mMessageServiceImpl;
 
 @Controller
 public class ReportAllManageController {
 	@Autowired
 	private ReportAllManageService reAllmService;
+	
+	@Autowired
+	private mMessageServiceImpl mMessageServiceImpl;
 	
 	public static final int LIMIT = 10;
 	
@@ -31,6 +35,7 @@ public class ReportAllManageController {
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
 				mv.addObject("listCount", listCount);
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 				mv.setViewName("management/reportmemberManagelist");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -55,6 +60,7 @@ public class ReportAllManageController {
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
 				mv.addObject("rblistCount", rblistCount);
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 				mv.setViewName("management/reportBoardManagelist");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -79,6 +85,7 @@ public class ReportAllManageController {
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
 				mv.addObject("rbblistCount", rbblistCount);
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 				mv.setViewName("management/reportBsboardManagelist");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -91,6 +98,7 @@ public class ReportAllManageController {
 	public ModelAndView deleteBoardManage(@RequestParam(name = "b_id") String b_id, ModelAndView mv) {
 		try {
 			reAllmService.deleteBoardManage(b_id);
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 			mv.setViewName("redirect:reportBoardManagelist.do");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -103,6 +111,7 @@ public class ReportAllManageController {
 	public ModelAndView deleteBsboardManage(@RequestParam(name = "bb_id") String bb_id, ModelAndView mv) {
 		try {
 			reAllmService.deleteBsboardManage(bb_id);
+			mv.addObject("messagecheck", mMessageServiceImpl.readcheck("admin"));
 			mv.setViewName("redirect:reportBsboardManagelist.do");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
