@@ -237,7 +237,7 @@ public class MemberManage implements java.io.Serializable {
 	}
 	
 	public String getom_reason() {
-		if(o_reason=="S") {
+		if(o_reason.equals("S")) {
 			return "자진탈퇴";
 		} else {
 			return "강제탈퇴";
