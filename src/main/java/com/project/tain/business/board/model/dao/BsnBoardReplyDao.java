@@ -60,4 +60,17 @@ public class BsnBoardReplyDao {
 		System.out.println("답글삭제dao:"+bb_id);
 		return sqlSession.delete("BsnBoardReply.deleteBbrr", bb_id);
 	}
+	
+	// 댓글 작성 알림
+	public int bbrInsertNotice(BsnBoardReply bbr) {
+		System.out.println("댓글등록dao:"+bbr);
+		return sqlSession.insert("BsnBoardReply.bbrInsertNotice", bbr);
+	}
+	
+	// 답글 작성 알림 
+	public int bbrrInsertNotice(BsnBoardReply bbr) {
+		System.out.println("답글등록dao:"+bbr);
+		return sqlSession.insert("BsnBoardReply.bbrrInsertNotice", bbr);
+	}
+	
 }

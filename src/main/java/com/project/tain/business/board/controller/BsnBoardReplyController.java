@@ -73,8 +73,11 @@ public class BsnBoardReplyController {
 	public HashMap <String, Object> bbrInsert(BsnBoardReply bbr, @RequestParam(name="m_id")String m_id, 
 			@RequestParam(name="bb_topid")String bb_topid, @RequestParam(name="bb_info")String bb_info, 
 			Locale locale, Model model, HttpServletRequest request) {
-		System.out.println("댓글등록 컨트롤러" + bbr.getM_id());
 		HashMap<String, Object> result = new HashMap <String,Object>();
+		System.out.println("댓글등록 컨트롤러" + bbr.getM_id());
+		HttpSession session = request.getSession();
+		String my_name=(String) session.getAttribute("my_name");
+		bbr.setMy_name(my_name);
 		System.out.println("댓글등록 아이디"+m_id);
 		System.out.println("댓글등록 상위글"+bb_topid);
 		System.out.println("댓글등록 내용"+bb_info);
@@ -150,9 +153,12 @@ public class BsnBoardReplyController {
 	public HashMap <String, Object> bbrrInsert(BsnBoardReply bbr, @RequestParam(name="m_id")String m_id, 
 			@RequestParam(name="bb_topid")String bb_topid, @RequestParam(name="bb_info")String bb_info, 
 			Locale locale, Model model, HttpServletRequest request) {
-		System.out.println("답글등록 컨트롤러"+ bbr.getM_id());
 		HashMap<String, Object> result = new HashMap <String,Object>();
+		System.out.println("답글등록 컨트롤러"+ bbr.getM_id());
+		HttpSession session = request.getSession();
+		String my_name=(String) session.getAttribute("my_name");
 		bbr.setM_id(m_id);
+		bbr.setMy_name(my_name);
 		System.out.println("답글등록 아이디"+m_id);
 		System.out.println("답글등록 상위글"+bb_topid);
 		System.out.println("답글등록 내용"+bb_info);

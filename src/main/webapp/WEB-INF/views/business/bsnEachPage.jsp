@@ -300,34 +300,34 @@ input {
 .myBtn img{
 	border:1px solid #C7C7C7 !important;
 }
-.selectBb:hover .middle{
-	opacity:1;
-}
-.text {
-  color: grey;
-  font-size: 16px;
-}
-
 #mdImg img{
-	width:100%;
-	height:100%;
-    min-width: 450px;
-    min-height: 450px;
-    max-width: 600px;
-    max-height: 600px;
+	width:600px;
+	height:600px;
+}
+/* 모달 상세페이지 (배경) */
+.modal {
+  	display: none; /* Hidden by default */
+  	position: fixed; /* Stay in place */
+  	z-index: 10; /* Sit on top */
+  	left: 0;
+  	top: 0;
+  	width: 100%; /* Full width */
+  	height: 100%; /* Full height */
+  	overflow: auto; /* Enable scroll if needed */
+  	background-color: rgb(0,0,0); /* Fallback color */
+  	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-
+/* 모달 상세페이지(내용)*/
 .modal-content {
-  	background-color: #fefefe;
-  	margin: auto;
-  	padding: 10px;
-  	border: 1px solid #C7C7C7;
-  	width: 90%;
-  	max-width:930px;
-  	display: flex;
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #C7C7C7;
+    width: 1000px;
+    height: 600px;
+    display: flex;
+    margin-top: 50px;
 }
-
 /* close */
 .close {
     float: right;
@@ -352,26 +352,22 @@ input {
     display: contents;
 }
 #mdImg {
-    margin-right: 20px;
-    min-width:450px;
-	min-height:450px;
-	max-width:600px;
-	max-height:600px;
+    width: 600px;
+    height: 600px;
 }
 #mdText {
     max-height: 600px;
-   	width: 100%;
+   	width: 400px;
    	position:relative;
+   	border-left:1px solid #C7C7C7;
 }
 #mdInfo {
-    height: 72px;
+    height: 40px;
     right: 0;
-    width: 100%;
     line-height: 50px;
+    border-bottom:1px solid #C7C7C7;
+    padding:16px;
     position:relative;
-}
-#mdInfoText{
-	border-bottom:1px solid #C7C7C7;
 }
 #mdInfoText>a{
 	margin-right:15px;
@@ -401,26 +397,39 @@ input {
 }
 
 #mdBoard {
-	height:70%;
+	clear:both;
+	height:372px;
     overflow-x: hidden;
     min-height: 250px;
-    margin-bottom: 15px;
+    padding-top:16px;
+    padding-right:16px;
+    padding-left:16px;
+}
+#mdBoard::-webkit-scrollbar {
+    display: none;
 }
 #mdContent {
     margin-bottom: 10px;
     position:relative;
 }
+#mdContent>pre {
+    border-bottom: 1px dashed #C7C7C7;
+    padding-bottom: 10px;
+}
 #bbName{
+	padding-bottom:10px;
+	border-bottom:1px dashed #C7C7C7;
 }
 #bbInfo{
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
 .translate {
+	color: rgb(0, 149, 246);
     right: 0px;
-    bottom:13px;
+    bottom:34px;
     position: absolute;
-}
+}.
 .mrd{
 	margin-bottom:20px;
 	position: relative;
@@ -480,7 +489,7 @@ input {
 }
 #bbrr {
     padding-left: 15px;
-    margin-top: 13px;
+    margin: 13px 0;
 }
 .bbrrbtn {
     float: left;
@@ -489,12 +498,7 @@ input {
 #bbrrInBox {
     clear: both;
 }
-#mdBoard {
-    margin-bottom: 15px;
-}
-#mdBoard::-webkit-scrollbar {
-    display: none;
-}
+
 
 .bbrrImg{
 	float:left;
@@ -512,23 +516,24 @@ input {
 .bbrrOpt {
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 #mdMore {
     position: absolute;
-    bottom: 35px;
-    border-bottom: 1px solid #C7C7C7;
-    width: 100%;
-    padding-bottom: 7px;
+    bottom: 52px;
+    width: 367px;
     background-color: white;
+    border-bottom: 1px solid #C7C7C7;
     border-top: 1px solid #C7C7C7;
+    padding:5px 16px 16px 16px;
 }
 #mdWrite{
-	margin-top:10px;
 	position:absolute;
 	bottom:0px;
+	padding:16px;
 }
 #bb_info {
-    width: 400px;
+    width: 329px;
     height: 18px;
     outline: none;
     border: none;
@@ -552,8 +557,7 @@ input {
 	margin: auto;
   	padding: 10px;
   	border: 1px solid #C7C7C7;
-  	width: 90%;
-  	max-width:930px;
+  	width: 980px;
   	display: flex;
   	margin-top: 20px;
   	justify-content: space-around;
@@ -565,9 +569,7 @@ input {
 	
 	/* Slideshow container */
 	.mdImg {
-	  max-width: 500px;
 	  position: relative;
-	  margin: auto;
 	}
 	
 	/* Next & previous buttons */
@@ -631,11 +633,17 @@ input {
 	
 	.bbrrInBox{
 		display:none;
+		border-bottom:1px solid #C7C7C7;
+		border-top:1px dashed #C7C7C7;
 	}
 	.bbrrInBox input{
 		margin-left: 0px;
-    	width: 230px;
    		margin-right: 10px;
+   		margin-top: 10px;
+   		margin-bottom: 10px;
+    	width: 230px;
+		border:none;
+		outline: none;
 		
 	}
 	
@@ -698,7 +706,7 @@ input {
 	  	padding: 10px;
 	  	border: 1px solid #C7C7C7;
 	  	width: 400px;
-	  	height:290px;
+	  	height:190px;
 	  	max-width:400px;
 	  	border-radius: 12px;
 	  	text-align:center;
@@ -781,7 +789,29 @@ input {
 		cursor:pointer;
 	}
 	
+	/* 모달 팔로우+팔로워 +신고*/
+	#report_back,
+	#follow_back {
+	    display: none; /* Hidden by default */
+	  	position: fixed; /* Stay in place */
+	  	z-index: 10; /* Sit on top */
+	  	left: 0;
+	  	top: 0;
+	  	width: 100%; /* Full width */
+	  	height: 100%; /* Full height */
+	  	overflow: auto; /* Enable scroll if needed */
+	  	background-color: rgb(0,0,0); /* Fallback color */
+	  	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
 	
+	#report_modal,
+	#follow_modal {
+		position: fixed;
+        width: 100%;
+        height: 100%;
+        display: none;
+        z-index: 11;
+	}
 	
 	
 	.timeline_icon_con {
@@ -790,6 +820,91 @@ input {
 	    margin-top: 4px;
 	}
 	
+	#see_follow,
+    #see_follower {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 400px;
+        width: 400px;
+        background: #fff;
+        z-index: 9;
+        border-radius: 20px;
+        text-align: center;
+        font-size: 14px;
+        overflow: auto;
+    }
+    
+    .top_con {
+        width: 100%;
+        height: 42px;
+        border-bottom: 1px solid #C7C7C7;
+    }
+    
+    .blank {
+        width: 48px;
+        height: 42px;
+        float: left;
+    }
+    
+    .fo_title {
+        width: 304px;
+        height: 100%;
+        float: left;
+        font-size: 16px;
+        line-height: 42px;
+    }
+    
+    .people_con {
+        width: 363px;
+        height: 38px;
+        padding: 8px 16px 8px 21px;
+    }
+    
+    .people_photo {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-top: 5px;
+        float: left;
+    }
+    
+    .people_middle {
+        margin-left: 12px;
+        float: left;
+        width: 250px;
+        height: 38px;
+        text-align: left;
+    }
+    
+    .people_id,
+    .people_name {
+        width: 100%;
+        height: 18px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+    
+    .people_btn {
+        float: right;
+        font-size: 14px;
+        line-height: 38px;
+        height: 32px;
+        width: 56px;
+        border: 1px solid #C7C7C7;
+    }
+    
+    .cate_mine {
+        color: #C7C7C7;
+        cursor: pointer;
+    }
+    
+    .fa-times {
+        font-size: 21px;
+        margin-top: 10.5px;
+        cursor: pointer;
+    }
 	.icon {
 	    width: 24px;
 	    height: 24px;
@@ -886,7 +1001,6 @@ input {
 <body>
 	<!-- 헤더 -->
 	<jsp:include page="../header.jsp"></jsp:include>
-${listCount } : ${my_name } : ${id_img_fwr.m_id } : ${bbDetail.m_id } : ${bbDetail.bb_info }
 	<div id="content" class="content">
 	<input type="hidden" id="my_name" value="${my_name }"/>
 	<input type="hidden" id="bb_id" value="${bbDetail.bb_id }"/>
@@ -965,19 +1079,13 @@ ${listCount } : ${my_name } : ${id_img_fwr.m_id } : ${bbDetail.m_id } : ${bbDeta
 	<div id="mdBb">
 		<div id="mdbbContent" class="mdcContent">
 			<div id="bbReport" class="bbReport" onclick="bbRepoart(this)">
-				<span class="pointer">신고</span>
+				<span class="pointer">게시물 신고</span>
 			</div>
 			<div id="goBbPage" class="goBbPage" onclick="location.href='#'">
 				<span class="pointer">게시물로 이동</span>
 			</div>
 			<div id="shareBb" class="shareBb">
-				<span class="pointer">공유 대상...</span>
-			</div>
-			<div id="linkBb" class="linkBb">
-				<span class="pointer">링크 복사</span>
-			</div>
-			<div  id="saveBb" class="saveBb">
-				<span class="pointer">퍼가기</span>
+				<span class="pointer">게시물 공유하기</span>
 			</div>
 			<div id="cancel" class="cancel">
 				<span class="pointer">취소</span>
@@ -999,6 +1107,7 @@ ${listCount } : ${my_name } : ${id_img_fwr.m_id } : ${bbDetail.m_id } : ${bbDeta
 	
 	<input type="button"  value="글쓰기" onclick="window.location='bbWriteForm.do'">
 	</div>
+	
 	<jsp:include page="../footer.jsp"></jsp:include>
 <script>
 var m_id = document.getElementById("m_id").value;
@@ -1107,9 +1216,9 @@ window.onload = function(){
    			// 게시글번호 및 멤버아이디(추후삭제)
    			console.log("#my_name:"+$("#my_name").val());
    			if(resp.bbDetail.m_id==$("#my_name").val()){
-    			$("#mdInfoText").html(resp.bbDetail.bb_id +' : <a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id +'</a><a id="bbUpdate" href="bbRenew.do?bb_id='+resp.bbDetail.bb_id+'">수정</a><a id="bbDelete" href="bbDelete.do?bb_id='+resp.bbDetail.bb_id+'">삭제</a><span id="mdBbBtn" class="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
+    			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id +'</a><a id="bbUpdate" href="bbRenew.do?bb_id='+resp.bbDetail.bb_id+'">수정</a><a id="bbDelete" href="bbDelete.do?bb_id='+resp.bbDetail.bb_id+'">삭제</a><span id="mdBbBtn" class="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
    			} else {
-    			$("#mdInfoText").html(resp.bbDetail.bb_id +' : <a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id + '</a><span id="follow" value="'+resp.bbDetail.m_id+'" onclick="follow(\''+resp.bbDetail.m_id+'\')">팔로우</span><span id="unFollow" value="'+resp.bbDetail.m_id+'" onclick="unFollow(\''+resp.bbDetail.m_id+'\')" style="cursor:pointer">팔로잉</span><span id="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
+    			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id + '</a><span id="follow" value="'+resp.bbDetail.m_id+'" onclick="follow(\''+resp.bbDetail.m_id+'\')">팔로우</span><span id="unFollow" value="'+resp.bbDetail.m_id+'" onclick="unFollow(\''+resp.bbDetail.m_id+'\')" style="cursor:pointer">팔로잉</span><span id="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
    			}
    			// 상품명
     		$("#bbName").html(resp.bbDetail.bb_name);
@@ -1322,10 +1431,10 @@ window.onload = function(){
 
 /* 댓글 삭제 */
 function bbrDelete(r_bb_id){
-	console.log("bbrDelete함수1:"+r_bb_id);
+	console.log("bbrDelete함수:"+r_bb_id);
 	var a = r_bb_id;
 	var b = document.getElementById(r_bb_id);
-	console.log("bbrDelete함수2:"+a+":"+b);
+	console.log("bbrDelete함수:"+a+":"+b);
 	$.ajax({
 		url:"bbrDelete",
 		method:"POST",
@@ -1342,7 +1451,6 @@ function bbrDelete(r_bb_id){
 		}
 	});
 };
-
 /* 답글 삭제 */
 function bbrrDelete(rr_bb_id){
 	console.log("bbrDelete함수:"+rr_bb_id);
@@ -1365,7 +1473,6 @@ function bbrrDelete(rr_bb_id){
 		}
 	});
 };
-
 /* 답글 조회(답글 div 열기)  */
 function bbrrListShow(bb_id){
 	console.log("bbrrListShow함수:"+bb_id);
@@ -1631,8 +1738,6 @@ $('.cancel').on('click', function() {
 function mdReport(e){
 	$("#mdBbr").css("display", "block");
 }
-
-
 //모달(댓글+답글) 닫기
 $('.cancel').on('click', function() {
 	$("#mdBbr").css("display", "none");
@@ -1652,6 +1757,7 @@ $(window).on('click', function() {
 	if (event.target == mdBbr) {
 		mdBbr.style.display = "none";
 	}
+	
 	
 });
     
@@ -2157,9 +2263,14 @@ $("#etc").on('click', function() {
 
 <!-- 댓글 입력 에이작스 -->
 <script type="text/javascript">
-
+var m_id = document.getElementById("m_id").value;
+var my_name = $("#my_name").val();
+var memId = $(".m_id").val();
+console.log("m_id:"+m_id+"my_name:"+my_name+"memId:"+memId);
 $(function(){
-	var my_name=$("#my_name").val();
+	console.log("로드완료!!!!!!!!!!!!!!!!!!!!!!!!");
+	
+	
 	/* 댓글등록 */
 	$(".bbrInsert").on('click', function(){
 		var a = $("#bb_topid").val();
@@ -2277,74 +2388,6 @@ $(function(){
 	});
 	
 	
-	/* 스크롤 페이징 */
-	var page = 1;  // page선언
-	
-	$(function(){  // 첫 화면 로드시 page 증가.
-		console.log("페이지로드:"+page);
-	     getList(page);	// 리스트 추가 조회
-	     page++;
-	}); 
-	 
-	$(window).scroll(function(){   //스크롤이 최하단으로 내려가면 리스트 조회 후 page 증가.
-		console.log("스크롤:"+page);
-	    if($(window).scrollTop() >= $(document).height() - $(window).height()){
-			getList(page);		// 리스트 추가 조회
-			page++;   
-		} 
-	});
-	
-	function getList(page){	// 리스트 추가 조회
-		var m_id = document.getElementById("m_id");
-		var m_id2 = $(m_id).val();
-		console.log("m_id:"+m_id);
-		console.log("m_id2:"+m_id2);
-	    $.ajax({
-	        url : 'bbListA',
-	        method : 'post',  
-	        data : {"page" : page, "m_id":m_id2},
-	        dataType : 'json', 
-	        success: function(resp){
-	        	console.log("resp:"+resp.list);
-	            console.log("data:"+resp.list.length);
-	            var data = resp.list.length;
-	            var htmls = "";
-	            if (page==1){ //페이지 1일 경우 id가 page인 html을 비운다.
-	                  $("#page").html(""); 
-	            }
-	            console.log(resp.currentPage+":"+resp.maxPage);
-	            if (resp.currentPage<=resp.maxPage){
-	            	if(data>0){
-	                	for(var i = 0; i < data; i++){
-	                		console.log("resp.list[i].bb_id:"+resp.list[i].bb_id);
-		                	htmls += "<div id='selectBb' class='selectBb "+resp.list[i].c_name+" chkAll'>"+
-										"<button type='button' id='bb' class='myBtn' onclick='mdOpen(this)' value='"+resp.list[i].bb_id+"' style='border:none; cursor:pointer'>"+
-											"<img class='listImg' src='${pageContext.request.contextPath}/resources/uploadFiles/"+resp.list[i].bb_img1+"'>"+
-											"<div class='middle'>"+
-												"<div class='text'><span class='icon like_icon' ></span> : <span>"+resp.list[i].bb_like+"</span>  <span class='icon write_icon'></span> : <span>"+resp.list[i].bbrcnt+"</span></div>"+
-											"</div>"+
-										"</button>"+
-									"</div>";
-	                	}
-	                }else{
-	                }
-	            }
-	            if (page==1){  //페이지가 1이 아닐경우 데이터를 붙힌다.
-	                $("#bbList").append(""); 
-	            }else{
-	                $("#bbList").append(htmls);
-	                /* $("#content").load(location.href+".selectBb"); */
-	            }
-	            
-	       },error:function(e){
-	    	   alert("데이터 실패.");
-	           if(e.status==300){
-	               alert("데이터를 가져오는데 실패하였습니다.");
-	           };
-	       }
-	    });
-	
-	}
 });
 //페이지 로딩 시 처음 두개 댓글 나타내기 trigger - .hidden_commentchk
 // 댓글 좋아요 표시 외 수정 불가

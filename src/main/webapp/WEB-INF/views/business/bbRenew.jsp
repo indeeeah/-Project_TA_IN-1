@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TA_IN 비즈니스 게시물 수정</title>
+<title>${bbRenew.bb_id }번 게시물 수정</title>
 <link href="${pageContext.request.contextPath}/resources/css/reset.css"
 	rel="stylesheet" type="text/css">
 <script type="text/javascript"
@@ -286,7 +286,7 @@ a {
                     <div id="bbWriteMore" class="bbWriteMore">
 	                    <div id="bbWriteMoreLeft" class="bbWriteMoreLeft">
 							<div id="bbWritePrice" class="bbWritePrice">
-								<input type="text" name="bb_price" placeholder="가 격" value="${bbRenew.bb_price}">
+								<input type="text" name="bb_price" placeholder="가 격" value="${bbRenew.bb_price}" required>
 							</div>
 							<div id="categoryBox">
 								<select id="category" name="c_name">
@@ -455,6 +455,29 @@ a {
                 });
             });
 
+            // 웹캠 연결
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({
+                    video: true
+                }).then(function(stream) {
+                    var video = document.getElementById('video');
+                    video.srcObject = stream;
+                    video.play();
+                });
+            }
+
+            // 웹캠 화면 캡쳐
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var video = document.getElementById('video');
+            document.getElementById("webcamBtn").addEventListener("click", function() {
+                $("#canvas").css("display", "block");
+                context.drawImage(video, 0, 0, 500, 375);
+            });
+
+            document.querySelector('a').addEventListener('click', event => 
+                event.target.href = canvas.toDataURL()
+            );
 
             // 업로드 파일 미리보기
 

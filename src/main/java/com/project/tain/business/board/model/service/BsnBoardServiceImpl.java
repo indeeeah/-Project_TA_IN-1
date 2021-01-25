@@ -61,6 +61,7 @@ public class BsnBoardServiceImpl implements BsnBoardService{
 	public int insertBsnBoard(BsnBoard bb) {
 		System.out.println("aaa2");
 		bbDao.insertBsnBoard(bb);
+		bbDao.bbInsertNotice(bb);
 		return bbDao.insertBsnBoardAdd(bb);
 	}
 

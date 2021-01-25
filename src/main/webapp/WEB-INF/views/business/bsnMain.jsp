@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>비즈니스 메인</title>
+<title>${bsnInfo.bm_name }의 메인 페이지 입니다.</title>
 <link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
@@ -172,6 +172,7 @@ input {
     cursor: pointer;
     border: 1px solid #C7C7C7;
     box-sizing: border-box;
+    margin-top:10px;
 }
 .highlight_photo_h {
     height: 87px;
@@ -341,37 +342,14 @@ input {
 	transition: .1s ease;
 	backface-visibility: hidden;
 }
-.selectBb:hover img{
-	background-color:black;
-	opacity:0.3;
-}
 .listImg{
 	width:312px;
 	height:312px;
 }
 
-
-.middle {
-  transition: .1s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
 .myBtn img{
 	border:1px solid #C7C7C7 !important;
 }
-.selectBb:hover .middle{
-	opacity:1;
-}
-.text {
-  color: grey;
-  font-size: 16px;
-}
-
 #mdImg img{
 	width:600px;
 	height:600px;
@@ -470,7 +448,7 @@ input {
 
 #mdBoard {
 	clear:both;
-	height:69%;
+	height:372px;
     overflow-x: hidden;
     min-height: 250px;
     padding-top:16px;
@@ -778,7 +756,7 @@ input {
 	  	padding: 10px;
 	  	border: 1px solid #C7C7C7;
 	  	width: 400px;
-	  	height:290px;
+	  	height:190px;
 	  	max-width:400px;
 	  	border-radius: 12px;
 	  	text-align:center;
@@ -1201,20 +1179,6 @@ input {
 					<div id="selectBb" class="selectBb ${v.c_name } chkAll">
 						<button type="button" id="bb" class="myBtn" onclick="mdOpen(this)" value="${v.bb_id }" style="border:none; cursor:pointer">
 							<img class="listImg" src="${pageContext.request.contextPath}/resources/uploadFiles/${v.bb_img1 }">
-							<div class="middle">
-								<div class="text">
-									<span class='list_icon list_like_icon' >
-									</span> 
-									<span>
-										${v.bb_like }  
-									</span>
-									<span class="list_icon list_write_icon">
-									</span>
-									<span>
-										${v.bbrcnt }
-									</span>
-								</div>
-							</div>
 						</button>
 					</div>
 				</c:forEach>
@@ -1298,19 +1262,13 @@ input {
 	<div id="mdBb">
 		<div id="mdbbContent" class="mdcContent">
 			<div id="bbReport" class="bbReport" onclick="bbRepoart(this)">
-				<span class="pointer">신고</span>
+				<span class="pointer">게시물 신고</span>
 			</div>
 			<div id="goBbPage" class="goBbPage" onclick="location.href='#'">
 				<span class="pointer">게시물로 이동</span>
 			</div>
 			<div id="shareBb" class="shareBb">
-				<span class="pointer">공유 대상...</span>
-			</div>
-			<div id="linkBb" class="linkBb">
-				<span class="pointer">링크 복사</span>
-			</div>
-			<div  id="saveBb" class="saveBb">
-				<span class="pointer">퍼가기</span>
+				<span class="pointer">게시물 공유하기</span>
 			</div>
 			<div id="cancel" class="cancel">
 				<span class="pointer">취소</span>
@@ -1386,6 +1344,7 @@ input {
 	
 	<jsp:include page="../footer.jsp"></jsp:include>
 <script>
+
 var m_id = document.getElementById("m_id").value;
 var my_name = $("#my_name").val();
 var memId = $(".m_id").val();
@@ -1495,9 +1454,9 @@ function mdOpen(e){
    			// 게시글번호 및 멤버아이디(추후삭제)
    			console.log("#my_name:"+$("#my_name").val());
    			if(resp.bbDetail.m_id==$("#my_name").val()){
-    			$("#mdInfoText").html(resp.bbDetail.bb_id +' : <a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id +'</a><a id="bbUpdate" href="bbRenew.do?bb_id='+resp.bbDetail.bb_id+'">수정</a><a id="bbDelete" href="bbDelete.do?bb_id='+resp.bbDetail.bb_id+'">삭제</a><span id="mdBbBtn" class="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
+    			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id +'</a><a id="bbUpdate" href="bbRenew.do?bb_id='+resp.bbDetail.bb_id+'">수정</a><a id="bbDelete" href="bbDelete.do?bb_id='+resp.bbDetail.bb_id+'&m_id='+resp.bbDetail.m_id+'">삭제</a><span id="mdBbBtn" class="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
    			} else {
-    			$("#mdInfoText").html(resp.bbDetail.bb_id +' : <a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id + '</a><span id="follow" value="'+resp.bbDetail.m_id+'" onclick="follow(\''+resp.bbDetail.m_id+'\')">팔로우</span><span id="unFollow" value="'+resp.bbDetail.m_id+'" onclick="unFollow(\''+resp.bbDetail.m_id+'\')" style="cursor:pointer">팔로잉</span><span id="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
+    			$("#mdInfoText").html('<a href="${pageContext.request.contextPath}/gnMain?m_id='+resp.bbDetail.m_id+'">'+resp.bbDetail.m_id + '</a><span id="follow" value="'+resp.bbDetail.m_id+'" onclick="follow(\''+resp.bbDetail.m_id+'\')">팔로우</span><span id="unFollow" value="'+resp.bbDetail.m_id+'" onclick="unFollow(\''+resp.bbDetail.m_id+'\')" style="cursor:pointer">팔로잉</span><span id="mdBbBtn" onclick="mdBb()" style="cursor:pointer">&#149;&#149;&#149;</span>');
    			}
    			// 상품명
     		$("#bbName").html(resp.bbDetail.bb_name);
@@ -2637,7 +2596,9 @@ var my_name = $("#my_name").val();
 var memId = $(".m_id").val();
 console.log("m_id:"+m_id+"my_name:"+my_name+"memId:"+memId);
 $(function(){
-	$(".fochkWithMe").trigger('click');
+	console.log("로드완료!!!!!!!!!!!!!!!!!!!!!!!!");
+	
+	
 	/* 댓글등록 */
 	$(".bbrInsert").on('click', function(){
 		var a = $("#bb_topid").val();
@@ -2757,7 +2718,7 @@ $(function(){
 	
 	/* 스크롤 페이징 */
 	var page = 1;  // page선언
-	
+	console.log("페이지로드:"+page);
 	$(function(){  // 첫 화면 로드시 page 증가.
 		console.log("페이지로드:"+page);
 	     getList(page);	// 리스트 추가 조회
@@ -2824,7 +2785,7 @@ $(function(){
 	
 	}
 	
-	
+	$(".fochkWithMe").trigger('click');
 });
 //페이지 로딩 시 처음 두개 댓글 나타내기 trigger - .hidden_commentchk
 // 댓글 좋아요 표시 외 수정 불가

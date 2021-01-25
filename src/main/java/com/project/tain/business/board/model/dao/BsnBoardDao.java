@@ -172,5 +172,16 @@ public class BsnBoardDao {
 		return sqlSession.selectOne("BsnBoard.bsnInfoFollower", m_id);
 	}
 	
+	// 게시물 등록 알림
+	public int bbInsertNotice(BsnBoard bb) {
+		System.out.println("게시물 등록 알림 dao"+bb.getMy_name()+":"+bb.getM_id()+":"+bb.getBb_id());
+		return sqlSession.insert("BsnBoard.bbInsertNotice", bb);
+	}
+	// 게시물 좋아요 알림
+	public int bbLikeNotice(BsnBoard bb) {
+		System.out.println("게시물 좋아요 알림 dao"+bb.getMy_name()+":"+bb.getM_id()+":"+bb.getBb_id());
+		return sqlSession.insert("BsnBoard.bbLikeNotice", bb);
+	}
+	
 	
 }

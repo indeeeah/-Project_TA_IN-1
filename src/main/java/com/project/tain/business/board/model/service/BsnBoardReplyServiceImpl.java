@@ -26,7 +26,8 @@ public class BsnBoardReplyServiceImpl implements BsnBoardReplyService{
 
 	@Override
 	public int insertBbr(BsnBoardReply bbr) {
-		return bbrDao.insertBbr(bbr);
+		bbrDao.insertBbr(bbr);
+		return bbrDao.bbrInsertNotice(bbr);
 	}
 
 	@Override
@@ -46,7 +47,8 @@ public class BsnBoardReplyServiceImpl implements BsnBoardReplyService{
 
 	@Override
 	public int insertBbrr(BsnBoardReply bbr) {
-		return bbrDao.insertBbrr(bbr);
+		bbrDao.insertBbrr(bbr);
+		return bbrDao.bbrrInsertNotice(bbr);
 	}
 
 	@Override

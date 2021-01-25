@@ -38,77 +38,8 @@ public class BsnBoardReply implements java.io.Serializable{
 	// 좋아요 여부
 	private String like_chk;
 	
-	// 기본 생성자
-	public BsnBoardReply() {}
-	
-	// 등록 및 수정
-	public BsnBoardReply(String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
-			String bb_option2, String bb_option3, String bb_option4, String bb_type, int t_num) {
-		super();
-		this.m_id = m_id;
-		this.bb_name = bb_name;
-		this.bb_info = bb_info;
-		this.bb_price = bb_price;
-		this.bb_option1 = bb_option1;
-		this.bb_option2 = bb_option2;
-		this.bb_option3 = bb_option3;
-		this.bb_option4 = bb_option4;
-		this.bb_type = bb_type;
-		this.t_num = t_num;
-	}
-	
-	// 삭제
-	public BsnBoardReply(String bb_id) {
-		super();
-		this.bb_id = bb_id;
-	}
-	
-	// 조회
-	public BsnBoardReply(String bb_id, String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
-			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date,
-			int t_num, String m_img) {
-		super();
-		this.bb_id = bb_id;
-		this.m_id = m_id;
-		this.bb_name = bb_name;
-		this.bb_info = bb_info;
-		this.bb_price = bb_price;
-		this.bb_option1 = bb_option1;
-		this.bb_option2 = bb_option2;
-		this.bb_option3 = bb_option3;
-		this.bb_option4 = bb_option4;
-		this.bb_type = bb_type;
-		this.bb_topid = bb_topid;
-		this.bb_date = bb_date;
-		this.t_num = t_num;
-		this.m_img = m_img;
-	}
-
-	// 전체
-	public BsnBoardReply(String bb_id, String m_id, String bb_name, String bb_info, int bb_price, String bb_option1,
-			String bb_option2, String bb_option3, String bb_option4, String bb_type, String bb_topid, Date bb_date,
-			int t_num, Date l_date, int bbrlike, String m_img, String rb_reason, Date rb_date, String like_chk) {
-		super();
-		this.bb_id = bb_id;
-		this.m_id = m_id;
-		this.bb_name = bb_name;
-		this.bb_info = bb_info;
-		this.bb_price = bb_price;
-		this.bb_option1 = bb_option1;
-		this.bb_option2 = bb_option2;
-		this.bb_option3 = bb_option3;
-		this.bb_option4 = bb_option4;
-		this.bb_type = bb_type;
-		this.bb_topid = bb_topid;
-		this.bb_date = bb_date;
-		this.t_num = t_num;
-		this.l_date = l_date;
-		this.bbrlike = bbrlike;
-		this.m_img = m_img;
-		this.rb_reason = rb_reason;
-		this.rb_date = rb_date;
-		this.like_chk = like_chk;
-	}
+	// 사용자 이름
+	private String my_name;
 
 	@Override
 	public String toString() {
@@ -117,7 +48,7 @@ public class BsnBoardReply implements java.io.Serializable{
 				+ ", bb_option3=" + bb_option3 + ", bb_option4=" + bb_option4 + ", bb_type=" + bb_type + ", bb_topid="
 				+ bb_topid + ", bb_date=" + bb_date + ", t_num=" + t_num + ", l_date=" + l_date + ", bbrlike=" + bbrlike
 				+ ", m_img=" + m_img + ", rb_reason=" + rb_reason + ", rb_date=" + rb_date + ", like_chk=" + like_chk
-				+ "]";
+				+ ", my_name=" + my_name + "]";
 	}
 
 	public String getBb_id() {
@@ -274,6 +205,14 @@ public class BsnBoardReply implements java.io.Serializable{
 
 	public void setLike_chk(String like_chk) {
 		this.like_chk = like_chk;
+	}
+
+	public String getMy_name() {
+		return my_name;
+	}
+
+	public void setMy_name(String my_name) {
+		this.my_name = my_name;
 	}
 	
 }

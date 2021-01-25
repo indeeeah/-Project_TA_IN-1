@@ -166,6 +166,7 @@ public class BsnBoardController {
 			MultipartHttpServletRequest request, ModelAndView mv) {
 		System.out.println("게시물 등록 컨트롤러" + bb);
 		System.out.println("게시물 등록 컨트롤러" + bb.getM_id());
+		bb.setMy_name(bb.getM_id());
 		String m_id = bb.getM_id();
 		try {
 			if(request!=null && !request.equals("")) {
@@ -284,7 +285,9 @@ public class BsnBoardController {
 	// 게시물 삭제
 	@RequestMapping(value="/bbDelete.do")
 	public ModelAndView boardDelete(@RequestParam(name="bb_id") String bb_id, 
+			@RequestParam(name="m_id") String m_id, 
 			HttpServletRequest request, ModelAndView mv) {
+			System.out.println("삭제컨입"+m_id);
 		try {
 			System.out.println("삭제컨입");
 			BsnBoard bb = bbService.selectOneImg(bb_id);
@@ -294,7 +297,7 @@ public class BsnBoardController {
 			
 			bbService.deleteBsnBoard(bb_id);
 			System.out.println("삭제완료");
-			
+			mv.addObject("m_id", m_id);
 			mv.setViewName("redirect:bbList.do");
 		} catch(Exception e) {
 			mv.addObject("msg", e.getMessage());

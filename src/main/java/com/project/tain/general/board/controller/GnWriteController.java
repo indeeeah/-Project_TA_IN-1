@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.tain.business.board.model.service.BsnBoardService;
 import com.project.tain.general.board.model.domain.GnWrite;
 import com.project.tain.general.board.model.service.GnBoardService;
 import com.project.tain.general.board.model.service.GnWriteService;
@@ -32,7 +33,10 @@ public class GnWriteController {
 
 	@Autowired
 	private TimeLineService tService;
-
+	
+	@Autowired
+	private BsnBoardService bbService;
+	
 	@RequestMapping(value = "/gnWrite", method = RequestMethod.GET)
 	public ModelAndView gnWrite(HttpServletRequest request, ModelAndView mv) {
 		try {
@@ -44,7 +48,10 @@ public class GnWriteController {
 				mv.addObject("chkseq", gwService.chkseq());
 				mv.setViewName("general/gnWrite");
 			} else if (result.equals("B")) {
-
+				mv.addObject("m_id", my_name);
+				mv.addObject("category", bbService.selectCategory(my_name));
+				System.out.println("category: "+bbService.selectCategory(my_name));
+				mv.setViewName("business/bbWriteForm");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

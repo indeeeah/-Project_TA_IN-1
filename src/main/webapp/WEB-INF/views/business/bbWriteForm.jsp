@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TA_IN 비즈니스 게시물 작성</title>
+<title>${my_name }님의 게시물 작성</title>
 <link href="${pageContext.request.contextPath}/resources/css/reset.css"
 	rel="stylesheet" type="text/css">
 <script type="text/javascript"
@@ -285,7 +285,7 @@ a {
                     <div id="bbWriteMore" class="bbWriteMore">
 	                    <div id="bbWriteMoreLeft" class="bbWriteMoreLeft">
 							<div id="bbWritePrice" class="bbWritePrice">
-								 <input type="text" name="bb_price" placeholder="상 품 가 격">
+								 <input type="text" name="bb_price" placeholder="상 품 가 격" required>
 							</div>
 							<div id="categoryBox">
 								<select id="category" name="c_name">
