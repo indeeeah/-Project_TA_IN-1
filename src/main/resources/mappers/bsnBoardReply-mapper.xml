@@ -21,6 +21,7 @@
 		<result property="rb_date" column="rb_date"/>
 		<result property="bbrlike" column="bbrlike"/>
 		<result property="like_chk" column="like_chk"/>
+		<result property="my_name" column="my_name"/>
 	</resultMap>
 	
 	<!-- 댓글 좋아요 수 -->
@@ -63,7 +64,7 @@
             order by bb_date desc
 	</select>
 	
-	<!-- 대댓글 등록 -->
+	<!-- 답글 등록 -->
 	<insert id="insertBbrr" parameterType="BsnBoardReply" flushCache="true" statementType="PREPARED">
 		insert into businessboard values(
 			'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(B_SEQ.NEXTVAL,3,'0'), #{m_id},
@@ -72,7 +73,7 @@
 		)
 	</insert>
 	
-	<!-- 대댓글 삭제 -->
+	<!-- 답글 삭제 -->
 	<delete id="deleteBbrr" parameterType="string" flushCache="true" statementType="PREPARED">
 		delete from businessboard where bb_id=#{bb_id}
 	</delete>
@@ -85,4 +86,36 @@
 	<select id="checkBbrr_like" parameterType="string" flushCache="true" statementType="PREPARED" resultType="int">
 		select * from bblike where m_id=#{m_id} and bb_id=#{bb_id}
 	</select>
+	
+	<!-- 댓글 작성 알림 -->
+	<insert id="bbrInsertNotice" parameterType="BsnBoard"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into notice
+		(m_id, m_id2, b_id, n_contents) values (#{my_name}, #{m_id}, 'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD((B_SEQ.CURRVAL),3,'0'),
+		#{m_id}||'님이 댓글을 등록하셨습니다.')
+	</insert>
+	
+	<!-- 답글 작성 알림 -->
+	<insert id="bbrrInsertNotice" parameterType="BsnBoard"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into notice
+		(m_id, m_id2, b_id, n_contents) values (#{my_name}, #{m_id}, 'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD((B_SEQ.CURRVAL),3,'0'),
+		#{m_id}||'님이 답글을 등록하셨습니다.')
+	</insert>
+	
+	<!-- 댓글 좋아요 알림 -->
+	<insert id="bbrLikeNotice" parameterType="BsnBoard"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into notice
+		(m_id, m_id2, b_id, n_contents) values (#{m_id}, #{m_id2}, #{bb_id},
+		#{m_id}||'님이 화원님의 댓글을 좋아합니다.')
+	</insert>
+	
+	<!-- 답글 좋아요 알림 -->
+	<insert id="bbrrLikeNotice" parameterType="BsnBoard"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into notice
+		(m_id, m_id2, b_id, n_contents) values (#{m_id}, #{m_id2}, #{bb_id},
+		#{m_id}||'님이 화원님의 답글을 좋아합니다.')
+	</insert>
 </mapper>

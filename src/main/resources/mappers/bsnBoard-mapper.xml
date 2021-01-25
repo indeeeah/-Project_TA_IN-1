@@ -165,6 +165,23 @@
 	<delete id="unFollow" parameterType="BsnBoard" flushCache="true" statementType="PREPARED">
 		delete from follow where m_id1=#{my_name} and m_id2=#{m_id}
 	</delete>
+	
+	<!-- 게시물 등록 알림 -->
+	<insert id="bbInsertNotice" parameterType="BsnBoard"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into notice
+		(m_id, m_id2, b_id, n_contents) values (#{my_name}, #{m_id}, 'BB'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD((B_SEQ.CURRVAL),3,'0'),
+		#{m_id}||'님이 게시글을 등록하셨습니다.')
+	</insert>
+	
+	<!-- 게시물 좋아요 알림 -->
+	<insert id="bbLikeNotice" parameterType="BsnBoard"
+		flushCache="true" statementType="PREPARED" timeout="20">
+		insert into notice
+		(m_id, m_id2, b_id, n_contents) values (#{my_name}, #{m_id}, #{bb_id},
+		#{m_id}||'님이 화원님의 게시글을 좋아합니다.')
+	</insert>
+	
 </mapper>
 
 
