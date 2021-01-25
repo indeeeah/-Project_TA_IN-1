@@ -13,7 +13,6 @@
             <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
             <script src="https://kit.fontawesome.com/2409d81413.js" crossorigin="anonymous"></script>
         </head>
-
         <body>
             <header id="header">
                 <div id="big_con">
@@ -24,19 +23,37 @@
                             <input type="hidden" name="alarmcheck" value="${alarmcheck }">
                         </div>
                         <input type="text" id="search" placeholder="검색" style="text-align: center;">
-                        <div id="header_right">
-                            <div id="header_icon_con">
-                                <div id="fix_home" class="fix_icon"><i class="fas fa-home"></i></div>
-                                <div id="fix_write" class="fix_icon"><i class="fas fa-arrow-circle-up"></i></div>
-                                <div id="fix_message" class="fix_icon"><i class="fas fa-comment-dots"></i></div>
-                                <div id="fix_alert" class="fix_icon"  onclick="turny('${my_name}');"><label for="alert" style="cursor:pointer;"><i
-                                            class="fas fa-bell"></i></label></div>
-                                <input type="checkbox" id="alert" style="display:none;">
-                                <div id="fix_bag" class="fix_icon"><i class="fas fa-shopping-bag"></i></div>
-                                <div id="fix_profile" class="fix_icon"><i class="fas fa-user-circle"></i></div>
-                            </div>
-                        </div>
-                    </div>
+				<div id="header_right">
+					<div id="header_icon_con">
+						<div id="fix_home" class="fix_icon">
+							<i class="fas fa-home"></i>
+						</div>
+						<div id="fix_write" class="fix_icon">
+							<i class="fas fa-arrow-circle-up"></i>
+						</div>
+						<div id="fix_message" class="fix_icon">
+							<i class="fas fa-comment-dots"></i>
+							<div id="circle1" class="circle1"style="display:none;position:relative;right:4px;top:10px;background-color: #ED4956; width: 5px; height: 5px;
+				border-radius: 75px; text-align: center; margin: 0 auto; font-size: 12px; vertical-align: middle;
+				line-height: 150px;"></div>
+						</div>
+						<div id="fix_alert" class="fix_icon"<%-- onclick="turny('${my_name}');" --%>>
+							<label for="alert" style="cursor: pointer;"> <i
+								class="fas fa-bell"></i></label>
+								<div id="circle2" class="circle2"style="display:none;position:relative;right:4px;top:10px;background-color: #ED4956; width: 5px; height: 5px;
+				border-radius: 75px; text-align: center; margin: 0 auto; font-size: 12px; vertical-align: middle;
+				line-height: 150px;"></div>
+						</div>
+						<input type="checkbox" id="alert" style="display: none;">
+						<div id="fix_bag" class="fix_icon">
+							<i class="fas fa-shopping-bag"></i>
+						</div>
+						<div id="fix_profile" class="fix_icon">
+							<i class="fas fa-user-circle"></i>
+						</div>
+					</div>
+				</div>
+			</div>
                 </div>
             </header>
             <div id="alert_con">
@@ -59,6 +76,66 @@
             </div>
             <div id="forheader"></div>
         </body>
+        <script>
+        $(document).ready(function(){
+        	var socket = null;
+    		function connect() {
+    			var ws = new WebSocket(
+    					"ws://localhost:8090/tain/replyEcho?ID=${my_name}");
+    			socket = ws;
+
+    			//접속 처리
+    			ws.onopen = function() {
+    				console.log('Info: connection opened.');
+    			};
+
+    			//메시지 처리
+    			ws.onmessage = function(event) {
+    				console.log("ReceiveMessage : ", event.data + '\n');
+    				var arr=[];
+    				arr = event.data.split(",");
+    				var id = arr[0];
+    				var msg = arr[1];
+    				if(msg=="!Alarm"){
+    					$(".circle2").css("display", "block");
+    				}
+    				if(msg!="!Alarm"){
+    					$(".circle1").css("display", "block");
+    				}
+    			};
+    			
+    			//접속 끊겼을때
+    			ws.onclose = function(event) {
+    				console.log('Info: connection closed.');
+    				//setTimeout(function(){connect();}, 1000);   // retry connection!!
+    			};
+    			ws.onerror = function(err) {
+    				console.log('Err:', err);
+    			};
+
+    		}
+
+    		connect();
+			
+    		//댓글등록 버튼, 팔로우 버튼, 좋아요버튼
+    		$('.socket').on('click', function(evt) {
+    			evt.preventDefault();
+    			if (socket.readyState !== 1)
+    				return;
+    			var id = "${my_name}"; //내 아이디
+    			var msg = "!Alarm";
+    			var toid = $("#toid").val(); //알림을 받을 사람 아이디
+    			var date = new Date;
+    			var year = date.getFullYear();
+    			var month = date.getMonth();
+    			var day = date.getDate();
+    			var hours = date.getHours();
+    			var minutes = date.getMinutes();
+    			var seconds = date.getSeconds();
+    			socket.send(id+","+toid+","+msg+","+year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds);
+    		});
+        });
+        </script>
         <script type="text/javascript">
             var memId = $(".m_id").val();
 
@@ -127,19 +204,9 @@
                 var url = "${pageContext.request.contextPath}/timeLine";
                 $(location).attr('href', url);
             });
-            $("#fix_message").on('click', function() {
-                var memId = $(".m_id").val();
-                var url = "${pageContext.request.contextPath}/chatlist.do";
-                $(location).attr('href', url);
-            });
             $("#fix_write").on('click', function() {
                 var memId = $(".m_id").val();
                 var url = "${pageContext.request.contextPath}/gnWrite";
-                $(location).attr('href', url);
-            });
-            $("#fix_bag").on('click', function() {
-                var memId = $(".m_id").val();
-                var url = "${pageContext.request.contextPath}/mCart.do";
                 $(location).attr('href', url);
             });
             $("#fix_profile").on('click', function() {
@@ -198,10 +265,7 @@
                     data: {
                         m_id: my_name
                     },
-                    success: function(data) {
-                    	console.log("success turn to Y");
-                    	
-                    },
+                    success: function(data) {},
                     error: function(request, status, error) {
                         alert("code:" +
                             request.status +

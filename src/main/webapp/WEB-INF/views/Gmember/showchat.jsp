@@ -177,6 +177,7 @@ img {
 .outgoing_msg {
 	overflow: hidden;
 	margin: 25px 0 25px;
+	word-break: break-all;
 }
 
 .sent_msg {
@@ -447,7 +448,7 @@ line-height:150px;
 											<div class="incoming_msg_img" style="width: 30px; height: 30px; border-radius: 70%; overflow: hidden;">
 												<img width="44px"  src="${pageContext.request.contextPath}/resources/uploadFiles/${chatImg}" style="width: 100%; height:100%; object-fit: cover;"><b style="font-size: 9pt;">${msg.m_id }</b>
 											</div>
-											<div style="display:block; word-break:normal;">
+											<div style="display:block; word-break: break-all;">
 											<p>${msg.m_message }</p>
 											<span class="time_date"> ${msg.m_date }</span>
 											</div>

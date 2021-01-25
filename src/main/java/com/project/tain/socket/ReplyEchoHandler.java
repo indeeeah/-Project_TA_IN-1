@@ -37,12 +37,7 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		//메세지 형태는 보내는아이디,받는아이디,메세지내용
 		String msg = message.getPayload();
-		System.out.println(msg);
 		String[] strs = msg.split(",");
-		System.out.println(strs[0]);
-		System.out.println(strs[1]);
-		System.out.println(strs[2]);
-		System.out.println(strs[3]);
 		if (strs != null) {
 			String id = strs[0];
 			String toid = strs[1];
@@ -55,7 +50,9 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 			mvo.setM_date(m_date);
 			mvo.setM_check("N");
 			System.out.println(mvo);
-			mMessageServiceImpl.sendMessage(mvo);
+			if(content != "!Alarm") {
+				mMessageServiceImpl.sendMessage(mvo);
+			}
 			WebSocketSession m_id = userSessions.get(toid);
 			if (m_id != null) {
 				TextMessage tmpMsg = new TextMessage(id+","+content);

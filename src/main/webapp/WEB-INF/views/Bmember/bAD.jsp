@@ -348,7 +348,7 @@ img {
 						</c:if>
 						<br> <br>
 					</div>
-					<button id="CateADD" class="btn2"
+					<button id="ADADD" class="btn2"
 						style="background: #6782B4; padding: 5px 20px 5px 20px; color: white;">추가</button>
 					<br> <br>
 				</div>
