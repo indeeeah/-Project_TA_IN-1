@@ -71,6 +71,7 @@ public class GnBoardController {
 				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				mv.addObject("shownotice", tService.shownotice(my_name));
 				mv.addObject("alarmcheck", tService.alarmcheck(my_name));
+				mv.addObject("messagecheck", mMessageServiceImpl.readcheck(my_name));
 				mv.addObject("chkfollow", tService.chkfollow(my_name));
 				mv.addObject("id_img_fwr", gService.showp_one(m_id));
 				mv.addObject("fw", gService.showp_two(m_id));
