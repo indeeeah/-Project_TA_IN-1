@@ -27,7 +27,7 @@
 ------------
 ## Using
 1. FrontEnd - HTML5, JS, CSS3, jQuery
-2. BackEnd - JACA(JDK 1.8), Spring, Servlet, Mybatis
+2. BackEnd - JAVA(JDK 1.8), Spring, Servlet, Mybatis
 3. OS - Windows, MacOS
 4. Library&API - Google Developers Charts, kakaomap, WebSocket, I'mport, JBCrypt, Commons FileUpload, JavaMail API JAR, Gson, JSON.simple, Spring JDBC, Oracle JDBC Driver
 5. IDE - Spring Tool Suite 3
@@ -37,7 +37,7 @@
 9. DataBase - Oracle DataBase 11g
 ------------
 ## 업무일정
-<img width="840" alt="스크린샷 2021-01-29 오후 6 36 52" src="https://user-images.githubusercontent.com/72774483/106258404-1e9eb780-6261-11eb-9a55-37419ccac6bd.png">
+<img width="840" alt="스크린샷 2021-01-29 오후 6 36 52" src="https://user-images.githubusercontent.com/72774483/106258404-1e9eb780-6261-11eb-9a55-37419ccac6bd.png">
 
 ------------
 ## TA_IN 기능 설명
@@ -51,14 +51,14 @@
 1. 이메일 인증 유무 체크 기능
 2. 세션값 저장(아이디)
 ### [헤더]
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 42 27" src="https://user-images.githubusercontent.com/72774483/106257583-15f9b180-6260-11eb-8ba8-324b6045027f.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 42 27" src="https://user-images.githubusercontent.com/72774483/106257583-15f9b180-6260-11eb-8ba8-324b6045027f.png">
 
 1. WebSocket을 이용한 실시간 알림 기능
 > + 새로운 알림, 새로운 메세지 유무 표시 기능
 2. 팔로우 하는 계정 로그인 유무 확인 기능
 3. 해시태그, 계정 아이디 자동 검색어 완성 기능
 ### [타임라인]
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 02" src="https://user-images.githubusercontent.com/72774483/106258086-bbad2080-6260-11eb-9d2a-917569e7d9a1.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 02" src="https://user-images.githubusercontent.com/72774483/106258086-bbad2080-6260-11eb-9d2a-917569e7d9a1.png">
 
 1. 팔로우하고 있는 계정의 게시물 조회 기능
 2. 2개 이상 사진 슬라이드 기능
@@ -71,15 +71,15 @@
 6. 주소 공유 기능
 7. AJAX를 이용한 무한 스크롤
 ### [검색 완료 페이지]
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 36" src="https://user-images.githubusercontent.com/72774483/106257935-8dc7dc00-6260-11eb-8fe9-43b6d6561ac1.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 36" src="https://user-images.githubusercontent.com/72774483/106257935-8dc7dc00-6260-11eb-8fe9-43b6d6561ac1.png">
 
 1. 해시태그, 계정 '#', '@'에 따른 분류로 다른 페이지로 이동 기능
 2. 해당 해시태그를 포함한 게시물 조회 기능
 3. AJAX를 이용한 무한 스크롤
 ### [일반 계정 프로필 페이지]
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 08 1" src="https://user-images.githubusercontent.com/72774483/106258049-b0f28b80-6260-11eb-822a-a6f52dbe2fe3.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 08 1" src="https://user-images.githubusercontent.com/72774483/106258049-b0f28b80-6260-11eb-822a-a6f52dbe2fe3.png">
 
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 16" src="https://user-images.githubusercontent.com/72774483/106258000-a33d0600-6260-11eb-8944-c3bf76c4f730.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 16" src="https://user-images.githubusercontent.com/72774483/106258000-a33d0600-6260-11eb-8944-c3bf76c4f730.png">
 
 1. 계정 아이디와 접속자, 팔로우 유무 체크 후 다르게 나타나는 아이콘
 2. 계정 신고 기능
@@ -89,7 +89,7 @@
 > + 댓글&답글 작성, 수정, 삭제, 신고 기능
 5. 팔로우, 팔로우 취소 기능
 ### [일반 게시글 페이지]
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 53 13" src="https://user-images.githubusercontent.com/72774483/106257118-7a684100-625f-11eb-82f1-55d1e31ed5bc.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 53 13" src="https://user-images.githubusercontent.com/72774483/106257118-7a684100-625f-11eb-82f1-55d1e31ed5bc.png">
 
 1. 단일 게시글 조회 기능
 2. 게시글 클릭 시 모달
@@ -113,7 +113,7 @@
 1. 옵션 선택 후 그에 따른 총액 계산 기능
 2. I'mport를 이용한 결제 기능
 ### [게시글 작성 페이지]
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 45" src="https://user-images.githubusercontent.com/72774483/106257894-81dc1a00-6260-11eb-8c27-7db069a8c378.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 45" src="https://user-images.githubusercontent.com/72774483/106257894-81dc1a00-6260-11eb-8c27-7db069a8c378.png">
 
 1. 여러 이미지 파일 업로드 기능
 2. 사진 필터 적용 기능
@@ -122,20 +122,20 @@
 
 1. 스토리 작성
 
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 55" src="https://user-images.githubusercontent.com/72774483/106257847-712ba400-6260-11eb-8789-9e9fc24ce4d3.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 41 55" src="https://user-images.githubusercontent.com/72774483/106257847-712ba400-6260-11eb-8789-9e9fc24ce4d3.png">
 
 > + 이미지 파일 업로드 기능
 > + 사진 필터 적용 기능
 > + 웹캠 캡쳐 기능
 2. 스토리 관리
 
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 42 15" src="https://user-images.githubusercontent.com/72774483/106257664-33c71680-6260-11eb-90e7-60e3c424cb30.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 42 15" src="https://user-images.githubusercontent.com/72774483/106257664-33c71680-6260-11eb-90e7-60e3c424cb30.png">
 
 > + 스토리 사진 다운로드 기능
 > + 스토리 삭제 기능
 3. 하이라이트 관리
 
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 42 01" src="https://user-images.githubusercontent.com/72774483/106257753-51947b80-6260-11eb-91c4-ee12b84f6849.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 42 01" src="https://user-images.githubusercontent.com/72774483/106257753-51947b80-6260-11eb-91c4-ee12b84f6849.png">
 
 > + 하이라이트 생성 및 삭제 기능
 4. 메세지 전송 기능(추후 구현 예정)
@@ -151,12 +151,12 @@
 4. 게시글, 회원 조회 기능
 5. 탈퇴 회원 조회 기능
 ### [고객 센터]
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 42 44" src="https://user-images.githubusercontent.com/72774483/106257526-024e4b00-6260-11eb-969b-a702c45a70d0.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 42 44" src="https://user-images.githubusercontent.com/72774483/106257526-024e4b00-6260-11eb-969b-a702c45a70d0.png">
 
 1. 각 링크로 이동 기능
 2. 탈퇴
 
-<img width="1680" alt="스크린샷 2021-01-25 오후 9 43 11" src="https://user-images.githubusercontent.com/72774483/106257444-e21e8c00-625f-11eb-9c9e-d31d43060865.png">
+<img width="1680" alt="스크린샷 2021-01-25 오후 9 43 11" src="https://user-images.githubusercontent.com/72774483/106257444-e21e8c00-625f-11eb-9c9e-d31d43060865.png">
 
 
 > + 비밀번호 체크 기능
@@ -169,31 +169,31 @@
 + Detailed Document : can be found in [this Link.](https://drive.google.com/drive/folders/1IeWR4BBKugRTOphRTcaBkhKF0DDV16j3?usp=sharing)
 1. 기능정의서
 
-<img width="840" alt="스크린샷 2021-01-29 오후 6 38 17" src="https://user-images.githubusercontent.com/72774483/106258635-6e7d7e80-6261-11eb-8be5-9f401a4c8d02.png">
+<img width="840" alt="스크린샷 2021-01-29 오후 6 38 17" src="https://user-images.githubusercontent.com/72774483/106258635-6e7d7e80-6261-11eb-8be5-9f401a4c8d02.png">
 
 2. 유스케이스
 
-<img width="840" alt="스크린샷 2021-01-29 오후 6 38 27" src="https://user-images.githubusercontent.com/72774483/106258673-7dfcc780-6261-11eb-85a7-39edc1484091.png">
+<img width="840" alt="스크린샷 2021-01-29 오후 6 38 27" src="https://user-images.githubusercontent.com/72774483/106258673-7dfcc780-6261-11eb-85a7-39edc1484091.png">
 
 3. UI 설계서
 
-<img width="840" alt="스크린샷 2021-01-29 오후 6 38 37" src="https://user-images.githubusercontent.com/72774483/106258736-92d95b00-6261-11eb-9688-5e9ac7110a1f.png">
+<img width="840" alt="스크린샷 2021-01-29 오후 6 38 37" src="https://user-images.githubusercontent.com/72774483/106258736-92d95b00-6261-11eb-9688-5e9ac7110a1f.png">
 
 4. ERD
 
-<img width="840" alt="스크린샷 2021-01-29 오후 6 38 58" src="https://user-images.githubusercontent.com/72774483/106258768-9c62c300-6261-11eb-88bc-9e3483d8abed.png">
+<img width="840" alt="스크린샷 2021-01-29 오후 6 38 58" src="https://user-images.githubusercontent.com/72774483/106258768-9c62c300-6261-11eb-88bc-9e3483d8abed.png">
 
 5. 테이블 정의서
 
-<img width="841" alt="스크린샷 2021-01-29 오후 6 39 07" src="https://user-images.githubusercontent.com/72774483/106258793-a8e71b80-6261-11eb-956d-1206d41e540e.png">
+<img width="841" alt="스크린샷 2021-01-29 오후 6 39 07" src="https://user-images.githubusercontent.com/72774483/106258793-a8e71b80-6261-11eb-956d-1206d41e540e.png">
 
 6. 클래스 다이어그램
 
-<img width="838" alt="스크린샷 2021-01-29 오후 6 39 24" src="https://user-images.githubusercontent.com/72774483/106258817-b4d2dd80-6261-11eb-9255-7c766f29f161.png">
+<img width="838" alt="스크린샷 2021-01-29 오후 6 39 24" src="https://user-images.githubusercontent.com/72774483/106258817-b4d2dd80-6261-11eb-9255-7c766f29f161.png">
 
 7. 시퀀스 다이어그램
 
-<img width="839" alt="스크린샷 2021-01-29 오후 6 39 36" src="https://user-images.githubusercontent.com/72774483/106258847-c1573600-6261-11eb-8573-fb1316ff736d.png">
+<img width="839" alt="스크린샷 2021-01-29 오후 6 39 36" src="https://user-images.githubusercontent.com/72774483/106258847-c1573600-6261-11eb-8573-fb1316ff736d.png">
 
 ------------
 ## 추후 구현 예정 기능
