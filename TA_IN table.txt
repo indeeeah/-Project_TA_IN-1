@@ -1,0 +1,314 @@
+DROP TABLE Notice;
+DROP TABLE BoardAdd;
+DROP TABLE Follow;
+DROP TABLE HashTag;
+DROP TABLE BLike;
+DROP TABLE BbLike;
+DROP TABLE Message;
+DROP TABLE ReportBoard;
+DROP TABLE ReportMember;
+DROP TABLE Board;
+DROP TABLE BusinessHashTag;
+DROP TABLE ReportBusinessBoard;
+DROP TABLE AcceptedAD;
+DROP TABLE BusinessMember;
+DROP TABLE Out;
+DROP TABLE ShoppingBasket;
+DROP TABLE HighLight;
+DROP TABLE Story;
+DROP TABLE BusinessBoardAdd;
+DROP TABLE OrderDetail;
+DROP TABLE BusinessBoard;
+DROP TABLE Category;
+DROP TABLE Member;
+
+DROP SEQUENCE g_seq;
+DROP SEQUENCE b_seq;
+DROP SEQUENCE s_seq;
+DROP SEQUENCE o_seq;
+
+CREATE TABLE Member (
+   m_id   varchar2(20)      NOT NULL,
+   m_pw   varchar2(20)      NOT NULL,
+   m_name   varchar2(20)      NOT NULL,
+   m_intro   varchar2(200)    NULL,
+   m_email   varchar2(100)      NOT NULL,
+   m_addr1   number      NOT NULL,
+   m_addr2   varchar2(100)      NOT NULL,
+   m_addr3   varchar2(200)      NOT NULL,
+   m_phone   varchar2(13)      NOT NULL,
+   m_birth   Date      NOT NULL,
+   m_img   varchar2(200)      NULL,
+   m_usage   char(1)   DEFAULT 'G'   CHECK(m_usage IN ('G', 'B', 'M'))    NOT NULL,
+   m_status   number   DEFAULT 0   NOT NULL,
+   m_activity   number   DEFAULT 2   NOT NULL,
+   m_lastact   Date   DEFAULT sysdate   NOT NULL,
+   m_language   char(1)   DEFAULT 'K'   CHECK(m_language IN ('K', 'E'))   NOT NULL,
+   m_joindate Date DEFAULT sysdate NOT NULL,
+   approval_key char(10) NULL,
+   approval_status char(5) NOT NULL
+);
+
+
+CREATE TABLE BLike (
+   b_id   char(11)      NULL,
+   m_id   varchar2(20)      NOT NULL,
+   l_date   Date   DEFAULT sysdate   NOT NULL
+);
+
+CREATE TABLE BBLike (
+   bb_id   char(11)      NULL,
+   m_id   varchar2(20)      NOT NULL,
+   l_date   Date   DEFAULT sysdate   NOT NULL
+);
+
+
+CREATE TABLE Board (
+   b_id   char(11)      NOT NULL,
+   m_id   varchar2(20)      NOT NULL,
+   b_content   varchar2(500)      NULL,
+   b_type   char(1)   DEFAULT 'G' CHECK(b_type IN ('G', 'C', 'R'))   NOT NULL,
+   b_topid   char(11)      NULL,
+   b_date   Date   DEFAULT sysdate   NOT NULL
+);
+
+CREATE TABLE BusinessBoard (
+   bb_id   char(11)      NOT NULL,
+   m_id   varchar2(20)      NOT NULL,
+   bb_name   varchar2(100)      NOT NULL,
+   bb_info   varchar2(500)      NOT NULL,
+   bb_price   number      NOT NULL,
+   bb_option1   varchar2(100)      NULL,
+   bb_option2   varchar2(100)      NULL,
+   bb_option3   varchar2(100)      NULL,
+   bb_option4   varchar2(100)      NULL,
+   bb_type      char(1) DEFAULT 'B' CHECK(bb_type IN ('B', 'C', 'R'))   NOT NULL,
+   bb_topid      char(11)      NULL,
+   bb_date      Date   DEFAULT sysdate   NOT NULL,
+   c_name   varchar2(100)   NULL
+);
+
+CREATE TABLE Story (
+   s_id   char(11)      NOT NULL,
+   m_id   varchar2(20)      NOT NULL,
+   s_img   varchar2(200)      NOT NULL,
+   s_date   Date   DEFAULT sysdate   NOT NULL,
+   s_link   varchar2(200)      NULL,
+   s_type   char(1)   DEFAULT 'G'   CHECK(s_type IN ('G', 'A'))   NOT NULL
+);
+
+CREATE TABLE AcceptedAD (
+   m_id   varchar2(20)      NOT NULL,
+   ad_approval   char(1)   DEFAULT 'N'   CHECK(ad_approval IN ('N', 'Y'))   NOT NULL
+);
+
+CREATE TABLE Follow (
+   m_id1   varchar2(20)      NOT NULL,
+   m_id2   varchar2(20)      NOT NULL,
+   f_date   Date   DEFAULT sysdate   NOT NULL
+);
+
+CREATE TABLE BusinessMember (
+   m_id   varchar2(20)      NOT NULL,
+   bm_cate   number   CHECK(bm_cate IN (1, 2, 3, 4, 5))      NOT NULL,
+   bm_name   varchar2(200)      NOT NULL,
+   bm_addr   varchar2(500)      NOT NULL,
+   bm_url   varchar2(200)      NULL,
+   bm_account   varchar2(200)      NULL,
+   bm_intro   varchar2(200)      NULL,
+   bm_phone   varchar2(20)      NOT NULL,
+   bm_approval   char(1)   DEFAULT 'N' CHECK(bm_approval IN ('N', 'Y'))   NOT NULL
+);
+
+CREATE TABLE BoardAdd (
+   b_id   char(11)      NOT NULL,
+   b_img1   varchar2(200)      NULL,
+   b_img2   varchar2(200)      NULL,
+   b_img3   varchar2(200)      NULL,
+   b_img4   varchar2(200)      NULL,
+   b_img5   varchar2(200)      NULL,
+   b_img6   varchar2(200)      NULL,
+   b_img7   varchar2(200)      NULL,
+   b_img8   varchar2(200)      NULL,
+   b_img9   varchar2(200)      NULL,
+   b_img10   varchar2(200)      NULL
+);
+
+CREATE TABLE BusinessBoardAdd (
+   bb_id   char(11) UNIQUE      NOT NULL,
+   bb_img1   varchar2(200)      NULL,
+   bb_img2   varchar2(200)      NULL,
+   bb_img3   varchar2(200)      NULL,
+   bb_img4   varchar2(200)      NULL,
+   bb_img5   varchar2(200)      NULL,
+   bb_img6   varchar2(200)      NULL,
+   bb_img7   varchar2(200)      NULL,
+   bb_img8   varchar2(200)      NULL,
+   bb_img9   varchar2(200)      NULL,
+   bb_img10   varchar2(200)      NULL
+);
+
+CREATE TABLE ShoppingBasket (
+   m_id   varchar2(20)      NOT NULL,
+   bb_id   char(11)      NOT NULL,
+   sb_date   Date   DEFAULT sysdate   NOT NULL
+);
+
+CREATE TABLE Category (
+   c_name   varchar2(100)      NULL,
+   m_id   varchar2(20)      NOT NULL
+);
+
+CREATE TABLE Message (
+   m_id   varchar2(20)      NOT NULL,
+   m_id2   varchar2(20)      NOT NULL,
+   m_message   varchar2(500)      NOT NULL,
+   m_date   varchar2(30)   DEFAULT TO_CHAR(sysdate, 'yyyy.mm.dd hh24:mi:ss') NOT NULL,
+   m_check char(1) default 'N'
+);
+
+CREATE TABLE HashTag (
+   b_id   char(11)      NOT NULL,
+   h_tag   varchar2(200)      NULL
+);
+
+CREATE TABLE BusinessHashTag (
+   bb_id   char(11)      NOT NULL,
+   h_tag   varchar2(200)      NULL
+);
+
+CREATE TABLE ReportBoard (
+   b_id   char(11)      NOT NULL,
+   m_id   varchar2(20)      NOT NULL,
+   rb_reason   varchar2(500)      NOT NULL,
+   rb_date Date   DEFAULT sysdate   NOT NULL
+);
+
+CREATE TABLE ReportMember (
+   m_id1   varchar2(20)      NOT NULL,
+   m_id2   varchar2(20)      NOT NULL,
+   rm_reason   varchar2(500)      NOT NULL,
+   rm_date   Date   DEFAULT sysdate   NOT NULL
+);
+
+CREATE TABLE ReportBusinessBoard (
+   bb_id   char(11)      NOT NULL,
+   m_id   varchar2(20)      NOT NULL,
+   rbb_reason   varchar2(500)      NOT NULL,
+   rbb_date   Date   DEFAULT sysdate   NOT NULL
+);
+
+CREATE TABLE Out (
+   m_id   varchar2(20)      NOT NULL,
+   o_reason   char(1)   CHECK(o_reason IN ('S', 'F'))      NOT NULL,
+   o_date   Date   DEFAULT sysdate   NOT NULL,
+   o_reasontx varchar(50) NULL
+);
+
+CREATE TABLE OrderDetail (
+   od_id    char(11)    NOT NULL,
+   bb_id   char(11)      NOT NULL,
+   m_id   varchar2(20)      NOT NULL,
+   od_date   Date   DEFAULT sysdate   NOT NULL,
+   od_size   char(2)   CHECK(od_size IN ('S', 'M', 'L', 'XL', 'F'))   NULL,
+   od_amount   number   DEFAULT 1   NOT NULL,
+   od_options   varchar2(500)   NULL,
+   od_price   number   NOT NULL,
+   od_name  varchar2(200)   NOT NULL,
+   od_phone char(13)  NOT NULL,
+   od_addr1 number NOT NULL,
+   od_addr2 varchar2(500) NOT NULL,
+   od_addr3 varchar2(500) NOT NULL,
+   od_status char(1)    NOT NULL
+);
+
+CREATE TABLE Highlight (
+   h_name   varchar2(100)      NOT NULL,
+   s_id   char(11)      NOT NULL,
+   m_id   varchar2(20)      NOT NULL,
+   h_img   varchar2(200)      NULL
+);
+
+CREATE TABLE NOTICE (
+  m_id   varchar2(20)   NOT NULL,
+  m_id2   varchar2(20)   NOT NULL,
+  b_id   char(11)   NULL,
+  n_date   Date   DEFAULT   sysdate,
+  n_contents   varchar2(200)   NOT NULL,
+  n_check   char(1) DEFAULT 'N' NOT NULL
+);
+
+
+
+ALTER TABLE Member ADD CONSTRAINT PR_MEMBER PRIMARY KEY(m_id);
+ALTER TABLE Board ADD CONSTRAINT PR_BOARD PRIMARY KEY(b_id);
+ALTER TABLE BusinessBoard ADD CONSTRAINT PR_BUSINESSBOARD PRIMARY KEY(bb_id);
+ALTER TABLE Story ADD CONSTRAINT PR_STROY PRIMARY KEY(s_id);
+ALTER TABLE OrderDetail ADD CONSTRAINT PR_ORDERDETAIL PRIMARY KEY(od_id);
+
+ALTER TABLE OrderDetail ADD FOREIGN KEY(bb_id) REFERENCES BusinessBoard(bb_id) ON DELETE CASCADE;
+ALTER TABLE OrderDetail ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE Follow ADD FOREIGN KEY(m_id1) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE Follow ADD FOREIGN KEY(m_id2) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE BLike ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE BLike ADD FOREIGN KEY(b_id) REFERENCES Board(b_id) ON DELETE CASCADE;
+ALTER TABLE BbLike ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE BbLike ADD FOREIGN KEY(bb_id) REFERENCES BusinessBoard(bb_id) ON DELETE CASCADE;
+ALTER TABLE Board ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE BoardAdd ADD FOREIGN KEY(b_id) REFERENCES BOARD(b_id) ON DELETE CASCADE;
+ALTER TABLE ReportBoard ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE ReportBoard ADD FOREIGN KEY(b_id) REFERENCES Board(b_id) ON DELETE CASCADE;
+ALTER TABLE HashTag ADD FOREIGN KEY(b_id) REFERENCES Board(b_id) ON DELETE CASCADE;
+ALTER TABLE ShoppingBasket ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE ShoppingBasket ADD FOREIGN KEY(bb_id) REFERENCES BusinessBoard(bb_id) ON DELETE CASCADE;
+ALTER TABLE Story ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE ReportMember ADD FOREIGN KEY(m_id1) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE ReportMember ADD FOREIGN KEY(m_id2) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE Message ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE Category ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE BusinessBoard ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE BusinessMember ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE BusinessBoardAdd ADD FOREIGN KEY(bb_id) REFERENCES BusinessBoard(bb_id) ON DELETE CASCADE;
+ALTER TABLE AcceptedAD ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE ReportBusinessBoard ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE ReportBusinessBoard ADD FOREIGN KEY(bb_id) REFERENCES BusinessBoard(bb_id) ON DELETE CASCADE;
+ALTER TABLE BusinessHashTag ADD FOREIGN KEY(bb_id) REFERENCES BusinessBoard(bb_id) ON DELETE CASCADE;
+ALTER TABLE HighLight ADD FOREIGN KEY(s_id) REFERENCES Story(s_id) ON DELETE CASCADE;
+ALTER TABLE HighLight ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+ALTER TABLE NOTICE ADD FOREIGN KEY(m_id) REFERENCES Member(m_id) ON DELETE CASCADE;
+
+
+
+create sequence g_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 999
+nocycle
+cache 20;
+
+
+create sequence b_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 999
+nocycle
+cache 20;
+
+
+create sequence s_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 999
+nocycle
+cache 20;
+
+create sequence o_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 999
+nocycle
+cache 20;
