@@ -114,6 +114,8 @@
 2. I'mport를 이용한 결제 기능
 ### [게시글 작성 페이지]
 <img width="1680" alt="스크린샷 2021-01-25 오후 9 41 45" src="https://user-images.githubusercontent.com/72774483/106257894-81dc1a00-6260-11eb-8c27-7db069a8c378.png">
+<img width="1680" alt="스크린샷 2021-02-02 오후 9 41 38" src="https://user-images.githubusercontent.com/72774483/106693570-199f8680-661a-11eb-99bb-9f5a7edb891e.png">
+<img width="1680" alt="스크린샷 2021-02-02 오후 9 42 28" src="https://user-images.githubusercontent.com/72774483/106693574-1c01e080-661a-11eb-9510-2bd30c2b985d.png">
 
 1. 여러 이미지 파일 업로드 기능
 2. 사진 필터 적용 기능
@@ -143,6 +145,8 @@
 1. 팔로우하고 있는 계정 아이디 자동 검색어 완성 기능
 2. WebSocket 양방향 통신을 이용한 1:1 채팅 기능
 ### [관리자 페이지]
+<img width="1320" alt="스크린샷 2021-02-02 오후 8 54 33" src="https://user-images.githubusercontent.com/72774483/106693637-3936af00-661a-11eb-8261-bd1c8a4e0443.png">
+
 1. 기간 설정에 따른 회원가입 수 통계 조회 기능
 2. 신고 관리
 > + 신고된 회원, 게시글 조회 기능
