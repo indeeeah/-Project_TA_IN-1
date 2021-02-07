@@ -387,6 +387,17 @@ public HashMap<String, Object> timeLineScroll(Model model, HttpServletRequest re
 #
 gnWrite-mapper.xml
 ``` xml
+<!-- 텍스트 업로드 -->
+<insert id="insertboard" parameterType="GnWrite"
+	flushCache="true" statementType="PREPARED" timeout="20">
+	insert into board
+	(B_ID, M_ID, B_CONTENT) values
+	('BO'||TO_CHAR(SYSDATE,'RRMMDD')||LPAD(#{seq},3,'0'),
+	#{my_name},
+	#{b_content})
+</insert>
+
+<!-- 다중 파일 업로드 -->
 <insert id="insertboardimg" parameterType="GnWrite"
     flushCache="true" statementType="PREPARED" timeout="20">
     <!-- 10개까지 이미지 업로드 가능 -->
