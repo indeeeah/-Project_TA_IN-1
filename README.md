@@ -271,6 +271,7 @@ $("#search").on("keypress", function(event) {
 2. 해당 해시태그를 포함한 게시물 조회 기능
 3. AJAX를 이용한 무한 스크롤
 #
+timeline.jsp
 ``` javascript
 // 스크롤 페이징
 // page선언
@@ -314,6 +315,28 @@ function getList(page) {
                     }
                 }
 ```
+TimeLineController.java
+``` java
+// 게시물 스크롤 페이징
+@ResponseBody
+@RequestMapping(value="/timeLineScroll.do", method = RequestMethod.POST)
+public HashMap<String, Object> timeLineScroll(Model model, HttpServletRequest request,
+		@RequestParam(name="page", defaultValue = "1") int page) {
+	HashMap<String, Object> result = new HashMap <String,Object>();
+	HttpSession session = request.getSession();
+	String my_name = (String) session.getAttribute("my_name");
+	int currentPage=page;
+	int listCount=tService.timeLineListCount(my_name);
+	int maxPage=(int)((double)listCount/LIMIT+0.9);
+	List<TimeLine> logList = tService.showTimeLineListPage(my_name, currentPage, LIMIT);
+	result.put("count", tService.timeLineListCount(my_name));	// 게시물카운트
+	result.put("currentPage", currentPage);				// 현재 페이지
+	result.put("maxPage", maxPage);						// 최대 페이지
+	result.put("list", logList);	// 게시물 텍스트정보
+	System.out.println("list:"+ logList);
+	return result;
+}
+```	
 
 + 스크롤이 하단에 닿으면 다음 Ajax를 이용해 다음 페이지의 데이터를 보여주는 기능입니다.
 + 보여줄 데이터가 많을 시 속도 저하와 서버 과부하를 예방하기 위해 추가하였습니다.
