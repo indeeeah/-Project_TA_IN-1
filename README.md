@@ -246,29 +246,10 @@ $("#search").on("keypress", function(event) {
         if (hashtag.startsWith(at)) {
             // '@'를 없애준다.
             hashtag = hashtag.replace(/[@]/g, '');
-
-            $.ajax({
-                url: "${pageContext.request.contextPath}/showMemberType.do",
-                type: "post",
-                data: {
-                    m_id: hashtag
-                },
-                success: function(data) {
-                    console.log(data);
-                    // 개인 계정 프로필로 이동
-                    var url = "${pageContext.request.contextPath}/gnMain?m_id=" + hashtag;
-                    $(location).attr('href', url);
-                },
-                error: function(request, status, error) {
-                    alert("code:" +
-                        request.status +
-                        "\n" +
-                        "message:" +
-                        request.responseText +
-                        "\n" + "error:" +
-                        error);
-                }
-            });
+	    // 개인 계정 프로필로 이동
+	    var url = "${pageContext.request.contextPath}/gnMain?m_id=" + hashtag;
+	    $(location).attr('href', url);
+               
             // '@'로 시작하는 것이 아닌 검색어
         } else {
             // '#'이 있다면 없애준다.
@@ -879,7 +860,7 @@ $(b).html(htmls2);
 
 4. ERD
 
-<img width="1238" alt="스크린샷 2021-02-04 오후 8 12 55" src="https://user-images.githubusercontent.com/72774483/106885275-b864d980-6725-11eb-98ff-7ef86e4cf839.png">
+<img width="1238" alt="스크린샷 2021-02-04 오후 8 12 55" src="https://user-images.githubusercontent.com/72774483/106885275-b864d980-6725-11eb-98ff-7ef86e4cf839.png">
 
 > + TA_IN은 로그인 후에만 이용할 수 있는 사이트로, 대부분의 테이블이 Member 테이블의 m_id(계정 아이디)를 부모키로 가지고 있습니다.
 > + 게시판은 일반 게시판과 비즈니스 게시판으로 분리되어 있으며, 각 게시판에 대한 좋아요, 신고, 이미지 파일 테이블들도 일반과 비즈니스가 분리되어 있습니다.
